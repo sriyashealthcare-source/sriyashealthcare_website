@@ -1,0 +1,1950 @@
+{
+  "brands": [
+    {
+      "slug": "peters",
+      "name": "Peters Surgical",
+      "tabLabel": "Peters Surgical",
+      "icon": "🔬",
+      "logoUrl": "/assets/logos/peters-surgical.png",
+      "description": "High-performance surgical sutures, meshes, clips, surgical adhesives, and Caesarean section kits.",
+      "displayOrder": 1
+    },
+    {
+      "slug": "liquiband",
+      "name": "LiquiBand®",
+      "tabLabel": "LiquiBand®",
+      "icon": "💉",
+      "logoUrl": "/assets/logos/liquiband.png",
+      "description": "Advanced topical skin adhesives and laparoscopic hernia mesh fixation devices by Advanced Medical Solutions.",
+      "displayOrder": 2
+    },
+    {
+      "slug": "cutimed",
+      "name": "Cutimed® Sorbact®",
+      "tabLabel": "Cutimed® Sorbact®",
+      "icon": "🩹",
+      "logoUrl": "",
+      "description": "Clinically proven antibiotic-free wound infection management using physical DACC technology.",
+      "displayOrder": 3
+    },
+    {
+      "slug": "gentacoll",
+      "name": "Genta-Coll® resorb",
+      "tabLabel": "Genta-Coll® resorb",
+      "icon": "🧬",
+      "logoUrl": "",
+      "description": "Haemostatic equine collagen sponge with gentamicin sulphate for infection protection and haemostasis.",
+      "displayOrder": 4
+    },
+    {
+      "slug": "gore",
+      "name": "W.L. Gore & Associates",
+      "tabLabel": "W.L. Gore & Associates",
+      "icon": "🧪",
+      "logoUrl": "/assets/logos/gore.png",
+      "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
+      "displayOrder": 5
+    }
+  ],
+  "categories": [
+    {
+      "name": "Synthetic Absorbable Sutures",
+      "slug": "peters-synthetic-absorbable-sutures",
+      "brandSlug": "peters",
+      "heroTitle": "Synthetic Absorbable Sutures",
+      "description": "High-performance sutures with predictable absorption and superior tensile strength.",
+      "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 1,
+      "isActive": true
+    },
+    {
+      "name": "Natural Absorbable Sutures",
+      "slug": "peters-natural-absorbable-sutures",
+      "brandSlug": "peters",
+      "heroTitle": "Natural Absorbable Sutures",
+      "description": "Time-tested natural sutures with reliable enzymatic absorption.",
+      "heroGradient": "linear-gradient(135deg,#1a4a3c,#2d7a5e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 2,
+      "isActive": true
+    },
+    {
+      "name": "Non-Absorbable Sutures",
+      "slug": "peters-non-absorbable-sutures",
+      "brandSlug": "peters",
+      "heroTitle": "Non-Absorbable Sutures",
+      "description": "Permanent sutures for long-term tissue approximation and support.",
+      "heroGradient": "linear-gradient(135deg,#1a2a4a,#2d4a7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-non-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 3,
+      "isActive": true
+    },
+    {
+      "name": "Surgical Mesh",
+      "slug": "peters-surgical-mesh",
+      "brandSlug": "peters",
+      "heroTitle": "Sterilene Mesh",
+      "description": "Flat knitted polypropylene mesh — the ideal choice for open & laparoscopic hernia repairs.",
+      "heroGradient": "linear-gradient(135deg,#2a1a4a,#4a2d7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-mesh.png",
+        "publicId": ""
+      },
+      "displayOrder": 4,
+      "isActive": true
+    },
+    {
+      "name": "Surgical Kits · Obstetrics",
+      "slug": "peters-surgical-kits-obstetrics",
+      "brandSlug": "peters",
+      "heroTitle": "C-Section Kit",
+      "description": "Complete pre-assembled kits for Caesarean Section — Polycol™ + Stericryl™.",
+      "heroGradient": "linear-gradient(135deg,#4a1a3c,#7a2d5e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
+        "publicId": ""
+      },
+      "displayOrder": 5,
+      "isActive": true
+    },
+    {
+      "name": "Haemostasis · Titanium Clips",
+      "slug": "peters-haemostasis-titanium-clips",
+      "brandSlug": "peters",
+      "heroTitle": "Titanium Hemostatic Clips",
+      "description": "Pure titanium clips — biologically inert, radio-opaque, MRI compatible.",
+      "heroGradient": "linear-gradient(135deg,#1a3a4a,#2d5e7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
+        "publicId": ""
+      },
+      "displayOrder": 6,
+      "isActive": true
+    },
+    {
+      "name": "Surgical Adhesive",
+      "slug": "peters-surgical-adhesive",
+      "brandSlug": "peters",
+      "heroTitle": "IFABOND®",
+      "description": "A few drops glue a lot — n-hexyl cyanoacrylate surgical adhesive. EU MDR certified.",
+      "heroGradient": "linear-gradient(135deg,#c0392b,#e74c3c)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-adhesive.png",
+        "publicId": ""
+      },
+      "displayOrder": 7,
+      "isActive": true
+    },
+    {
+      "name": "Barbed Sutures · Knotless",
+      "slug": "peters-barbed-sutures-knotless",
+      "brandSlug": "peters",
+      "heroTitle": "FILBLOC® Barbed Sutures",
+      "description": "Knotless closure device with Final Lock System — absorbable and non-absorbable.",
+      "heroGradient": "linear-gradient(135deg,#00695c,#00897b)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png",
+        "publicId": ""
+      },
+      "displayOrder": 8,
+      "isActive": true
+    },
+    {
+      "name": "Topical Skin Adhesive",
+      "slug": "liquiband-topical-skin-adhesive",
+      "brandSlug": "liquiband",
+      "heroTitle": "LiquiBand® Optima",
+      "description": "Topical skin adhesive — microbial barrier in 10 seconds. Take the sting out of wound closure.",
+      "heroGradient": "linear-gradient(135deg,#0d2d5e,#1a5799)",
+      "heroImage": {
+        "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
+        "publicId": ""
+      },
+      "displayOrder": 9,
+      "isActive": true
+    },
+    {
+      "name": "Hernia Mesh Fixation",
+      "slug": "liquiband-hernia-mesh-fixation",
+      "brandSlug": "liquiband",
+      "heroTitle": "LiquiBand® FIX8®",
+      "description": "Laparoscopic hernia mesh fixation device — atraumatic, precise, strong.",
+      "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
+        "publicId": ""
+      },
+      "displayOrder": 10,
+      "isActive": true
+    },
+    {
+      "name": "Wound Care · Infection Management",
+      "slug": "cutimed-wound-care-infection-management",
+      "brandSlug": "cutimed",
+      "heroTitle": "Cutimed® Sorbact®",
+      "description": "Clinically proven antibiotic-free wound infection management — purely physical mode of action.",
+      "heroGradient": "linear-gradient(135deg,#006064,#00838f)",
+      "heroImage": {
+        "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png",
+        "publicId": ""
+      },
+      "displayOrder": 11,
+      "isActive": true
+    },
+    {
+      "name": "Haemostasis · Antibiotic Collagen Sponge",
+      "slug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
+      "brandSlug": "gentacoll",
+      "heroTitle": "Genta-Coll® resorb",
+      "description": "Haemostatic collagen sponge with gentamicin sulphate — effective protection with strong haemostyptic action.",
+      "heroGradient": "linear-gradient(135deg,#3e2723,#6d4c41)",
+      "heroImage": {
+        "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+        "publicId": ""
+      },
+      "displayOrder": 12,
+      "isActive": true
+    },
+    {
+      "name": "Absorbable Biomaterials & Tissue Reinforcement",
+      "slug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "brandSlug": "gore",
+      "heroTitle": "W.L. Gore & Associates",
+      "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
+      "heroGradient": "linear-gradient(135deg,#2c2c2c,#5c1a1a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+        "publicId": ""
+      },
+      "displayOrder": 13,
+      "isActive": true
+    }
+  ],
+  "products": [
+    {
+      "legacyId": "icol",
+      "name": "I-Col™",
+      "slug": "i-col",
+      "brandSlug": "peters",
+      "categorySlug": "peters-synthetic-absorbable-sutures",
+      "cardCategory": "Braided · Polyglycolic Acid",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglycolic Acid",
+      "shortSpecification": "PGA · Coated · Absorption 60–75 Days",
+      "description": "I-Col™ is a synthetic absorbable braided suture made from Polyglycolic Acid (PGA), coated with Calcium Stearate and Polycaprolactone. It provides high initial tensile strength with predictable absorption — ideal for procedures requiring extended wound support.",
+      "images": [
+        {
+          "url": "/assets/products/icol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "High initial strength with moderated absorption kinetics",
+        "Excellent knot reliability and security",
+        "High biocompatibility — minimal tissue reaction",
+        "Perfect slide due to homogeneous calcium stearate coating",
+        "Available dyed (violet) and undyed",
+        "27% higher knot pull tensile strength than USP limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyglycolic Acid (PGA) — Braided"
+        },
+        {
+          "name": "Coating",
+          "value": "Calcium Stearate & Polycaprolactone"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "28–35 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "60–75 Days"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Gamma / EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Cholecystectomy",
+        "Mastectomy",
+        "Appendectomy",
+        "Hysterectomy",
+        "General soft tissue approximation and ligation"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 1
+    },
+    {
+      "legacyId": "icol_fast",
+      "name": "I-Col™ Fast",
+      "slug": "i-col-fast",
+      "brandSlug": "peters",
+      "categorySlug": "peters-synthetic-absorbable-sutures",
+      "cardCategory": "Braided · Short Term",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Short Term",
+      "shortSpecification": "Treated PGA · Absorption 40–45 Days",
+      "description": "I-Col™ Fast is a short-term synthetic absorbable braided suture made from treated Polyglycolic Acid. Spontaneous elimination after 10 days saves surgical time and provides excellent wound healing with very soft thread handling.",
+      "images": [
+        {
+          "url": "/assets/products/icol_fast-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Gamma sterilization for superior sterility assurance",
+        "Excellent wound healing results",
+        "Very soft thread — excellent handling",
+        "Spontaneous elimination after 10 days",
+        "Short absorption profile for superficial/fast-healing procedures"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Treated Polyglycolic Acid — Braided"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "10–14 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "40–45 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "3.15 KGF (18% above USP limit)"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Gamma"
+        },
+        {
+          "name": "Available",
+          "value": "Undyed only"
+        }
+      ],
+      "applications": [
+        "Laparotomy",
+        "Colostomy",
+        "Open Hysterectomy",
+        "Appendectomy",
+        "Mastectomy",
+        "Hernia Repair",
+        "Superficial wound closure"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 2
+    },
+    {
+      "legacyId": "polycol",
+      "name": "Polycol™",
+      "slug": "polycol",
+      "brandSlug": "peters",
+      "categorySlug": "peters-synthetic-absorbable-sutures",
+      "cardCategory": "Braided · Polyglactin 910",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglactin 910",
+      "shortSpecification": "Polyglactin 910 · Coated · Absorption 60–75 Days",
+      "description": "Polycol™ is a synthetic absorbable braided suture made from Polyglactin 910, coated with Poly-Glycolide-co-Lactide and Calcium Stearate. It offers excellent tensile strength, improved handling and minimal tissue reaction.",
+      "images": [
+        {
+          "url": "/assets/products/polycol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Excellent tensile strength with improved handling",
+        "Minimal tissue reaction with predictable absorption",
+        "Available undyed and violet",
+        "Reliable knot security and smooth passage through tissue",
+        "23% above USP knot pull tensile strength limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyglactin 910 — Braided"
+        },
+        {
+          "name": "Coating",
+          "value": "Poly-Glycolide-co-Lactide & Calcium Stearate"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "28–35 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "60–75 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "62.35 KGF"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Hysterectomy",
+        "Abdominal Surgeries",
+        "Bowel Anastomosis",
+        "Colostomy",
+        "Mastectomy",
+        "Cholecystectomy",
+        "Appendectomy",
+        "Hernia Repair"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 3
+    },
+    {
+      "legacyId": "stericryl",
+      "name": "Stericryl™",
+      "slug": "stericryl",
+      "brandSlug": "peters",
+      "categorySlug": "peters-synthetic-absorbable-sutures",
+      "cardCategory": "Monofilament · Poliglecaprone 25",
+      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Poliglecaprone 25",
+      "shortSpecification": "PGA-PCL · Absorption 90–120 Days",
+      "description": "Stericryl™ is a synthetic absorbable monofilament suture made from Poliglecaprone 25 (PGA-PCL). It features smooth atraumatic tissue penetration, mild tissue reactivity, and reduces postoperative adhesion.",
+      "images": [
+        {
+          "url": "/assets/products/stericryl-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Smooth atraumatic tissue penetration",
+        "Mild tissue reactivity — well tolerated",
+        "Reduces postoperative adhesion",
+        "Monofilament — easy passage through tissue",
+        "80% above USP knot pull tensile strength limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Poliglecaprone 25 (PGA-PCL) — Monofilament"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "21–28 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "90–120 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "31.52 KGF (80% above USP)"
+        },
+        {
+          "name": "Available",
+          "value": "Dyed and Undyed"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Colostomy",
+        "Mastectomy",
+        "Appendectomy",
+        "Hysterectomy",
+        "Subcutaneous tissue closure",
+        "Skin and fascia approximation"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 4
+    },
+    {
+      "legacyId": "monocol",
+      "name": "Monocol™",
+      "slug": "monocol",
+      "brandSlug": "peters",
+      "categorySlug": "peters-synthetic-absorbable-sutures",
+      "cardCategory": "Monofilament · Polydioxanone",
+      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Polydioxanone",
+      "shortSpecification": "PDO · Absorption 180–210 Days",
+      "description": "Monocol™ is a long-term synthetic absorbable monofilament suture made from Polydioxanone (PDO). Provides sustained wound support over 60 days with homogeneous absorption kinetics and exceptional resistance in aggressive biological environments.",
+      "images": [
+        {
+          "url": "/assets/products/monocol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Optimal strength duration over 60 days",
+        "Homogeneous absorption kinetics across the whole range",
+        "Minimal tissue trauma and excellent tolerance",
+        "High strength in aggressive biological fluids",
+        "23% higher knot pull tensile strength than USP limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polydioxanone (PDO) — Monofilament"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "Over 60 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "180–210 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "62.36 KGF"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 4-0 to USP 1"
+        }
+      ],
+      "applications": [
+        "Colostomy",
+        "Laparotomy",
+        "Knee/Hip Replacement",
+        "Open Hysterectomy",
+        "Fascial closure requiring prolonged support",
+        "Orthopaedic and reconstructive procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 5
+    },
+    {
+      "legacyId": "catgut",
+      "name": "Catgut Chromic™",
+      "slug": "catgut-chromic",
+      "brandSlug": "peters",
+      "categorySlug": "peters-natural-absorbable-sutures",
+      "cardCategory": "Twisted · Chromic Catgut",
+      "detailCategory": "Natural Absorbable Suture · Chromic Catgut · Twisted",
+      "shortSpecification": "Natural Collagen · Absorption ~90 Days",
+      "description": "Catgut Chromic™ is a natural absorbable suture made from the submucosa of sheep intestines, treated with chromium salts to prolong absorption. Naturally absorbed by enzymatic action of body tissues.",
+      "images": [
+        {
+          "url": "/assets/products/catgut-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Natural collagen-based suture material",
+        "Chromic treatment extends tensile strength retention",
+        "Soft and pliable — excellent handling",
+        "Naturally absorbed by enzymatic action",
+        "Good knot security with natural material"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Chromic Catgut (sheep intestine submucosa)"
+        },
+        {
+          "name": "Type",
+          "value": "Twisted"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "21–28 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "~90 Days"
+        },
+        {
+          "name": "Available",
+          "value": "Natural coloured"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Cholecystectomy",
+        "Hysterectomy",
+        "Appendectomy",
+        "Superficial soft tissue approximation",
+        "Ligation of small blood vessels",
+        "Episiotomy and obstetric procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 6
+    },
+    {
+      "legacyId": "sterisil",
+      "name": "Sterisil™",
+      "slug": "sterisil",
+      "brandSlug": "peters",
+      "categorySlug": "peters-non-absorbable-sutures",
+      "cardCategory": "Braided Silk · Non-Absorbable",
+      "detailCategory": "Non-Absorbable Suture · Braided Silk · Black",
+      "shortSpecification": "Black Braided Silk · Permanent",
+      "description": "Sterisil™ is a non-absorbable surgical suture made from natural black braided silk, coated for smooth tissue passage. Valued for excellent handling characteristics and secure knotting in all surgical environments.",
+      "images": [
+        {
+          "url": "/assets/products/sterisil-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Excellent handling and knotting characteristics",
+        "Smooth tissue passage due to coating",
+        "High visibility with black dye",
+        "Reliable tensile strength throughout",
+        "Soft and pliable — minimal tissue trauma"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Natural Silk — Black Braided"
+        },
+        {
+          "name": "REF",
+          "value": "SFS 5333"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Standard",
+          "value": "USP 2-0 (Metric 3), 76 cm"
+        },
+        {
+          "name": "",
+          "value": "Round Bodied, 30mm, Half Circle"
+        }
+      ],
+      "applications": [
+        "General soft tissue approximation",
+        "Cardiovascular surgery",
+        "Ophthalmic surgery",
+        "Skin and subcutaneous closure",
+        "Tendon repair",
+        "Ligation of vessels"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 7
+    },
+    {
+      "legacyId": "sterilon",
+      "name": "Sterilon™",
+      "slug": "sterilon",
+      "brandSlug": "peters",
+      "categorySlug": "peters-non-absorbable-sutures",
+      "cardCategory": "Monofilament · Polyamide (Nylon)",
+      "detailCategory": "Non-Absorbable Suture · Monofilament Polyamide (Nylon) · Blue",
+      "shortSpecification": "Monofilament Polyamide · Blue · Permanent",
+      "description": "Sterilon™ is a synthetic non-absorbable monofilament suture made from Polyamide (Nylon). Blue coloured for enhanced visibility with low tissue reactivity and predictable long-term strength.",
+      "images": [
+        {
+          "url": "/assets/products/sterilon-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Monofilament — smooth passage through tissue",
+        "Low tissue reactivity",
+        "Blue colour for excellent visibility",
+        "Predictable long-term tensile strength",
+        "Resists biological degradation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyamide (Nylon) — Monofilament"
+        },
+        {
+          "name": "Colour",
+          "value": "Blue"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 6-0"
+        }
+      ],
+      "applications": [
+        "Skin closure",
+        "Ophthalmic surgery",
+        "Plastic and cosmetic surgery",
+        "Microsurgery",
+        "Nerve repair",
+        "Tendon and fascial repair"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 8
+    },
+    {
+      "legacyId": "sterilene_suture",
+      "name": "Sterilene™ Suture",
+      "slug": "sterilene-suture",
+      "brandSlug": "peters",
+      "categorySlug": "peters-non-absorbable-sutures",
+      "cardCategory": "Monofilament · Polypropylene",
+      "detailCategory": "Non-Absorbable Suture · Monofilament Polypropylene · Blue",
+      "shortSpecification": "Monofilament PP · Blue · Permanent",
+      "description": "Sterilene™ is a synthetic non-absorbable monofilament suture made from Polypropylene — the most biologically inert suture material. Ideal for use in infected tissue and procedures requiring permanent strength.",
+      "images": [
+        {
+          "url": "/assets/products/sterilene_suture-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Highest biologic inertness of all synthetic sutures",
+        "Maintains tensile strength indefinitely",
+        "Smooth monofilament — excellent tissue passage",
+        "Ideal in infected or contaminated wounds",
+        "Resists degradation by body enzymes"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polypropylene — Monofilament"
+        },
+        {
+          "name": "Colour",
+          "value": "Blue"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 6-0"
+        }
+      ],
+      "applications": [
+        "Cardiovascular surgery",
+        "Hernia repair",
+        "Abdominal wall closure",
+        "Skin closure",
+        "Orthopaedic procedures",
+        "Fascial closure requiring permanent support"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 9
+    },
+    {
+      "legacyId": "steribon",
+      "name": "Steribon™",
+      "slug": "steribon",
+      "brandSlug": "peters",
+      "categorySlug": "peters-non-absorbable-sutures",
+      "cardCategory": "Braided Polyester · Non-Absorbable",
+      "detailCategory": "Non-Absorbable Suture · Coated Braided Polyester",
+      "shortSpecification": "Coated Braided PET · Permanent",
+      "description": "Steribon™ is a synthetic non-absorbable coated braided polyester suture. It offers superior tensile strength — the highest of all non-absorbable sutures — and is the choice when permanent support is required.",
+      "images": [
+        {
+          "url": "/assets/products/steribon-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Superior tensile strength — highest among non-absorbables",
+        "Coated braiding for smooth tissue passage",
+        "Excellent knot security and handling",
+        "Permanent support indefinitely",
+        "Highly resistant to biological degradation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyester (PET) — Coated Braided"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "Highest among non-absorbables"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO or Gamma"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 5 to USP 5-0"
+        }
+      ],
+      "applications": [
+        "Cardiac surgery (valve repair)",
+        "Orthopaedic surgery (tendon/ligament)",
+        "Hernia repair with mesh",
+        "Vascular surgery",
+        "Abdominal wall closure",
+        "Ophthalmic procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 10
+    },
+    {
+      "legacyId": "sterilene_mesh",
+      "name": "Sterilene™ Mesh",
+      "slug": "sterilene-mesh",
+      "brandSlug": "peters",
+      "categorySlug": "peters-surgical-mesh",
+      "cardCategory": "Flat Knitted · Polypropylene",
+      "detailCategory": "Surgical Mesh · Flat Knitted Polypropylene",
+      "shortSpecification": "Light / Regular / Heavy variants\nOpen &\nLaparoscopic Hernia",
+      "description": "Sterilene™ Mesh is a flat knitted polypropylene mesh — the ideal mesh for open and laparoscopic hernia repairs. Available in Light, Regular and Heavy variants to suit the specific requirements of each procedure.",
+      "images": [
+        {
+          "url": "/assets/products/sterilene_mesh-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/sterilene_mesh-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Sterilene Light: 56% lighter than regular mesh — better compatibility and fast tissue integration",
+        "Sterilene Regular: Good shape memory and perfect fitment against cavity wall",
+        "Sterilene Heavy: Highest tensile and burst strength — ideal for open hernia repair",
+        "Monofilament polypropylene — excellent biological inertness",
+        "Laser cutting for precise edges",
+        "Hernia Kit and Hernia Kit Plus configurations available"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Monofilament Polypropylene"
+        },
+        {
+          "name": "Cutting Type",
+          "value": "Laser"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Ethylene Oxide (EO)"
+        },
+        {
+          "name": "Colour",
+          "value": "Clear — Undyed"
+        },
+        {
+          "name": "Variants",
+          "value": "Light (SPM611L), Regular (SFN842), Heavy (SFN841)"
+        },
+        {
+          "name": "Hernia Kit",
+          "value": "SPM611L/SPM715L + SFN842 + SFN841 + SFN3336 + SPL2341"
+        }
+      ],
+      "applications": [
+        "Laparoscopic inguinal hernia repair (TAPP/TEP)",
+        "Open hernia repair",
+        "Incisional hernia repair",
+        "Ventral hernia repair",
+        "Umbilical hernia repair",
+        "Hernia Kit — complete repair solution"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 11
+    },
+    {
+      "legacyId": "csection",
+      "name": "Peters C-Section Kit",
+      "slug": "peters-c-section-kit",
+      "brandSlug": "peters",
+      "categorySlug": "peters-surgical-kits-obstetrics",
+      "cardCategory": "Pre-assembled Sterile Kit",
+      "detailCategory": "Surgical Kit · Obstetrics · Caesarean Section",
+      "shortSpecification": "Polycol™ + Stericryl™\nAll C-Section Layers",
+      "description": "Peters C-Section Kit is a pre-assembled sterile kit specifically designed for Caesarean Section procedures. Contains Polycol™ and Stericryl™ sutures — providing the complete suturing solution for all layers.",
+      "images": [
+        {
+          "url": "/assets/products/csection-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Complete pre-assembled kit for all C-Section layers",
+        "Polycol™ for uterus, peritoneum and fascial closure",
+        "Stericryl™ for subcutaneous and subcuticular skin closure",
+        "Sterile packaging for immediate use",
+        "Reduces surgical preparation time",
+        "Available in multiple configurations"
+      ],
+      "specifications": [
+        {
+          "name": "Polycol (SPL2364)",
+          "value": "Polyglactin 910 · Size 1 · 90cm · 40mm Needle · 1/2C Taper Cut (Heavy) · Uterus"
+        },
+        {
+          "name": "Polycol (SPL2518)",
+          "value": "Polyglactin 910 · Size 1-0 · 90cm · 40mm Needle · 1/2C Taper Cut (Heavy) · Peritoneum/Skin"
+        },
+        {
+          "name": "Stericryl (STR1678)",
+          "value": "Polyglecaprone 25 · Size 3-0 · 70cm · 26mm Needle · 3/8C Reverse Cutting · Subcutaneous/Skin"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO (Ethylene Oxide)"
+        },
+        {
+          "name": "Indication",
+          "value": "Caesarean Section (all layers)"
+        }
+      ],
+      "applications": [
+        "Uterine closure (Polycol SPL2364)",
+        "Peritoneum closure (Polycol SPL2518)",
+        "Fascial layer closure (Polycol SPL2518)",
+        "Subcutaneous tissue closure (Stericryl STR1678)",
+        "Subcuticular skin closure (Stericryl STR1678)",
+        "Complete C-Section wound closure from uterus to skin"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 12
+    },
+    {
+      "legacyId": "titanium",
+      "name": "Titanium Hemostatic Clips",
+      "slug": "titanium-hemostatic-clips",
+      "brandSlug": "peters",
+      "categorySlug": "peters-haemostasis-titanium-clips",
+      "cardCategory": "Pure Titanium · Haemostasis",
+      "detailCategory": "Haemostasis · Pure Titanium Ligation Clips",
+      "shortSpecification": "7 sizes · 7 colour codes\nOpen & Laparoscopic",
+      "description": "Peters Surgical Titanium Hemostatic Clips are pure titanium, chevron-shaped clips for reliable vessel ligation. Biologically inert, radio-opaque, non-magnetic, and annealed to consistent malleability for more reliable tip-to-tip engulfing closure.",
+      "images": [
+        {
+          "url": "/assets/products/titanium-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/titanium-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Pure titanium — biologically inert, chevron shaped",
+        "Annealed to consistent malleability — no shape memory for occlusive closure",
+        "Radio opaque for post-operative verification",
+        "Non-magnetic — MRI compatible",
+        "More reliable tip-to-tip engulfing closure",
+        "6 sizes + 1 exclusive size, 7 colour codes",
+        "Endo appliers available",
+        "Colour codes for all 7 available clip sizes"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Pure Titanium"
+        },
+        {
+          "name": "Shape",
+          "value": "Chevron (V-shape)"
+        },
+        {
+          "name": "Sizes",
+          "value": "Micro, Small, Small, Small/Medium, Medium, Medium/Large, Large"
+        },
+        {
+          "name": "Colour Codes",
+          "value": "7 (for different vessel sizes)"
+        },
+        {
+          "name": "MRI Compatibility",
+          "value": "Non-ferromagnetic (MRI safe)"
+        },
+        {
+          "name": "Application",
+          "value": "Open and Laparoscopic"
+        }
+      ],
+      "applications": [
+        "Colectomy",
+        "Appendectomy",
+        "Cholecystectomy",
+        "Urology",
+        "Liver Surgery",
+        "General haemostasis during any surgical procedure"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 13
+    },
+    {
+      "legacyId": "ifabond",
+      "name": "IFABOND®",
+      "slug": "ifabond",
+      "brandSlug": "peters",
+      "categorySlug": "peters-surgical-adhesive",
+      "cardCategory": "Surgical Adhesive · n-hexyl cyanoacrylate",
+      "detailCategory": "Surgical Adhesive · n-hexyl cyanoacrylate · Class III Implantable",
+      "shortSpecification": "Class III Implantable · Biodegradable\nFlexible\napplicators: 15/37/45 cm",
+      "description": "IFABOND® is an n-hexyl cyanoacrylate synthetic surgical adhesive. Class III implantable and biodegradable, EU MDR certified. Non-irritant and non-toxic — used by surgeons in France and abroad for over 20 years.",
+      "images": [
+        {
+          "url": "/assets/products/ifabond-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/ifabond-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "n-hexyl cyanoacrylate — Class III implantable & biodegradable",
+        "EU MDR certified medical device",
+        "Non-irritant and non-toxic",
+        "Drop-by-drop flexible applicators — can be bent distally before insertion",
+        "Available in 3 sizes: MB15G (15cm), MB37G (37cm), MB45G (45cm)",
+        "2.5ml syringe with luer lock port + 18G needle",
+        "20 years of use by numerous surgeons in France and abroad"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "n-hexyl cyanoacrylate"
+        },
+        {
+          "name": "Class",
+          "value": "III — Implantable & Biodegradable"
+        },
+        {
+          "name": "Certification",
+          "value": "EU MDR"
+        },
+        {
+          "name": "Applicators",
+          "value": "MB15G (Open), MB37G (Laparoscopic), MB45G (Laparoscopic/Bariatric)"
+        },
+        {
+          "name": "Packaging",
+          "value": "2.5ml syringe + IFABOND vial + 18G needle"
+        }
+      ],
+      "applications": [
+        "Staple line reinforcement sleeve — Gastrectomy",
+        "Fixation of Sacrocolpopexy Meshes",
+        "Closure of mesenteric defects during Bypass Surgery",
+        "Mesh fixation in hernia repair",
+        "Tissue gluing in minimally invasive surgery"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 14
+    },
+    {
+      "legacyId": "filbloc90",
+      "name": "FILBLOC® 90",
+      "slug": "filbloc-90",
+      "brandSlug": "peters",
+      "categorySlug": "peters-barbed-sutures-knotless",
+      "cardCategory": "Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PGCL",
+      "shortSpecification": "Poly(glycolide-co-Caprolactone) · PGCL\nComplete\nabsorption within weeks",
+      "description": "FILBLOC® 90 is an absorbable monofilament barbed suture with Final Lock System. The knotless closure device fastens thread quickly and efficiently — eliminating the need to tie a knot at the beginning of suturing.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc90-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/filbloc90-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System fastens thread in seconds",
+        "Unilateral notches for great grip and controlled distance",
+        "Wide range of stainless steel needles suitable for laparoscopic trocar",
+        "Tensile strength: 50% at 7 days, 20% at 14 days",
+        "Complete absorption within weeks"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "poly(glycolide-co-Caprolactone) (PGCL)"
+        },
+        {
+          "name": "Color",
+          "value": "Violet or undyed"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "7 days – 50% / 14 days – 20%"
+        },
+        {
+          "name": "Absorption",
+          "value": "Complete within weeks"
+        },
+        {
+          "name": "Type",
+          "value": "Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery",
+        "Orthopaedics",
+        "Any procedure requiring running suture technique"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 15
+    },
+    {
+      "legacyId": "filbloc",
+      "name": "FILBLOC®",
+      "slug": "filbloc",
+      "brandSlug": "peters",
+      "categorySlug": "peters-barbed-sutures-knotless",
+      "cardCategory": "Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PDO",
+      "shortSpecification": "Poly(p-dioxanone) PDO · Violet or Undyed\nAbsorption\n180–210 Days",
+      "description": "FILBLOC® is an absorbable monofilament barbed suture with Final Lock System, made from poly(p-dioxanone) PDO. Provides 28-day strength retention with complete absorption between 180–210 days.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System",
+        "Great grip with unilateral notches",
+        "Wide range of stainless steel needles for laparoscopic use",
+        "28 days – 71.7% tensile strength retention",
+        "56 days – 16.5% retention",
+        "Complete absorption 180–210 days"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "poly(p-dioxanone) (PDO)"
+        },
+        {
+          "name": "Color",
+          "value": "Violet or undyed"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "28 days – 71.7% / 56 days – 16.5%"
+        },
+        {
+          "name": "Absorption",
+          "value": "Complete within 180–210 days"
+        },
+        {
+          "name": "Type",
+          "value": "Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery",
+        "Orthopaedics",
+        "Open and laparoscopic running suture technique"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 16
+    },
+    {
+      "legacyId": "filbloc_perm",
+      "name": "FILBLOC® Permanent",
+      "slug": "filbloc-permanent",
+      "brandSlug": "peters",
+      "categorySlug": "peters-barbed-sutures-knotless",
+      "cardCategory": "Non-Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Non-Absorbable · Monofilament · Polypropylene",
+      "shortSpecification": "Polypropylene (PP) · Blue or Undyed\nPermanent",
+      "description": "FILBLOC® Permanent is a non-absorbable monofilament barbed suture with Final Lock System, made from Polypropylene (PP). Provides permanent tissue approximation with the efficiency of knotless technique.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc_perm-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System",
+        "Non-absorbable — permanent tissue support",
+        "Great grip with unilateral notches",
+        "Blue or undyed options",
+        "Wide range of stainless steel needles"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "Polypropylene (PP)"
+        },
+        {
+          "name": "Color",
+          "value": "Blue or undyed"
+        },
+        {
+          "name": "Absorption",
+          "value": "Non-absorbable (Permanent)"
+        },
+        {
+          "name": "Type",
+          "value": "Non-Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery — facelift and body contouring",
+        "Orthopaedics",
+        "Robot-assisted surgery"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 17
+    },
+    {
+      "legacyId": "lb_optima",
+      "name": "LiquiBand® Optima",
+      "slug": "liquiband-optima",
+      "brandSlug": "liquiband",
+      "categorySlug": "liquiband-topical-skin-adhesive",
+      "cardCategory": "Topical Adhesive · Skin Closure",
+      "detailCategory": "Topical Skin Adhesive · LiquiBand® Optima",
+      "shortSpecification": "0.35g × 10 per box · REF OPT002\nMicrobial barrier in\n10 seconds",
+      "description": "LiquiBand® Optima is a topical skin adhesive that forms a microbial barrier in just 10 seconds. It takes the sting out of wound closure by replacing sutures and staples for superficial skin lacerations.",
+      "images": [
+        {
+          "url": "/assets/products/lb_optima-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/lb_optima-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Microbial barrier in 10 seconds",
+        "Replaces sutures and staples for superficial wounds",
+        "Flexible precision applicator",
+        "Strong wound closure without patient discomfort",
+        "Easy to apply — no needles required",
+        "Sterile, single-use applicator"
+      ],
+      "specifications": [
+        {
+          "name": "Size",
+          "value": "0.35g per applicator"
+        },
+        {
+          "name": "Qty per Box",
+          "value": "10 × 0.35g"
+        },
+        {
+          "name": "REF",
+          "value": "OPT002"
+        },
+        {
+          "name": "Type",
+          "value": "Topical Skin Adhesive"
+        }
+      ],
+      "applications": [
+        "Superficial skin lacerations",
+        "Emergency department wound closure",
+        "Paediatric wound closure",
+        "Post-operative wound support",
+        "Laceration closure in place of sutures or staples"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 18
+    },
+    {
+      "legacyId": "lb_exceed",
+      "name": "LiquiBand® Exceed™",
+      "slug": "liquiband-exceed",
+      "brandSlug": "liquiband",
+      "categorySlug": "liquiband-topical-skin-adhesive",
+      "cardCategory": "Topical Adhesive · Precision Delivery",
+      "detailCategory": "Topical Skin Adhesive · LiquiBand® Exceed™",
+      "shortSpecification": "XS (0.4g, 7cm yield) / Standard (0.8g, 30cm)\n99.5%\nantimicrobial barrier over 3 days",
+      "description": "LiquiBand® Exceed™ Range offers improved precision and controlled delivery with innovative tip design. Available in XS (small incisions) and standard (medium to long incisions) — with 99.5% antimicrobial barrier over 3 days and 97.9% over 7 days.",
+      "images": [
+        {
+          "url": "/assets/products/lb_exceed-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/lb_exceed-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Improved precision and controlled delivery tip design",
+        "99.5% antimicrobial barrier over 3 days",
+        "97.9% antimicrobial barrier over 7 days",
+        "Wound closure strength 9.41N (vs Dermabond 9.33N)",
+        "Exceed XS: 7cm yield, no clog tip — ideal for small incisions",
+        "Exceed Standard: 30cm yield, 90 min intraoperative reuse"
+      ],
+      "specifications": [
+        {
+          "name": "LiquiBand Exceed XS",
+          "value": "Size 0.4g, Qty 6 per box, Code 72014020"
+        },
+        {
+          "name": "LiquiBand Exceed Standard",
+          "value": "Size 0.8g, Qty 6 per box, Code 72014002"
+        },
+        {
+          "name": "Antimicrobial Barrier",
+          "value": "Protection against Gram positive, Gram negative bacteria and fungi"
+        },
+        {
+          "name": "Standard",
+          "value": "ASTM F2458-05 Wound Closure Strength"
+        }
+      ],
+      "applications": [
+        "Small incisions and laparoscopic port sites (Exceed XS)",
+        "Medium to long surgical incisions (Exceed Standard)",
+        "Post-operative wound protection",
+        "Wound closure in outpatient and OR settings",
+        "Paediatric wound care"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 19
+    },
+    {
+      "legacyId": "fix8",
+      "name": "LiquiBand® FIX8®",
+      "slug": "liquiband-fix8",
+      "brandSlug": "liquiband",
+      "categorySlug": "liquiband-hernia-mesh-fixation",
+      "cardCategory": "Surgical Device · Laparoscopic",
+      "detailCategory": "Surgical Device · Laparoscopic Hernia Mesh Fixation",
+      "shortSpecification": "Liquid anchor fixation · New atraumatic tip\nVentral\n& Incisional Hernia",
+      "description": "LiquiBand® FIX8® is a laparoscopic hernia mesh fixation device using innovative liquid anchors to deliver strong, atraumatic mesh fixation. Low incidence of post-operative pain compared to mechanical tacks.",
+      "images": [
+        {
+          "url": "/assets/products/fix8-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "New Atraumatic Tip Design — non-sticking, reduces tissue trauma",
+        "Enhanced Anchor Delivery with controlled dispensing trigger",
+        "Peritoneum Closure capability",
+        "Quantity Indicator for confident application",
+        "Ergonomic Design for precise handling",
+        "New Tinted Adhesive for improved visibility",
+        "Higher shear strength vs advanced tacking devices",
+        "Fast Set Time"
+      ],
+      "specifications": [
+        {
+          "name": "Device Type",
+          "value": "Laparoscopic Hernia Mesh Fixation"
+        },
+        {
+          "name": "Anchors",
+          "value": "Liquid n-butyl-2-cyanoacrylate"
+        },
+        {
+          "name": "Incidence of Post-Op Pain",
+          "value": "Low (clinical study n=20)"
+        },
+        {
+          "name": "Applicators",
+          "value": "Non-sticking tip, Quantity indicator, Controlled delivery trigger"
+        },
+        {
+          "name": "Indicated for",
+          "value": "Ventral & Incisional Hernia"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        }
+      ],
+      "applications": [
+        "Ventral hernia mesh fixation (laparoscopic)",
+        "Incisional hernia repair",
+        "Peritoneum closure following hernia repair",
+        "TAPP and TEP hernia repair",
+        "Mesh fixation at multiple angles"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 20
+    },
+    {
+      "legacyId": "cutimed_sorbact",
+      "name": "Cutimed® Sorbact®",
+      "slug": "cutimed-sorbact",
+      "brandSlug": "cutimed",
+      "categorySlug": "cutimed-wound-care-infection-management",
+      "cardCategory": "Wound Dressing · DACC Technology",
+      "detailCategory": "Wound Dressing · Infection Management · DACC Technology",
+      "shortSpecification": "73.1% bacterial reduction in 4 days\nNo antimicrobial\nagents released",
+      "description": "Cutimed® Sorbact® is a clinically proven antibiotic-free wound dressing that uses a purely physical mode of action — DACC technology — to bind and remove bacteria and fungi. Up to 73.1% bacterial reduction in 4 days.",
+      "images": [
+        {
+          "url": "/assets/products/cutimed_sorbact-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Purely physical mode of action — no antimicrobials released",
+        "73.1% bacterial reduction in critically colonised wounds within 4 days",
+        "No known contraindications — safe for all patient groups",
+        "Low risk of allergies",
+        "No known mechanism of antimicrobial resistance",
+        "All-round infection management from superficial to deep wounds"
+      ],
+      "specifications": [
+        {
+          "name": "Technology",
+          "value": "DACC (Dialkylcarbamoyl Chloride)"
+        },
+        {
+          "name": "Action",
+          "value": "Purely Physical — bacteria bind to dressing surface"
+        },
+        {
+          "name": "Bacterial Reduction",
+          "value": "Up to 73.1% in 4 days"
+        },
+        {
+          "name": "Available",
+          "value": "Absorption dressing, Ribbon gauze, Gel dressing, Foam, NPWT"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        }
+      ],
+      "applications": [
+        "Critically colonised and infected chronic wounds",
+        "Venous leg ulcers and diabetic foot ulcers",
+        "Pressure ulcers",
+        "Post-operative wound infection prevention",
+        "Cavity wounds (ribbon gauze)",
+        "Dry sloughy wounds (gel dressing)"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 21
+    },
+    {
+      "legacyId": "cutimed_siltec",
+      "name": "Cutimed® Siltec® Sorbact®",
+      "slug": "cutimed-siltec-sorbact",
+      "brandSlug": "cutimed",
+      "categorySlug": "cutimed-wound-care-infection-management",
+      "cardCategory": "Silicone Foam · DACC Technology",
+      "detailCategory": "Silicone Foam Dressing · Infection Management · DACC Technology",
+      "shortSpecification": "Super-absorbent · Silicone border\nModerate to high\nexudate",
+      "description": "Cutimed® Siltec® Sorbact® combines Siltec® foam technology with Sorbact® antimicrobial action. Super-absorbent particles absorb moderate to high exudate even under compression — with the highest fluid retention of all tested products.",
+      "images": [
+        {
+          "url": "/assets/products/cutimed_siltec-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Dual action: superior absorption AND infection management",
+        "Highest retention under compression (lab test 2011)",
+        "Sorbact® wound contact layer physically removes bacteria",
+        "Gentle silicone fixation border — atraumatic dressing changes",
+        "Dynamic MVTR — moisture balance maintained",
+        "Super-absorbent hot-melt stripes for vertical absorption"
+      ],
+      "specifications": [
+        {
+          "name": "Technology",
+          "value": "Siltec® Foam + Sorbact® DACC"
+        },
+        {
+          "name": "Fluid Retention",
+          "value": "Highest under compression of all tested products"
+        },
+        {
+          "name": "Border",
+          "value": "Gentle silicone adhesive border"
+        },
+        {
+          "name": "Film",
+          "value": "Moisture-balancing breathable PU film"
+        },
+        {
+          "name": "Indication",
+          "value": "Moderate to high exudate, shallow wounds"
+        },
+        {
+          "name": "Sizes",
+          "value": "3×3 in to Sacrum 9×9 in"
+        }
+      ],
+      "applications": [
+        "Venous leg ulcers with moderate to high exudate",
+        "Diabetic foot ulcers",
+        "Pressure ulcers",
+        "Post-operative and trauma wounds",
+        "Colonised, contaminated or infected shallow wounds",
+        "Secondary absorbent dressing for deeper wounds"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 22
+    },
+    {
+      "legacyId": "gentacoll",
+      "name": "Genta-Coll® resorb",
+      "slug": "genta-coll-resorb",
+      "brandSlug": "gentacoll",
+      "categorySlug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
+      "cardCategory": "Resorbable · Collagen + Gentamicin",
+      "detailCategory": "Haemostasis · Resorbable Collagen Sponge · Antibiotic",
+      "shortSpecification": "Equine collagen · Completely absorbable\nSizes:\n2.5×2.5cm to 5×20cm",
+      "description": "Genta-Coll® resorb is a haemostatic collagen sponge containing gentamicin sulphate to protect the implant from infection. Made from equine collagen — completely absorbable with strong haemostyptic action.",
+      "images": [
+        {
+          "url": "/assets/products/gentacoll-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/gentacoll-2.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gentacoll-3.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gentacoll-4.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Haemostatic: platelets aggregate on collagen fibres triggering coagulation",
+        "Completely resorbable — no second operation needed",
+        "Antibiotic protection: gentamicin sulphate (broad spectrum aminoglycoside)",
+        "Malleable — can be rolled, folded or cut to smaller pieces",
+        "Ideal carrier for fibrin glue",
+        "Highly absorbant — stable in moist milieu of wounds",
+        "Reduces risk of bacterial colonisation and haematoma formation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Equine Collagen Sponge + Gentamicin Sulphate"
+        },
+        {
+          "name": "Absorbability",
+          "value": "Completely absorbable"
+        },
+        {
+          "name": "Sizes",
+          "value": "2.5×2.5cm (GC25), 5×5cm (GC5S/GC1S), 10×10cm (GC510/GC110), 5×20cm (GC1520)"
+        },
+        {
+          "name": "Pack",
+          "value": "5 Sponges (GC25, GC5S, GC510) or 1 Sponge (GC125, GC1S, GC110, GC1520)"
+        },
+        {
+          "name": "Properties",
+          "value": "Haemostatic, Resorbable, Antibiotic, Malleable, Highly absorbant"
+        }
+      ],
+      "applications": [
+        "Clean and contaminated wounds",
+        "Septic surgery and revision procedures",
+        "High infection risk surgical sites",
+        "Cardiac surgery — sternal wound complications",
+        "Caesarean section — SSI prevention",
+        "Orthopaedic surgery",
+        "As carrier for fibrin glue"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 23
+    },
+    {
+      "legacyId": "gore_bioa",
+      "name": "GORE® BIO-A® Tissue Reinforcement",
+      "slug": "gore-bio-a-tissue-reinforcement",
+      "brandSlug": "gore",
+      "categorySlug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "cardCategory": "Absorbable · 100% Synthetic Tissue Scaffold",
+      "detailCategory": "Absorbable Biomaterial · 100% Synthetic Tissue Reinforcement",
+      "shortSpecification": "PGA:TMC · Bioabsorbable · 10 Years Clinical\nResults\nMatrix for tissue generation & healing",
+      "description": "GORE® BIO-A® Tissue Reinforcement is a uniquely designed web of biocompatible synthetic polymers (PGA:TMC) that is gradually absorbed by the body. Its 3D matrix of open, highly interconnected pores facilitates cell infiltration and tissue generation — leaving no permanent material behind. Backed by more than 20 years of research and clinical use.",
+      "images": [
+        {
+          "url": "/assets/products/gore_bioa-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "#f5f5f0",
+      "features": [
+        "100% synthetic, bioabsorbable tissue scaffold — no human or animal tissue",
+        "Open, highly porous 3D web structure — similar to collagen fibre network",
+        "Rapid cell population and vascularisation within 1–2 weeks",
+        "Replaced 1:1 with patient's own native type I collagen",
+        "Absorbed by body over approximately 6–7 months (primarily by hydrolysis)",
+        "No soaking, refrigeration, or special tracking required",
+        "Trimmable — available in sizes up to 20 cm × 30 cm",
+        "Three-year shelf life",
+        "10 years of positive clinical results"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Poly(glycolide:trimethylene carbonate) — PGA:TMC synthetic fibres"
+        },
+        {
+          "name": "Structure",
+          "value": "Open, highly interconnected 3D porous web"
+        },
+        {
+          "name": "Absorption",
+          "value": "Gradual absorption over 6–7 months via hydrolysis"
+        },
+        {
+          "name": "Sizes",
+          "value": "HH0710E (7×10cm*), FS0808E (8×8cm), FS0915E (9×15cm), FS1030E (10×30cm), FS2020E (20×20cm), FS2030E (20×30cm)"
+        },
+        {
+          "name": "",
+          "value": "* HH0710E configured for hiatal hernia repair"
+        },
+        {
+          "name": "Sterilisation",
+          "value": "Sterile, ready to use — no pre-soaking required"
+        },
+        {
+          "name": "Shelf Life",
+          "value": "Three years"
+        },
+        {
+          "name": "Manufacturer",
+          "value": "W.L. Gore & Associates"
+        }
+      ],
+      "applications": [
+        "Paraesophageal / hiatal hernia repair (onlay following primary closure of crura)",
+        "Abdominal wall reconstruction (suture line reinforcement following midline closure)",
+        "Ventral / incisional hernia repair",
+        "Soft tissue reinforcement in: Mouth, Colon, Stomach, Lungs, Liver, Pancreas, Spleen",
+        "Components separation technique for ventral hernia"
+      ],
+      "brochure": {
+        "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
+        "publicId": "",
+        "filename": "GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+      },
+      "isActive": true,
+      "displayOrder": 24
+    },
+    {
+      "legacyId": "gore_synecor_ip",
+      "name": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "brandSlug": "gore",
+      "categorySlug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "cardCategory": "Intraperitoneal · Tri-layer Hybrid Biomaterial",
+      "detailCategory": "Intraperitoneal Biomaterial · Tri-layer Hybrid · PTFE + PGA:TMC",
+      "shortSpecification": "PTFE + PGA:TMC · Permanent Strength · VHWG Grade\n2\nMaterial innovation for permanent strength",
+      "description": "GORE® SYNECOR Intraperitoneal Biomaterial is a tri-layer hybrid solution designed for durable repair in complex patients (VHWG Grade 2). It combines a GORE 3D PGA:TMC Web Scaffold for rapid vascularisation, a macroporous PTFE knit for permanent strength, and a non-porous PGA:TMC film to minimise visceral attachment. Burst strength >500 N — designed to provide strength for large defects and higher BMIs.",
+      "images": [
+        {
+          "url": "/assets/products/gore_synecor_ip-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/gore_synecor_ip-2.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gore_synecor_ip-3.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "#f5f5f0",
+      "features": [
+        "Tri-layer hybrid design: GORE 3D PGA:TMC Web Scaffold + Macroporous PTFE knit + Non-porous PGA:TMC film",
+        "Permanent strength: Burst strength >500 N (nearly 2× the strength requirement for bridging ventral hernia repair)",
+        "PTFE knit — latest generation macroporous fibre designed for permanent strength",
+        "PTFE knit had least bacterial adherence vs competitive polypropylene knits (S. aureus study)",
+        "Rapid vascularisation: vascularity within 7 days, tissue ingrowth at 30 days, tissue generation at 180 days",
+        "Non-porous PGA:TMC film minimises visceral attachment — no adhesion complications at 12 months clinically",
+        "Minimal contraction: -5.1% at 31 days, -6.6% at 180 days (animal studies)",
+        "Flexible and conformable — material memory for easy unrolling and optimal placement",
+        "No pre-soaking needed (may be dipped in sterile saline to facilitate handling)",
+        "MRI and CT compatible — PTFE visible in high-resolution imaging",
+        "100% synthetic — no human, animal or tissue-derived materials"
+      ],
+      "specifications": [
+        {
+          "name": "Structure",
+          "value": "Tri-layer hybrid biomaterial"
+        },
+        {
+          "name": "Layer 1 (Parietal)",
+          "value": "GORE 3D PGA:TMC Web Scaffold — Poly(glycolide:trimethylene carbonate)"
+        },
+        {
+          "name": "Layer 2 (Mid)",
+          "value": "Macroporous PTFE knit — dense monofilament PTFE fibre, pore size 1–3 mm"
+        },
+        {
+          "name": "Layer 3 (Visceral)",
+          "value": "Non-porous PGA:TMC film — absorbs in 6–7 months"
+        },
+        {
+          "name": "Burst Strength",
+          "value": ">500 N (578 N at 1.59 mm min. pore size)"
+        },
+        {
+          "name": "Contraction",
+          "value": "-5.1% at 31 days / -6.6% at 180 days"
+        },
+        {
+          "name": "Sizes",
+          "value": "GKFC12E (12cm circle), GKFV1015E (10×15cm oval), GKFV1520E (15×20cm oval), GKFR2025E (20×25cm rect.), GKFR2030E (20×30cm rect.)"
+        },
+        {
+          "name": "Procedures",
+          "value": "Laparoscopic, Robotic, and Open surgical approaches"
+        },
+        {
+          "name": "Manufacturer",
+          "value": "W.L. Gore & Associates"
+        }
+      ],
+      "applications": [
+        "Ventral hernia repair — complex patients VHWG Grade 2",
+        "Incisional hernia repair — large defects and higher BMIs",
+        "Laparoscopic ventral hernia repair (intraperitoneal placement: 75.6% in clinical study)",
+        "Robotic hernia repair",
+        "Open hernia repair",
+        "Complex abdominal wall reconstruction"
+      ],
+      "brochure": {
+        "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
+        "publicId": "",
+        "filename": "GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+      },
+      "isActive": true,
+      "displayOrder": 25
+    }
+  ]
+}

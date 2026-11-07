@@ -1,0 +1,18 @@
+{
+  "name": "sriyas-healthcare-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sriyas Healthcare Pvt. Ltd. — Full-Stack Medical & Surgical Catalogue and Admin Analytics Platform",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "dev": "node scripts/dev.js",
+    "seed": "node scripts/seedProducts.js",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
