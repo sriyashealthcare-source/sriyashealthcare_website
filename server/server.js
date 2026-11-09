@@ -1,4 +1,12 @@
 const path = require('path');
+const fs = require('fs');
+
+// Ensure server/node_modules is loaded even when started from repository root
+const serverNodeModules = path.join(__dirname, 'node_modules');
+if (fs.existsSync(serverNodeModules) && !module.paths.includes(serverNodeModules)) {
+  module.paths.unshift(serverNodeModules);
+}
+
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
@@ -7,7 +15,8 @@ const { connectDatabase } = require('./config/database');
 const { configureCloudinary } = require('./config/cloudinary');
 const { ensureSeededOnStartup } = require('../scripts/seedProducts');
 
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 async function startServer() {
   try {
@@ -15,10 +24,10 @@ async function startServer() {
     configureCloudinary();
     await ensureSeededOnStartup();
 
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT, HOST, () => {
       console.log(`═══════════════════════════════════════════════════════════`);
-      console.log(`  Sriyas Healthcare Backend Server listening on port ${PORT}`);
-      console.log(`  Health check: http://localhost:${PORT}/api/health`);
+      console.log(`  Sriyas Healthcare Backend Server listening on http://${HOST}:${PORT}`);
+      console.log(`  Health check: http://${HOST}:${PORT}/api/health`);
       console.log(`═══════════════════════════════════════════════════════════`);
     });
 

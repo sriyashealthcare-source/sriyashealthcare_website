@@ -5,14 +5,21 @@
   "description": "Sriyas Healthcare Pvt. Ltd. — Full-Stack Medical & Surgical Catalogue and Admin Analytics Platform",
   "scripts": {
     "install:all": "cd server && npm install && cd ../client && npm install",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "dev": "node scripts/dev.js",
     "seed": "node scripts/seedProducts.js",
-    "build": "cd client && npm install --include=dev && npm run build",
-    "start": "npm --prefix server start"
+    "build:server": "cd server && npm install",
+    "build:client": "cd client && npm install --include=dev && npm run build",
+    "build": "cd server && npm install && cd ../client && npm install --include=dev && npm run build",
+    "start": "node server/server.js"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.10"
   }
 }
