@@ -47,3 +47,6 @@ coverage/
 *.pid
 *.seed
 server/data/*.runtime.json
+
+.vercel
+.env*
