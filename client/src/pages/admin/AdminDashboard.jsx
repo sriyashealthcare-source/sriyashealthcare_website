@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    document.title = 'Admin Dashboard | Sriyas Healthcare Pvt Ltd';
+    document.title = 'Executive Dashboard | Sriyas Healthcare Admin';
   }, []);
 
   const loadDashboard = useCallback(async (selectedRange = range) => {
@@ -44,9 +44,7 @@ export default function AdminDashboard() {
       const res = await analyticsService.getOverview(params);
       setOverview(res.overview || null);
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Unable to load dashboard statistics.'
-      );
+      setError(err.response?.data?.message || 'Unable to load dashboard statistics.');
     } finally {
       setLoading(false);
     }
@@ -56,27 +54,29 @@ export default function AdminDashboard() {
     if (range !== 'custom') {
       loadDashboard(range);
     }
-  }, [range]);
+  }, [range, loadDashboard]);
 
   const handleRangeChange = (nextRange) => {
     setRange(nextRange);
   };
 
+  const hasData = overview && (overview.totalPageViews > 0 || overview.totalVisitors > 0 || overview.productViews > 0 || overview.totalEnquiries > 0);
+
   return (
     <div className="fade-in-up">
       <div className="admin-page-header">
         <div>
-          <h1>Catalogue &amp; Engagement Overview</h1>
+          <h1>Executive Analytics &amp; Operations Overview</h1>
           <p>
-            Real-time metrics for Sriyas Healthcare products and customer product-view activity.
+            Real-time, persistent metrics from MongoDB Atlas across visitors, product engagements, and customer enquiries.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <Link to="/admin/analytics" className="adm-btn adm-btn-secondary">
-            📈 Full Analytics Report
+          <Link to="/admin/enquiries" className="adm-btn adm-btn-secondary">
+            ✉ Customer Enquiries {overview?.newEnquiries > 0 && <span className="adm-badge adm-badge-warning" style={{ marginLeft: '4px' }}>{overview.newEnquiries}</span>}
           </Link>
           <Link to="/admin/products/add" className="adm-btn adm-btn-primary">
-            + Add New Product
+            + Add Product
           </Link>
         </div>
       </div>
@@ -94,12 +94,12 @@ export default function AdminDashboard() {
       {loading && !overview && (
         <div className="state-container">
           <div className="spinner" />
-          <div className="state-title">Loading Dashboard Metrics...</div>
+          <div className="state-title">Loading Dashboard Metrics from MongoDB...</div>
         </div>
       )}
 
       {error && (
-        <div className="admin-card" style={{ borderColor: 'var(--status-danger)' }}>
+        <div className="admin-card" style={{ borderColor: 'var(--status-danger)', marginBottom: '24px' }}>
           <p style={{ color: 'var(--status-danger)', fontWeight: 600 }}>{error}</p>
           <button
             type="button"
@@ -107,242 +107,177 @@ export default function AdminDashboard() {
             style={{ marginTop: '10px' }}
             onClick={() => loadDashboard(range)}
           >
-            Retry
+            Retry Connection
           </button>
         </div>
       )}
 
       {overview && (
         <>
-          {/* Summary Cards */}
+          {/* Mandatory Executive 8-KPI Grid */}
           <div className="admin-stats-grid">
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Total Products</span>
-                <span className="admin-stat-icon">📦</span>
+                <span className="admin-stat-label">Total Visitors</span>
+                <span className="admin-stat-icon">👥</span>
               </div>
-              <div className="admin-stat-value">{overview.totalProducts}</div>
-              <div className="admin-stat-sub">
-                {overview.archivedProducts > 0
-                  ? `${overview.archivedProducts} archived`
-                  : 'Complete active catalogue'}
-              </div>
+              <div className="admin-stat-value">{overview.totalVisitors || 0}</div>
+              <div className="admin-stat-sub">Across all browsing sessions</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Active Products</span>
-                <span className="admin-stat-icon">✅</span>
+                <span className="admin-stat-label">Unique Visitors</span>
+                <span className="admin-stat-icon">👤</span>
               </div>
-              <div className="admin-stat-value" style={{ color: 'var(--status-success)' }}>
-                {overview.activeProducts}
+              <div className="admin-stat-value" style={{ color: 'var(--gold-deep)' }}>
+                {overview.uniqueVisitors || 0}
               </div>
-              <div className="admin-stat-sub">Visible on customer website</div>
+              <div className="admin-stat-sub">Distinct anonymous client devices</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Inactive Products</span>
-                <span className="admin-stat-icon">⏸️</span>
+                <span className="admin-stat-label">Total Page Views</span>
+                <span className="admin-stat-icon">📄</span>
               </div>
-              <div className="admin-stat-value" style={{ color: 'var(--status-warning)' }}>
-                {overview.inactiveProducts}
-              </div>
-              <div className="admin-stat-sub">Hidden from public view</div>
+              <div className="admin-stat-value">{overview.totalPageViews || 0}</div>
+              <div className="admin-stat-sub">Customer page navigations</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Product Views (Period)</span>
+                <span className="admin-stat-label">Product Views</span>
                 <span className="admin-stat-icon">👁️</span>
               </div>
               <div className="admin-stat-value" style={{ color: 'var(--gold-deep)' }}>
-                {overview.totalViews}
+                {overview.productViews || 0}
               </div>
-              <div className="admin-stat-sub">
-                {overview.allTimeViews} all-time views recorded
-              </div>
+              <div className="admin-stat-sub">Detailed catalogue item impressions</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Unique Sessions</span>
-                <span className="admin-stat-icon">👥</span>
+                <span className="admin-stat-label">Total Enquiries</span>
+                <span className="admin-stat-icon">✉️</span>
               </div>
-              <div className="admin-stat-value">{overview.uniqueSessions}</div>
-              <div className="admin-stat-sub">Distinct product-viewing sessions</div>
+              <div className="admin-stat-value" style={{ color: 'var(--status-success)' }}>
+                {overview.totalEnquiries || 0}
+              </div>
+              <div className="admin-stat-sub">Contact &amp; product requests</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Most Viewed Product</span>
-                <span className="admin-stat-icon">🏆</span>
+                <span className="admin-stat-label">New Enquiries</span>
+                <span className="admin-stat-icon">🔔</span>
               </div>
-              <div
-                className="admin-stat-value"
-                style={{ fontSize: '1.25rem', lineHeight: 1.25, marginTop: '4px' }}
-              >
-                {overview.mostViewedProduct ? overview.mostViewedProduct.name : '—'}
+              <div className="admin-stat-value" style={{ color: overview.newEnquiries > 0 ? 'var(--status-warning)' : 'inherit' }}>
+                {overview.newEnquiries || 0}
               </div>
-              <div className="admin-stat-sub">
-                {overview.mostViewedProduct
-                  ? `${overview.mostViewedProduct.periodViews} period views (${overview.mostViewedProduct.brandName})`
-                  : 'No views yet'}
-              </div>
+              <div className="admin-stat-sub">Awaiting team response</div>
             </div>
 
             <div className="admin-stat-card">
               <div className="admin-stat-top">
-                <span className="admin-stat-label">Least Viewed Product</span>
-                <span className="admin-stat-icon">📉</span>
+                <span className="admin-stat-label">Returning Visitors</span>
+                <span className="admin-stat-icon">🔄</span>
               </div>
-              <div
-                className="admin-stat-value"
-                style={{ fontSize: '1.25rem', lineHeight: 1.25, marginTop: '4px' }}
-              >
-                {overview.leastViewedProduct ? overview.leastViewedProduct.name : '—'}
+              <div className="admin-stat-value">{overview.returningVisitors || 0}</div>
+              <div className="admin-stat-sub">Repeat visitors browsing catalog</div>
+            </div>
+
+            <div className="admin-stat-card">
+              <div className="admin-stat-top">
+                <span className="admin-stat-label">Enquiry Conversion</span>
+                <span className="admin-stat-icon">🎯</span>
               </div>
-              <div className="admin-stat-sub">
-                {overview.leastViewedProduct
-                  ? `${overview.leastViewedProduct.periodViews} period views (${overview.leastViewedProduct.brandName})`
-                  : 'No views yet'}
+              <div className="admin-stat-value" style={{ color: 'var(--gold-dark)' }}>
+                {overview.conversionRate || 0}%
               </div>
+              <div className="admin-stat-sub">Enquiries per visitor ratio</div>
             </div>
           </div>
 
-          {/* Charts Row: Daily View Trends & Top Viewed Products */}
-          <div className="admin-two-col">
-            <div className="admin-card">
-              <div className="admin-card-header">
-                <h2 className="admin-card-title">Product-View Trends</h2>
-                <Link to="/admin/analytics" className="adm-btn adm-btn-secondary adm-btn-sm">
-                  Detailed Trends →
-                </Link>
-              </div>
-              <TrendLineChart data={overview.dailyTrends || []} />
+          {!hasData && (
+            <div className="state-container" style={{ margin: '30px 0', background: '#fff', border: '1px solid rgba(169, 130, 44, 0.2)', borderRadius: 'var(--radius-md)' }}>
+              <div className="state-icon" style={{ fontSize: '2.5rem' }}>📊</div>
+              <div className="state-title">No visitor data available yet</div>
+              <p className="state-desc" style={{ maxWidth: '520px' }}>
+                Analytics will appear as customers browse the website. All metrics are calculated live from MongoDB Atlas records without mock data.
+              </p>
             </div>
+          )}
 
+          {/* Activity Trends & Top Products */}
+          <div className="admin-grid-2col">
             <div className="admin-card">
               <div className="admin-card-header">
-                <h2 className="admin-card-title">Top Viewed Products</h2>
-                <Link to="/admin/analytics" className="adm-btn adm-btn-secondary adm-btn-sm">
-                  All Rankings →
-                </Link>
-              </div>
-              <HorizontalBarChart
-                items={(overview.topProducts || []).slice(0, 6)}
-                labelKey="name"
-                valueKey="periodViews"
-                subKey="brandName"
-              />
-            </div>
-          </div>
-
-          {/* Tables Row: Recently Viewed Products & Recently Added Products */}
-          <div className="admin-two-col">
-            <div className="admin-card">
-              <div className="admin-card-header">
-                <h2 className="admin-card-title">Recently Viewed Products</h2>
-                <Link to="/admin/analytics" className="adm-btn adm-btn-secondary adm-btn-sm">
-                  View Activity Log
-                </Link>
-              </div>
-
-              {(!overview.recentlyViewedProducts ||
-                overview.recentlyViewedProducts.length === 0) ? (
-                <div style={{ padding: '28px 16px', textAlign: 'center', color: 'var(--text-mute)' }}>
-                  No customer product views recorded in this time window yet. Open any product on
-                  the customer website to see live tracking here.
+                <div>
+                  <h3 className="admin-card-title">Visitor Traffic &amp; Page Views</h3>
+                  <p className="admin-card-sub">Daily customer interactions over selected period</p>
                 </div>
+              </div>
+              {overview.dailyTrends && overview.dailyTrends.length > 0 ? (
+                <TrendLineChart
+                  data={overview.dailyTrends.map(t => ({
+                    label: t.label,
+                    views: t.pageViews || t.visitors,
+                    uniqueVisitors: t.visitors
+                  }))}
+                />
               ) : (
-                <div className="admin-table-wrap">
-                  <table className="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Brand</th>
-                        <th>Viewed At</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {overview.recentlyViewedProducts.map((v, idx) => (
-                        <tr key={v._id || idx}>
-                          <td>
-                            <div className="admin-prod-name">{v.productName}</div>
-                            <div className="admin-prod-sub">{v.categoryName}</div>
-                          </td>
-                          <td>{v.brandName}</td>
-                          <td style={{ fontSize: '0.78rem', color: 'var(--text-mute)' }}>
-                            {formatDateTime(v.viewedAt)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <p className="state-desc">No trend points available for this period.</p>
               )}
             </div>
 
             <div className="admin-card">
               <div className="admin-card-header">
-                <h2 className="admin-card-title">Recently Added Products</h2>
-                <Link to="/admin/products" className="adm-btn adm-btn-secondary adm-btn-sm">
-                  Manage Catalogue
+                <div>
+                  <h3 className="admin-card-title">Top Viewed Products</h3>
+                  <p className="admin-card-sub">Ranking of catalogue items by customer impressions</p>
+                </div>
+                <Link to="/admin/analytics" className="adm-btn adm-btn-secondary adm-btn-sm">
+                  View All
                 </Link>
               </div>
-
-              <div className="admin-table-wrap">
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Brand</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(overview.recentlyAddedProducts || []).map((p) => (
-                      <tr key={p._id}>
-                        <td>
-                          <div className="admin-prod-cell">
-                            {p.primaryImage && (
-                              <img
-                                src={resolveAssetUrl(p.primaryImage)}
-                                alt={p.name}
-                                className="admin-prod-thumb"
-                              />
-                            )}
-                            <div>
-                              <div className="admin-prod-name">{p.name}</div>
-                              <div className="admin-prod-sub">{p.categoryName}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td>{p.brandName}</td>
-                        <td>
-                          <span className={`status-badge ${p.isActive ? 'active' : 'inactive'}`}>
-                            {p.isActive ? 'Active' : 'Inactive'}
-                          </span>
-                        </td>
-                        <td>
-                          <Link
-                            to={`/admin/products/edit/${p._id}`}
-                            className="adm-btn adm-btn-secondary adm-btn-sm"
-                          >
-                            Edit
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              {overview.topProducts && overview.topProducts.length > 0 ? (
+                <HorizontalBarChart
+                  items={overview.topProducts.map(p => ({
+                    label: p.name,
+                    sub: p.brandName,
+                    value: p.periodViews || p.totalViews
+                  }))}
+                  valueSuffix=" views"
+                />
+              ) : (
+                <p className="state-desc">No product view events logged in this period.</p>
+              )}
             </div>
+          </div>
+
+          {/* Quick Navigation Cards */}
+          <div className="admin-grid-3col" style={{ marginTop: '24px' }}>
+            <Link to="/admin/visitors" className="admin-card" style={{ textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+              <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>👤</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--ink)', fontSize: '1.25rem', marginBottom: '6px' }}>Visitor Analytics</h3>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-mute)', margin: 0 }}>Inspect anonymous visitor profiles, visit frequency, and device types.</p>
+            </Link>
+
+            <Link to="/admin/journeys" className="admin-card" style={{ textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+              <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>🧭</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--ink)', fontSize: '1.25rem', marginBottom: '6px' }}>Visitor Journeys</h3>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-mute)', margin: 0 }}>Follow chronological customer navigation paths across pages and surgical products.</p>
+            </Link>
+
+            <Link to="/admin/enquiries" className="admin-card" style={{ textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+              <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>✉️</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--ink)', fontSize: '1.25rem', marginBottom: '6px' }}>Customer Enquiries</h3>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-mute)', margin: 0 }}>Review hospital inquiries, assign statuses, add internal notes, or export to CSV.</p>
+            </Link>
           </div>
         </>
       )}
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
 const Product = require('../models/Product');
 const Brand = require('../models/Brand');
 const Category = require('../models/Category');
-const { uploadBuffer, deleteAsset } = require('../config/cloudinary');
+const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
 
 function makeSlug(str) {
   return String(str || '')
@@ -471,10 +471,14 @@ const createProduct = async (req, res, next) => {
     const uploadedImageFiles = (req.files && req.files.images) ? req.files.images : [];
     for (let i = 0; i < uploadedImageFiles.length; i++) {
       const file = uploadedImageFiles[i];
-      const uploaded = await uploadBuffer(file.buffer, file.originalname, 'sriyas-healthcare/products', 'image');
+      const uploaded = await uploadBuffer(file.buffer, file.originalname, CLOUDINARY_FOLDERS.products, 'image');
       images.push({
         url: uploaded.url,
         publicId: uploaded.publicId,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height,
+        bytes: uploaded.bytes,
         isPrimary: i === 0
       });
     }
@@ -483,20 +487,22 @@ const createProduct = async (req, res, next) => {
     if (images.length === 0 && req.body.imageUrls) {
       const urls = parseListField(req.body.imageUrls);
       urls.forEach((u, idx) => {
-        images.push({ url: u, publicId: '', isPrimary: idx === 0 });
+        images.push({ url: u, publicId: '', format: 'webp', width: 0, height: 0, bytes: 0, isPrimary: idx === 0 });
       });
     }
 
     // Handle brochure PDF upload
-    let brochure = { url: '', publicId: '', filename: '' };
+    let brochure = { url: '', publicId: '', filename: '', format: 'pdf', bytes: 0 };
     const brochureFiles = (req.files && req.files.brochure) ? req.files.brochure : [];
     if (brochureFiles.length > 0) {
       const pdfFile = brochureFiles[0];
-      const uploadedPdf = await uploadBuffer(pdfFile.buffer, pdfFile.originalname, 'sriyas-healthcare/brochures', 'raw');
+      const uploadedPdf = await uploadBuffer(pdfFile.buffer, pdfFile.originalname, CLOUDINARY_FOLDERS.brochures, 'raw');
       brochure = {
         url: uploadedPdf.url,
         publicId: uploadedPdf.publicId,
-        filename: pdfFile.originalname
+        filename: pdfFile.originalname,
+        format: uploadedPdf.format || 'pdf',
+        bytes: uploadedPdf.bytes || 0
       };
     }
 
@@ -640,10 +646,14 @@ const updateProduct = async (req, res, next) => {
     }
 
     for (const file of uploadedImageFiles) {
-      const uploaded = await uploadBuffer(file.buffer, file.originalname, 'sriyas-healthcare/products', 'image');
+      const uploaded = await uploadBuffer(file.buffer, file.originalname, CLOUDINARY_FOLDERS.products, 'image');
       retainedImages.push({
         url: uploaded.url,
         publicId: uploaded.publicId,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height,
+        bytes: uploaded.bytes,
         isPrimary: false
       });
     }
@@ -658,12 +668,12 @@ const updateProduct = async (req, res, next) => {
     }
 
     // Manage Brochure PDF
-    let brochure = product.brochure || { url: '', publicId: '', filename: '' };
+    let brochure = product.brochure || { url: '', publicId: '', filename: '', format: 'pdf', bytes: 0 };
     if (String(req.body.removeBrochure) === 'true') {
       if (brochure.publicId) {
         await deleteAsset(brochure.publicId, 'raw');
       }
-      brochure = { url: '', publicId: '', filename: '' };
+      brochure = { url: '', publicId: '', filename: '', format: 'pdf', bytes: 0 };
     }
 
     const brochureFiles = (req.files && req.files.brochure) ? req.files.brochure : [];
@@ -672,11 +682,13 @@ const updateProduct = async (req, res, next) => {
         await deleteAsset(brochure.publicId, 'raw');
       }
       const pdfFile = brochureFiles[0];
-      const uploadedPdf = await uploadBuffer(pdfFile.buffer, pdfFile.originalname, 'sriyas-healthcare/brochures', 'raw');
+      const uploadedPdf = await uploadBuffer(pdfFile.buffer, pdfFile.originalname, CLOUDINARY_FOLDERS.brochures, 'raw');
       brochure = {
         url: uploadedPdf.url,
         publicId: uploadedPdf.publicId,
-        filename: pdfFile.originalname
+        filename: pdfFile.originalname,
+        format: uploadedPdf.format || 'pdf',
+        bytes: uploadedPdf.bytes || 0
       };
     }
 

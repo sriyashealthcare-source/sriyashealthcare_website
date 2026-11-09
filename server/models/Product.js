@@ -4,6 +4,10 @@ const imageSchema = new mongoose.Schema(
   {
     url: { type: String, required: true },
     publicId: { type: String, default: '' },
+    format: { type: String, default: 'webp' },
+    width: { type: Number, default: 0 },
+    height: { type: Number, default: 0 },
+    bytes: { type: Number, default: 0 },
     isPrimary: { type: Boolean, default: false }
   },
   { _id: false }
@@ -95,7 +99,9 @@ const productSchema = new mongoose.Schema(
     brochure: {
       url: { type: String, default: '' },
       publicId: { type: String, default: '' },
-      filename: { type: String, default: '' }
+      filename: { type: String, default: '' },
+      format: { type: String, default: 'pdf' },
+      bytes: { type: Number, default: 0 }
     },
     isActive: {
       type: Boolean,

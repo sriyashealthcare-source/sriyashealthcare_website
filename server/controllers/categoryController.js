@@ -1,7 +1,7 @@
 const Category = require('../models/Category');
 const Brand = require('../models/Brand');
 const Product = require('../models/Product');
-const { uploadBuffer, deleteAsset } = require('../config/cloudinary');
+const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
 
 function makeSlug(str) {
   return String(str || '')
@@ -102,8 +102,14 @@ const createCategory = async (req, res, next) => {
     };
 
     if (req.file && req.file.buffer) {
-      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, 'sriyas-healthcare/categories', 'image');
-      heroImage = { url: uploaded.url, publicId: uploaded.publicId };
+      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.categories, 'image');
+      heroImage = {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height
+      };
     }
 
     const totalCats = await Category.countDocuments({});
@@ -161,15 +167,27 @@ const updateCategory = async (req, res, next) => {
       ? (typeof req.body.isActive === 'boolean' ? req.body.isActive : String(req.body.isActive) === 'true')
       : category.isActive;
 
-    let heroImage = category.heroImage || { url: '', publicId: '' };
+    let heroImage = category.heroImage || { url: '', publicId: '', format: 'webp', width: 0, height: 0 };
     if (req.file && req.file.buffer) {
       if (heroImage.publicId) {
-        await deleteAsset(heroImage.publicId, 'image');
+        await deleteAsset(heroImage.publicId, 'image', true);
       }
-      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, 'sriyas-healthcare/categories', 'image');
-      heroImage = { url: uploaded.url, publicId: uploaded.publicId };
+      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.categories, 'image');
+      heroImage = {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height
+      };
     } else if (req.body.heroImageUrl !== undefined) {
-      heroImage = { url: req.body.heroImageUrl.trim(), publicId: heroImage.publicId || '' };
+      heroImage = {
+        url: req.body.heroImageUrl.trim(),
+        publicId: heroImage.publicId || '',
+        format: heroImage.format || 'webp',
+        width: heroImage.width || 0,
+        height: heroImage.height || 0
+      };
     }
 
     const updated = await Category.findByIdAndUpdate(

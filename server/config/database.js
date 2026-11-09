@@ -1,3 +1,6 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const mongoose = require('mongoose');
 const { activateLocalDbAdapter, dbFilePath } = require('../utils/localDbEngine');
 
@@ -16,7 +19,8 @@ const connectDatabase = async () => {
     try {
       mongoose.set('strictQuery', true);
       const conn = await mongoose.connect(mongoUri, {
-        serverSelectionTimeoutMS: 10000
+        serverSelectionTimeoutMS: 10000,
+        dbName: 'sriyas_healthcare'
       });
 
       dbStatus = {

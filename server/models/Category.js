@@ -38,7 +38,10 @@ const categorySchema = new mongoose.Schema(
     },
     heroImage: {
       url: { type: String, default: '' },
-      publicId: { type: String, default: '' }
+      publicId: { type: String, default: '' },
+      format: { type: String, default: 'webp' },
+      width: { type: Number, default: 0 },
+      height: { type: Number, default: 0 }
     },
     displayOrder: {
       type: Number,

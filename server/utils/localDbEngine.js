@@ -26,7 +26,12 @@ function loadStore() {
     Category: [],
     Product: [],
     Admin: [],
-    ProductView: []
+    ProductView: [],
+    CustomerEnquiry: [],
+    AdminNote: [],
+    AnalyticsVisitor: [],
+    AnalyticsSession: [],
+    AnalyticsEvent: []
   };
 }
 
@@ -39,7 +44,68 @@ function saveStore() {
 
 function reloadStore() {
   store = loadStore();
+  const models = [
+    'Brand', 'Category', 'Product', 'Admin', 'ProductView',
+    'CustomerEnquiry', 'AdminNote', 'AnalyticsVisitor', 'AnalyticsSession', 'AnalyticsEvent'
+  ];
+  for (const m of models) {
+    if (!store[m]) store[m] = [];
+  }
   return store;
+}
+
+function getFieldValues(obj, pathParts) {
+  if (obj === null || obj === undefined) return [];
+  if (pathParts.length === 0) return [obj];
+
+  const [head, ...tail] = pathParts;
+  if (Array.isArray(obj)) {
+    return obj.flatMap(item => getFieldValues(item ? item[head] : undefined, tail));
+  }
+  const next = obj[head];
+  if (Array.isArray(next)) {
+    return next.flatMap(item => getFieldValues(item, tail));
+  }
+  return getFieldValues(next, tail);
+}
+
+function matchesSingleValue(val, cond) {
+  if (cond === null) {
+    return val === null || val === undefined;
+  }
+
+  if (cond instanceof RegExp) {
+    return cond.test(String(val || ''));
+  }
+
+  if (typeof cond === 'object' && !(cond instanceof Date) && !Array.isArray(cond)) {
+    if ('$regex' in cond) {
+      const flags = cond.$options || '';
+      const rx = cond.$regex instanceof RegExp ? cond.$regex : new RegExp(cond.$regex, flags);
+      if (!rx.test(String(val || ''))) return false;
+    }
+    if ('$in' in cond && Array.isArray(cond.$in)) {
+      const strSet = cond.$in.map(v => String(v));
+      if (!strSet.includes(String(val))) return false;
+    }
+    if ('$nin' in cond && Array.isArray(cond.$nin)) {
+      const strSet = cond.$nin.map(v => String(v));
+      if (strSet.includes(String(val))) return false;
+    }
+    if ('$ne' in cond) {
+      if (String(val) === String(cond.$ne)) return false;
+    }
+    if ('$gte' in cond || '$lte' in cond || '$gt' in cond || '$lt' in cond) {
+      const docTime = val ? new Date(val).getTime() : NaN;
+      if ('$gte' in cond && !(docTime >= new Date(cond.$gte).getTime())) return false;
+      if ('$gt' in cond && !(docTime > new Date(cond.$gt).getTime())) return false;
+      if ('$lte' in cond && !(docTime <= new Date(cond.$lte).getTime())) return false;
+      if ('$lt' in cond && !(docTime < new Date(cond.$lt).getTime())) return false;
+    }
+    return true;
+  }
+
+  return String(val) === String(cond);
 }
 
 function matchesFilter(doc, filter = {}) {
@@ -55,53 +121,18 @@ function matchesFilter(doc, filter = {}) {
       continue;
     }
 
-    const val = key.includes('.')
-      ? key.split('.').reduce((acc, k) => (acc ? acc[k] : undefined), doc)
-      : doc[key];
-
-    if (cond === null) {
-      if (val !== null && val !== undefined) return false;
-      continue;
+    let vals = [];
+    if (key.includes('.')) {
+      vals = getFieldValues(doc, key.split('.'));
+    } else {
+      const v = doc[key];
+      vals = Array.isArray(v) ? v : [v];
     }
 
-    if (cond instanceof RegExp) {
-      if (!cond.test(String(val || ''))) return false;
-      continue;
-    }
-
-    if (typeof cond === 'object' && !(cond instanceof Date) && !Array.isArray(cond)) {
-      if ('$regex' in cond) {
-        const flags = cond.$options || '';
-        const rx = cond.$regex instanceof RegExp ? cond.$regex : new RegExp(cond.$regex, flags);
-        if (!rx.test(String(val || ''))) return false;
-        continue;
-      }
-      if ('$in' in cond && Array.isArray(cond.$in)) {
-        const strSet = cond.$in.map(v => String(v));
-        if (!strSet.includes(String(val))) return false;
-        continue;
-      }
-      if ('$nin' in cond && Array.isArray(cond.$nin)) {
-        const strSet = cond.$nin.map(v => String(v));
-        if (strSet.includes(String(val))) return false;
-        continue;
-      }
-      if ('$ne' in cond) {
-        if (String(val) === String(cond.$ne)) return false;
-        continue;
-      }
-      if ('$gte' in cond || '$lte' in cond || '$gt' in cond || '$lt' in cond) {
-        const docTime = val ? new Date(val).getTime() : NaN;
-        if ('$gte' in cond && !(docTime >= new Date(cond.$gte).getTime())) return false;
-        if ('$gt' in cond && !(docTime > new Date(cond.$gt).getTime())) return false;
-        if ('$lte' in cond && !(docTime <= new Date(cond.$lte).getTime())) return false;
-        if ('$lt' in cond && !(docTime < new Date(cond.$lt).getTime())) return false;
-        continue;
-      }
-    }
-
-    if (String(val) !== String(cond)) {
-      return false;
+    if (vals.length === 0) {
+      if (!matchesSingleValue(undefined, cond)) return false;
+    } else {
+      if (!vals.some(v => matchesSingleValue(v, cond))) return false;
     }
   }
   return true;
@@ -416,8 +447,24 @@ function activateLocalDbAdapter() {
   const Product = require('../models/Product');
   const Admin = require('../models/Admin');
   const ProductView = require('../models/ProductView');
+  const CustomerEnquiry = require('../models/CustomerEnquiry');
+  const AdminNote = require('../models/AdminNote');
+  const AnalyticsVisitor = require('../models/AnalyticsVisitor');
+  const AnalyticsSession = require('../models/AnalyticsSession');
+  const AnalyticsEvent = require('../models/AnalyticsEvent');
 
-  [Brand, Category, Product, Admin, ProductView].forEach(attachLocalAdapterToModel);
+  [
+    Brand,
+    Category,
+    Product,
+    Admin,
+    ProductView,
+    CustomerEnquiry,
+    AdminNote,
+    AnalyticsVisitor,
+    AnalyticsSession,
+    AnalyticsEvent
+  ].forEach(attachLocalAdapterToModel);
 }
 
 module.exports = {

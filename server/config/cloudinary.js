@@ -1,6 +1,8 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
-const path = require('path');
 const crypto = require('crypto');
 
 const isCloudinaryConfigured = () => {
@@ -26,7 +28,17 @@ const configureCloudinary = () => {
   return false;
 };
 
-const uploadBuffer = async (buffer, originalName = 'upload.png', folder = 'sriyas-healthcare/products', resourceType = 'image') => {
+// Standardized folder hierarchy
+const CLOUDINARY_FOLDERS = {
+  products: 'sriyas/products',
+  brands: 'sriyas/brands',
+  categories: 'sriyas/categories',
+  brochures: 'sriyas/brochures',
+  website: 'sriyas/website',
+  test: 'sriyas/test'
+};
+
+const uploadBuffer = async (buffer, originalName = 'upload.png', folder = CLOUDINARY_FOLDERS.products, resourceType = 'image') => {
   if (isCloudinaryConfigured()) {
     return new Promise((resolve, reject) => {
       const uploadOptions = {
@@ -44,6 +56,10 @@ const uploadBuffer = async (buffer, originalName = 'upload.png', folder = 'sriya
         resolve({
           url: result.secure_url,
           publicId: result.public_id,
+          format: result.format || (resourceType === 'raw' ? 'pdf' : 'webp'),
+          width: result.width || 0,
+          height: result.height || 0,
+          bytes: result.bytes || (buffer ? buffer.length : 0),
           filename: originalName
         });
       });
@@ -67,11 +83,15 @@ const uploadBuffer = async (buffer, originalName = 'upload.png', folder = 'sriya
   return {
     url: `/assets/uploads/${uniqueName}`,
     publicId: `local:${uniqueName}`,
+    format: ext.replace('.', ''),
+    width: 0,
+    height: 0,
+    bytes: buffer ? buffer.length : 0,
     filename: originalName
   };
 };
 
-const uploadLocalFile = async (filePath, folder = 'sriyas-healthcare/products', resourceType = 'image') => {
+const uploadLocalFile = async (filePath, folder = CLOUDINARY_FOLDERS.products, resourceType = 'image') => {
   if (!isCloudinaryConfigured()) {
     return null;
   }
@@ -88,11 +108,15 @@ const uploadLocalFile = async (filePath, folder = 'sriyas-healthcare/products', 
   const result = await cloudinary.uploader.upload(filePath, uploadOptions);
   return {
     url: result.secure_url,
-    publicId: result.public_id
+    publicId: result.public_id,
+    format: result.format,
+    width: result.width || 0,
+    height: result.height || 0,
+    bytes: result.bytes || 0
   };
 };
 
-const deleteAsset = async (publicId, resourceType = 'image') => {
+const deleteAsset = async (publicId, resourceType = 'image', checkReferences = true) => {
   if (!publicId) return false;
 
   if (publicId.startsWith('local:')) {
@@ -108,10 +132,43 @@ const deleteAsset = async (publicId, resourceType = 'image') => {
     return true;
   }
 
+  // Safety check: ensure publicId belongs to Sriyas namespaces
+  if (!publicId.startsWith('sriyas/') && !publicId.startsWith('sriyas-healthcare/')) {
+    console.warn('[Cloudinary] Refusing to delete asset outside Sriyas namespace:', publicId);
+    return false;
+  }
+
+  if (checkReferences) {
+    try {
+      const Product = require('../models/Product');
+      const Brand = require('../models/Brand');
+      const Category = require('../models/Category');
+
+      const [productCount, brandCount, categoryCount] = await Promise.all([
+        Product.countDocuments({
+          $or: [
+            { 'images.publicId': publicId },
+            { 'brochure.publicId': publicId }
+          ]
+        }),
+        Brand.countDocuments({ logoPublicId: publicId }),
+        Category.countDocuments({ 'heroImage.publicId': publicId })
+      ]);
+
+      if (productCount + brandCount + categoryCount > 0) {
+        console.log(`[Cloudinary] Asset ${publicId} is still referenced by ${productCount + brandCount + categoryCount} active record(s). Skipping deletion.`);
+        return false;
+      }
+    } catch (e) {
+      // If models or DB are not reachable, continue safely
+      console.warn('[Cloudinary] Could not check active references for asset deletion:', e.message);
+    }
+  }
+
   if (isCloudinaryConfigured()) {
     try {
-      await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
-      return true;
+      const result = await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
+      return result.result === 'ok';
     } catch (err) {
       console.warn('[Cloudinary] Failed to delete asset from Cloudinary:', err.message);
       return false;
@@ -122,10 +179,10 @@ const deleteAsset = async (publicId, resourceType = 'image') => {
 
 module.exports = {
   cloudinary,
+  CLOUDINARY_FOLDERS,
   isCloudinaryConfigured,
   configureCloudinary,
   uploadBuffer,
   uploadLocalFile,
   deleteAsset
 };
-

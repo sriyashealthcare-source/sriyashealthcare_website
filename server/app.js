@@ -15,6 +15,7 @@ const { publicProductRouter, adminProductRouter } = require('./routes/productRou
 const { publicBrandRouter, adminBrandRouter } = require('./routes/brandRoutes');
 const { publicCategoryRouter, adminCategoryRouter } = require('./routes/categoryRoutes');
 const { publicAnalyticsRouter, adminAnalyticsRouter } = require('./routes/analyticsRoutes');
+const { publicEnquiryRouter, adminEnquiryRouter } = require('./routes/enquiryRoutes');
 
 const app = express();
 
@@ -103,12 +104,14 @@ app.use('/api/products', publicProductRouter);
 app.use('/api/brands', publicBrandRouter);
 app.use('/api/categories', publicCategoryRouter);
 app.use('/api/analytics', publicAnalyticsRouter);
+app.use('/api/enquiries', publicEnquiryRouter);
 
 // Mount Protected Administrator Routes
 app.use('/api/admin/products', adminProductRouter);
 app.use('/api/admin/brands', adminBrandRouter);
 app.use('/api/admin/categories', adminCategoryRouter);
 app.use('/api/admin/analytics', adminAnalyticsRouter);
+app.use('/api/admin/enquiries', adminEnquiryRouter);
 
 // Error Handling Middleware
 app.use(notFound);

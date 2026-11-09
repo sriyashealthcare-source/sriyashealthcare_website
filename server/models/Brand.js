@@ -31,6 +31,11 @@ const brandSchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    logoPublicId: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     description: {
       type: String,
       trim: true,

@@ -39,10 +39,12 @@ const uploadProductFiles = upload.fields([
 ]);
 
 const uploadCategoryHero = upload.single('heroImage');
+const uploadBrandLogo = upload.single('logo');
 
 module.exports = {
   upload,
   uploadProductFiles,
-  uploadCategoryHero
+  uploadCategoryHero,
+  uploadBrandLogo
 };
 

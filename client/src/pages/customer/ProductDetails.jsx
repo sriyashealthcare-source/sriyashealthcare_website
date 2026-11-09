@@ -198,6 +198,7 @@ export default function ProductDetails() {
                 target="_blank"
                 rel="noreferrer"
                 className="btn-pdf"
+                onClick={() => analyticsService.trackBrochureDownload(product._id, product.name)}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <rect
@@ -224,6 +225,7 @@ export default function ProductDetails() {
                 href={brochureUrl}
                 download={brochureFilename}
                 className="btn-pdf"
+                onClick={() => analyticsService.trackBrochureDownload(product._id, product.name)}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path
@@ -244,6 +246,17 @@ export default function ProductDetails() {
               </a>
             </div>
           )}
+
+          <div style={{ marginTop: '24px' }}>
+            <Link
+              to="/contact"
+              state={{ productId: product._id, productName: product.name }}
+              className="hero-cta"
+              style={{ display: 'inline-flex', padding: '12px 28px', fontSize: '0.9rem' }}
+            >
+              ✉ Enquire About This Product
+            </Link>
+          </div>
         </div>
       </div>
     </section>

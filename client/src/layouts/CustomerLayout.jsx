@@ -1,14 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
+import { initializeAnalyticsSession, trackAnalyticsEvent } from '../utils/session';
 
 export default function CustomerLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const lastTrackedPath = useRef('');
+
+  useEffect(() => {
+    initializeAnalyticsSession();
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (lastTrackedPath.current !== location.pathname) {
+      lastTrackedPath.current = location.pathname;
+      // Slight delay so document.title has updated
+      const timer = setTimeout(() => {
+        trackAnalyticsEvent('page_view', {
+          pagePath: location.pathname,
+          pageTitle: document.title
+        });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, [location.pathname]);
 
   // Support legacy hash links from the original single-file website

@@ -21,20 +21,8 @@ const catalogPath = path.join(__dirname, 'catalogData.json');
 const publicDir = path.join(__dirname, '..', 'client', 'public');
 
 async function resolveAssetUpload(relUrl, folder, resourceType = 'image') {
-  if (!relUrl) return { url: '', publicId: '' };
-  if (isCloudinaryConfigured() && relUrl.startsWith('/assets/')) {
-    const localFilePath = path.join(publicDir, relUrl.replace(/^\//, ''));
-    if (fs.existsSync(localFilePath)) {
-      try {
-        const uploaded = await uploadLocalFile(localFilePath, folder, resourceType);
-        if (uploaded && uploaded.url) {
-          return uploaded;
-        }
-      } catch (err) {
-        console.warn(`[Seed] Cloudinary upload failed for ${relUrl}, keeping static path:`, err.message);
-      }
-    }
-  }
+  // Retain relative static paths during initial seed to prevent automatic bulk-uploading.
+  // Bulk Cloudinary migration is handled separately and safely via scripts/migrateAssetsToCloudinary.js.
   return { url: relUrl, publicId: '' };
 }
 

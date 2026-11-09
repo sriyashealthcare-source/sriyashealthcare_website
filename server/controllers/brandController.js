@@ -1,6 +1,7 @@
 const Brand = require('../models/Brand');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
 
 function makeSlug(str) {
   return String(str || '')
@@ -58,7 +59,13 @@ const createBrand = async (req, res, next) => {
     const tabLabel = (req.body.tabLabel || name).trim();
     const icon = (req.body.icon || '🔬').trim();
     const description = (req.body.description || '').trim();
-    const logoUrl = (req.body.logoUrl || '').trim();
+    let logoUrl = (req.body.logoUrl || '').trim();
+    let logoPublicId = '';
+    if (req.file && req.file.buffer) {
+      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.brands, 'image');
+      logoUrl = uploaded.url;
+      logoPublicId = uploaded.publicId;
+    }
     const isActive = req.body.isActive !== undefined ? Boolean(req.body.isActive) : true;
 
     const existing = await Brand.findOne({ $or: [{ slug }, { name }] });
@@ -79,6 +86,7 @@ const createBrand = async (req, res, next) => {
       icon,
       description,
       logoUrl,
+      logoPublicId,
       displayOrder,
       isActive
     });
@@ -109,7 +117,16 @@ const updateBrand = async (req, res, next) => {
     const tabLabel = req.body.tabLabel !== undefined ? req.body.tabLabel.trim() : brand.tabLabel;
     const icon = req.body.icon !== undefined ? req.body.icon.trim() : brand.icon;
     const description = req.body.description !== undefined ? req.body.description.trim() : brand.description;
-    const logoUrl = req.body.logoUrl !== undefined ? req.body.logoUrl.trim() : brand.logoUrl;
+    let logoUrl = req.body.logoUrl !== undefined ? req.body.logoUrl.trim() : brand.logoUrl;
+    let logoPublicId = brand.logoPublicId || '';
+    if (req.file && req.file.buffer) {
+      if (brand.logoPublicId) {
+        await deleteAsset(brand.logoPublicId, 'image', true);
+      }
+      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.brands, 'image');
+      logoUrl = uploaded.url;
+      logoPublicId = uploaded.publicId;
+    }
     const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : brand.displayOrder;
     const isActive = req.body.isActive !== undefined ? Boolean(req.body.isActive) : brand.isActive;
 
@@ -123,6 +140,7 @@ const updateBrand = async (req, res, next) => {
           icon,
           description,
           logoUrl,
+          logoPublicId,
           displayOrder,
           isActive
         }

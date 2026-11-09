@@ -14,11 +14,17 @@ import Contact from './pages/customer/Contact';
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import Visitors from './pages/admin/Visitors';
+import VisitorJourneys from './pages/admin/VisitorJourneys';
+import ProductAnalytics from './pages/admin/ProductAnalytics';
+import CustomerEnquiries from './pages/admin/CustomerEnquiries';
+import TrafficSources from './pages/admin/TrafficSources';
+import DeviceAnalytics from './pages/admin/DeviceAnalytics';
+import Reports from './pages/admin/Reports';
 import ProductManagement from './pages/admin/ProductManagement';
 import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import BrandCategoryManagement from './pages/admin/BrandCategoryManagement';
-import ProductAnalytics from './pages/admin/ProductAnalytics';
 import AdminSettings from './pages/admin/AdminSettings';
 
 function NotFoundPage() {
@@ -52,16 +58,22 @@ export default function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
-          {/* Separate Administrator Interface */}
+          {/* Separate Protected Administrator Interface */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="visitors" element={<Visitors />} />
+            <Route path="journeys" element={<VisitorJourneys />} />
+            <Route path="analytics" element={<ProductAnalytics />} />
+            <Route path="enquiries" element={<CustomerEnquiries />} />
+            <Route path="traffic-sources" element={<TrafficSources />} />
+            <Route path="devices" element={<DeviceAnalytics />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="products" element={<ProductManagement />} />
             <Route path="products/add" element={<AddProduct />} />
             <Route path="products/edit/:id" element={<EditProduct />} />
             <Route path="brands-categories" element={<BrandCategoryManagement />} />
-            <Route path="analytics" element={<ProductAnalytics />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
@@ -69,4 +81,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
