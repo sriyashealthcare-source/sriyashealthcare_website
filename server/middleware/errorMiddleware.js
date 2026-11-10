@@ -31,7 +31,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (statusCode >= 500) {
-    console.error('[ServerError]', err.message);
+    console.error('[ServerError]', err.stack || err.message);
   }
 
   res.status(statusCode).json({

@@ -1408,3 +1408,475 @@
   }
 }
 
+
+
+/* ═══════════════════════════════════════════════════════════
+   PARTNER BROWSING EXPERIENCE (3-STAGE NAVIGATION)
+   Stage 1: Partner Directory (/products)
+   Stage 2: Partner Products (/products/:partnerSlug)
+   Stage 3: Individual Product Details (/products/:partnerSlug/:productSlug)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── STAGE 1: PARTNER DIRECTORY ─── */
+.partners-page {
+  padding: 124px 6% 90px;
+  flex: 1;
+  background: var(--ivory);
+  animation: fadeInUp 0.45s var(--ease) both;
+}
+
+.partners-page-header {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto 52px;
+}
+
+.partners-eyebrow {
+  font-family: var(--font-brand);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+
+.partners-page-header h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+
+.partners-page-header p {
+  font-size: 1.05rem;
+  color: var(--text-mute);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.gold-accent-line {
+  width: 64px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  margin: 0 auto;
+  border-radius: var(--radius-full);
+}
+
+.partners-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+}
+
+.partner-card {
+  background: #fff;
+  border: 1px solid rgba(169, 130, 44, 0.22);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(15, 18, 16, 0.04);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  overflow: hidden;
+}
+
+.partner-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+
+.partner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(169, 130, 44, 0.16);
+  border-color: var(--gold);
+}
+
+.partner-card:hover::before {
+  opacity: 1;
+}
+
+.partner-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  min-height: 80px;
+}
+
+.partner-card-logo-wrap {
+  flex: 1;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.partner-card-logo {
+  max-height: 72px;
+  max-width: 190px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.35s var(--ease);
+}
+
+.partner-card:hover .partner-card-logo {
+  transform: scale(1.04);
+}
+
+.partner-card-fallback-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  background: var(--ivory-deep);
+  border: 1px solid rgba(169, 130, 44, 0.25);
+}
+
+.partner-card-fallback-icon {
+  font-size: 1.4rem;
+}
+
+.partner-card-fallback-text {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.partner-count-badge {
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--ivory-deep);
+  color: var(--gold-deep);
+  border: 1px solid rgba(169, 130, 44, 0.25);
+  white-space: nowrap;
+}
+
+.partner-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.partner-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.25;
+  transition: color 0.25s var(--ease);
+}
+
+.partner-card:hover .partner-card-title {
+  color: var(--gold-deep);
+}
+
+.partner-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-mute);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.partner-card-desc-placeholder {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.partner-card-footer {
+  padding-top: 18px;
+  border-top: 1px solid rgba(169, 130, 44, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.partner-card-cta {
+  font-family: var(--font-brand);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.partner-card:hover .partner-card-cta {
+  gap: 12px;
+  color: var(--gold-dark);
+}
+
+/* ─── STAGE 2: PARTNER PRODUCT LISTING ─── */
+.partner-products-page {
+  padding: 114px 6% 80px;
+  flex: 1;
+  background: var(--ivory);
+  animation: fadeInUp 0.45s var(--ease) both;
+}
+
+.partner-top-bar {
+  max-width: 1200px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.partner-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-brand);
+  font-size: 0.84rem;
+}
+
+.breadcrumb-link {
+  color: var(--text-mute);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--gold-deep);
+  text-decoration: underline;
+}
+
+.breadcrumb-sep {
+  color: rgba(169, 130, 44, 0.45);
+  font-size: 0.8rem;
+}
+
+.breadcrumb-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.back-to-partners-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(169, 130, 44, 0.28);
+  background: #fff;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.back-to-partners-btn:hover {
+  background: var(--ivory-deep);
+  border-color: var(--gold-dark);
+  color: var(--gold-deep);
+  transform: translateX(-3px);
+}
+
+.partner-hero-banner {
+  max-width: 1200px;
+  margin: 0 auto 34px;
+  background: #fff;
+  border: 1px solid rgba(169, 130, 44, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 34px 40px;
+  box-shadow: var(--shadow-card);
+}
+
+.partner-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.partner-hero-logo-box {
+  width: 180px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-right: 1px solid rgba(169, 130, 44, 0.16);
+}
+
+.partner-hero-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.partner-hero-fallback-icon {
+  font-size: 2.8rem;
+}
+
+.partner-hero-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.partner-hero-eyebrow {
+  font-family: var(--font-brand);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 6px;
+}
+
+.partner-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.partner-hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-mute);
+  line-height: 1.6;
+  max-width: 850px;
+  margin: 0;
+}
+
+.partner-toolbar {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+}
+
+.partner-category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.category-pill {
+  border: 1px solid rgba(169, 130, 44, 0.25);
+  background: #fff;
+  border-radius: var(--radius-full);
+  padding: 7px 18px;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.category-pill:hover {
+  border-color: var(--gold-dark);
+  color: var(--ink);
+}
+
+.category-pill.active {
+  background: linear-gradient(135deg, var(--gold-deep), var(--gold-light));
+  border-color: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(138, 106, 31, 0.22);
+}
+
+.partner-products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── STAGE 3: INDIVIDUAL PRODUCT DETAILS IMPROVEMENTS ─── */
+.detail-prod-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.prod-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(169, 130, 44, 0.1);
+  transition: gap 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.prod-card:hover .prod-card-action {
+  gap: 10px;
+  color: var(--gold-dark);
+}
+
+/* ─── RESPONSIVE RULES FOR PARTNER FLOW ─── */
+@media (max-width: 900px) {
+  .partner-hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .partner-hero-logo-box {
+    border-right: none;
+    border-bottom: 1px solid rgba(169, 130, 44, 0.16);
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 16px;
+    height: 70px;
+  }
+
+  .partner-hero-banner {
+    padding: 24px;
+  }
+
+  .partners-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -7,7 +7,8 @@ import AdminLayout from './layouts/AdminLayout';
 
 // Customer Pages
 import Home from './pages/customer/Home';
-import Products from './pages/customer/Products';
+import Partners from './pages/customer/Partners';
+import PartnerProducts from './pages/customer/PartnerProducts';
 import ProductDetails from './pages/customer/ProductDetails';
 import Contact from './pages/customer/Contact';
 
@@ -52,8 +53,10 @@ export default function App() {
           {/* Public Customer Interface */}
           <Route element={<CustomerLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:slug" element={<ProductDetails />} />
+            <Route path="/products" element={<Partners />} />
+            <Route path="/products/:partnerSlug" element={<PartnerProducts />} />
+            <Route path="/products/:partnerSlug/:productSlug" element={<ProductDetails />} />
+            <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

@@ -1,7 +1,12 @@
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const Brand = require('../models/Brand');
 const Category = require('../models/Category');
 const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
+
+function isObjectId(val) {
+  return typeof val === 'string' && /^[0-9a-fA-F]{24}$/.test(val) && mongoose.Types.ObjectId.isValid(val);
+}
 
 function makeSlug(str) {
   return String(str || '')
@@ -86,18 +91,22 @@ function parseSpecificationsField(input) {
 async function resolveBrandRef(brandInput) {
   if (!brandInput) return null;
   const val = String(brandInput).trim();
-  let doc = await Brand.findOne({
-    $or: [{ _id: val }, { slug: val.toLowerCase() }, { name: val }]
-  });
+  const or = [{ slug: val.toLowerCase() }, { name: val }];
+  if (isObjectId(val)) {
+    or.unshift({ _id: val });
+  }
+  let doc = await Brand.findOne({ $or: or });
   return doc;
 }
 
 async function resolveCategoryRef(categoryInput, brandDoc) {
   if (!categoryInput) return null;
   const val = String(categoryInput).trim();
-  let doc = await Category.findOne({
-    $or: [{ _id: val }, { slug: val.toLowerCase() }, { name: val }]
-  });
+  const or = [{ slug: val.toLowerCase() }, { name: val }];
+  if (isObjectId(val)) {
+    or.unshift({ _id: val });
+  }
+  let doc = await Category.findOne({ $or: or });
   if (!doc && brandDoc) {
     // Auto-create category under the brand if administrator typed a new category name
     const slug = makeSlug(`${brandDoc.slug}-${val}`);
@@ -139,9 +148,12 @@ const getPublicProducts = async (req, res, next) => {
     }
 
     if (category) {
-      const cDoc = await Category.findOne({
-        $or: [{ _id: category }, { slug: String(category).toLowerCase() }]
-      });
+      const catVal = String(category).trim();
+      const or = [{ slug: catVal.toLowerCase() }, { name: catVal }];
+      if (isObjectId(catVal)) {
+        or.unshift({ _id: catVal });
+      }
+      const cDoc = await Category.findOne({ $or: or });
       if (!cDoc || !cDoc.isActive) {
         return res.status(200).json({ success: true, count: 0, products: [] });
       }
@@ -216,14 +228,17 @@ const getPublicProductBySlug = async (req, res, next) => {
 const getPublicProductById = async (req, res, next) => {
   try {
     const idParam = String(req.params.id || '').trim();
+    const or = [
+      { slug: idParam.toLowerCase() },
+      { legacyId: idParam.toLowerCase() }
+    ];
+    if (isObjectId(idParam)) {
+      or.unshift({ _id: idParam });
+    }
     let product = await Product.findOne({
       isActive: true,
       deletedAt: null,
-      $or: [
-        { _id: idParam },
-        { slug: idParam.toLowerCase() },
-        { legacyId: idParam.toLowerCase() }
-      ]
+      $or: or
     })
       .populate('brand', 'name slug tabLabel icon logoUrl isActive')
       .populate('category', 'name slug heroTitle description heroGradient heroImage isActive');
@@ -281,9 +296,11 @@ const getPublicProductsByBrand = async (req, res, next) => {
 const getPublicProductsByCategory = async (req, res, next) => {
   try {
     const catParam = String(req.params.category || '').trim();
-    const catDoc = await Category.findOne({
-      $or: [{ _id: catParam }, { slug: catParam.toLowerCase() }]
-    }).populate('brand', 'name slug tabLabel icon isActive');
+    const or = [{ slug: catParam.toLowerCase() }, { name: catParam }];
+    if (isObjectId(catParam)) {
+      or.unshift({ _id: catParam });
+    }
+    const catDoc = await Category.findOne({ $or: or }).populate('brand', 'name slug tabLabel icon isActive');
 
     if (!catDoc || !catDoc.isActive) {
       return res.status(404).json({
@@ -346,9 +363,12 @@ const getAdminProducts = async (req, res, next) => {
     }
 
     if (category) {
-      const cDoc = await Category.findOne({
-        $or: [{ _id: category }, { slug: String(category).toLowerCase() }]
-      });
+      const catVal = String(category).trim();
+      const or = [{ slug: catVal.toLowerCase() }, { name: catVal }];
+      if (isObjectId(catVal)) {
+        or.unshift({ _id: catVal });
+      }
+      const cDoc = await Category.findOne({ $or: or });
       if (cDoc) filter.category = cDoc._id;
     }
 

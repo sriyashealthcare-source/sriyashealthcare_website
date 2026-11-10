@@ -1,4 +1,2 @@
-# Cloudflare Pages / Static Hosting SPA Rewrite Rule
-# Serves /index.html for any sub-route (e.g. /admin, /admin/login, /products) with status 200
 /*    /index.html   200
 

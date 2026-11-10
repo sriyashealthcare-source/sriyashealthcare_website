@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getPublicBrands,
+  getPublicBrandBySlug,
   getAdminBrands,
   createBrand,
   updateBrand,
@@ -13,6 +14,7 @@ const { validateBrandInput } = require('../middleware/validationMiddleware');
 
 const publicBrandRouter = express.Router();
 publicBrandRouter.get('/', getPublicBrands);
+publicBrandRouter.get('/:slug', getPublicBrandBySlug);
 
 const adminBrandRouter = express.Router();
 adminBrandRouter.use(protectAdmin);

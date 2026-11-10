@@ -6,7 +6,9 @@ import ImageGallery from '../../components/product-details/ImageGallery';
 import { resolveAssetUrl } from '../../utils/session';
 
 export default function ProductDetails() {
-  const { slug } = useParams();
+  const { partnerSlug, productSlug, slug } = useParams();
+  const effectiveProductSlug = productSlug || slug;
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,33 +21,45 @@ export default function ProductDetails() {
     let isMounted = true;
 
     async function loadProduct() {
+      if (!effectiveProductSlug) return;
       try {
         setLoading(true);
         setError('');
         let res;
         try {
-          res = await productService.getPublicProductBySlug(slug);
+          res = await productService.getPublicProductBySlug(effectiveProductSlug);
         } catch (_) {
-          res = await productService.getPublicProductById(slug);
+          res = await productService.getPublicProductById(effectiveProductSlug);
         }
 
         if (!isMounted) return;
         const prod = res?.product || null;
         if (!prod) {
-          setError('The requested product could not be found.');
+          setError('The requested product could not be found or has been archived.');
           return;
         }
 
         setProduct(prod);
+
+        // Dynamic SEO Page Title & Meta Description
         document.title = `${prod.name} | Sriyas Healthcare Pvt Ltd`;
+        let metaDesc = document.querySelector('meta[name="description"]');
+        if (!metaDesc) {
+          metaDesc = document.createElement('meta');
+          metaDesc.name = 'description';
+          document.head.appendChild(metaDesc);
+        }
+        metaDesc.content = prod.description
+          ? `${prod.name}: ${prod.description.slice(0, 150)}...`
+          : `Explore technical specifications and details for ${prod.name} provided by Sriyas Healthcare.`;
 
         // Record persistent product view event once per product detail visit
         if (trackedRef.current !== String(prod._id)) {
           trackedRef.current = String(prod._id);
           analyticsService.trackProductView(
             prod._id,
-            location.state?.fromBrand
-              ? `brand:${location.state.fromBrand}`
+            partnerSlug || location.state?.fromBrand
+              ? `brand:${partnerSlug || location.state?.fromBrand}`
               : document.referrer || 'catalogue'
           );
         }
@@ -65,22 +79,21 @@ export default function ProductDetails() {
     return () => {
       isMounted = false;
     };
-  }, [slug]);
+  }, [effectiveProductSlug, partnerSlug, location.state]);
 
   const brandSlug =
-    product?.brand?.slug || location.state?.fromBrand || 'peters';
-  const brandLabel = product?.brand?.name
-    ? `${product.brand.name} Products`
-    : 'Products';
-
-  const handleBack = () => {
-    navigate(`/products?brand=${encodeURIComponent(brandSlug)}`);
-  };
+    product?.brand?.slug ||
+    partnerSlug ||
+    location.state?.fromBrand ||
+    '';
+  const brandName = product?.brand?.name || (brandSlug ? brandSlug.toUpperCase() : 'Partner');
+  const brandLabel = brandName ? `${brandName} Products` : 'All Products';
+  const backUrl = brandSlug ? `/products/${encodeURIComponent(brandSlug)}` : '/products';
 
   if (loading) {
     return (
       <section className="univ-detail" aria-label="Loading Product Details">
-        <div className="state-container">
+        <div className="state-container" style={{ minHeight: '480px' }}>
           <div className="spinner" />
           <div className="state-title">Loading Product Details</div>
           <p className="state-desc">Fetching clinical specifications and gallery...</p>
@@ -92,14 +105,21 @@ export default function ProductDetails() {
   if (error || !product) {
     return (
       <section className="univ-detail" aria-label="Product Not Found">
-        <div className="state-container">
+        <div className="state-container" style={{ minHeight: '480px' }}>
           <div className="state-title">Product Not Available</div>
           <p className="state-desc">
             {error || 'The product you are looking for may have been moved or archived.'}
           </p>
-          <Link to="/products" className="hero-cta">
-            Return to Product Catalogue
-          </Link>
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {brandSlug ? (
+              <Link to={`/products/${encodeURIComponent(brandSlug)}`} className="hero-cta">
+                Back to {brandName} Products
+              </Link>
+            ) : null}
+            <Link to="/products" className="detail-back" style={{ marginBottom: 0 }}>
+              Return to Partner Directory
+            </Link>
+          </div>
         </div>
       </section>
     );
@@ -118,9 +138,31 @@ export default function ProductDetails() {
 
   return (
     <section className="univ-detail" id="univ-detail" aria-label="Product Details">
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <button type="button" className="detail-back" onClick={handleBack}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <div style={{ maxWidth: '1100px', margin: '0 auto 28px' }}>
+        {/* Breadcrumb Navigation: Home > Products > Partner Name > Product Name */}
+        <nav className="partner-breadcrumbs" aria-label="Breadcrumbs" style={{ marginBottom: '16px' }}>
+          <Link to="/" className="breadcrumb-link">
+            Home
+          </Link>
+          <span className="breadcrumb-sep">/</span>
+          <Link to="/products" className="breadcrumb-link">
+            Products
+          </Link>
+          {brandSlug && (
+            <>
+              <span className="breadcrumb-sep">/</span>
+              <Link to={`/products/${encodeURIComponent(brandSlug)}`} className="breadcrumb-link">
+                {brandName}
+              </Link>
+            </>
+          )}
+          <span className="breadcrumb-sep">/</span>
+          <span className="breadcrumb-current">{product.name}</span>
+        </nav>
+
+        {/* Back to Partner Products Button */}
+        <Link to={backUrl} className="detail-back" id="detail-back-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
             <path
               d="M11 14L6 9l5-5"
               stroke="currentColor"
@@ -130,7 +172,7 @@ export default function ProductDetails() {
             />
           </svg>
           <span id="detail-back-label">Back to {brandLabel}</span>
-        </button>
+        </Link>
       </div>
 
       <div className="detail-grid">
@@ -142,7 +184,9 @@ export default function ProductDetails() {
               {detailCategoryLabel}
             </div>
           )}
-          <h2 id="ud-name">{product.name}</h2>
+          <h1 className="detail-prod-title" id="ud-name">
+            {product.name}
+          </h1>
           {product.description && (
             <p className="detail-desc-text" id="ud-desc">
               {product.description}
@@ -200,7 +244,7 @@ export default function ProductDetails() {
                 className="btn-pdf"
                 onClick={() => analyticsService.trackBrochureDownload(product._id, product.name)}
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <rect
                     x="2"
                     y="1"
@@ -227,7 +271,7 @@ export default function ProductDetails() {
                 className="btn-pdf"
                 onClick={() => analyticsService.trackBrochureDownload(product._id, product.name)}
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path
                     d="M8 2v8M5 8l3 3 3-3"
                     stroke="currentColor"
@@ -247,12 +291,13 @@ export default function ProductDetails() {
             </div>
           )}
 
-          <div style={{ marginTop: '24px' }}>
+          <div style={{ marginTop: '28px' }}>
             <Link
               to="/contact"
               state={{ productId: product._id, productName: product.name }}
               className="hero-cta"
-              style={{ display: 'inline-flex', padding: '12px 28px', fontSize: '0.9rem' }}
+              id="enquire-prod-btn"
+              style={{ display: 'inline-flex', padding: '13px 32px', fontSize: '0.92rem' }}
             >
               ✉ Enquire About This Product
             </Link>
@@ -262,4 +307,3 @@ export default function ProductDetails() {
     </section>
   );
 }
-

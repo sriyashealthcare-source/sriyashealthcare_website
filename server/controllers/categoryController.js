@@ -1,7 +1,12 @@
+const mongoose = require('mongoose');
 const Category = require('../models/Category');
 const Brand = require('../models/Brand');
 const Product = require('../models/Product');
 const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
+
+function isObjectId(val) {
+  return typeof val === 'string' && /^[0-9a-fA-F]{24}$/.test(val) && mongoose.Types.ObjectId.isValid(val);
+}
 
 function makeSlug(str) {
   return String(str || '')
@@ -16,9 +21,12 @@ const getPublicCategories = async (req, res, next) => {
   try {
     const filter = { isActive: true };
     if (req.query.brand) {
-      const bDoc = await Brand.findOne({
-        $or: [{ _id: req.query.brand }, { slug: String(req.query.brand).toLowerCase() }]
-      });
+      const bVal = String(req.query.brand).trim();
+      const or = [{ slug: bVal.toLowerCase() }, { name: bVal }];
+      if (isObjectId(bVal)) {
+        or.unshift({ _id: bVal });
+      }
+      const bDoc = await Brand.findOne({ $or: or });
       if (bDoc) {
         filter.brand = bDoc._id;
       }
@@ -72,9 +80,12 @@ const createCategory = async (req, res, next) => {
     let brandSlug = '';
 
     if (brandId) {
-      const brandDoc = await Brand.findOne({
-        $or: [{ _id: brandId }, { slug: String(brandId).toLowerCase() }]
-      });
+      const bVal = String(brandId).trim();
+      const or = [{ slug: bVal.toLowerCase() }, { name: bVal }];
+      if (isObjectId(bVal)) {
+        or.unshift({ _id: bVal });
+      }
+      const brandDoc = await Brand.findOne({ $or: or });
       if (brandDoc) {
         brandId = brandDoc._id;
         brandSlug = brandDoc.slug;
@@ -153,9 +164,12 @@ const updateCategory = async (req, res, next) => {
     const name = req.body.name !== undefined ? req.body.name.trim() : category.name;
     let brandId = req.body.brand !== undefined ? req.body.brand : category.brand;
     if (brandId) {
-      const brandDoc = await Brand.findOne({
-        $or: [{ _id: brandId }, { slug: String(brandId).toLowerCase() }]
-      });
+      const bVal = String(brandId).trim();
+      const or = [{ slug: bVal.toLowerCase() }, { name: bVal }];
+      if (isObjectId(bVal)) {
+        or.unshift({ _id: bVal });
+      }
+      const brandDoc = await Brand.findOne({ $or: or });
       if (brandDoc) brandId = brandDoc._id;
     }
 

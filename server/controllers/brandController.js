@@ -1,7 +1,12 @@
+const mongoose = require('mongoose');
 const Brand = require('../models/Brand');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
+
+function isObjectId(val) {
+  return typeof val === 'string' && /^[0-9a-fA-F]{24}$/.test(val) && mongoose.Types.ObjectId.isValid(val);
+}
 
 function makeSlug(str) {
   return String(str || '')
@@ -15,10 +20,59 @@ function makeSlug(str) {
 const getPublicBrands = async (req, res, next) => {
   try {
     const brands = await Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 });
+    const allProducts = await Product.find({ isActive: true, deletedAt: null }).select('brand');
+
+    const enriched = brands.map(b => {
+      const bObj = typeof b.toObject === 'function' ? b.toObject() : { ...b };
+      const bId = String(bObj._id);
+      bObj.productCount = allProducts.filter(p => String(p.brand) === bId).length;
+      return bObj;
+    });
+
     res.status(200).json({
       success: true,
-      count: brands.length,
-      brands
+      count: enriched.length,
+      brands: enriched
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET /api/brands/:slug (Public — by slug or ObjectId)
+const getPublicBrandBySlug = async (req, res, next) => {
+  try {
+    const param = String(req.params.slug || req.params.id || '').trim();
+    const or = [
+      { slug: param.toLowerCase() },
+      { name: param }
+    ];
+    if (isObjectId(param)) {
+      or.unshift({ _id: param });
+    }
+    const brand = await Brand.findOne({
+      isActive: true,
+      $or: or
+    });
+    if (!brand) {
+      return res.status(404).json({
+        success: false,
+        message: 'Partner not found or inactive.'
+      });
+    }
+
+    const productCount = await Product.countDocuments({
+      brand: brand._id,
+      isActive: true,
+      deletedAt: null
+    });
+
+    const brandObj = typeof brand.toObject === 'function' ? brand.toObject() : { ...brand };
+    brandObj.productCount = productCount;
+
+    res.status(200).json({
+      success: true,
+      brand: brandObj
     });
   } catch (error) {
     next(error);
@@ -221,6 +275,7 @@ const deleteBrand = async (req, res, next) => {
 
 module.exports = {
   getPublicBrands,
+  getPublicBrandBySlug,
   getAdminBrands,
   createBrand,
   updateBrand,

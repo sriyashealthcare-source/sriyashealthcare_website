@@ -22,6 +22,16 @@ export const productService = {
     return response.data;
   },
 
+  async getPublicBrandBySlug(slug) {
+    const response = await api.get(`/brands/${encodeURIComponent(slug)}`);
+    return response.data;
+  },
+
+  async getPublicProductsByBrand(brandSlug) {
+    const response = await api.get(`/products/brand/${encodeURIComponent(brandSlug)}`);
+    return response.data;
+  },
+
   async getPublicCategories(params = {}) {
     const response = await api.get('/categories', { params });
     return response.data;
