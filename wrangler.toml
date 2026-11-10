@@ -1,0 +1,10 @@
+name = "sriyashealthcare-website"
+compatibility_date = "2024-09-23"
+
+# Cloudflare Workers Static Assets configuration
+# Automatically routes all non-file requests to /index.html for client-side SPA routing (React Router)
+[assets]
+directory = "./client/dist"
+not_found_handling = "single-page-application"
+html_handling = "auto-trailing-slash"
+

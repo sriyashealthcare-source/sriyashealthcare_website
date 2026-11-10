@@ -30,36 +30,40 @@ app.use(
   })
 );
 
-// CORS Configuration
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
+// CORS Configuration — Specific Production & Development Origins
+const defaultAllowedOrigins = [
+  'https://sriyashealthcare.com',
+  'https://www.sriyashealthcare.com',
+  'https://sriyashealthcare-website.sriyashealthcare.workers.dev',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000'
+];
+
+const envOrigins = (process.env.CLIENT_URL || '')
   .split(',')
   .map(o => o.trim().replace(/\/$/, ''))
   .filter(Boolean);
 
-if (!allowedOrigins.includes('http://localhost:5173')) {
-  allowedOrigins.push('http://localhost:5173');
-}
-if (!allowedOrigins.includes('http://127.0.0.1:5173')) {
-  allowedOrigins.push('http://127.0.0.1:5173');
-}
+const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envOrigins]));
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow non-browser agents, server-to-server calls, or health probes (no Origin header)
       if (!origin) return callback(null, true);
       const cleanOrigin = origin.replace(/\/$/, '');
-      if (
-        allowedOrigins.includes(cleanOrigin) ||
-        cleanOrigin.endsWith('.vercel.app') ||
-        process.env.NODE_ENV !== 'production'
-      ) {
+
+      if (allowedOrigins.includes(cleanOrigin)) {
         return callback(null, true);
       }
-      return callback(new Error('Not allowed by CORS'));
+
+      // Safely reject unauthorized origins without throwing an unhandled Express error (prevents HTTP 500)
+      return callback(null, false);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
   })
 );
 
