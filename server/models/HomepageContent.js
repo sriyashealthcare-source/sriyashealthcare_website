@@ -4,7 +4,11 @@ const mediaRefSchema = new mongoose.Schema(
   {
     url: { type: String, trim: true, default: '' },
     publicId: { type: String, trim: true, default: '' },
-    alt: { type: String, trim: true, default: '' }
+    mobileUrl: { type: String, trim: true, default: '' },
+    mobilePublicId: { type: String, trim: true, default: '' },
+    alt: { type: String, trim: true, default: '' },
+    focalPoint: { type: String, trim: true, default: 'center center' },
+    aspectRatio: { type: String, trim: true, default: 'auto' }
   },
   { _id: false }
 );
@@ -14,7 +18,12 @@ const aboutImageSchema = new mongoose.Schema(
     id: { type: String, required: true, trim: true },
     url: { type: String, trim: true, default: '' },
     publicId: { type: String, trim: true, default: '' },
+    mobileUrl: { type: String, trim: true, default: '' },
+    mobilePublicId: { type: String, trim: true, default: '' },
+    alt: { type: String, trim: true, default: '' },
     caption: { type: String, trim: true, default: '' },
+    focalPoint: { type: String, trim: true, default: 'center center' },
+    aspectRatio: { type: String, trim: true, default: 'auto' },
     size: {
       type: String,
       enum: ['primary', 'secondary', 'accent'],
@@ -25,27 +34,32 @@ const aboutImageSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const whatWeDoItemSchema = new mongoose.Schema(
+const workplaceImageSchema = new mongoose.Schema(
   {
     id: { type: String, required: true, trim: true },
-    title: { type: String, required: true, trim: true },
-    description: { type: String, trim: true, default: '' },
-    icon: { type: String, trim: true, default: '🩺' },
-    image: { type: mediaRefSchema, default: () => ({ url: '', publicId: '', alt: '' }) },
-    linkUrl: { type: String, trim: true, default: '/products' },
+    url: { type: String, trim: true, default: '' },
+    publicId: { type: String, trim: true, default: '' },
+    mobileUrl: { type: String, trim: true, default: '' },
+    mobilePublicId: { type: String, trim: true, default: '' },
+    alt: { type: String, trim: true, default: '' },
+    title: { type: String, trim: true, default: '' },
+    caption: { type: String, trim: true, default: '' },
+    category: { type: String, trim: true, default: 'Workplace' },
+    focalPoint: { type: String, trim: true, default: 'center center' },
+    aspectRatio: { type: String, trim: true, default: 'auto' },
     displayOrder: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true }
   },
   { _id: false }
 );
 
-const founderItemSchema = new mongoose.Schema(
+const profileItemSchema = new mongoose.Schema(
   {
     id: { type: String, required: true, trim: true },
     name: { type: String, required: true, trim: true },
     designation: { type: String, trim: true, default: '' },
     bio: { type: String, trim: true, default: '' },
-    photo: { type: mediaRefSchema, default: () => ({ url: '', publicId: '', alt: '' }) },
+    photo: { type: mediaRefSchema, default: () => ({}) },
     linkedinUrl: { type: String, trim: true, default: '' },
     email: { type: String, trim: true, default: '' },
     displayOrder: { type: Number, default: 0 },
@@ -54,7 +68,20 @@ const founderItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const whyChooseItemSchema = new mongoose.Schema(
+const whatWeDoItemSchema = new mongoose.Schema(
+  {
+    id: { type: String, required: true, trim: true },
+    title: { type: String, required: true, trim: true },
+    description: { type: String, trim: true, default: '' },
+    icon: { type: String, trim: true, default: '🩺' },
+    image: { type: mediaRefSchema, default: () => ({}) },
+    displayOrder: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true }
+  },
+  { _id: false }
+);
+
+const valueItemSchema = new mongoose.Schema(
   {
     id: { type: String, required: true, trim: true },
     title: { type: String, required: true, trim: true },
@@ -69,9 +96,15 @@ const whyChooseItemSchema = new mongoose.Schema(
 const homepageSnapshotSchema = new mongoose.Schema(
   {
     hero: {
-      companyName: { type: String, trim: true, default: 'SRIYAS' },
-      companySubtitle: { type: String, trim: true, default: 'HEALTHCARE PVT LTD' },
-      tagline: { type: String, trim: true, default: 'Empowering Healthcare with Care and Innovation' },
+      companyName: { type: String, trim: true, default: 'SRIYAS HEALTHCARE' },
+      companySubtitle: { type: String, trim: true, default: 'PVT LTD' },
+      tagline: { type: String, trim: true, default: 'Empowering Healthcare with Care and Innovation.' },
+      supportingIntro: {
+        type: String,
+        trim: true,
+        default:
+          'Authorized medical and surgical distribution partner based in Chennai, serving clinicians and hospitals with trusted healthcare technologies.'
+      },
       valuesText: { type: String, trim: true, default: 'CARE · TRUST · INNOVATION' },
       ctaText: { type: String, trim: true, default: 'Explore Sriyas' },
       ctaLink: { type: String, trim: true, default: '#about-sriyas' },
@@ -82,15 +115,20 @@ const homepageSnapshotSchema = new mongoose.Schema(
       showSecondaryCta: { type: Boolean, default: true },
       logo: {
         type: mediaRefSchema,
-        default: () => ({ url: '/assets/logos/sriyas-emblem.png', publicId: '', alt: 'Sriyas Healthcare Emblem' })
+        default: () => ({ url: '/assets/logos/sriyas-emblem.png', alt: 'Sriyas Healthcare Emblem' })
+      },
+      backgroundImage: {
+        type: mediaRefSchema,
+        default: () => ({})
       }
     },
     about: {
       enabled: { type: Boolean, default: true },
       eyebrow: { type: String, trim: true, default: 'About Sriyas Healthcare' },
-      heading: { type: String, trim: true, default: 'Empowering Healthcare Through Innovation' },
+      heading: { type: String, trim: true, default: 'Empowering Healthcare Through Dedication & Partnership' },
       introduction: { type: String, trim: true, default: '' },
       supportingText: { type: String, trim: true, default: '' },
+      hospitalCommitment: { type: String, trim: true, default: '' },
       vision: { type: String, trim: true, default: '' },
       mission: { type: String, trim: true, default: '' },
       layoutPreset: {
@@ -100,69 +138,76 @@ const homepageSnapshotSchema = new mongoose.Schema(
       },
       images: { type: [aboutImageSchema], default: [] }
     },
+    workplace: {
+      enabled: { type: Boolean, default: true },
+      eyebrow: { type: String, trim: true, default: 'Our Company & Workplace' },
+      heading: { type: String, trim: true, default: 'Inside Sriyas Healthcare' },
+      subtitle: { type: String, trim: true, default: '' },
+      layoutStyle: {
+        type: String,
+        enum: ['editorial-collage', 'gallery-grid'],
+        default: 'editorial-collage'
+      },
+      images: { type: [workplaceImageSchema], default: [] }
+    },
+    leadership: {
+      enabled: { type: Boolean, default: true },
+      eyebrow: { type: String, trim: true, default: 'Leadership & Governance' },
+      heading: { type: String, trim: true, default: 'Founders & Directors' },
+      subtitle: { type: String, trim: true, default: '' },
+      items: { type: [profileItemSchema], default: [] }
+    },
+    team: {
+      enabled: { type: Boolean, default: true },
+      eyebrow: { type: String, trim: true, default: 'Our People' },
+      heading: { type: String, trim: true, default: 'Our Dedicated Team' },
+      subtitle: { type: String, trim: true, default: '' },
+      items: { type: [profileItemSchema], default: [] }
+    },
     whatWeDo: {
       enabled: { type: Boolean, default: true },
       eyebrow: { type: String, trim: true, default: 'What We Do' },
-      heading: { type: String, trim: true, default: 'Surgical & Clinical Supply Expertise' },
+      heading: { type: String, trim: true, default: 'Capabilities Built Around Clinical Care' },
       subtitle: { type: String, trim: true, default: '' },
       items: { type: [whatWeDoItemSchema], default: [] }
     },
-    founders: {
+    values: {
       enabled: { type: Boolean, default: true },
-      eyebrow: { type: String, trim: true, default: 'Founders & Leadership' },
-      heading: { type: String, trim: true, default: 'Leadership Dedicated to Clinical Trust' },
-      subtitle: { type: String, trim: true, default: '' },
-      items: { type: [founderItemSchema], default: [] }
-    },
-    productCategories: {
-      enabled: { type: Boolean, default: true },
-      eyebrow: { type: String, trim: true, default: 'Healthcare Solutions' },
-      heading: { type: String, trim: true, default: 'Our Product Categories' },
-      subtitle: { type: String, trim: true, default: '' },
-      selectedCategoryIds: { type: [String], default: [] },
-      maxDisplay: { type: Number, default: 8 },
-      ctaText: { type: String, trim: true, default: 'Explore Product Catalogue' },
-      ctaLink: { type: String, trim: true, default: '/products' }
-    },
-    partners: {
-      enabled: { type: Boolean, default: true },
-      eyebrow: { type: String, trim: true, default: 'Global Manufacturer Alliances' },
-      heading: { type: String, trim: true, default: 'Our Trusted Partners' },
-      subtitle: { type: String, trim: true, default: '' },
-      selectedBrandIds: { type: [String], default: [] },
-      ctaText: { type: String, trim: true, default: 'Explore All Partners' },
-      ctaLink: { type: String, trim: true, default: '/products' }
-    },
-    whyChooseUs: {
-      enabled: { type: Boolean, default: true },
-      eyebrow: { type: String, trim: true, default: 'Our Commitment' },
+      eyebrow: { type: String, trim: true, default: 'Our Values · Why Choose Us' },
       heading: { type: String, trim: true, default: 'Why Choose Sriyas Healthcare' },
       subtitle: { type: String, trim: true, default: '' },
-      items: { type: [whyChooseItemSchema], default: [] }
+      featureImage: { type: mediaRefSchema, default: () => ({}) },
+      items: { type: [valueItemSchema], default: [] }
     },
     callToAction: {
       enabled: { type: Boolean, default: true },
-      eyebrow: { type: String, trim: true, default: 'Connect With Us' },
-      heading: { type: String, trim: true, default: "Let's Build Better Healthcare Together." },
-      supportingText: {
-        type: String,
-        trim: true,
-        default: 'Connect with Sriyas Healthcare to explore our surgical and healthcare product portfolio.'
-      },
-      primaryButtonText: { type: String, trim: true, default: 'Explore Products' },
+      eyebrow: { type: String, trim: true, default: 'Partner With Us' },
+      heading: { type: String, trim: true, default: 'Partnering for Better Healthcare.' },
+      supportingText: { type: String, trim: true, default: '' },
+      primaryButtonText: { type: String, trim: true, default: 'Explore Our Products' },
       primaryButtonLink: { type: String, trim: true, default: '/products' },
       secondaryButtonText: { type: String, trim: true, default: 'Contact Us' },
-      secondaryButtonLink: { type: String, trim: true, default: '/contact' }
+      secondaryButtonLink: { type: String, trim: true, default: '/contact' },
+      showContactDetails: { type: Boolean, default: true },
+      contactPhone: { type: String, trim: true, default: '+91 96008 04456 · +91 93677 72801' },
+      contactEmail: { type: String, trim: true, default: 'Sriyashealthcare@gmail.com' },
+      contactAddress: {
+        type: String,
+        trim: true,
+        default:
+          'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077'
+      },
+      backgroundImage: { type: mediaRefSchema, default: () => ({}) }
     },
     sectionOrder: {
       type: [String],
       default: [
         'about',
+        'workplace',
+        'leadership',
+        'team',
         'whatWeDo',
-        'founders',
-        'productCategories',
-        'partners',
-        'whyChooseUs',
+        'values',
         'callToAction'
       ]
     }
@@ -226,4 +271,3 @@ const homepageContentSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('HomepageContent', homepageContentSchema);
-

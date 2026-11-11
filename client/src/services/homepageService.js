@@ -5,9 +5,7 @@ let publicHomepagePromise = null;
 
 export const homepageService = {
   /**
-   * Fetch ONLY published homepage content for customers.
-   * Uses short-lived in-memory deduplication so back-navigation is instant,
-   * while allowing forced refresh when needed.
+   * Fetch ONLY published homepage content for visitors.
    */
   async getPublicHomepage({ force = false } = {}) {
     if (!force && publicHomepageCache) {
@@ -48,6 +46,11 @@ export const homepageService = {
     return response.data;
   },
 
+  async getMediaLibrary() {
+    const response = await api.get('/admin/homepage/media-library');
+    return response.data;
+  },
+
   async saveDraft(draft) {
     const response = await api.put('/admin/homepage/draft', { draft });
     return response.data;
@@ -78,4 +81,3 @@ export const homepageService = {
 };
 
 export default homepageService;
-

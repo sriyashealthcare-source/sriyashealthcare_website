@@ -1,68 +1,85 @@
 import React from 'react';
-import { resolveAssetUrl } from '../../utils/session';
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
+import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 function getInitials(name = '') {
-  const parts = String(name).trim().split(/\s+/).filter(Boolean);
+  const parts = String(name)
+    .replace(/\(.*?\)/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
   if (parts.length === 0) return 'SH';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 }
 
-export default function FoundersSection({ founders = {}, isPreview = false }) {
+export default function ProfileShowcaseSection({
+  id = 'leadership',
+  section = {},
+  variant = 'leadership',
+  tinted = false,
+  isPreview = false,
+  forceMobile = false
+}) {
   const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
 
-  if (founders.enabled === false) return null;
+  if (section.enabled === false) return null;
 
-  const items = Array.isArray(founders.items)
-    ? founders.items.filter((item) => item && item.isActive !== false && item.name)
+  const items = Array.isArray(section.items)
+    ? [...section.items]
+        .filter((item) => item && item.isActive !== false && item.name)
+        .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 
-  // Never display empty/fabricated leadership placeholders on public website
   if (items.length === 0) return null;
 
   return (
     <section
       ref={sectionRef}
-      id="founders"
-      className={`hp-section hp-founders-section ${isVisible ? 'is-revealed' : ''}`}
-      aria-labelledby="founders-heading"
+      id={id}
+      className={`hp-section ${tinted ? 'hp-section--tinted' : ''} hp-people-section hp-people--${variant} ${
+        isVisible ? 'is-revealed' : ''
+      }`}
+      aria-labelledby={`${id}-heading`}
     >
       <div className="hp-container">
         <header className="hp-section-header hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
-          {founders.eyebrow && <span className="hp-eyebrow">{founders.eyebrow}</span>}
-          {founders.heading && (
-            <h2 id="founders-heading" className="hp-heading">
-              {founders.heading}
+          {section.eyebrow && <span className="hp-eyebrow">{section.eyebrow}</span>}
+          {section.heading && (
+            <h2 id={`${id}-heading`} className="hp-heading">
+              {section.heading}
             </h2>
           )}
-          {founders.subtitle && <p className="hp-section-subtitle">{founders.subtitle}</p>}
+          {section.subtitle && <p className="hp-section-subtitle">{section.subtitle}</p>}
         </header>
 
         <div
           className={`hp-founders-grid ${
-            items.length === 1 ? 'hp-founders-grid--single' : items.length === 2 ? 'hp-founders-grid--two' : ''
+            items.length === 1
+              ? 'hp-founders-grid--single'
+              : items.length === 2
+                ? 'hp-founders-grid--two'
+                : ''
           }`}
         >
           {items.map((person, idx) => (
             <article
               key={person.id || idx}
               className="hp-founder-card hp-reveal-child"
-              style={{ '--reveal-delay': `${90 + idx * 80}ms` }}
+              style={{ '--reveal-delay': `${80 + idx * 70}ms` }}
             >
               <div className="hp-founder-portrait-wrap">
-                {person.photo?.url ? (
-                  <img
-                    src={resolveAssetUrl(person.photo.url)}
-                    alt={person.photo.alt || person.name}
-                    className="hp-founder-portrait"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="hp-founder-monogram" aria-hidden="true">
-                    <span>{getInitials(person.name)}</span>
-                  </div>
-                )}
+                <ResponsiveMediaImage
+                  media={person.photo}
+                  alt={person.photo?.alt || person.name}
+                  className="hp-founder-portrait"
+                  forceMobile={forceMobile}
+                  fallback={
+                    <div className="hp-founder-monogram" aria-hidden="true">
+                      <span>{getInitials(person.name)}</span>
+                    </div>
+                  }
+                />
               </div>
 
               <div className="hp-founder-details">

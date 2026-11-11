@@ -1,15 +1,20 @@
 import React from 'react';
-import { resolveAssetUrl } from '../../utils/session';
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
-import SmartActionLink from './SmartActionLink';
+import ResponsiveMediaImage from './ResponsiveMediaImage';
 
-export default function WhatWeDoSection({ whatWeDo = {}, isPreview = false }) {
+export default function WhatWeDoSection({
+  whatWeDo = {},
+  isPreview = false,
+  forceMobile = false
+}) {
   const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
 
   if (whatWeDo.enabled === false) return null;
 
   const items = Array.isArray(whatWeDo.items)
-    ? whatWeDo.items.filter((item) => item && item.isActive !== false && item.title)
+    ? [...whatWeDo.items]
+        .filter((item) => item && item.isActive !== false && item.title)
+        .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 
   if (items.length === 0) return null;
@@ -33,51 +38,44 @@ export default function WhatWeDoSection({ whatWeDo = {}, isPreview = false }) {
         </header>
 
         <div className="hp-wwd-grid">
-          {items.map((item, idx) => (
-            <article
-              key={item.id || idx}
-              className="hp-wwd-card hp-reveal-child"
-              style={{ '--reveal-delay': `${80 + idx * 70}ms` }}
-            >
-              {item.image?.url ? (
-                <div className="hp-wwd-media">
-                  <img
-                    src={resolveAssetUrl(item.image.url)}
-                    alt={item.image.alt || item.title}
-                    loading="lazy"
-                  />
-                  {item.icon && (
-                    <span className="hp-wwd-floating-icon" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                  )}
-                </div>
-              ) : (
-                <div className="hp-wwd-icon-banner" aria-hidden="true">
-                  <span className="hp-wwd-icon-badge">{item.icon || '🩺'}</span>
-                </div>
-              )}
-
-              <div className="hp-wwd-body">
-                <span className="hp-card-index">0{idx + 1}</span>
-                <h3 className="hp-card-title">{item.title}</h3>
-                {item.description && <p className="hp-card-desc">{item.description}</p>}
-                {item.linkUrl && (
-                  <SmartActionLink
-                    to={item.linkUrl}
-                    isPreview={isPreview}
-                    className="hp-inline-link"
-                  >
-                    <span>Explore Solution</span>
-                    <span aria-hidden="true">→</span>
-                  </SmartActionLink>
+          {items.map((item, idx) => {
+            const hasMedia = Boolean(item.image?.url || item.image?.mobileUrl);
+            return (
+              <article
+                key={item.id || idx}
+                className="hp-wwd-card hp-reveal-child"
+                style={{ '--reveal-delay': `${70 + idx * 65}ms` }}
+              >
+                {hasMedia ? (
+                  <div className="hp-wwd-media">
+                    <ResponsiveMediaImage
+                      media={item.image}
+                      alt={item.image?.alt || item.title}
+                      forceMobile={forceMobile}
+                      fallback={
+                        <div className="hp-wwd-icon-banner">
+                          <span className="hp-wwd-icon-badge">{item.icon || '🩺'}</span>
+                        </div>
+                      }
+                    />
+                  </div>
+                ) : (
+                  <div className="hp-wwd-icon-banner" aria-hidden="true">
+                    <span className="hp-wwd-icon-badge">{item.icon || '🩺'}</span>
+                    <span className="hp-card-index">0{idx + 1}</span>
+                  </div>
                 )}
-              </div>
-            </article>
-          ))}
+
+                <div className="hp-wwd-body">
+                  {hasMedia && <span className="hp-card-index">0{idx + 1}</span>}
+                  <h3 className="hp-card-title">{item.title}</h3>
+                  {item.description && <p className="hp-card-desc">{item.description}</p>}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
-

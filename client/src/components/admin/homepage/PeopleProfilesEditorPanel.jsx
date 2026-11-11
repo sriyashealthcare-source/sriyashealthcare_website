@@ -1,27 +1,43 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
 
-export default function FoundersEditorPanel({ founders, onChange }) {
+export default function PeopleProfilesEditorPanel({
+  sectionData = {},
+  onChange,
+  panelTitle,
+  panelDescription,
+  itemLabel = 'Profile',
+  defaultDesignation = '',
+  defaultPlaceholderPhoto = '/assets/placeholders/portrait-leadership-placeholder.svg'
+}) {
   const updateField = (key, value) => {
-    onChange({ ...founders, [key]: value });
+    onChange({ ...sectionData, [key]: value });
   };
 
-  const items = Array.isArray(founders.items) ? founders.items : [];
+  const items = Array.isArray(sectionData.items) ? sectionData.items : [];
 
   const updateItem = (index, patch) => {
     const next = items.map((item, idx) => (idx === index ? { ...item, ...patch } : item));
     updateField('items', next);
   };
 
-  const addFounder = () => {
+  const addItem = () => {
     const next = [
       ...items,
       {
-        id: `founder-${Date.now()}`,
-        name: '',
-        designation: '',
+        id: `${itemLabel.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`,
+        name: `New ${itemLabel}`,
+        designation: defaultDesignation,
         bio: '',
-        photo: { url: '', publicId: '', alt: '' },
+        photo: {
+          url: defaultPlaceholderPhoto,
+          publicId: '',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: `${itemLabel} portrait`,
+          focalPoint: 'center top',
+          aspectRatio: '1/1'
+        },
         linkedinUrl: '',
         email: '',
         displayOrder: items.length + 1,
@@ -53,16 +69,14 @@ export default function FoundersEditorPanel({ founders, onChange }) {
     <div className="admin-card hp-editor-panel">
       <div className="admin-card-header">
         <div>
-          <h3>Founders &amp; Leadership</h3>
-          <p className="hp-panel-desc">
-            Add real founder and executive leadership portraits, designations, and biographies. No placeholder profiles appear on the live site until you add at least one active person here.
-          </p>
+          <h3>{panelTitle}</h3>
+          <p className="hp-panel-desc">{panelDescription}</p>
         </div>
 
         <label className="hp-checkbox-pill">
           <input
             type="checkbox"
-            checked={founders.enabled !== false}
+            checked={sectionData.enabled !== false}
             onChange={(e) => updateField('enabled', e.target.checked)}
           />
           <span>Section Visible</span>
@@ -72,66 +86,65 @@ export default function FoundersEditorPanel({ founders, onChange }) {
       <div className="hp-form-stack">
         <div className="admin-form-grid">
           <div className="admin-field">
-            <label htmlFor="founders-eyebrow">Section Eyebrow</label>
+            <label>Section Eyebrow</label>
             <input
-              id="founders-eyebrow"
               type="text"
-              value={founders.eyebrow || ''}
+              value={sectionData.eyebrow || ''}
               onChange={(e) => updateField('eyebrow', e.target.value)}
             />
           </div>
 
           <div className="admin-field">
-            <label htmlFor="founders-heading">Section Heading</label>
+            <label>Section Heading</label>
             <input
-              id="founders-heading"
               type="text"
-              value={founders.heading || ''}
+              value={sectionData.heading || ''}
               onChange={(e) => updateField('heading', e.target.value)}
             />
           </div>
         </div>
 
         <div className="admin-field">
-          <label htmlFor="founders-subtitle">Section Subtitle</label>
+          <label>Section Subtitle</label>
           <textarea
-            id="founders-subtitle"
             rows={2}
-            value={founders.subtitle || ''}
+            value={sectionData.subtitle || ''}
             onChange={(e) => updateField('subtitle', e.target.value)}
           />
         </div>
 
         <div className="hp-subcollection">
           <div className="hp-subcollection-header">
-            <h4>Leadership Profiles ({items.length})</h4>
+            <h4>
+              {itemLabel} Profiles ({items.length})
+            </h4>
             <button
               type="button"
-              className="adm-btn adm-btn-primary adm-btn-sm"
-              onClick={addFounder}
+              className="adm-btn adm-btn-secondary adm-btn-sm"
+              onClick={addItem}
             >
-              + Add Founder / Leader
+              + Add {itemLabel}
             </button>
           </div>
 
           {items.length === 0 && (
-            <div className="hp-empty-note">
-              <strong>Public section hidden until populated:</strong> To maintain integrity, Sriyas Healthcare never renders stock photos or synthetic names. Click &ldquo;+ Add Founder / Leader&rdquo; above when ready to publish leadership profiles.
-            </div>
+            <p className="hp-empty-note">
+              No profiles added yet. Add portraits and bios below, or disable Section Visible above until ready.
+            </p>
           )}
 
           <div className="hp-repeater-list">
-            {items.map((person, idx) => (
-              <div key={person.id || idx} className="hp-repeater-item">
+            {items.map((item, idx) => (
+              <div key={item.id || idx} className="hp-repeater-item">
                 <div className="hp-repeater-top">
                   <strong>
-                    Leader #{idx + 1}: {person.name || 'New Profile (Name required to display)'}
+                    {itemLabel} #{idx + 1}: {item.name || 'Unnamed'}
                   </strong>
                   <div className="hp-repeater-actions">
                     <label className="hp-inline-check">
                       <input
                         type="checkbox"
-                        checked={person.isActive !== false}
+                        checked={item.isActive !== false}
                         onChange={(e) => updateItem(idx, { isActive: e.target.checked })}
                       />
                       <span>Active</span>
@@ -157,7 +170,7 @@ export default function FoundersEditorPanel({ founders, onChange }) {
                       className="adm-btn adm-btn-danger adm-btn-sm"
                       onClick={() => removeItem(idx)}
                     >
-                      Remove
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -165,10 +178,11 @@ export default function FoundersEditorPanel({ founders, onChange }) {
                 <ImageUploadField
                   compact
                   roundPreview
-                  label="Portrait Photo (optional — displays gold monogram initials if blank)"
-                  value={person.photo}
+                  label="Portrait Photo"
+                  defaultAspectRatio="1/1"
+                  value={item.photo}
                   onChange={(media) => updateItem(idx, { photo: media })}
-                  hint="Square headshot crop recommended."
+                  hint="Tip: Select 'Top Center' focal point so heads and faces stay perfectly framed across all screen sizes."
                 />
 
                 <div className="admin-form-grid">
@@ -176,49 +190,48 @@ export default function FoundersEditorPanel({ founders, onChange }) {
                     <label>Full Name *</label>
                     <input
                       type="text"
-                      value={person.name || ''}
+                      value={item.name || ''}
                       onChange={(e) => updateItem(idx, { name: e.target.value })}
-                      placeholder="e.g., Founder / Managing Director name"
                     />
                   </div>
                   <div className="admin-field">
-                    <label>Designation / Role</label>
+                    <label>Role / Designation</label>
                     <input
                       type="text"
-                      value={person.designation || ''}
+                      value={item.designation || ''}
                       onChange={(e) => updateItem(idx, { designation: e.target.value })}
-                      placeholder="e.g., Founder &amp; Managing Director"
+                      placeholder={defaultDesignation || 'Title or Department'}
                     />
                   </div>
                 </div>
 
                 <div className="admin-field">
-                  <label>Short Biography / Leadership Message</label>
+                  <label>Short Biography</label>
                   <textarea
                     rows={3}
-                    value={person.bio || ''}
+                    value={item.bio || ''}
                     onChange={(e) => updateItem(idx, { bio: e.target.value })}
-                    placeholder="Concise background or leadership perspective..."
+                    placeholder="Concise introduction highlighting responsibilities and experience."
                   />
                 </div>
 
                 <div className="admin-form-grid">
                   <div className="admin-field">
-                    <label>LinkedIn URL (optional)</label>
+                    <label>Email (optional)</label>
                     <input
-                      type="url"
-                      value={person.linkedinUrl || ''}
-                      onChange={(e) => updateItem(idx, { linkedinUrl: e.target.value })}
-                      placeholder="https://linkedin.com/in/..."
+                      type="email"
+                      value={item.email || ''}
+                      onChange={(e) => updateItem(idx, { email: e.target.value })}
+                      placeholder="name@sriyashealthcare.com"
                     />
                   </div>
                   <div className="admin-field">
-                    <label>Email Address (optional)</label>
+                    <label>LinkedIn URL (optional)</label>
                     <input
-                      type="email"
-                      value={person.email || ''}
-                      onChange={(e) => updateItem(idx, { email: e.target.value })}
-                      placeholder="name@sriyashealthcare.com"
+                      type="url"
+                      value={item.linkedinUrl || ''}
+                      onChange={(e) => updateItem(idx, { linkedinUrl: e.target.value })}
+                      placeholder="https://linkedin.com/in/..."
                     />
                   </div>
                 </div>

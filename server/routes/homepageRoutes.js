@@ -8,7 +8,8 @@ const {
   saveHomepageDraft,
   publishHomepage,
   discardHomepageDraft,
-  uploadHomepageImage
+  uploadHomepageImage,
+  getHomepageMediaLibrary
 } = require('../controllers/homepageController');
 
 const publicHomepageRouter = express.Router();
@@ -21,6 +22,7 @@ publicHomepageRouter.get('/', getPublicHomepage);
 adminHomepageRouter.use(protectAdmin);
 adminHomepageRouter.get('/', getAdminHomepage);
 adminHomepageRouter.get('/preview', getAdminHomepagePreview);
+adminHomepageRouter.get('/media-library', getHomepageMediaLibrary);
 adminHomepageRouter.put('/draft', saveHomepageDraft);
 adminHomepageRouter.post('/publish', publishHomepage);
 adminHomepageRouter.post('/discard', discardHomepageDraft);
@@ -30,4 +32,3 @@ module.exports = {
   publicHomepageRouter,
   adminHomepageRouter
 };
-

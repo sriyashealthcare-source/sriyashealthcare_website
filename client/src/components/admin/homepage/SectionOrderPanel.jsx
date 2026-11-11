@@ -3,37 +3,37 @@ import React, { useState } from 'react';
 const SECTION_META = {
   about: {
     label: 'About Sriyas Healthcare',
-    desc: 'Corporate story, vision, mission & collage imagery',
+    desc: 'Corporate story, vision, mission, commitment & collage imagery',
     tabId: 'about'
+  },
+  workplace: {
+    label: 'Our Company & Workplace Gallery',
+    desc: 'Office interior, team spaces & medical supply activity gallery',
+    tabId: 'workplace'
+  },
+  leadership: {
+    label: 'Founders & Directors',
+    desc: 'Executive leadership portraits & biographies',
+    tabId: 'leadership'
+  },
+  team: {
+    label: 'Hospital Support & Operations Team',
+    desc: 'People coordinating hospital relations, clinical assistance & logistics',
+    tabId: 'team'
   },
   whatWeDo: {
     label: 'What We Do',
-    desc: 'Specialty medical & surgical distribution capability cards',
+    desc: 'Focused healthcare supply & hospital service capabilities',
     tabId: 'whatWeDo'
   },
-  founders: {
-    label: 'Founders & Leadership',
-    desc: 'Leadership portraits & bios (auto-hidden if empty)',
-    tabId: 'founders'
-  },
-  productCategories: {
-    label: 'Healthcare Solutions / Product Categories',
-    desc: 'Dynamic product category grid synced from database',
-    tabId: 'productCategories'
-  },
-  partners: {
-    label: 'Our Partners',
-    desc: 'Floating manufacturer partner logos synced from Brands collection',
-    tabId: 'partners'
-  },
-  whyChooseUs: {
-    label: 'Why Choose Sriyas Healthcare',
-    desc: 'Editorial strength pillars highlighting clinical reliability',
-    tabId: 'whyChooseUs'
+  values: {
+    label: 'Our Values & Why Choose Sriyas',
+    desc: 'Trust pillars & ethics alongside optional editorial feature photography',
+    tabId: 'values'
   },
   callToAction: {
     label: 'Closing Call To Action',
-    desc: 'Obsidian & gold bottom conversion banner',
+    desc: 'Partnering for Better Healthcare banner with direct contact strip',
     tabId: 'callToAction'
   }
 };

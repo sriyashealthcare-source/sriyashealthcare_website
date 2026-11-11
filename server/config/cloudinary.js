@@ -190,6 +190,60 @@ const deleteAsset = async (publicId, resourceType = 'image', checkReferences = t
   return false;
 };
 
+const listMediaLibrary = async (maxResults = 60) => {
+  if (isCloudinaryConfigured()) {
+    try {
+      if (!cloudinary.config().cloud_name) {
+        configureCloudinary();
+      }
+      const result = await cloudinary.api.resources({
+        type: 'upload',
+        prefix: 'sriyas/',
+        resource_type: 'image',
+        max_results: Math.min(100, Math.max(10, Number(maxResults) || 60))
+      });
+      return (result?.resources || []).map((item) => ({
+        url: item.secure_url,
+        publicId: item.public_id,
+        format: item.format || '',
+        width: item.width || 0,
+        height: item.height || 0,
+        bytes: item.bytes || 0,
+        createdAt: item.created_at || null,
+        source: 'cloudinary'
+      }));
+    } catch (err) {
+      console.warn('[Cloudinary] Could not list remote media library:', err.message);
+    }
+  }
+
+  const localDirs = [
+    { dir: path.join(__dirname, '..', '..', 'client', 'public', 'assets', 'uploads'), prefix: '/assets/uploads/', idPrefix: 'local:', source: 'local-upload' },
+    { dir: path.join(__dirname, '..', '..', 'client', 'public', 'assets', 'placeholders'), prefix: '/assets/placeholders/', idPrefix: '', source: 'placeholder' },
+    { dir: path.join(__dirname, '..', '..', 'client', 'public', 'assets', 'contact'), prefix: '/assets/contact/', idPrefix: '', source: 'site-asset' },
+    { dir: path.join(__dirname, '..', '..', 'client', 'public', 'assets', 'logos'), prefix: '/assets/logos/', idPrefix: '', source: 'site-asset' }
+  ];
+
+  const collected = [];
+  for (const entry of localDirs) {
+    if (!fs.existsSync(entry.dir)) continue;
+    const files = fs.readdirSync(entry.dir);
+    for (const file of files) {
+      if (!/\.(png|jpe?g|webp|svg|avif)$/i.test(file)) continue;
+      collected.push({
+        url: `${entry.prefix}${file}`,
+        publicId: entry.idPrefix ? `${entry.idPrefix}${file}` : '',
+        format: path.extname(file).replace('.', ''),
+        width: 0,
+        height: 0,
+        source: entry.source,
+        label: file
+      });
+    }
+  }
+  return collected;
+};
+
 module.exports = {
   cloudinary,
   CLOUDINARY_FOLDERS,
@@ -197,5 +251,6 @@ module.exports = {
   configureCloudinary,
   uploadBuffer,
   uploadLocalFile,
-  deleteAsset
+  deleteAsset,
+  listMediaLibrary
 };

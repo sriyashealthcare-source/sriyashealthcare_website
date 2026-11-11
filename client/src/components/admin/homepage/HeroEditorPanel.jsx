@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
 
-export default function HeroEditorPanel({ hero, onChange }) {
+export default function HeroEditorPanel({ hero = {}, onChange }) {
   const updateField = (key, value) => {
     onChange({ ...hero, [key]: value });
   };
@@ -12,7 +12,7 @@ export default function HeroEditorPanel({ hero, onChange }) {
         <div>
           <h3>Hero Section &amp; Brand Transformation</h3>
           <p className="hp-panel-desc">
-            Controls the initial viewport lockup shown at page top and the brand mark that animates smoothly into the top-left navbar on scroll.
+            Controls the initial viewport lockup shown at page top and the brand mark that moves seamlessly into the top-left navbar on scroll.
           </p>
         </div>
         <span className="status-badge status-resolved">Always First</span>
@@ -23,7 +23,9 @@ export default function HeroEditorPanel({ hero, onChange }) {
           label="Hero Emblem / Brand Logo"
           value={hero.logo}
           onChange={(nextLogo) => updateField('logo', nextLogo)}
-          hint="Transparent PNG or crisp SVG logo recommended (used in Hero & synchronized when docked to Navbar)."
+          allowMobileVariant={false}
+          showPresentationControls={false}
+          hint="Transparent PNG or crisp SVG logo recommended (synchronized cleanly with the docked navbar logo)."
         />
 
         <div className="admin-form-grid">
@@ -34,7 +36,7 @@ export default function HeroEditorPanel({ hero, onChange }) {
               type="text"
               value={hero.companyName || ''}
               onChange={(e) => updateField('companyName', e.target.value)}
-              placeholder="SRIYAS"
+              placeholder="SRIYAS HEALTHCARE"
             />
           </div>
 
@@ -45,7 +47,7 @@ export default function HeroEditorPanel({ hero, onChange }) {
               type="text"
               value={hero.companySubtitle || ''}
               onChange={(e) => updateField('companySubtitle', e.target.value)}
-              placeholder="HEALTHCARE PVT LTD"
+              placeholder="PVT LTD"
             />
           </div>
         </div>
@@ -58,7 +60,7 @@ export default function HeroEditorPanel({ hero, onChange }) {
               type="text"
               value={hero.tagline || ''}
               onChange={(e) => updateField('tagline', e.target.value)}
-              placeholder="Empowering Healthcare with Care and Innovation"
+              placeholder="Empowering Healthcare with Care and Innovation."
             />
           </div>
 
@@ -72,6 +74,17 @@ export default function HeroEditorPanel({ hero, onChange }) {
               placeholder="CARE · TRUST · INNOVATION"
             />
           </div>
+        </div>
+
+        <div className="admin-field">
+          <label htmlFor="hero-supportingIntro">Supporting Hero Intro</label>
+          <textarea
+            id="hero-supportingIntro"
+            rows={2}
+            value={hero.supportingIntro || ''}
+            onChange={(e) => updateField('supportingIntro', e.target.value)}
+            placeholder="Concise introduction shown beneath the company tagline."
+          />
         </div>
 
         <div className="admin-form-grid">
@@ -150,8 +163,15 @@ export default function HeroEditorPanel({ hero, onChange }) {
             <span>Show Secondary CTA Button</span>
           </label>
         </div>
+
+        <ImageUploadField
+          label="Hero Architectural Backdrop (Optional)"
+          value={hero.backgroundImage}
+          onChange={(nextBg) => updateField('backgroundImage', nextBg)}
+          defaultAspectRatio="16/9"
+          hint="Subtle background texture rendered softly behind the ivory gradient overlay. Leave blank for pure warm ivory styling."
+        />
       </div>
     </div>
   );
 }
-

@@ -1,23 +1,24 @@
 import React from 'react';
+import ImageUploadField from './ImageUploadField';
 
-export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
+export default function ValuesEditorPanel({ values = {}, onChange }) {
   const updateField = (key, value) => {
-    onChange({ ...whyChooseUs, [key]: value });
+    onChange({ ...values, [key]: value });
   };
 
-  const items = Array.isArray(whyChooseUs.items) ? whyChooseUs.items : [];
+  const items = Array.isArray(values.items) ? values.items : [];
 
   const updateItem = (index, patch) => {
     const next = items.map((item, idx) => (idx === index ? { ...item, ...patch } : item));
     updateField('items', next);
   };
 
-  const addPillar = () => {
+  const addItem = () => {
     const next = [
       ...items,
       {
-        id: `wcu-${Date.now()}`,
-        title: 'New Quality Pillar',
+        id: `val-${Date.now()}`,
+        title: 'New Value Pillar',
         description: '',
         icon: '✦',
         displayOrder: items.length + 1,
@@ -49,16 +50,16 @@ export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
     <div className="admin-card hp-editor-panel">
       <div className="admin-card-header">
         <div>
-          <h3>Why Choose Sriyas Healthcare</h3>
+          <h3>Our Values &amp; Why Choose Sriyas</h3>
           <p className="hp-panel-desc">
-            Manage key strength pillars communicating clinical trustworthiness, manufacturer alliances, and responsive institutional support.
+            Highlight ethical governance, quality assurance, and hospital partnership values alongside an optional editorial feature photograph.
           </p>
         </div>
 
         <label className="hp-checkbox-pill">
           <input
             type="checkbox"
-            checked={whyChooseUs.enabled !== false}
+            checked={values.enabled !== false}
             onChange={(e) => updateField('enabled', e.target.checked)}
           />
           <span>Section Visible</span>
@@ -68,45 +69,53 @@ export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
       <div className="hp-form-stack">
         <div className="admin-form-grid">
           <div className="admin-field">
-            <label htmlFor="wcu-eyebrow">Section Eyebrow</label>
+            <label htmlFor="val-eyebrow">Section Eyebrow</label>
             <input
-              id="wcu-eyebrow"
+              id="val-eyebrow"
               type="text"
-              value={whyChooseUs.eyebrow || ''}
+              value={values.eyebrow || ''}
               onChange={(e) => updateField('eyebrow', e.target.value)}
             />
           </div>
 
           <div className="admin-field">
-            <label htmlFor="wcu-heading">Section Heading</label>
+            <label htmlFor="val-heading">Section Heading</label>
             <input
-              id="wcu-heading"
+              id="val-heading"
               type="text"
-              value={whyChooseUs.heading || ''}
+              value={values.heading || ''}
               onChange={(e) => updateField('heading', e.target.value)}
             />
           </div>
         </div>
 
         <div className="admin-field">
-          <label htmlFor="wcu-subtitle">Section Subtitle</label>
+          <label htmlFor="val-subtitle">Section Subtitle</label>
           <textarea
-            id="wcu-subtitle"
+            id="val-subtitle"
             rows={2}
-            value={whyChooseUs.subtitle || ''}
+            value={values.subtitle || ''}
             onChange={(e) => updateField('subtitle', e.target.value)}
           />
         </div>
 
+        <ImageUploadField
+          label="Values Editorial Feature Image (Optional)"
+          value={values.featureImage}
+          defaultAspectRatio="4/3"
+          onChange={(media) => updateField('featureImage', media)}
+          hint="Displayed in the two-column Values split layout beside the pillars list."
+        />
+
         <div className="hp-subcollection">
           <div className="hp-subcollection-header">
-            <h4>Strength Pillars ({items.length})</h4>
+            <h4>Value Pillars ({items.length})</h4>
             <button
               type="button"
               className="adm-btn adm-btn-secondary adm-btn-sm"
-              onClick={addPillar}
+              onClick={addItem}
             >
-              + Add Pillar
+              + Add Value Pillar
             </button>
           </div>
 
@@ -115,7 +124,7 @@ export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
               <div key={item.id || idx} className="hp-repeater-item">
                 <div className="hp-repeater-top">
                   <strong>
-                    Pillar #0{idx + 1}: {item.title || 'Untitled'}
+                    Pillar #{idx + 1}: {item.title || 'Untitled'}
                   </strong>
                   <div className="hp-repeater-actions">
                     <label className="hp-inline-check">
@@ -154,7 +163,7 @@ export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
 
                 <div className="admin-form-grid">
                   <div className="admin-field">
-                    <label>Pillar Title *</label>
+                    <label>Title *</label>
                     <input
                       type="text"
                       value={item.title || ''}
@@ -162,7 +171,7 @@ export default function WhyChooseUsEditorPanel({ whyChooseUs, onChange }) {
                     />
                   </div>
                   <div className="admin-field">
-                    <label>Icon Symbol</label>
+                    <label>Icon (Symbol / Emoji)</label>
                     <input
                       type="text"
                       value={item.icon || ''}

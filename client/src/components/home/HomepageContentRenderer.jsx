@@ -1,24 +1,28 @@
 import React from 'react';
 import HeroMorphSection from './HeroMorphSection';
 import AboutSection from './AboutSection';
+import WorkplaceGallerySection from './WorkplaceGallerySection';
+import ProfileShowcaseSection from './ProfileShowcaseSection';
 import WhatWeDoSection from './WhatWeDoSection';
-import FoundersSection from './FoundersSection';
-import SolutionsSection from './SolutionsSection';
-import PartnersSection from './PartnersSection';
-import WhyChooseUsSection from './WhyChooseUsSection';
+import ValuesSection from './ValuesSection';
 import CtaSection from './CtaSection';
+import ContinueToProductsTrigger from './ContinueToProductsTrigger';
 
 const DEFAULT_ORDER = [
   'about',
+  'workplace',
+  'leadership',
+  'team',
   'whatWeDo',
-  'founders',
-  'productCategories',
-  'partners',
-  'whyChooseUs',
+  'values',
   'callToAction'
 ];
 
-export default function HomepageContentRenderer({ homepage, isPreview = false }) {
+export default function HomepageContentRenderer({
+  homepage,
+  isPreview = false,
+  forceMobile = false
+}) {
   if (!homepage) return null;
 
   const order =
@@ -29,35 +33,63 @@ export default function HomepageContentRenderer({ homepage, isPreview = false })
   const renderSection = (key) => {
     switch (key) {
       case 'about':
-        return <AboutSection key="about" about={homepage.about} isPreview={isPreview} />;
+        return (
+          <AboutSection
+            key="about"
+            about={homepage.about}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
+      case 'workplace':
+        return (
+          <WorkplaceGallerySection
+            key="workplace"
+            workplace={homepage.workplace}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
+      case 'leadership':
+        return (
+          <ProfileShowcaseSection
+            key="leadership"
+            id="leadership"
+            section={homepage.leadership}
+            variant="leadership"
+            tinted={false}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
+      case 'team':
+        return (
+          <ProfileShowcaseSection
+            key="team"
+            id="our-team"
+            section={homepage.team}
+            variant="team"
+            tinted={false}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
       case 'whatWeDo':
-        return <WhatWeDoSection key="whatWeDo" whatWeDo={homepage.whatWeDo} isPreview={isPreview} />;
-      case 'founders':
-        return <FoundersSection key="founders" founders={homepage.founders} isPreview={isPreview} />;
-      case 'productCategories':
         return (
-          <SolutionsSection
-            key="productCategories"
-            productCategories={homepage.productCategories}
-            resolvedCategories={homepage.resolvedCategories}
+          <WhatWeDoSection
+            key="whatWeDo"
+            whatWeDo={homepage.whatWeDo}
             isPreview={isPreview}
+            forceMobile={forceMobile}
           />
         );
-      case 'partners':
+      case 'values':
         return (
-          <PartnersSection
-            key="partners"
-            partners={homepage.partners}
-            resolvedPartners={homepage.resolvedPartners}
+          <ValuesSection
+            key="values"
+            values={homepage.values}
             isPreview={isPreview}
-          />
-        );
-      case 'whyChooseUs':
-        return (
-          <WhyChooseUsSection
-            key="whyChooseUs"
-            whyChooseUs={homepage.whyChooseUs}
-            isPreview={isPreview}
+            forceMobile={forceMobile}
           />
         );
       case 'callToAction':
@@ -66,6 +98,7 @@ export default function HomepageContentRenderer({ homepage, isPreview = false })
             key="callToAction"
             callToAction={homepage.callToAction}
             isPreview={isPreview}
+            forceMobile={forceMobile}
           />
         );
       default:
@@ -74,10 +107,18 @@ export default function HomepageContentRenderer({ homepage, isPreview = false })
   };
 
   return (
-    <div className={`hp-root ${isPreview ? 'hp-root--preview' : ''}`}>
-      <HeroMorphSection hero={homepage.hero} isPreview={isPreview} />
+    <div
+      className={`hp-root ${isPreview ? 'hp-root--preview' : ''} ${
+        forceMobile ? 'hp-root--forced-mobile' : ''
+      }`}
+    >
+      <HeroMorphSection
+        hero={homepage.hero}
+        isPreview={isPreview}
+        forceMobile={forceMobile}
+      />
       {order.map(renderSection)}
+      <ContinueToProductsTrigger isPreview={isPreview} />
     </div>
   );
 }
-

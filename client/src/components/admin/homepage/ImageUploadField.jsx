@@ -1,20 +1,61 @@
 import React, { useRef, useState } from 'react';
 import { resolveAssetUrl } from '../../../utils/session';
 import { homepageService } from '../../../services/homepageService';
+import MediaLibraryModal from './MediaLibraryModal';
+
+const FOCAL_POINT_OPTIONS = [
+  { value: 'center center', label: 'Center (Balanced)' },
+  { value: 'center top', label: 'Top Center (Portraits / Heads)' },
+  { value: 'center bottom', label: 'Bottom Center' },
+  { value: 'left center', label: 'Left Focus' },
+  { value: 'right center', label: 'Right Focus' }
+];
+
+const ASPECT_RATIO_OPTIONS = [
+  { value: 'auto', label: 'Auto (Layout Default)' },
+  { value: '16/9', label: '16:9 Widescreen' },
+  { value: '4/3', label: '4:3 Editorial Card' },
+  { value: '3/2', label: '3:2 Classic Photo' },
+  { value: '1/1', label: '1:1 Square' },
+  { value: '3/4', label: '3:4 Vertical Portrait' }
+];
+
+function normalizeMedia(value, defaultAspectRatio = 'auto') {
+  return {
+    url: value?.url || '',
+    publicId: value?.publicId || '',
+    mobileUrl: value?.mobileUrl || '',
+    mobilePublicId: value?.mobilePublicId || '',
+    alt: value?.alt || '',
+    focalPoint: value?.focalPoint || 'center center',
+    aspectRatio: value?.aspectRatio || defaultAspectRatio
+  };
+}
 
 export default function ImageUploadField({
   label = 'Image',
-  value = { url: '', publicId: '', alt: '' },
+  value,
   onChange,
   hint = 'Recommended: high-resolution JPG, PNG, or WEBP.',
   roundPreview = false,
-  compact = false
+  compact = false,
+  allowMobileVariant = true,
+  showPresentationControls = true,
+  defaultAspectRatio = 'auto'
 }) {
   const fileInputRef = useRef(null);
+  const [variant, setVariant] = useState('desktop');
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [libraryOpen, setLibraryOpen] = useState(false);
 
-  const currentUrl = value?.url || '';
+  const media = normalizeMedia(value, defaultAspectRatio);
+  const activeIsMobile = allowMobileVariant && variant === 'mobile';
+  const activeUrl = activeIsMobile ? media.mobileUrl : media.url;
+
+  const commit = (patch) => {
+    onChange({ ...media, ...patch });
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -25,15 +66,23 @@ export default function ImageUploadField({
     try {
       const res = await homepageService.uploadImage(file);
       if (res?.image?.url) {
-        onChange({
-          url: res.image.url,
-          publicId: res.image.publicId || '',
-          alt: value?.alt || file.name.replace(/\.[^.]+$/, '')
-        });
+        if (activeIsMobile) {
+          commit({
+            mobileUrl: res.image.url,
+            mobilePublicId: res.image.publicId || ''
+          });
+        } else {
+          commit({
+            url: res.image.url,
+            publicId: res.image.publicId || '',
+            alt: media.alt || file.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')
+          });
+        }
       }
     } catch (err) {
       setUploadError(
-        err.response?.data?.message || 'Image upload failed. Please check your connection and file format.'
+        err.response?.data?.message ||
+          'Image upload failed. Please check your connection and file format.'
       );
     } finally {
       setUploading(false);
@@ -43,26 +92,74 @@ export default function ImageUploadField({
     }
   };
 
-  const handleClear = () => {
+  const handleSelectFromLibrary = (selected) => {
     setUploadError('');
-    onChange({ url: '', publicId: '', alt: '' });
+    if (activeIsMobile) {
+      commit({
+        mobileUrl: selected.url,
+        mobilePublicId: selected.publicId || ''
+      });
+    } else {
+      commit({
+        url: selected.url,
+        publicId: selected.publicId || '',
+        alt: media.alt || selected.suggestedAlt || ''
+      });
+    }
+  };
+
+  const handleClearActive = () => {
+    setUploadError('');
+    if (activeIsMobile) {
+      commit({ mobileUrl: '', mobilePublicId: '' });
+    } else {
+      commit({ url: '', publicId: '' });
+    }
   };
 
   return (
     <div className={`hp-upload-field ${compact ? 'hp-upload-field--compact' : ''}`}>
-      {label && <label className="hp-field-label">{label}</label>}
+      <div className="hp-upload-label-row">
+        {label ? <label className="hp-field-label">{label}</label> : <span />}
+        {allowMobileVariant && (
+          <div className="hp-upload-subtabs" role="tablist" aria-label="Device image variant">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!activeIsMobile}
+              className={`hp-upload-subtab ${!activeIsMobile ? 'is-active' : ''}`}
+              onClick={() => setVariant('desktop')}
+            >
+              Desktop {media.url ? '●' : ''}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeIsMobile}
+              className={`hp-upload-subtab ${activeIsMobile ? 'is-active' : ''}`}
+              onClick={() => setVariant('mobile')}
+            >
+              Mobile {media.mobileUrl ? '●' : '(Auto)'}
+            </button>
+          </div>
+        )}
+      </div>
 
       <div className="hp-upload-row">
         <div
           className={`hp-upload-thumb ${roundPreview ? 'hp-upload-thumb--round' : ''} ${
-            !currentUrl ? 'is-empty' : ''
+            !activeUrl ? 'is-empty' : ''
           }`}
         >
-          {currentUrl ? (
-            <img src={resolveAssetUrl(currentUrl)} alt={value?.alt || label} />
+          {activeUrl ? (
+            <img
+              src={resolveAssetUrl(activeUrl)}
+              alt={media.alt || label || 'Uploaded preview'}
+              style={{ objectPosition: media.focalPoint || 'center center' }}
+            />
           ) : (
             <span className="hp-upload-placeholder-icon" aria-hidden="true">
-              🖼️
+              {activeIsMobile ? '📱' : '🖼️'}
             </span>
           )}
         </div>
@@ -83,22 +180,43 @@ export default function ImageUploadField({
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
             >
-              {uploading ? 'Uploading...' : currentUrl ? 'Replace Image' : 'Upload Image'}
+              {uploading
+                ? 'Uploading...'
+                : activeUrl
+                  ? `Replace ${activeIsMobile ? 'Mobile' : 'Image'}`
+                  : `Upload ${activeIsMobile ? 'Mobile' : 'Image'}`}
             </button>
 
-            {currentUrl && (
+            <button
+              type="button"
+              className="adm-btn adm-btn-secondary adm-btn-sm"
+              onClick={() => setLibraryOpen(true)}
+              disabled={uploading}
+            >
+              Choose from Library
+            </button>
+
+            {activeUrl && (
               <button
                 type="button"
                 className="adm-btn adm-btn-ghost adm-btn-sm"
-                onClick={handleClear}
+                onClick={handleClearActive}
                 disabled={uploading}
               >
-                Remove
+                {activeIsMobile ? 'Reset to Auto' : 'Remove'}
               </button>
             )}
           </div>
 
-          {hint && <p className="hp-field-hint">{hint}</p>}
+          {activeIsMobile && !media.mobileUrl && (
+            <p className="hp-field-hint">
+              Currently mirrors the Desktop image on mobile screens. Upload a portrait crop only if needed.
+            </p>
+          )}
+
+          {hint && (!activeIsMobile || media.mobileUrl) && (
+            <p className="hp-field-hint">{hint}</p>
+          )}
 
           {uploadError && (
             <p className="hp-field-error" role="alert">
@@ -107,7 +225,61 @@ export default function ImageUploadField({
           )}
         </div>
       </div>
+
+      {showPresentationControls && (
+        <div className="hp-focal-grid">
+          <div className="admin-field">
+            <label>Alt Description (Accessibility)</label>
+            <input
+              type="text"
+              value={media.alt}
+              onChange={(e) => commit({ alt: e.target.value })}
+              placeholder="Concise description of the image"
+            />
+          </div>
+
+          <div className="admin-field">
+            <label>Focal Point</label>
+            <select
+              value={media.focalPoint}
+              onChange={(e) => commit({ focalPoint: e.target.value })}
+            >
+              {FOCAL_POINT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="admin-field">
+            <label>Aspect Ratio</label>
+            <select
+              value={media.aspectRatio}
+              onChange={(e) => commit({ aspectRatio: e.target.value })}
+            >
+              {ASPECT_RATIO_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+
+      <MediaLibraryModal
+        isOpen={libraryOpen}
+        onClose={() => setLibraryOpen(false)}
+        onSelect={handleSelectFromLibrary}
+        targetLabel={
+          label
+            ? `${label} (${activeIsMobile ? 'Mobile Crop' : 'Desktop'})`
+            : activeIsMobile
+              ? 'Mobile Crop'
+              : 'Desktop Image'
+        }
+      />
     </div>
   );
 }
-

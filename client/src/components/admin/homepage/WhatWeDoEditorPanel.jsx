@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
 
-export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
+export default function WhatWeDoEditorPanel({ whatWeDo = {}, onChange }) {
   const updateField = (key, value) => {
     onChange({ ...whatWeDo, [key]: value });
   };
@@ -21,8 +21,15 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
         title: 'New Healthcare Capability',
         description: '',
         icon: '🩺',
-        image: { url: '', publicId: '', alt: '' },
-        linkUrl: '/products',
+        image: {
+          url: '',
+          publicId: '',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: '',
+          focalPoint: 'center center',
+          aspectRatio: '16/9'
+        },
         displayOrder: items.length + 1,
         isActive: true
       }
@@ -54,7 +61,7 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
         <div>
           <h3>What We Do</h3>
           <p className="hp-panel-desc">
-            Highlight Sriyas Healthcare&apos;s distribution capabilities, clinical product specialties, and hospital supply activities.
+            Highlight Sriyas Healthcare&apos;s distribution capabilities, hospital coordination, and medical supply activities without cluttering the homepage with product catalogues.
           </p>
         </div>
 
@@ -103,13 +110,13 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
 
         <div className="hp-subcollection">
           <div className="hp-subcollection-header">
-            <h4>Activity Cards ({items.length})</h4>
+            <h4>Capability Cards ({items.length})</h4>
             <button
               type="button"
               className="adm-btn adm-btn-secondary adm-btn-sm"
               onClick={addItem}
             >
-              + Add Activity Card
+              + Add Capability Card
             </button>
           </div>
 
@@ -157,7 +164,7 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
 
                 <div className="admin-form-grid">
                   <div className="admin-field">
-                    <label>Card Title *</label>
+                    <label>Capability Title *</label>
                     <input
                       type="text"
                       value={item.title || ''}
@@ -165,7 +172,7 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
                     />
                   </div>
                   <div className="admin-field">
-                    <label>Badge Icon (Emoji/Symbol)</label>
+                    <label>Badge Icon (Emoji / Symbol)</label>
                     <input
                       type="text"
                       value={item.icon || ''}
@@ -183,22 +190,13 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
                   />
                 </div>
 
-                <div className="admin-field">
-                  <label>Link Destination</label>
-                  <input
-                    type="text"
-                    value={item.linkUrl || ''}
-                    onChange={(e) => updateItem(idx, { linkUrl: e.target.value })}
-                    placeholder="/products/peters"
-                  />
-                </div>
-
                 <ImageUploadField
                   compact
                   label="Card Feature Image (optional)"
                   value={item.image}
+                  defaultAspectRatio="16/9"
                   onChange={(media) => updateItem(idx, { image: media })}
-                  hint="If omitted, the badge icon is styled prominently instead."
+                  hint="If left empty, the refined gold emblem badge is featured instead."
                 />
               </div>
             ))}
@@ -208,4 +206,3 @@ export default function WhatWeDoEditorPanel({ whatWeDo, onChange }) {
     </div>
   );
 }
-

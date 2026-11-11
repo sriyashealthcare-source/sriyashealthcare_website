@@ -1,15 +1,19 @@
 import React from 'react';
-import { resolveAssetUrl } from '../../utils/session';
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
+import ResponsiveMediaImage from './ResponsiveMediaImage';
 
-export default function AboutSection({ about = {}, isPreview = false }) {
+export default function AboutSection({
+  about = {},
+  isPreview = false,
+  forceMobile = false
+}) {
   const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
 
   if (about.enabled === false) return null;
 
   const images = Array.isArray(about.images)
     ? [...about.images]
-        .filter((img) => Boolean(img?.url))
+        .filter((img) => Boolean(img?.url || img?.mobileUrl))
         .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 
@@ -26,8 +30,8 @@ export default function AboutSection({ about = {}, isPreview = false }) {
       aria-labelledby="about-heading"
     >
       <div className="hp-container">
-        <div className="hp-about-grid">
-          {/* Narrative Story Column */}
+        <div className={`hp-about-grid ${images.length === 0 ? 'hp-about-grid--no-media' : ''}`}>
+          {/* Company Narrative Column */}
           <div className="hp-about-content hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
             {about.eyebrow && <span className="hp-eyebrow">{about.eyebrow}</span>}
             {about.heading && (
@@ -42,6 +46,9 @@ export default function AboutSection({ about = {}, isPreview = false }) {
             )}
             {about.supportingText && (
               <p className="hp-body-paragraph">{about.supportingText}</p>
+            )}
+            {about.hospitalCommitment && (
+              <p className="hp-body-paragraph">{about.hospitalCommitment}</p>
             )}
 
             {(about.vision || about.mission) && (
@@ -62,21 +69,21 @@ export default function AboutSection({ about = {}, isPreview = false }) {
             )}
           </div>
 
-          {/* Floating Architectural Media Collage */}
+          {/* Editorial Media Composition */}
           {images.length > 0 && (
             <div
               className={`hp-about-visuals hp-reveal-child ${
                 images.length === 1 ? 'hp-about-visuals--single' : ''
               }`}
-              style={{ '--reveal-delay': '140ms' }}
+              style={{ '--reveal-delay': '120ms' }}
             >
               {primaryImg && (
                 <figure className="hp-collage-frame hp-collage-frame--primary">
                   <div className="hp-collage-media">
-                    <img
-                      src={resolveAssetUrl(primaryImg.url)}
-                      alt={primaryImg.caption || 'Sriyas Healthcare facility'}
-                      loading="lazy"
+                    <ResponsiveMediaImage
+                      media={primaryImg}
+                      alt={primaryImg.caption || 'Sriyas Healthcare corporate facility'}
+                      forceMobile={forceMobile}
                     />
                   </div>
                   {primaryImg.caption && (
@@ -88,10 +95,10 @@ export default function AboutSection({ about = {}, isPreview = false }) {
               {secondaryImg && (
                 <figure className="hp-collage-frame hp-collage-frame--secondary">
                   <div className="hp-collage-media">
-                    <img
-                      src={resolveAssetUrl(secondaryImg.url)}
-                      alt={secondaryImg.caption || 'Sriyas Healthcare surgical portfolio'}
-                      loading="lazy"
+                    <ResponsiveMediaImage
+                      media={secondaryImg}
+                      alt={secondaryImg.caption || 'Sriyas Healthcare operations'}
+                      forceMobile={forceMobile}
                     />
                   </div>
                   {secondaryImg.caption && (
@@ -105,10 +112,10 @@ export default function AboutSection({ about = {}, isPreview = false }) {
                   {accentImgs.map((img) => (
                     <figure key={img.id} className="hp-collage-frame hp-collage-frame--accent">
                       <div className="hp-collage-media">
-                        <img
-                          src={resolveAssetUrl(img.url)}
+                        <ResponsiveMediaImage
+                          media={img}
                           alt={img.caption || 'Sriyas Healthcare'}
-                          loading="lazy"
+                          forceMobile={forceMobile}
                         />
                       </div>
                       {img.caption && (
@@ -127,4 +134,3 @@ export default function AboutSection({ about = {}, isPreview = false }) {
     </section>
   );
 }
-

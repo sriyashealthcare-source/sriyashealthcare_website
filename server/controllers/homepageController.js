@@ -1,12 +1,15 @@
 const crypto = require('crypto');
 const HomepageContent = require('../models/HomepageContent');
-const Brand = require('../models/Brand');
-const Category = require('../models/Category');
-const Product = require('../models/Product');
-const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
+const {
+  uploadBuffer,
+  deleteAsset,
+  listMediaLibrary,
+  CLOUDINARY_FOLDERS
+} = require('../config/cloudinary');
 const {
   CANONICAL_SECTION_ORDER,
   createDefaultHomepagePayload,
+  upgradeLegacySnapshotIfNeeded,
   ensureHomepageInitialized,
   deepClone
 } = require('../config/defaultHomepageContent');
@@ -35,12 +38,46 @@ function cleanUrl(val, fallback = '') {
   return trimmed.slice(0, 1000);
 }
 
-function cleanMediaRef(raw, fallback = { url: '', publicId: '', alt: '' }) {
+const ALLOWED_FOCAL_POINTS = new Set([
+  'center center',
+  'center top',
+  'center bottom',
+  'left center',
+  'right center',
+  'left top',
+  'right top'
+]);
+
+const ALLOWED_ASPECT_RATIOS = new Set(['auto', '16/9', '4/3', '3/4', '1/1', '3/2']);
+
+function cleanMediaRef(raw, fallback = {}) {
   const src = raw && typeof raw === 'object' ? raw : {};
+  const fb = fallback && typeof fallback === 'object' ? fallback : {};
+
+  // Note: Explicit empty string '' clears media cleanly when admin removes an image!
+  const url = typeof src.url === 'string' ? cleanUrl(src.url, '') : fb.url || '';
+  const publicId =
+    typeof src.publicId === 'string' ? cleanText(src.publicId, '', 300) : url ? fb.publicId || '' : '';
+
+  const mobileUrl =
+    typeof src.mobileUrl === 'string' ? cleanUrl(src.mobileUrl, '') : fb.mobileUrl || '';
+  const mobilePublicId =
+    typeof src.mobilePublicId === 'string'
+      ? cleanText(src.mobilePublicId, '', 300)
+      : mobileUrl
+        ? fb.mobilePublicId || ''
+        : '';
+
   return {
-    url: cleanUrl(src.url, fallback.url || ''),
-    publicId: cleanText(src.publicId, fallback.publicId || '', 300),
-    alt: cleanText(src.alt, fallback.alt || '', 240)
+    url,
+    publicId,
+    mobileUrl,
+    mobilePublicId,
+    alt: cleanText(src.alt, fb.alt || '', 240),
+    focalPoint: ALLOWED_FOCAL_POINTS.has(src.focalPoint)
+      ? src.focalPoint
+      : fb.focalPoint || 'center center',
+    aspectRatio: ALLOWED_ASPECT_RATIOS.has(src.aspectRatio) ? src.aspectRatio : fb.aspectRatio || 'auto'
   };
 }
 
@@ -68,19 +105,74 @@ function sanitizeAboutImages(rawImages) {
   if (!Array.isArray(rawImages)) return [];
   const allowedSizes = new Set(['primary', 'secondary', 'accent']);
   return rawImages
-    .slice(0, 8)
+    .slice(0, 10)
     .map((img, idx) => {
       const item = img && typeof img === 'object' ? img : {};
+      const media = cleanMediaRef(item);
       return {
         id: cleanText(item.id, '', 80) || makeItemId('about-img'),
-        url: cleanUrl(item.url, ''),
-        publicId: cleanText(item.publicId, '', 300),
+        url: media.url,
+        publicId: media.publicId,
+        mobileUrl: media.mobileUrl,
+        mobilePublicId: media.mobilePublicId,
+        alt: media.alt,
         caption: cleanText(item.caption, '', 240),
+        focalPoint: media.focalPoint,
+        aspectRatio: media.aspectRatio,
         size: allowedSizes.has(item.size) ? item.size : 'primary',
         displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1
       };
     })
     .filter((img) => Boolean(img.url))
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
+function sanitizeWorkplaceImages(rawImages) {
+  if (!Array.isArray(rawImages)) return [];
+  return rawImages
+    .slice(0, 16)
+    .map((img, idx) => {
+      const item = img && typeof img === 'object' ? img : {};
+      const media = cleanMediaRef(item);
+      return {
+        id: cleanText(item.id, '', 80) || makeItemId('wp-img'),
+        url: media.url,
+        publicId: media.publicId,
+        mobileUrl: media.mobileUrl,
+        mobilePublicId: media.mobilePublicId,
+        alt: media.alt,
+        title: cleanText(item.title, '', 140),
+        caption: cleanText(item.caption, '', 280),
+        category: cleanText(item.category, 'Workplace', 60) || 'Workplace',
+        focalPoint: media.focalPoint,
+        aspectRatio: media.aspectRatio,
+        displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1,
+        isActive: cleanBool(item.isActive, true)
+      };
+    })
+    .filter((img) => Boolean(img.url))
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
+function sanitizeProfileItems(rawItems, prefix) {
+  if (!Array.isArray(rawItems)) return [];
+  return rawItems
+    .slice(0, 24)
+    .map((entry, idx) => {
+      const item = entry && typeof entry === 'object' ? entry : {};
+      return {
+        id: cleanText(item.id, '', 80) || makeItemId(prefix),
+        name: cleanText(item.name, '', 140),
+        designation: cleanText(item.designation, '', 160),
+        bio: cleanText(item.bio, '', 1200),
+        photo: cleanMediaRef(item.photo),
+        linkedinUrl: cleanUrl(item.linkedinUrl, ''),
+        email: cleanText(item.email, '', 180),
+        displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1,
+        isActive: cleanBool(item.isActive, true)
+      };
+    })
+    .filter((item) => Boolean(item.name))
     .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
@@ -96,7 +188,6 @@ function sanitizeWhatWeDoItems(rawItems) {
         description: cleanText(item.description, '', 600),
         icon: cleanText(item.icon, '🩺', 24) || '🩺',
         image: cleanMediaRef(item.image),
-        linkUrl: cleanUrl(item.linkUrl, '/products') || '/products',
         displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1,
         isActive: cleanBool(item.isActive, true)
       };
@@ -105,36 +196,14 @@ function sanitizeWhatWeDoItems(rawItems) {
     .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
-function sanitizeFounderItems(rawItems) {
-  if (!Array.isArray(rawItems)) return [];
-  return rawItems
-    .slice(0, 16)
-    .map((entry, idx) => {
-      const item = entry && typeof entry === 'object' ? entry : {};
-      return {
-        id: cleanText(item.id, '', 80) || makeItemId('founder'),
-        name: cleanText(item.name, '', 140),
-        designation: cleanText(item.designation, '', 160),
-        bio: cleanText(item.bio, '', 1200),
-        photo: cleanMediaRef(item.photo),
-        linkedinUrl: cleanUrl(item.linkedinUrl, ''),
-        email: cleanText(item.email, '', 180),
-        displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1,
-        isActive: cleanBool(item.isActive, true)
-      };
-    })
-    .filter((item) => Boolean(item.name))
-    .sort((a, b) => a.displayOrder - b.displayOrder);
-}
-
-function sanitizeWhyChooseItems(rawItems) {
+function sanitizeValueItems(rawItems) {
   if (!Array.isArray(rawItems)) return [];
   return rawItems
     .slice(0, 12)
     .map((entry, idx) => {
       const item = entry && typeof entry === 'object' ? entry : {};
       return {
-        id: cleanText(item.id, '', 80) || makeItemId('wcu'),
+        id: cleanText(item.id, '', 80) || makeItemId('val'),
         title: cleanText(item.title, '', 160),
         description: cleanText(item.description, '', 600),
         icon: cleanText(item.icon, '✦', 24) || '✦',
@@ -146,46 +215,27 @@ function sanitizeWhyChooseItems(rawItems) {
     .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
-function cleanIdList(rawIds, limit = 30) {
-  if (!Array.isArray(rawIds)) return [];
-  const seen = new Set();
-  const out = [];
-  for (const val of rawIds) {
-    const str = String(val || '').trim();
-    if (str && !seen.has(str)) {
-      seen.add(str);
-      out.push(str);
-      if (out.length >= limit) break;
-    }
-  }
-  return out;
-}
-
 function sanitizeSnapshot(rawInput, fallbackSnapshot) {
-  const base = fallbackSnapshot ? deepClone(fallbackSnapshot) : createDefaultHomepagePayload();
+  const base = upgradeLegacySnapshotIfNeeded(fallbackSnapshot || createDefaultHomepagePayload());
   const input = rawInput && typeof rawInput === 'object' ? rawInput : {};
-  const allowedPresets = new Set(['split-collage', 'editorial-stacked', 'centered-feature']);
+  const allowedAboutPresets = new Set(['split-collage', 'editorial-stacked', 'centered-feature']);
+  const allowedWorkplaceLayouts = new Set(['editorial-collage', 'gallery-grid']);
 
   const heroIn = input.hero && typeof input.hero === 'object' ? input.hero : base.hero;
   const aboutIn = input.about && typeof input.about === 'object' ? input.about : base.about;
+  const wpIn = input.workplace && typeof input.workplace === 'object' ? input.workplace : base.workplace;
+  const leadIn = input.leadership && typeof input.leadership === 'object' ? input.leadership : base.leadership;
+  const teamIn = input.team && typeof input.team === 'object' ? input.team : base.team;
   const wwdIn = input.whatWeDo && typeof input.whatWeDo === 'object' ? input.whatWeDo : base.whatWeDo;
-  const foundersIn = input.founders && typeof input.founders === 'object' ? input.founders : base.founders;
-  const catIn =
-    input.productCategories && typeof input.productCategories === 'object'
-      ? input.productCategories
-      : base.productCategories;
-  const partnersIn = input.partners && typeof input.partners === 'object' ? input.partners : base.partners;
-  const wcuIn = input.whyChooseUs && typeof input.whyChooseUs === 'object' ? input.whyChooseUs : base.whyChooseUs;
+  const valIn = input.values && typeof input.values === 'object' ? input.values : base.values;
   const ctaIn = input.callToAction && typeof input.callToAction === 'object' ? input.callToAction : base.callToAction;
-
-  const maxDisplayNum = Number(catIn.maxDisplay);
-  const clampedMaxDisplay = Number.isFinite(maxDisplayNum) ? Math.min(24, Math.max(1, Math.round(maxDisplayNum))) : 8;
 
   return {
     hero: {
-      companyName: cleanText(heroIn.companyName, base.hero.companyName, 80) || 'SRIYAS',
+      companyName: cleanText(heroIn.companyName, base.hero.companyName, 80) || 'SRIYAS HEALTHCARE',
       companySubtitle: cleanText(heroIn.companySubtitle, base.hero.companySubtitle, 100),
       tagline: cleanText(heroIn.tagline, base.hero.tagline, 240),
+      supportingIntro: cleanText(heroIn.supportingIntro, base.hero.supportingIntro, 600),
       valuesText: cleanText(heroIn.valuesText, base.hero.valuesText, 120),
       ctaText: cleanText(heroIn.ctaText, base.hero.ctaText, 60) || 'Explore Sriyas',
       ctaLink: cleanUrl(heroIn.ctaLink, base.hero.ctaLink) || '#about-sriyas',
@@ -194,7 +244,8 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
       showTagline: cleanBool(heroIn.showTagline, base.hero.showTagline),
       showValues: cleanBool(heroIn.showValues, base.hero.showValues),
       showSecondaryCta: cleanBool(heroIn.showSecondaryCta, base.hero.showSecondaryCta),
-      logo: cleanMediaRef(heroIn.logo, base.hero.logo)
+      logo: cleanMediaRef(heroIn.logo, base.hero.logo),
+      backgroundImage: cleanMediaRef(heroIn.backgroundImage, base.hero.backgroundImage)
     },
     about: {
       enabled: cleanBool(aboutIn.enabled, base.about.enabled),
@@ -202,10 +253,37 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
       heading: cleanText(aboutIn.heading, base.about.heading, 180),
       introduction: cleanText(aboutIn.introduction, base.about.introduction, 1500),
       supportingText: cleanText(aboutIn.supportingText, base.about.supportingText, 1500),
+      hospitalCommitment: cleanText(aboutIn.hospitalCommitment, base.about.hospitalCommitment, 1500),
       vision: cleanText(aboutIn.vision, base.about.vision, 800),
       mission: cleanText(aboutIn.mission, base.about.mission, 800),
-      layoutPreset: allowedPresets.has(aboutIn.layoutPreset) ? aboutIn.layoutPreset : base.about.layoutPreset,
+      layoutPreset: allowedAboutPresets.has(aboutIn.layoutPreset)
+        ? aboutIn.layoutPreset
+        : base.about.layoutPreset,
       images: Array.isArray(aboutIn.images) ? sanitizeAboutImages(aboutIn.images) : base.about.images
+    },
+    workplace: {
+      enabled: cleanBool(wpIn.enabled, base.workplace.enabled),
+      eyebrow: cleanText(wpIn.eyebrow, base.workplace.eyebrow, 80),
+      heading: cleanText(wpIn.heading, base.workplace.heading, 180),
+      subtitle: cleanText(wpIn.subtitle, base.workplace.subtitle, 500),
+      layoutStyle: allowedWorkplaceLayouts.has(wpIn.layoutStyle)
+        ? wpIn.layoutStyle
+        : base.workplace.layoutStyle,
+      images: Array.isArray(wpIn.images) ? sanitizeWorkplaceImages(wpIn.images) : base.workplace.images
+    },
+    leadership: {
+      enabled: cleanBool(leadIn.enabled, base.leadership.enabled),
+      eyebrow: cleanText(leadIn.eyebrow, base.leadership.eyebrow, 80),
+      heading: cleanText(leadIn.heading, base.leadership.heading, 180),
+      subtitle: cleanText(leadIn.subtitle, base.leadership.subtitle, 500),
+      items: Array.isArray(leadIn.items) ? sanitizeProfileItems(leadIn.items, 'leader') : base.leadership.items
+    },
+    team: {
+      enabled: cleanBool(teamIn.enabled, base.team.enabled),
+      eyebrow: cleanText(teamIn.eyebrow, base.team.eyebrow, 80),
+      heading: cleanText(teamIn.heading, base.team.heading, 180),
+      subtitle: cleanText(teamIn.subtitle, base.team.subtitle, 500),
+      items: Array.isArray(teamIn.items) ? sanitizeProfileItems(teamIn.items, 'team') : base.team.items
     },
     whatWeDo: {
       enabled: cleanBool(wwdIn.enabled, base.whatWeDo.enabled),
@@ -214,48 +292,32 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
       subtitle: cleanText(wwdIn.subtitle, base.whatWeDo.subtitle, 500),
       items: Array.isArray(wwdIn.items) ? sanitizeWhatWeDoItems(wwdIn.items) : base.whatWeDo.items
     },
-    founders: {
-      enabled: cleanBool(foundersIn.enabled, base.founders.enabled),
-      eyebrow: cleanText(foundersIn.eyebrow, base.founders.eyebrow, 80),
-      heading: cleanText(foundersIn.heading, base.founders.heading, 180),
-      subtitle: cleanText(foundersIn.subtitle, base.founders.subtitle, 500),
-      items: Array.isArray(foundersIn.items) ? sanitizeFounderItems(foundersIn.items) : base.founders.items
-    },
-    productCategories: {
-      enabled: cleanBool(catIn.enabled, base.productCategories.enabled),
-      eyebrow: cleanText(catIn.eyebrow, base.productCategories.eyebrow, 80),
-      heading: cleanText(catIn.heading, base.productCategories.heading, 180),
-      subtitle: cleanText(catIn.subtitle, base.productCategories.subtitle, 500),
-      selectedCategoryIds: cleanIdList(catIn.selectedCategoryIds, 24),
-      maxDisplay: clampedMaxDisplay,
-      ctaText: cleanText(catIn.ctaText, base.productCategories.ctaText, 60) || 'Explore Product Catalogue',
-      ctaLink: cleanUrl(catIn.ctaLink, base.productCategories.ctaLink) || '/products'
-    },
-    partners: {
-      enabled: cleanBool(partnersIn.enabled, base.partners.enabled),
-      eyebrow: cleanText(partnersIn.eyebrow, base.partners.eyebrow, 80),
-      heading: cleanText(partnersIn.heading, base.partners.heading, 180),
-      subtitle: cleanText(partnersIn.subtitle, base.partners.subtitle, 500),
-      selectedBrandIds: cleanIdList(partnersIn.selectedBrandIds, 24),
-      ctaText: cleanText(partnersIn.ctaText, base.partners.ctaText, 60) || 'Explore All Partners',
-      ctaLink: cleanUrl(partnersIn.ctaLink, base.partners.ctaLink) || '/products'
-    },
-    whyChooseUs: {
-      enabled: cleanBool(wcuIn.enabled, base.whyChooseUs.enabled),
-      eyebrow: cleanText(wcuIn.eyebrow, base.whyChooseUs.eyebrow, 80),
-      heading: cleanText(wcuIn.heading, base.whyChooseUs.heading, 180),
-      subtitle: cleanText(wcuIn.subtitle, base.whyChooseUs.subtitle, 500),
-      items: Array.isArray(wcuIn.items) ? sanitizeWhyChooseItems(wcuIn.items) : base.whyChooseUs.items
+    values: {
+      enabled: cleanBool(valIn.enabled, base.values.enabled),
+      eyebrow: cleanText(valIn.eyebrow, base.values.eyebrow, 80),
+      heading: cleanText(valIn.heading, base.values.heading, 180),
+      subtitle: cleanText(valIn.subtitle, base.values.subtitle, 500),
+      featureImage: cleanMediaRef(valIn.featureImage, base.values.featureImage),
+      items: Array.isArray(valIn.items) ? sanitizeValueItems(valIn.items) : base.values.items
     },
     callToAction: {
       enabled: cleanBool(ctaIn.enabled, base.callToAction.enabled),
       eyebrow: cleanText(ctaIn.eyebrow, base.callToAction.eyebrow, 80),
-      heading: cleanText(ctaIn.heading, base.callToAction.heading, 200),
+      heading: cleanText(ctaIn.heading, base.callToAction.heading, 200) || 'Partnering for Better Healthcare.',
       supportingText: cleanText(ctaIn.supportingText, base.callToAction.supportingText, 600),
-      primaryButtonText: cleanText(ctaIn.primaryButtonText, base.callToAction.primaryButtonText, 60) || 'Explore Products',
+      primaryButtonText:
+        cleanText(ctaIn.primaryButtonText, base.callToAction.primaryButtonText, 60) ||
+        'Explore Our Products',
       primaryButtonLink: cleanUrl(ctaIn.primaryButtonLink, base.callToAction.primaryButtonLink) || '/products',
-      secondaryButtonText: cleanText(ctaIn.secondaryButtonText, base.callToAction.secondaryButtonText, 60) || 'Contact Us',
-      secondaryButtonLink: cleanUrl(ctaIn.secondaryButtonLink, base.callToAction.secondaryButtonLink) || '/contact'
+      secondaryButtonText:
+        cleanText(ctaIn.secondaryButtonText, base.callToAction.secondaryButtonText, 60) || 'Contact Us',
+      secondaryButtonLink:
+        cleanUrl(ctaIn.secondaryButtonLink, base.callToAction.secondaryButtonLink) || '/contact',
+      showContactDetails: cleanBool(ctaIn.showContactDetails, base.callToAction.showContactDetails),
+      contactPhone: cleanText(ctaIn.contactPhone, base.callToAction.contactPhone, 120),
+      contactEmail: cleanText(ctaIn.contactEmail, base.callToAction.contactEmail, 160),
+      contactAddress: cleanText(ctaIn.contactAddress, base.callToAction.contactAddress, 360),
+      backgroundImage: cleanMediaRef(ctaIn.backgroundImage, base.callToAction.backgroundImage)
     },
     sectionOrder: normalizeSectionOrder(input.sectionOrder || base.sectionOrder)
   };
@@ -275,6 +337,9 @@ function collectPublicIds(obj, bucket = new Set()) {
   if (typeof obj.publicId === 'string' && obj.publicId.trim()) {
     bucket.add(obj.publicId.trim());
   }
+  if (typeof obj.mobilePublicId === 'string' && obj.mobilePublicId.trim()) {
+    bucket.add(obj.mobilePublicId.trim());
+  }
   for (const val of Object.values(obj)) {
     if (val && typeof val === 'object') {
       collectPublicIds(val, bucket);
@@ -285,14 +350,11 @@ function collectPublicIds(obj, bucket = new Set()) {
 
 async function cleanupOrphanedAssets(previousIds, currentDraft, currentPublished) {
   if (!previousIds || previousIds.size === 0) return;
-  const activeIds = new Set([
-    ...collectPublicIds(currentDraft),
-    ...collectPublicIds(currentPublished)
-  ]);
+  const activeIds = new Set([...collectPublicIds(currentDraft), ...collectPublicIds(currentPublished)]);
 
   const deletions = [];
   for (const pid of previousIds) {
-    if (pid.startsWith(`${CLOUDINARY_FOLDERS.website}/`) && !activeIds.has(pid)) {
+    if ((pid.startsWith(`${CLOUDINARY_FOLDERS.website}/`) || pid.startsWith('local:')) && !activeIds.has(pid)) {
       deletions.push(deleteAsset(pid, 'image', true));
     }
   }
@@ -301,90 +363,23 @@ async function cleanupOrphanedAssets(previousIds, currentDraft, currentPublished
   }
 }
 
-async function fetchCatalogueContext() {
-  const [brands, categories, activeProducts] = await Promise.all([
-    Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
-    Category.find({ isActive: true })
-      .populate('brand', 'name slug tabLabel icon isActive')
-      .sort({ displayOrder: 1, name: 1 }),
-    Product.find({ isActive: true, deletedAt: null }).select('brand category')
-  ]);
-
-  const brandCounts = new Map();
-  const categoryCounts = new Map();
-
-  for (const prod of activeProducts) {
-    const bId = prod.brand ? String(prod.brand._id || prod.brand) : '';
-    const cId = prod.category ? String(prod.category._id || prod.category) : '';
-    if (bId) brandCounts.set(bId, (brandCounts.get(bId) || 0) + 1);
-    if (cId) categoryCounts.set(cId, (categoryCounts.get(cId) || 0) + 1);
+function filterActiveSnapshotForDisplay(snapshot) {
+  const plain = sanitizeSnapshot(snapshot, createDefaultHomepagePayload());
+  if (plain.workplace && Array.isArray(plain.workplace.images)) {
+    plain.workplace.images = plain.workplace.images.filter((item) => item.isActive !== false && item.url);
   }
-
-  const plainBrands = brands.map((b) => {
-    const obj = toPlainObject(b);
-    obj.productCount = brandCounts.get(String(obj._id)) || 0;
-    return obj;
-  });
-
-  const plainCategories = categories.map((c) => {
-    const obj = toPlainObject(c);
-    obj.productCount = categoryCounts.get(String(obj._id)) || 0;
-    return obj;
-  });
-
-  return { availableBrands: plainBrands, availableCategories: plainCategories };
-}
-
-function resolveSnapshotCatalogue(snapshot, catalogueContext) {
-  const plain = deepClone(snapshot);
-  const { availableBrands, availableCategories } = catalogueContext;
-
-  const brandMap = new Map(availableBrands.map((b) => [String(b._id), b]));
-  const categoryMap = new Map(availableCategories.map((c) => [String(c._id), c]));
-
-  const selectedCatIds = Array.isArray(plain.productCategories?.selectedCategoryIds)
-    ? plain.productCategories.selectedCategoryIds
-    : [];
-  const maxCategories = Number(plain.productCategories?.maxDisplay) || 8;
-
-  let resolvedCategories = [];
-  if (selectedCatIds.length > 0) {
-    resolvedCategories = selectedCatIds
-      .map((id) => categoryMap.get(String(id)))
-      .filter(Boolean)
-      .slice(0, maxCategories);
+  if (plain.leadership && Array.isArray(plain.leadership.items)) {
+    plain.leadership.items = plain.leadership.items.filter((item) => item.isActive !== false && item.name);
   }
-  if (resolvedCategories.length === 0) {
-    resolvedCategories = availableCategories.slice(0, maxCategories);
+  if (plain.team && Array.isArray(plain.team.items)) {
+    plain.team.items = plain.team.items.filter((item) => item.isActive !== false && item.name);
   }
-
-  const selectedBrandIds = Array.isArray(plain.partners?.selectedBrandIds)
-    ? plain.partners.selectedBrandIds
-    : [];
-
-  let resolvedPartners = [];
-  if (selectedBrandIds.length > 0) {
-    resolvedPartners = selectedBrandIds
-      .map((id) => brandMap.get(String(id)))
-      .filter(Boolean);
-  }
-  if (resolvedPartners.length === 0) {
-    resolvedPartners = availableBrands;
-  }
-
-  // Keep only active items in customer-facing resolved snapshot
   if (plain.whatWeDo && Array.isArray(plain.whatWeDo.items)) {
-    plain.whatWeDo.items = plain.whatWeDo.items.filter((item) => item.isActive !== false);
+    plain.whatWeDo.items = plain.whatWeDo.items.filter((item) => item.isActive !== false && item.title);
   }
-  if (plain.founders && Array.isArray(plain.founders.items)) {
-    plain.founders.items = plain.founders.items.filter((item) => item.isActive !== false);
+  if (plain.values && Array.isArray(plain.values.items)) {
+    plain.values.items = plain.values.items.filter((item) => item.isActive !== false && item.title);
   }
-  if (plain.whyChooseUs && Array.isArray(plain.whyChooseUs.items)) {
-    plain.whyChooseUs.items = plain.whyChooseUs.items.filter((item) => item.isActive !== false);
-  }
-
-  plain.resolvedCategories = resolvedCategories;
-  plain.resolvedPartners = resolvedPartners;
   plain.sectionOrder = normalizeSectionOrder(plain.sectionOrder);
   return plain;
 }
@@ -398,13 +393,12 @@ function buildActor(req) {
   };
 }
 
-// GET /api/homepage (Public — returns ONLY published content + dynamically resolved Brands/Categories)
+// GET /api/homepage (Public — returns ONLY published content)
 const getPublicHomepage = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
     const plainDoc = toPlainObject(doc);
-    const catalogueContext = await fetchCatalogueContext();
-    const homepage = resolveSnapshotCatalogue(plainDoc.published, catalogueContext);
+    const homepage = filterActiveSnapshotForDisplay(plainDoc.published);
 
     res.status(200).json({
       success: true,
@@ -417,12 +411,11 @@ const getPublicHomepage = async (req, res, next) => {
   }
 };
 
-// GET /api/admin/homepage (Admin — returns full draft + published metadata + available brands/categories)
+// GET /api/admin/homepage (Admin — returns full sanitized draft + published)
 const getAdminHomepage = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
     const plainDoc = toPlainObject(doc);
-    const catalogueContext = await fetchCatalogueContext();
 
     res.status(200).json({
       success: true,
@@ -436,9 +429,7 @@ const getAdminHomepage = async (req, res, next) => {
         lastPublishedBy: plainDoc.lastPublishedBy || null,
         updatedBy: plainDoc.updatedBy || null,
         updatedAt: plainDoc.updatedAt || null
-      },
-      availableBrands: catalogueContext.availableBrands,
-      availableCategories: catalogueContext.availableCategories
+      }
     });
   } catch (error) {
     next(error);
@@ -450,8 +441,7 @@ const getAdminHomepagePreview = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
     const plainDoc = toPlainObject(doc);
-    const catalogueContext = await fetchCatalogueContext();
-    const homepage = resolveSnapshotCatalogue(plainDoc.draft, catalogueContext);
+    const homepage = filterActiveSnapshotForDisplay(plainDoc.draft);
 
     res.status(200).json({
       success: true,
@@ -465,7 +455,7 @@ const getAdminHomepagePreview = async (req, res, next) => {
   }
 };
 
-// PUT /api/admin/homepage/draft (Admin — saves draft ONLY without changing live published site)
+// PUT /api/admin/homepage/draft (Admin — saves draft ONLY without changing live site)
 const saveHomepageDraft = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
@@ -513,7 +503,7 @@ const saveHomepageDraft = async (req, res, next) => {
   }
 };
 
-// POST /api/admin/homepage/publish (Admin — optionally accepts draft payload, validates, copies draft -> published)
+// POST /api/admin/homepage/publish (Admin — promotes draft to live published)
 const publishHomepage = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
@@ -571,7 +561,7 @@ const publishHomepage = async (req, res, next) => {
   }
 };
 
-// POST /api/admin/homepage/discard (Admin — reverts draft back to current published snapshot)
+// POST /api/admin/homepage/discard (Admin — reverts draft back to published)
 const discardHomepageDraft = async (req, res, next) => {
   try {
     const doc = await ensureHomepageInitialized();
@@ -649,6 +639,20 @@ const uploadHomepageImage = async (req, res, next) => {
   }
 };
 
+// GET /api/admin/homepage/media-library (Admin — lists Cloudinary sriyas/* assets & available site assets)
+const getHomepageMediaLibrary = async (req, res, next) => {
+  try {
+    const items = await listMediaLibrary(60);
+    res.status(200).json({
+      success: true,
+      count: items.length,
+      items
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getPublicHomepage,
   getAdminHomepage,
@@ -656,6 +660,6 @@ module.exports = {
   saveHomepageDraft,
   publishHomepage,
   discardHomepageDraft,
-  uploadHomepageImage
+  uploadHomepageImage,
+  getHomepageMediaLibrary
 };
-

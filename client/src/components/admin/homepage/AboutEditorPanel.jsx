@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
 
-export default function AboutEditorPanel({ about, onChange }) {
+export default function AboutEditorPanel({ about = {}, onChange }) {
   const updateField = (key, value) => {
     onChange({ ...about, [key]: value });
   };
@@ -20,7 +20,12 @@ export default function AboutEditorPanel({ about, onChange }) {
         id: `about-img-${Date.now()}`,
         url: '',
         publicId: '',
+        mobileUrl: '',
+        mobilePublicId: '',
+        alt: '',
         caption: '',
+        focalPoint: 'center center',
+        aspectRatio: images.length === 0 ? '4/3' : '16/9',
         size: images.length === 0 ? 'primary' : images.length === 1 ? 'secondary' : 'accent',
         displayOrder: images.length + 1
       }
@@ -52,7 +57,7 @@ export default function AboutEditorPanel({ about, onChange }) {
         <div>
           <h3>About Sriyas Healthcare</h3>
           <p className="hp-panel-desc">
-            Tell Sriyas Healthcare&apos;s authentic corporate story, vision, mission, and upload multiple images rendered as an overlapping architectural collage.
+            Tell Sriyas Healthcare&apos;s authentic corporate story, vision, mission, and manage editorial photographs rendered as a layered visual collage.
           </p>
         </div>
 
@@ -122,6 +127,17 @@ export default function AboutEditorPanel({ about, onChange }) {
           />
         </div>
 
+        <div className="admin-field">
+          <label htmlFor="about-commitment">Hospital &amp; Institutional Commitment</label>
+          <textarea
+            id="about-commitment"
+            rows={2}
+            value={about.hospitalCommitment || ''}
+            onChange={(e) => updateField('hospitalCommitment', e.target.value)}
+            placeholder="Highlight commitment to hospital procurement, clinicians, and patient care."
+          />
+        </div>
+
         <div className="admin-form-grid">
           <div className="admin-field">
             <label htmlFor="about-vision">Vision Statement</label>
@@ -149,7 +165,7 @@ export default function AboutEditorPanel({ about, onChange }) {
             <div>
               <h4>About Section Images ({images.length})</h4>
               <p className="hp-field-hint">
-                Image 1 renders as the primary focal frame; Image 2 overlaps subtly beside it.
+                Photo #1 renders as the primary editorial frame; Photo #2 overlaps cleanly beside it.
               </p>
             </div>
             <button
@@ -164,7 +180,7 @@ export default function AboutEditorPanel({ about, onChange }) {
 
           {images.length === 0 && (
             <p className="hp-empty-note">
-              No About images uploaded yet. Add images from Cloudinary or local photo files.
+              No About images selected yet. Upload an image or pick one from the Cloudinary media library.
             </p>
           )}
 
@@ -203,11 +219,24 @@ export default function AboutEditorPanel({ about, onChange }) {
                 <ImageUploadField
                   compact
                   label=""
-                  value={{ url: img.url, publicId: img.publicId, alt: img.caption }}
+                  value={{
+                    url: img.url,
+                    publicId: img.publicId,
+                    mobileUrl: img.mobileUrl,
+                    mobilePublicId: img.mobilePublicId,
+                    alt: img.alt || img.caption,
+                    focalPoint: img.focalPoint || 'center center',
+                    aspectRatio: img.aspectRatio || (idx === 0 ? '4/3' : '16/9')
+                  }}
                   onChange={(media) =>
                     updateImageItem(idx, {
                       url: media.url,
                       publicId: media.publicId,
+                      mobileUrl: media.mobileUrl,
+                      mobilePublicId: media.mobilePublicId,
+                      alt: media.alt,
+                      focalPoint: media.focalPoint,
+                      aspectRatio: media.aspectRatio,
                       caption: img.caption || media.alt || ''
                     })
                   }
@@ -243,4 +272,3 @@ export default function AboutEditorPanel({ about, onChange }) {
     </div>
   );
 }
-

@@ -3,25 +3,24 @@ import { useOutletContext } from 'react-router-dom';
 import { homepageService } from '../../services/homepageService';
 import HeroEditorPanel from '../../components/admin/homepage/HeroEditorPanel';
 import AboutEditorPanel from '../../components/admin/homepage/AboutEditorPanel';
+import WorkplaceGalleryEditorPanel from '../../components/admin/homepage/WorkplaceGalleryEditorPanel';
+import PeopleProfilesEditorPanel from '../../components/admin/homepage/PeopleProfilesEditorPanel';
 import WhatWeDoEditorPanel from '../../components/admin/homepage/WhatWeDoEditorPanel';
-import FoundersEditorPanel from '../../components/admin/homepage/FoundersEditorPanel';
-import CategoriesShowcaseEditorPanel from '../../components/admin/homepage/CategoriesShowcaseEditorPanel';
-import PartnersShowcaseEditorPanel from '../../components/admin/homepage/PartnersShowcaseEditorPanel';
-import WhyChooseUsEditorPanel from '../../components/admin/homepage/WhyChooseUsEditorPanel';
+import ValuesEditorPanel from '../../components/admin/homepage/ValuesEditorPanel';
 import CtaEditorPanel from '../../components/admin/homepage/CtaEditorPanel';
 import SectionOrderPanel from '../../components/admin/homepage/SectionOrderPanel';
 import HomepagePreviewModal from '../../components/admin/homepage/HomepagePreviewModal';
 import '../../styles/homepageEditor.css';
 
 const TABS = [
-  { id: 'hero', label: 'Hero & Logo Morph' },
-  { id: 'about', label: 'About Sriyas', toggleKey: 'about' },
-  { id: 'whatWeDo', label: 'What We Do', toggleKey: 'whatWeDo' },
-  { id: 'founders', label: 'Founders & Leadership', toggleKey: 'founders' },
-  { id: 'productCategories', label: 'Product Categories', toggleKey: 'productCategories' },
-  { id: 'partners', label: 'Our Partners', toggleKey: 'partners' },
-  { id: 'whyChooseUs', label: 'Why Choose Us', toggleKey: 'whyChooseUs' },
-  { id: 'callToAction', label: 'Call To Action', toggleKey: 'callToAction' },
+  { id: 'hero', label: 'Hero Editor' },
+  { id: 'about', label: 'About Editor', toggleKey: 'about' },
+  { id: 'workplace', label: 'Company Gallery Editor', toggleKey: 'workplace' },
+  { id: 'leadership', label: 'Leadership Editor', toggleKey: 'leadership' },
+  { id: 'team', label: 'Team Members Editor', toggleKey: 'team' },
+  { id: 'whatWeDo', label: 'What We Do Editor', toggleKey: 'whatWeDo' },
+  { id: 'values', label: 'Values Editor', toggleKey: 'values' },
+  { id: 'callToAction', label: 'CTA Editor', toggleKey: 'callToAction' },
   { id: 'sectionOrder', label: 'Section Order & Visibility' }
 ];
 
@@ -44,8 +43,6 @@ export default function HomepageEditor() {
     lastPublishedAt: null,
     lastPublishedBy: null
   });
-  const [availableBrands, setAvailableBrands] = useState([]);
-  const [availableCategories, setAvailableCategories] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
   const [banner, setBanner] = useState(null);
 
@@ -72,8 +69,6 @@ export default function HomepageEditor() {
           lastPublishedAt: res.homepageDoc.lastPublishedAt || null,
           lastPublishedBy: res.homepageDoc.lastPublishedBy || null
         });
-        setAvailableBrands(res.availableBrands || []);
-        setAvailableCategories(res.availableCategories || []);
         setIsDirty(false);
       }
     } catch (err) {
@@ -90,7 +85,6 @@ export default function HomepageEditor() {
     loadData();
   }, [loadData]);
 
-  // Warn browser tab close / reload when unsaved local edits exist
   useEffect(() => {
     if (!isDirty) return undefined;
     const handleBeforeUnload = (e) => {
@@ -238,7 +232,6 @@ export default function HomepageEditor() {
 
   return (
     <div className="hp-editor-page">
-      {/* Top Action Bar */}
       <div className="hp-editor-toolbar">
         <div className="hp-toolbar-meta">
           <div className="hp-toolbar-badges">
@@ -321,7 +314,6 @@ export default function HomepageEditor() {
         </div>
       )}
 
-      {/* Main Split Editor Layout */}
       <div className="hp-editor-layout">
         <aside className="hp-editor-nav" aria-label="Homepage Sections">
           {TABS.map((tab) => {
@@ -362,6 +354,37 @@ export default function HomepageEditor() {
             />
           )}
 
+          {activeTab === 'workplace' && (
+            <WorkplaceGalleryEditorPanel
+              workplace={draft.workplace}
+              onChange={(nextWp) => updateSection('workplace', nextWp)}
+            />
+          )}
+
+          {activeTab === 'leadership' && (
+            <PeopleProfilesEditorPanel
+              sectionData={draft.leadership}
+              onChange={(nextLeadership) => updateSection('leadership', nextLeadership)}
+              panelTitle="Leadership & Directors"
+              panelDescription="Manage Founders, Directors, and key decision-makers. Upload crisp portraits, adjust Top Center focal framing, and publish authentic executive bios."
+              itemLabel="Leader"
+              defaultDesignation="Founder / Director"
+              defaultPlaceholderPhoto="/assets/placeholders/portrait-leadership-placeholder.svg"
+            />
+          )}
+
+          {activeTab === 'team' && (
+            <PeopleProfilesEditorPanel
+              sectionData={draft.team}
+              onChange={(nextTeam) => updateSection('team', nextTeam)}
+              panelTitle="Team Members"
+              panelDescription="Showcase the clinical liaison, hospital coordination, and supply logistics team behind Sriyas Healthcare."
+              itemLabel="Team Member"
+              defaultDesignation="Clinical & Operations Specialist"
+              defaultPlaceholderPhoto="/assets/placeholders/portrait-team-placeholder.svg"
+            />
+          )}
+
           {activeTab === 'whatWeDo' && (
             <WhatWeDoEditorPanel
               whatWeDo={draft.whatWeDo}
@@ -369,33 +392,10 @@ export default function HomepageEditor() {
             />
           )}
 
-          {activeTab === 'founders' && (
-            <FoundersEditorPanel
-              founders={draft.founders}
-              onChange={(nextFounders) => updateSection('founders', nextFounders)}
-            />
-          )}
-
-          {activeTab === 'productCategories' && (
-            <CategoriesShowcaseEditorPanel
-              productCategories={draft.productCategories}
-              availableCategories={availableCategories}
-              onChange={(nextCat) => updateSection('productCategories', nextCat)}
-            />
-          )}
-
-          {activeTab === 'partners' && (
-            <PartnersShowcaseEditorPanel
-              partners={draft.partners}
-              availableBrands={availableBrands}
-              onChange={(nextPartners) => updateSection('partners', nextPartners)}
-            />
-          )}
-
-          {activeTab === 'whyChooseUs' && (
-            <WhyChooseUsEditorPanel
-              whyChooseUs={draft.whyChooseUs}
-              onChange={(nextWcu) => updateSection('whyChooseUs', nextWcu)}
+          {activeTab === 'values' && (
+            <ValuesEditorPanel
+              values={draft.values}
+              onChange={(nextValues) => updateSection('values', nextValues)}
             />
           )}
 
@@ -420,8 +420,6 @@ export default function HomepageEditor() {
       <HomepagePreviewModal
         isOpen={previewOpen}
         draft={draft}
-        availableBrands={availableBrands}
-        availableCategories={availableCategories}
         onClose={() => setPreviewOpen(false)}
         onPublish={handlePublish}
         publishing={publishing}
@@ -429,4 +427,3 @@ export default function HomepageEditor() {
     </div>
   );
 }
-
