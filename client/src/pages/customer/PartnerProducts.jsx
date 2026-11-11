@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { productService } from '../../services/productService';
 import ProductCard from '../../components/product/ProductCard';
 import { resolveAssetUrl } from '../../utils/session';
@@ -7,6 +7,8 @@ import { resolveAssetUrl } from '../../utils/session';
 export default function PartnerProducts() {
   const { partnerSlug } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialCategoryParam = (searchParams.get('category') || '').trim();
 
   const [brand, setBrand] = useState(null);
   const [products, setProducts] = useState([]);
@@ -85,6 +87,19 @@ export default function PartnerProducts() {
         // Identify available categories strictly for this partner's products
         const partnerCats = categoriesRes?.categories || [];
         setCategories(partnerCats);
+
+        if (initialCategoryParam) {
+          const matched = partnerCats.find(
+            (c) =>
+              String(c._id) === initialCategoryParam ||
+              String(c.slug || '').toLowerCase() === initialCategoryParam.toLowerCase()
+          );
+          if (matched) {
+            setSelectedCategory(String(matched._id));
+          }
+        } else {
+          setSelectedCategory('all');
+        }
       } catch (err) {
         if (!isMounted) return;
         setError(
@@ -103,7 +118,7 @@ export default function PartnerProducts() {
     return () => {
       isMounted = false;
     };
-  }, [partnerSlug, navigate]);
+  }, [partnerSlug, navigate, initialCategoryParam]);
 
   // Distinct category filter options derived from active categories & products
   const categoryFilterOptions = useMemo(() => {

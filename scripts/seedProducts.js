@@ -16,6 +16,7 @@ const Brand = require('../server/models/Brand');
 const Category = require('../server/models/Category');
 const Product = require('../server/models/Product');
 const Admin = require('../server/models/Admin');
+const { ensureHomepageInitialized } = require('../server/config/defaultHomepageContent');
 
 const catalogPath = path.join(__dirname, 'catalogData.json');
 const publicDir = path.join(__dirname, '..', 'client', 'public');
@@ -224,6 +225,7 @@ async function ensureSeededOnStartup() {
       console.log('[Startup] Database is empty — running initial catalogue & admin seed...');
       await runSeed({ silent: false });
     }
+    await ensureHomepageInitialized();
   } catch (err) {
     console.error('[Startup] Auto-seed check error:', err.message);
   }

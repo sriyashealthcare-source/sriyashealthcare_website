@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
+import { HomepageScrollProvider } from '../context/HomepageScrollContext';
 import { initializeAnalyticsSession, trackAnalyticsEvent } from '../utils/session';
 
 export default function CustomerLayout() {
@@ -48,16 +49,18 @@ export default function CustomerLayout() {
   }, [location.hash, navigate]);
 
   return (
-    <div className="customer-layout">
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-      <Navbar />
-      <main id="main-content" className="customer-main">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+    <HomepageScrollProvider>
+      <div className="customer-layout">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <Navbar />
+        <main id="main-content" className="customer-main">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </HomepageScrollProvider>
   );
 }
 

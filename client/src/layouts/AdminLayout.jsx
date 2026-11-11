@@ -43,6 +43,7 @@ export default function AdminLayout() {
     if (p.includes('/admin/products/edit')) return 'Edit Product';
     if (p.includes('/admin/products')) return 'Product Catalogue Management';
     if (p.includes('/admin/brands-categories')) return 'Brands & Categories';
+    if (p.includes('/admin/homepage-editor')) return 'Homepage Editor';
     if (p.includes('/admin/analytics')) return 'Product-Specific Analytics';
     if (p.includes('/admin/settings')) return 'Administrator Settings';
     return 'Administrator Portal';
@@ -159,6 +160,15 @@ export default function AdminLayout() {
           >
             <span className="admin-nav-icon">🏷️</span>
             <span>Brands &amp; Categories</span>
+          </NavLink>
+
+          <div className="admin-nav-section-label">Website Management</div>
+          <NavLink
+            to="/admin/homepage-editor"
+            className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">🖥️</span>
+            <span>Homepage Editor</span>
           </NavLink>
 
           <div className="admin-nav-section-label">System</div>

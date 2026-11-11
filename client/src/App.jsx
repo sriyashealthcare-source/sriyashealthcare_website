@@ -27,6 +27,7 @@ import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import BrandCategoryManagement from './pages/admin/BrandCategoryManagement';
 import AdminSettings from './pages/admin/AdminSettings';
+import HomepageEditor from './pages/admin/HomepageEditor';
 
 function NotFoundPage() {
   return (
@@ -77,6 +78,7 @@ export default function App() {
             <Route path="products/add" element={<AddProduct />} />
             <Route path="products/edit/:id" element={<EditProduct />} />
             <Route path="brands-categories" element={<BrandCategoryManagement />} />
+            <Route path="homepage-editor" element={<HomepageEditor />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>

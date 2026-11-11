@@ -143,8 +143,9 @@ const deleteAsset = async (publicId, resourceType = 'image', checkReferences = t
       const Product = require('../models/Product');
       const Brand = require('../models/Brand');
       const Category = require('../models/Category');
+      const HomepageContent = require('../models/HomepageContent');
 
-      const [productCount, brandCount, categoryCount] = await Promise.all([
+      const [productCount, brandCount, categoryCount, homepageDoc] = await Promise.all([
         Product.countDocuments({
           $or: [
             { 'images.publicId': publicId },
@@ -152,11 +153,23 @@ const deleteAsset = async (publicId, resourceType = 'image', checkReferences = t
           ]
         }),
         Brand.countDocuments({ logoPublicId: publicId }),
-        Category.countDocuments({ 'heroImage.publicId': publicId })
+        Category.countDocuments({ 'heroImage.publicId': publicId }),
+        HomepageContent.findOne({ singletonKey: 'main_homepage' }).lean()
       ]);
 
-      if (productCount + brandCount + categoryCount > 0) {
-        console.log(`[Cloudinary] Asset ${publicId} is still referenced by ${productCount + brandCount + categoryCount} active record(s). Skipping deletion.`);
+      let homepageCount = 0;
+      if (homepageDoc) {
+        const serialized = JSON.stringify({
+          draft: homepageDoc.draft || null,
+          published: homepageDoc.published || null
+        });
+        if (serialized.includes(publicId)) {
+          homepageCount = 1;
+        }
+      }
+
+      if (productCount + brandCount + categoryCount + homepageCount > 0) {
+        console.log(`[Cloudinary] Asset ${publicId} is still referenced by active record(s). Skipping deletion.`);
         return false;
       }
     } catch (e) {
