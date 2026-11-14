@@ -31,7 +31,7 @@ export function HomepageScrollProvider({ children }) {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 
-  const [scrollProgress, setScrollProgress] = useState(() => (isHomepage && !reducedMotion ? 0 : 1));
+  const [scrollProgress, setScrollProgress] = useState(() => (isHomepage ? 0 : 1));
   const [navTargetRects, setNavTargetRects] = useState(null);
   const [brandMedia, setBrandMedia] = useState(DEFAULT_BRAND_MEDIA);
 
@@ -46,7 +46,7 @@ export function HomepageScrollProvider({ children }) {
     return () => mq.removeEventListener('change', handleChange);
   }, []);
 
-  const isMorphEnabled = isHomepage && !reducedMotion;
+  const isMorphEnabled = isHomepage;
 
   const measureNavTargets = useCallback(() => {
     if (!navImgRef.current || !navTextRef.current) return null;
@@ -130,15 +130,11 @@ export function HomepageScrollProvider({ children }) {
       setBrandMedia(DEFAULT_BRAND_MEDIA);
       return;
     }
-    if (reducedMotion) {
-      setScrollProgress(1);
-      return;
-    }
-    const y = window.scrollY || 0;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
     const vh = window.innerHeight || 800;
-    const morphDist = Math.min(380, Math.max(200, Math.round(vh * 0.35)));
+    const morphDist = Math.min(420, Math.max(220, Math.round(vh * 0.38)));
     setScrollProgress(Math.min(1, Math.max(0, y / morphDist)));
-  }, [isHomepage, reducedMotion]);
+  }, [isHomepage]);
 
   return (
     <HomepageScrollContext.Provider

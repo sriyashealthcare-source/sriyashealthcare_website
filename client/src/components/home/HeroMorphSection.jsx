@@ -11,7 +11,7 @@ function easeOutQuad(t) {
 function getMorphDistance() {
   if (typeof window === 'undefined') return 300;
   const vh = window.innerHeight || 800;
-  return Math.min(380, Math.max(200, Math.round(vh * 0.35)));
+  return Math.min(420, Math.max(220, Math.round(vh * 0.38)));
 }
 
 export default function HeroMorphSection({

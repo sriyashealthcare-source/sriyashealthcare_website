@@ -61,15 +61,15 @@ export default function Navbar() {
   const isProductsActive =
     location.pathname.startsWith('/products') || location.pathname.startsWith('/product/');
 
-  const isHeroTopTransparent = isMorphEnabled && scrollProgress < 0.60 && !mobileMenuOpen;
-  const isEmblemDocked = !isMorphEnabled || scrollProgress >= 0.985;
+  const isHeroTopTransparent = isHomepage && scrollProgress < 0.60 && !mobileMenuOpen;
+  const isEmblemDocked = !isHomepage || scrollProgress >= 0.985;
 
-  // Reveal navbar text smoothly as the emblem approaches and docks into navbar position (0.60 -> 1.0)
-  const navTextOpacity = !isMorphEnabled
+  // Reveal navbar text smoothly as the emblem approaches and docks into navbar position (0.65 -> 1.0)
+  const navTextOpacity = !isHomepage
     ? 1
-    : scrollProgress <= 0.60
+    : scrollProgress <= 0.65
       ? 0
-      : Math.min(1, (scrollProgress - 0.60) / 0.40);
+      : Math.min(1, (scrollProgress - 0.65) / 0.35);
 
   const logoSrc = brandMedia?.url || '/assets/logos/sriyas-emblem.png';
   const logoAlt = brandMedia?.alt || 'Sriyas Healthcare emblem';
@@ -90,10 +90,10 @@ export default function Navbar() {
       >
         <Link
           to="/"
-          className={`nav-logo ${isMorphEnabled && !isEmblemDocked ? 'nav-logo--morph-hidden' : ''}`}
+          className={`nav-logo ${isHomepage && !isEmblemDocked ? 'nav-logo--morph-hidden' : ''}`}
           aria-label="Sriyas Healthcare Home"
-          aria-hidden={isMorphEnabled && !isEmblemDocked ? 'true' : undefined}
-          tabIndex={isMorphEnabled && !isEmblemDocked ? -1 : undefined}
+          aria-hidden={isHomepage && !isEmblemDocked ? 'true' : undefined}
+          tabIndex={isHomepage && !isEmblemDocked ? -1 : undefined}
           onClick={closeMenu}
         >
           <div className="nav-logo-brand">
