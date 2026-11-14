@@ -368,11 +368,6 @@
   max-width: 100%;
 }
 
-.hp-hero-title-slot.is-measured {
-  visibility: hidden;
-  pointer-events: none;
-}
-
 .hp-hero-title-stack {
   display: inline-flex;
   flex-direction: column;
@@ -390,6 +385,10 @@
   letter-spacing: 0.14em;
   text-indent: 0.14em;
   color: var(--gold-dark);
+  background: linear-gradient(135deg, #A9822C 0%, #D4AF37 45%, #8A6A1F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hp-hero-brand-sub {
@@ -399,14 +398,30 @@
   font-weight: 600;
   letter-spacing: 0.32em;
   text-indent: 0.32em;
-  color: var(--ink);
+  color: var(--gold-dark);
+  background: linear-gradient(135deg, #8A6A1F 0%, #A9822C 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-transform: uppercase;
 }
 
-.hp-hero-morph-emblem,
-.hp-hero-morph-title {
+.hp-hero-morph-traveler {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1005;
   pointer-events: none;
   will-change: transform, opacity;
+  display: block;
+}
+
+.hp-hero-morph-traveler .hp-hero-emblem-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 24px rgba(169, 130, 44, 0.25));
 }
 
 .hp-hero-copy {
@@ -423,7 +438,11 @@
   font-weight: 500;
   font-size: clamp(1.16rem, 2.1vw, 1.52rem);
   line-height: 1.38;
-  color: #2f3530;
+  color: var(--gold-deep);
+  background: linear-gradient(135deg, #8A6A1F 0%, #A9822C 55%, #8A6A1F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   max-width: 680px;
 }
 

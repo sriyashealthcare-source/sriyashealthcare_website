@@ -4,8 +4,14 @@ import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 
-function easeInOutCubic(t) {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+function smoothstep(t) {
+  return t * t * (3 - 2 * t);
+}
+
+function getMorphDistance() {
+  if (typeof window === 'undefined') return 300;
+  const vh = window.innerHeight || 800;
+  return Math.min(380, Math.max(200, Math.round(vh * 0.35)));
 }
 
 export default function HeroMorphSection({
@@ -23,8 +29,6 @@ export default function HeroMorphSection({
   } = useHomepageScroll();
 
   const emblemPlaceholderRef = useRef(null);
-  const titlePlaceholderRef = useRef(null);
-
   const [startRects, setStartRects] = useState(null);
 
   const companyName = hero.companyName || 'SRIYAS HEALTHCARE';
@@ -57,38 +61,31 @@ export default function HeroMorphSection({
   }, [isPreview, logoUrl, logoAlt, companyName, companySubtitle, setBrandMedia]);
 
   const measureStartAnchors = useCallback(() => {
-    if (!emblemPlaceholderRef.current || !titlePlaceholderRef.current) return null;
-    const scrollY = window.scrollY || 0;
+    if (!emblemPlaceholderRef.current) return null;
+    const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const currentScrollX = window.scrollX || document.documentElement.scrollLeft || 0;
     const eRect = emblemPlaceholderRef.current.getBoundingClientRect();
-    const tRect = titlePlaceholderRef.current.getBoundingClientRect();
-    if (!eRect.width || !eRect.height || !tRect.width || !tRect.height) return null;
+    if (!eRect.width || !eRect.height) return null;
+
+    const pageTop = eRect.top + currentScrollY;
+    const pageLeft = eRect.left + currentScrollX;
 
     const next = {
       emblem: {
-        left: eRect.left,
-        top: eRect.top + scrollY,
+        pageTop,
+        pageLeft,
         width: eRect.width,
         height: eRect.height
-      },
-      title: {
-        left: tRect.left,
-        top: tRect.top + scrollY,
-        width: tRect.width,
-        height: tRect.height
       }
     };
 
     setStartRects((prev) => {
       if (
         prev &&
-        Math.abs(prev.emblem.left - next.emblem.left) < 0.5 &&
-        Math.abs(prev.emblem.top - next.emblem.top) < 0.5 &&
+        Math.abs(prev.emblem.pageTop - next.emblem.pageTop) < 0.5 &&
+        Math.abs(prev.emblem.pageLeft - next.emblem.pageLeft) < 0.5 &&
         Math.abs(prev.emblem.width - next.emblem.width) < 0.5 &&
-        Math.abs(prev.emblem.height - next.emblem.height) < 0.5 &&
-        Math.abs(prev.title.left - next.title.left) < 0.5 &&
-        Math.abs(prev.title.top - next.title.top) < 0.5 &&
-        Math.abs(prev.title.width - next.title.width) < 0.5 &&
-        Math.abs(prev.title.height - next.title.height) < 0.5
+        Math.abs(prev.emblem.height - next.emblem.height) < 0.5
       ) {
         return prev;
       }
@@ -111,7 +108,6 @@ export default function HeroMorphSection({
 
     syncAll();
 
-    // Ensure geometry updates when custom fonts finish loading or window/lockup resizes
     let cancelled = false;
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
@@ -125,7 +121,6 @@ export default function HeroMorphSection({
         if (!cancelled) syncAll();
       });
       if (emblemPlaceholderRef.current) ro.observe(emblemPlaceholderRef.current);
-      if (titlePlaceholderRef.current) ro.observe(titlePlaceholderRef.current);
     }
 
     window.addEventListener('resize', syncAll, { passive: true });
@@ -134,7 +129,7 @@ export default function HeroMorphSection({
       if (ro) ro.disconnect();
       window.removeEventListener('resize', syncAll);
     };
-  }, [useFixedMorph, companyName, companySubtitle, measureNavTargets, measureStartAnchors]);
+  }, [useFixedMorph, measureNavTargets, measureStartAnchors]);
 
   // Continuous rAF scroll listener consistent across desktop, laptop, tablet, and mobile
   useEffect(() => {
@@ -144,8 +139,8 @@ export default function HeroMorphSection({
 
     const updateProgress = () => {
       rafId = null;
-      const y = window.scrollY || 0;
-      const morphDist = Math.min(320, Math.max(180, window.innerHeight * 0.36));
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const morphDist = getMorphDistance();
       const next = Math.min(1, Math.max(0, y / morphDist));
       setScrollProgress((prev) => (Math.abs(prev - next) < 0.001 ? prev : next));
     };
@@ -167,81 +162,64 @@ export default function HeroMorphSection({
   }, [useFixedMorph, setScrollProgress]);
 
   const rawProgress = useFixedMorph ? scrollProgress : 0;
-  const eased = easeInOutCubic(rawProgress);
+  const eased = smoothstep(rawProgress);
 
-  // Supportive copy fades smoothly upward cleanly ahead of docking
-  const copyFadeProgress = Math.min(1, rawProgress / 0.45);
+  // Natural gentle fadeout as hero section scrolls past
+  const currentScrollY = typeof window !== 'undefined' ? (window.scrollY || document.documentElement.scrollTop || 0) : 0;
+  const morphDist = getMorphDistance();
+  const copyFadeProgress = Math.min(1, Math.max(0, (currentScrollY - 40) / (morphDist * 1.15)));
   const copyOpacity = useFixedMorph ? Math.max(0, 1 - copyFadeProgress) : 1;
-  const copyTranslateY = useFixedMorph ? copyFadeProgress * -16 : 0;
-  const auraOpacity = useFixedMorph ? Math.max(0, 1 - rawProgress * 1.25) : 1;
+  const copyTranslateY = useFixedMorph ? copyFadeProgress * -14 : 0;
+  const auraOpacity = useFixedMorph ? Math.max(0, 1 - rawProgress * 1.2) : 1;
 
-  const canAnimateMorph = Boolean(useFixedMorph && startRects && navTargetRects);
-  const isEmblemDocked = useFixedMorph && rawProgress >= 0.992;
+  const canAnimateMorph = Boolean(
+    useFixedMorph &&
+    startRects?.emblem &&
+    navTargetRects?.img &&
+    navTargetRects.img.width > 0 &&
+    startRects.emblem.width > 0
+  );
+
+  const isEmblemDocked = useFixedMorph && rawProgress >= 0.985;
 
   let emblemStyle = {};
-  let titleStyle = {};
 
   if (canAnimateMorph) {
-    // Emblem moves continuously center-to-center into exact navbar emblem rect
     const sEmblem = startRects.emblem;
     const tEmblem = navTargetRects.img;
-    const sCenterX = sEmblem.left + sEmblem.width / 2;
-    const sCenterY = sEmblem.top + sEmblem.height / 2;
+
+    const startLeft = sEmblem.pageLeft;
+    const startTop = sEmblem.pageTop;
+    const startWidth = sEmblem.width;
+    const startHeight = sEmblem.height;
+
+    const sCenterX = startLeft + startWidth / 2;
+    const sCenterY = startTop + startHeight / 2;
+
     const tCenterX = tEmblem.left + tEmblem.width / 2;
     const tCenterY = tEmblem.top + tEmblem.height / 2;
 
-    const emblemDx = (tCenterX - sCenterX) * eased;
-    const emblemDy = (tCenterY - sCenterY) * eased;
-    const emblemScaleTarget = Math.min(
-      tEmblem.width / sEmblem.width,
-      tEmblem.height / sEmblem.height
-    );
-    const emblemScale = 1 + (emblemScaleTarget - 1) * eased;
+    const currentCenterX = sCenterX + (tCenterX - sCenterX) * eased;
+    const currentCenterY = sCenterY + (tCenterY - sCenterY) * eased;
+
+    const scaleTarget = tEmblem.width / startWidth;
+    const currentScale = 1 + (scaleTarget - 1) * eased;
+
+    const tx = currentCenterX - startWidth / 2;
+    const ty = currentCenterY - startHeight / 2;
 
     emblemStyle = {
       position: 'fixed',
-      left: `${sEmblem.left}px`,
-      top: `${sEmblem.top}px`,
-      width: `${sEmblem.width}px`,
-      height: `${sEmblem.height}px`,
+      left: 0,
+      top: 0,
+      width: `${startWidth}px`,
+      height: `${startHeight}px`,
       transformOrigin: 'center center',
-      transform: `translate3d(${emblemDx.toFixed(2)}px, ${emblemDy.toFixed(2)}px, 0) scale(${emblemScale.toFixed(4)})`,
+      transform: `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${currentScale.toFixed(4)})`,
       opacity: isEmblemDocked ? 0 : 1,
-      pointerEvents: isEmblemDocked ? 'none' : 'auto',
-      zIndex: 1002
-    };
-
-    // Title block travels center-to-center directly onto navbar text column,
-    // staying opaque until docked alignment (0.86 -> 1.0)
-    const sTitle = startRects.title;
-    const tTitle = navTargetRects.text;
-    const sTitleCx = sTitle.left + sTitle.width / 2;
-    const sTitleCy = sTitle.top + sTitle.height / 2;
-    const tTitleCx = tTitle.left + tTitle.width / 2;
-    const tTitleCy = tTitle.top + tTitle.height / 2;
-
-    const titleDx = (tTitleCx - sTitleCx) * eased;
-    const titleDy = (tTitleCy - sTitleCy) * eased;
-    const titleScaleTarget = Math.min(
-      0.72,
-      Math.max(0.24, Math.min(tTitle.width / sTitle.width, tTitle.height / sTitle.height))
-    );
-    const titleScale = 1 + (titleScaleTarget - 1) * eased;
-
-    const titleOpacity =
-      rawProgress <= 0.86 ? 1 : Math.max(0, 1 - (rawProgress - 0.86) / 0.14);
-
-    titleStyle = {
-      position: 'fixed',
-      left: `${sTitle.left}px`,
-      top: `${sTitle.top}px`,
-      width: `${sTitle.width}px`,
-      height: `${sTitle.height}px`,
-      transformOrigin: 'center center',
-      transform: `translate3d(${titleDx.toFixed(2)}px, ${titleDy.toFixed(2)}px, 0) scale(${titleScale.toFixed(4)})`,
-      opacity: titleOpacity,
-      pointerEvents: titleOpacity < 0.08 ? 'none' : 'auto',
-      zIndex: 1001
+      pointerEvents: 'none',
+      zIndex: 1005,
+      willChange: 'transform, opacity'
     };
   }
 
@@ -275,62 +253,29 @@ export default function HeroMorphSection({
       </div>
 
       <div className="hp-hero-inner">
-        {/* Centered Resting Anchor Slot Preserving Flow Height at Zero Shift */}
+        {/* Centered Resting Anchor Slot */}
         <div className="hp-hero-lockup-flow">
           <div
             ref={emblemPlaceholderRef}
-            className={`hp-hero-emblem-slot ${canAnimateMorph ? 'is-measured' : ''}`}
+            className="hp-hero-emblem-slot"
           >
-            {!canAnimateMorph && (
-              <img
-                src={logoUrl}
-                alt={logoAlt}
-                className="hp-hero-emblem-img"
-                onLoad={measureStartAnchors}
-                fetchPriority="high"
-              />
-            )}
-          </div>
-
-          <div
-            ref={titlePlaceholderRef}
-            className={`hp-hero-title-slot ${canAnimateMorph ? 'is-measured' : ''}`}
-          >
-            {!canAnimateMorph ? (
-              <div className="hp-hero-title-stack">
-                <h1 className="hp-hero-brand-name">{companyName}</h1>
-                {companySubtitle && <p className="hp-hero-brand-sub">{companySubtitle}</p>}
-              </div>
-            ) : (
-              <div className="hp-hero-title-stack" aria-hidden="true">
-                <span className="hp-hero-brand-name">{companyName}</span>
-                {companySubtitle && <span className="hp-hero-brand-sub">{companySubtitle}</span>}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Continuous Fixed GPU-Composited Travelling Brand Unit */}
-        {canAnimateMorph && (
-          <>
             <img
               src={logoUrl}
               alt={logoAlt}
-              className="hp-hero-emblem-img hp-hero-morph-emblem"
-              style={emblemStyle}
+              className="hp-hero-emblem-img"
+              style={{ opacity: canAnimateMorph ? 0 : 1 }}
               onLoad={measureStartAnchors}
               fetchPriority="high"
             />
-            <div
-              className="hp-hero-title-stack hp-hero-morph-title"
-              style={titleStyle}
-              aria-hidden={isEmblemDocked ? 'true' : undefined}
-            >
+          </div>
+
+          <div className="hp-hero-title-slot">
+            <div className="hp-hero-title-stack">
               <h1 className="hp-hero-brand-name">{companyName}</h1>
               {companySubtitle && <p className="hp-hero-brand-sub">{companySubtitle}</p>}
             </div>
-          </>
-        )}
+          </div>
+        </div>
 
         {/* Tagline, Supporting Company Introduction & Action Buttons */}
         <div
@@ -383,21 +328,20 @@ export default function HeroMorphSection({
         </div>
       </div>
 
-      {/* Subtle Scroll Cue */}
-      {!isPreview && (
-        <a
-          href="#about-sriyas"
-          className="hp-hero-scroll-cue"
-          aria-label="Scroll to explore Sriyas Healthcare"
-          style={{ opacity: auraOpacity }}
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById('about-sriyas')?.scrollIntoView({ behavior: 'smooth' });
-          }}
+      {/* Continuous Fixed GPU-Composited Travelling Emblem */}
+      {canAnimateMorph && (
+        <div
+          className="hp-hero-morph-traveler"
+          style={emblemStyle}
+          aria-hidden={isEmblemDocked ? 'true' : undefined}
         >
-          <span className="hp-scroll-cue-label">Scroll to explore</span>
-          <span className="hp-scroll-cue-line" />
-        </a>
+          <img
+            src={logoUrl}
+            alt={logoAlt}
+            className="hp-hero-emblem-img"
+            fetchPriority="high"
+          />
+        </div>
       )}
     </section>
   );

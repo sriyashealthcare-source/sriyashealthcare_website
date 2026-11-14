@@ -135,7 +135,8 @@ export function HomepageScrollProvider({ children }) {
       return;
     }
     const y = window.scrollY || 0;
-    const morphDist = Math.min(320, Math.max(180, window.innerHeight * 0.36));
+    const vh = window.innerHeight || 800;
+    const morphDist = Math.min(380, Math.max(200, Math.round(vh * 0.35)));
     setScrollProgress(Math.min(1, Math.max(0, y / morphDist)));
   }, [isHomepage, reducedMotion]);
 

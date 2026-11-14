@@ -44,15 +44,15 @@ export default function Navbar() {
   const isProductsActive =
     location.pathname.startsWith('/products') || location.pathname.startsWith('/product/');
 
-  const isHeroTopTransparent = isMorphEnabled && scrollProgress < 0.72 && !mobileMenuOpen;
-  const isEmblemDocked = !isMorphEnabled || scrollProgress >= 0.992;
+  const isHeroTopTransparent = isMorphEnabled && scrollProgress < 0.60 && !mobileMenuOpen;
+  const isEmblemDocked = !isMorphEnabled || scrollProgress >= 0.985;
 
-  // Reveal navbar text strictly as the travelling title settles into navbar position (0.86 -> 1.0)
+  // Reveal navbar text smoothly as the emblem approaches and docks into navbar position (0.60 -> 1.0)
   const navTextOpacity = !isMorphEnabled
     ? 1
-    : scrollProgress <= 0.86
+    : scrollProgress <= 0.60
       ? 0
-      : Math.min(1, (scrollProgress - 0.86) / 0.14);
+      : Math.min(1, (scrollProgress - 0.60) / 0.40);
 
   const logoSrc = brandMedia?.url || '/assets/logos/sriyas-emblem.png';
   const logoAlt = brandMedia?.alt || 'Sriyas Healthcare emblem';
