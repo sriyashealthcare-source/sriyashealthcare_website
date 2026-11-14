@@ -13,7 +13,7 @@ import HomepagePreviewModal from '../../components/admin/homepage/HomepagePrevie
 import '../../styles/homepageEditor.css';
 
 const TABS = [
-  { id: 'hero', label: 'Hero Editor' },
+  { id: 'hero', label: 'Hero Editor', toggleKey: 'hero' },
   { id: 'about', label: 'About Editor', toggleKey: 'about' },
   { id: 'workplace', label: 'Company Gallery Editor', toggleKey: 'workplace' },
   { id: 'leadership', label: 'Leadership Editor', toggleKey: 'leadership' },
@@ -412,6 +412,9 @@ export default function HomepageEditor() {
               onOrderChange={(nextOrder) => updateSection('sectionOrder', nextOrder)}
               onToggleSection={handleToggleSection}
               onNavigateTab={(tabId) => setActiveTab(tabId)}
+              onSaveOrder={handleSaveDraft}
+              isSaving={saving}
+              isDirty={isDirty}
             />
           )}
         </section>

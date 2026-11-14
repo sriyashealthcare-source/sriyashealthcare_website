@@ -232,6 +232,7 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
 
   return {
     hero: {
+      enabled: cleanBool(heroIn.enabled, base.hero ? base.hero.enabled !== false : true),
       companyName: cleanText(heroIn.companyName, base.hero.companyName, 80) || 'SRIYAS HEALTHCARE',
       companySubtitle: cleanText(heroIn.companySubtitle, base.hero.companySubtitle, 100),
       tagline: cleanText(heroIn.tagline, base.hero.tagline, 240),

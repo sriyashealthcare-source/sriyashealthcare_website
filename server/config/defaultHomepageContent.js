@@ -1,6 +1,7 @@
 const HomepageContent = require('../models/HomepageContent');
 
 const CANONICAL_SECTION_ORDER = [
+  'hero',
   'about',
   'workplace',
   'leadership',
@@ -13,6 +14,7 @@ const CANONICAL_SECTION_ORDER = [
 function createDefaultHomepagePayload() {
   return {
     hero: {
+      enabled: true,
       companyName: 'SRIYAS HEALTHCARE',
       companySubtitle: 'PVT LTD',
       tagline: 'Empowering Healthcare with Care and Innovation.',

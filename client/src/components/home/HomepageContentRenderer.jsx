@@ -9,6 +9,7 @@ import CtaSection from './CtaSection';
 import ContinueToProductsTrigger from './ContinueToProductsTrigger';
 
 const DEFAULT_ORDER = [
+  'hero',
   'about',
   'workplace',
   'leadership',
@@ -25,13 +26,27 @@ export default function HomepageContentRenderer({
 }) {
   if (!homepage) return null;
 
-  const order =
+  let order =
     Array.isArray(homepage.sectionOrder) && homepage.sectionOrder.length > 0
-      ? homepage.sectionOrder
-      : DEFAULT_ORDER;
+      ? [...homepage.sectionOrder]
+      : [...DEFAULT_ORDER];
+
+  if (!order.includes('hero')) {
+    order = ['hero', ...order];
+  }
 
   const renderSection = (key) => {
     switch (key) {
+      case 'hero':
+        if (homepage.hero?.enabled === false) return null;
+        return (
+          <HeroMorphSection
+            key="hero"
+            hero={homepage.hero}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
       case 'about':
         return (
           <AboutSection
@@ -112,11 +127,6 @@ export default function HomepageContentRenderer({
         forceMobile ? 'hp-root--forced-mobile' : ''
       }`}
     >
-      <HeroMorphSection
-        hero={homepage.hero}
-        isPreview={isPreview}
-        forceMobile={forceMobile}
-      />
       {order.map(renderSection)}
       <ContinueToProductsTrigger isPreview={isPreview} />
     </div>

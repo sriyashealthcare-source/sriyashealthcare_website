@@ -49,12 +49,12 @@ export default function AdminLogin() {
     <div className="admin-login-page">
       <div className="admin-login-card">
         <div className="admin-login-header">
-          <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare emblem" />
+          <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare Emblem" />
           <div>
-            <span className="admin-login-badge">Administrator Portal</span>
+            <span className="admin-login-badge">ADMINISTRATOR PORTAL</span>
           </div>
           <h1>Sriyas Healthcare</h1>
-          <p>Sign in to manage products, brands, and customer analytics.</p>
+          <p>Sign in to manage catalogue, partners, homepage content &amp; enquiries.</p>
         </div>
 
         {error && (

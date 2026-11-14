@@ -96,6 +96,7 @@ const valueItemSchema = new mongoose.Schema(
 const homepageSnapshotSchema = new mongoose.Schema(
   {
     hero: {
+      enabled: { type: Boolean, default: true },
       companyName: { type: String, trim: true, default: 'SRIYAS HEALTHCARE' },
       companySubtitle: { type: String, trim: true, default: 'PVT LTD' },
       tagline: { type: String, trim: true, default: 'Empowering Healthcare with Care and Innovation.' },
@@ -202,6 +203,7 @@ const homepageSnapshotSchema = new mongoose.Schema(
     sectionOrder: {
       type: [String],
       default: [
+        'hero',
         'about',
         'workplace',
         'leadership',

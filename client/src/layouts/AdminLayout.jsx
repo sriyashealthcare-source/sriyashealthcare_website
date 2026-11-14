@@ -8,9 +8,33 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Auto-close sidebar drawer when navigating to another admin route
   useEffect(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
+
+  // Close drawer on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && sidebarOpen) {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [sidebarOpen]);
+
+  // Lock background body scroll when mobile drawer is open
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [sidebarOpen]);
 
   if (loading) {
     return (
@@ -26,6 +50,7 @@ export default function AdminLayout() {
   }
 
   const handleLogout = async () => {
+    setSidebarOpen(false);
     await logout();
     navigate('/admin/login', { replace: true });
   };
@@ -51,27 +76,67 @@ export default function AdminLayout() {
 
   const initials = (admin?.name || 'Admin')
     .split(' ')
-    .map(w => w[0])
+    .map((w) => w[0])
     .join('')
     .slice(0, 2)
     .toUpperCase();
 
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <div className="admin-shell">
-      {/* Sidebar */}
-      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`} aria-label="Administrator Navigation">
-        <Link to="/admin/dashboard" className="admin-sidebar-brand">
-          <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare" />
-          <div className="admin-sidebar-brand-text">
-            <span className="admin-sidebar-brand-title">SRIYAS HEALTHCARE</span>
-            <span className="admin-sidebar-brand-sub">Admin Console</span>
-          </div>
-        </Link>
+      {/* Mobile/Tablet Backdrop Overlay */}
+      <div
+        className={`admin-backdrop ${sidebarOpen ? 'open' : ''}`}
+        onClick={closeSidebar}
+        aria-hidden="true"
+      />
+
+      {/* Sidebar Navigation Drawer */}
+      <aside
+        className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}
+        aria-label="Administrator Navigation"
+        id="admin-navigation-drawer"
+      >
+        <div className="admin-sidebar-header">
+          <Link
+            to="/admin/dashboard"
+            className="admin-sidebar-brand"
+            onClick={closeSidebar}
+            title="Sriyas Healthcare Admin"
+          >
+            <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare Emblem" />
+            <div className="admin-sidebar-brand-text">
+              <span className="admin-sidebar-brand-title">SRIYAS HEALTHCARE</span>
+              <span className="admin-sidebar-brand-sub">Admin Console</span>
+            </div>
+          </Link>
+
+          {/* Clearly visible Close (X) button for mobile/tablet drawer */}
+          <button
+            type="button"
+            className="admin-sidebar-close-btn"
+            onClick={closeSidebar}
+            aria-label="Close navigation menu"
+            title="Close menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path
+                d="M4.5 4.5L13.5 13.5M13.5 4.5L4.5 13.5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
 
         <nav className="admin-sidebar-nav">
           <div className="admin-nav-section-label">Overview</div>
           <NavLink
             to="/admin/dashboard"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">📊</span>
@@ -81,6 +146,7 @@ export default function AdminLayout() {
           <div className="admin-nav-section-label">Analytics &amp; Intelligence</div>
           <NavLink
             to="/admin/visitors"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">👥</span>
@@ -89,6 +155,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/journeys"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">🧭</span>
@@ -97,6 +164,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/analytics"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">📈</span>
@@ -105,6 +173,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/traffic-sources"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">🌐</span>
@@ -113,6 +182,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/devices"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">📱</span>
@@ -121,6 +191,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/reports"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">📑</span>
@@ -130,6 +201,7 @@ export default function AdminLayout() {
           <div className="admin-nav-section-label">Customer CRM</div>
           <NavLink
             to="/admin/enquiries"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">✉️</span>
@@ -140,6 +212,7 @@ export default function AdminLayout() {
           <NavLink
             to="/admin/products"
             end
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">📦</span>
@@ -148,6 +221,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/products/add"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">➕</span>
@@ -156,6 +230,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/admin/brands-categories"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">🏷️</span>
@@ -165,6 +240,7 @@ export default function AdminLayout() {
           <div className="admin-nav-section-label">Website Management</div>
           <NavLink
             to="/admin/homepage-editor"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">🖥️</span>
@@ -174,6 +250,7 @@ export default function AdminLayout() {
           <div className="admin-nav-section-label">System</div>
           <NavLink
             to="/admin/settings"
+            onClick={closeSidebar}
             className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
           >
             <span className="admin-nav-icon">⚙️</span>
@@ -186,6 +263,7 @@ export default function AdminLayout() {
             rel="noreferrer"
             className="admin-nav-item"
             style={{ marginTop: '8px' }}
+            onClick={closeSidebar}
           >
             <span className="admin-nav-icon">↗</span>
             <span>View Public Website</span>
@@ -215,7 +293,8 @@ export default function AdminLayout() {
               type="button"
               className="admin-menu-toggle"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              aria-label="Toggle Menu"
+              aria-label="Open Navigation Menu"
+              aria-expanded={sidebarOpen}
             >
               ☰
             </button>
@@ -223,7 +302,11 @@ export default function AdminLayout() {
           </div>
 
           <div className="admin-topbar-right">
-            <Link to="/admin/enquiries" className="adm-btn adm-btn-secondary adm-btn-sm" style={{ marginRight: '8px' }}>
+            <Link
+              to="/admin/enquiries"
+              className="adm-btn adm-btn-secondary adm-btn-sm"
+              style={{ marginRight: '8px' }}
+            >
               ✉ Enquiries
             </Link>
             <Link to="/admin/products/add" className="adm-btn adm-btn-primary adm-btn-sm">

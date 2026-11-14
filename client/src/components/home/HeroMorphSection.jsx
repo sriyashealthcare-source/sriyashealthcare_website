@@ -50,6 +50,10 @@ export default function HeroMorphSection({
 
   // Keep docked Navbar brand synchronized seamlessly with Hero configuration
   useEffect(() => {
+    if (hero.enabled === false) {
+      setScrollProgress(1);
+      return;
+    }
     if (!isPreview) {
       setBrandMedia({
         url: logoUrl,
@@ -58,7 +62,9 @@ export default function HeroMorphSection({
         companySubtitle
       });
     }
-  }, [isPreview, logoUrl, logoAlt, companyName, companySubtitle, setBrandMedia]);
+  }, [isPreview, hero.enabled, logoUrl, logoAlt, companyName, companySubtitle, setBrandMedia, setScrollProgress]);
+
+  if (hero.enabled === false) return null;
 
   const measureStartAnchors = useCallback(() => {
     if (!emblemPlaceholderRef.current) return null;
