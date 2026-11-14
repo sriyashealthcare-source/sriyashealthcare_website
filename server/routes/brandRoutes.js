@@ -3,6 +3,7 @@ const {
   getPublicBrands,
   getPublicBrandBySlug,
   getAdminBrands,
+  uploadBrandLogoImage,
   createBrand,
   updateBrand,
   toggleBrandStatus,
@@ -19,6 +20,7 @@ publicBrandRouter.get('/:slug', getPublicBrandBySlug);
 const adminBrandRouter = express.Router();
 adminBrandRouter.use(protectAdmin);
 adminBrandRouter.get('/', getAdminBrands);
+adminBrandRouter.post('/upload-logo', uploadBrandLogo, uploadBrandLogoImage);
 adminBrandRouter.post('/', uploadBrandLogo, validateBrandInput, createBrand);
 adminBrandRouter.put('/:id', uploadBrandLogo, validateBrandInput, updateBrand);
 adminBrandRouter.patch('/:id/status', toggleBrandStatus);

@@ -219,7 +219,15 @@ export default function Products() {
                 className={`brand-tab ${isSelected ? 'active' : ''}`}
                 onClick={() => handleSelectBrand(brand.slug)}
               >
-                <span>{brand.icon || '🔬'}</span>
+                {brand.logoUrl ? (
+                  <img
+                    src={resolveAssetUrl(brand.logoUrl)}
+                    alt=""
+                    className="brand-tab-logo"
+                  />
+                ) : (
+                  <span>{brand.icon || '🔬'}</span>
+                )}
                 <span>{brand.tabLabel || brand.name}</span>
               </button>
             );

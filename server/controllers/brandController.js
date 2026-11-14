@@ -3,6 +3,7 @@ const Brand = require('../models/Brand');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 const { uploadBuffer, deleteAsset, CLOUDINARY_FOLDERS } = require('../config/cloudinary');
+const { isSafeSvg } = require('../middleware/uploadMiddleware');
 
 function isObjectId(val) {
   return typeof val === 'string' && /^[0-9a-fA-F]{24}$/.test(val) && mongoose.Types.ObjectId.isValid(val);
@@ -105,6 +106,48 @@ const getAdminBrands = async (req, res, next) => {
   }
 };
 
+// POST /api/admin/brands/upload-logo
+const uploadBrandLogoImage = async (req, res, next) => {
+  try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({
+        success: false,
+        message: 'No logo image file was provided. Please choose a PNG, JPG, JPEG, WEBP, or safe SVG file.'
+      });
+    }
+
+    if (req.file.mimetype === 'image/svg+xml' || req.file.originalname.toLowerCase().endsWith('.svg')) {
+      if (!isSafeSvg(req.file.buffer)) {
+        return res.status(400).json({
+          success: false,
+          message: 'SVG file contains unsafe scripts or embedded elements and cannot be uploaded.'
+        });
+      }
+    }
+
+    const uploaded = await uploadBuffer(
+      req.file.buffer,
+      req.file.originalname,
+      CLOUDINARY_FOLDERS.brands,
+      'image'
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Brand logo uploaded successfully.',
+      logo: {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // POST /api/admin/brands
 const createBrand = async (req, res, next) => {
   try {
@@ -114,8 +157,17 @@ const createBrand = async (req, res, next) => {
     const icon = (req.body.icon || '🔬').trim();
     const description = (req.body.description || '').trim();
     let logoUrl = (req.body.logoUrl || '').trim();
-    let logoPublicId = '';
+    let logoPublicId = (req.body.logoPublicId || '').trim();
+
     if (req.file && req.file.buffer) {
+      if (req.file.mimetype === 'image/svg+xml' || req.file.originalname.toLowerCase().endsWith('.svg')) {
+        if (!isSafeSvg(req.file.buffer)) {
+          return res.status(400).json({
+            success: false,
+            message: 'SVG file contains unsafe scripts or embedded elements and cannot be uploaded.'
+          });
+        }
+      }
       const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.brands, 'image');
       logoUrl = uploaded.url;
       logoPublicId = uploaded.publicId;
@@ -171,18 +223,50 @@ const updateBrand = async (req, res, next) => {
     const tabLabel = req.body.tabLabel !== undefined ? req.body.tabLabel.trim() : brand.tabLabel;
     const icon = req.body.icon !== undefined ? req.body.icon.trim() : brand.icon;
     const description = req.body.description !== undefined ? req.body.description.trim() : brand.description;
-    let logoUrl = req.body.logoUrl !== undefined ? req.body.logoUrl.trim() : brand.logoUrl;
-    let logoPublicId = brand.logoPublicId || '';
+    const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : brand.displayOrder;
+    const isActive = req.body.isActive !== undefined ? Boolean(req.body.isActive) : brand.isActive;
+
+    const oldPublicId = brand.logoPublicId || '';
+    let logoUrl = brand.logoUrl || '';
+    let logoPublicId = oldPublicId;
+    let shouldCleanupOldLogo = false;
+
+    // Case 1: Direct file upload on update
     if (req.file && req.file.buffer) {
-      if (brand.logoPublicId) {
-        await deleteAsset(brand.logoPublicId, 'image', true);
+      if (req.file.mimetype === 'image/svg+xml' || req.file.originalname.toLowerCase().endsWith('.svg')) {
+        if (!isSafeSvg(req.file.buffer)) {
+          return res.status(400).json({
+            success: false,
+            message: 'SVG file contains unsafe scripts or embedded elements and cannot be uploaded.'
+          });
+        }
       }
+      // Upload new logo first to ensure Cloudinary success before touching old asset
       const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.brands, 'image');
       logoUrl = uploaded.url;
       logoPublicId = uploaded.publicId;
+      if (oldPublicId && oldPublicId !== logoPublicId) {
+        shouldCleanupOldLogo = true;
+      }
     }
-    const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : brand.displayOrder;
-    const isActive = req.body.isActive !== undefined ? Boolean(req.body.isActive) : brand.isActive;
+    // Case 2: Explicit removal of brand logo
+    else if (req.body.removeLogo === true || req.body.removeLogo === 'true' || (req.body.logoUrl === '' && !req.file)) {
+      logoUrl = '';
+      logoPublicId = '';
+      if (oldPublicId) {
+        shouldCleanupOldLogo = true;
+      }
+    }
+    // Case 3: Logo URL updated (e.g. from standalone upload endpoint or payload)
+    else if (req.body.logoUrl !== undefined) {
+      const incomingUrl = req.body.logoUrl.trim();
+      const incomingPublicId = (req.body.logoPublicId || '').trim();
+      logoUrl = incomingUrl;
+      logoPublicId = incomingPublicId;
+      if (oldPublicId && oldPublicId !== incomingPublicId) {
+        shouldCleanupOldLogo = true;
+      }
+    }
 
     const updated = await Brand.findByIdAndUpdate(
       req.params.id,
@@ -201,6 +285,18 @@ const updateBrand = async (req, res, next) => {
       },
       { new: true }
     );
+
+    // Only after successful database update, clean up old Cloudinary asset if safe & unreferenced
+    if (shouldCleanupOldLogo && oldPublicId && !oldPublicId.startsWith('local:')) {
+      try {
+        const otherBrand = await Brand.findOne({ _id: { $ne: brand._id }, logoPublicId: oldPublicId });
+        if (!otherBrand) {
+          await deleteAsset(oldPublicId, 'image', true);
+        }
+      } catch (cleanupErr) {
+        console.warn('[BrandController] Non-blocking old logo cleanup warning:', cleanupErr.message);
+      }
+    }
 
     res.status(200).json({
       success: true,
@@ -263,7 +359,21 @@ const deleteBrand = async (req, res, next) => {
       });
     }
 
+    const logoToDelete = brand.logoPublicId;
     await Brand.findByIdAndDelete(req.params.id);
+
+    // Safely remove associated Cloudinary logo asset if unreferenced elsewhere
+    if (logoToDelete && !logoToDelete.startsWith('local:')) {
+      try {
+        const otherBrand = await Brand.findOne({ logoPublicId: logoToDelete });
+        if (!otherBrand) {
+          await deleteAsset(logoToDelete, 'image', true);
+        }
+      } catch (delErr) {
+        console.warn('[BrandController] Non-blocking logo cleanup warning on brand delete:', delErr.message);
+      }
+    }
+
     res.status(200).json({
       success: true,
       message: `Brand "${brand.name}" deleted successfully.`
@@ -277,6 +387,7 @@ module.exports = {
   getPublicBrands,
   getPublicBrandBySlug,
   getAdminBrands,
+  uploadBrandLogoImage,
   createBrand,
   updateBrand,
   toggleBrandStatus,

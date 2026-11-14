@@ -31,7 +31,7 @@ const configureCloudinary = () => {
 // Standardized folder hierarchy
 const CLOUDINARY_FOLDERS = {
   products: 'sriyas/products',
-  brands: 'sriyas/brands',
+  brands: 'sriyas-healthcare/brand-logos',
   categories: 'sriyas/categories',
   brochures: 'sriyas/brochures',
   website: 'sriyas/website',
@@ -47,7 +47,7 @@ const uploadBuffer = async (buffer, originalName = 'upload.png', folder = CLOUDI
         use_filename: true,
         unique_filename: true
       };
-      if (resourceType === 'image') {
+      if (resourceType === 'image' && !originalName.toLowerCase().endsWith('.svg')) {
         uploadOptions.transformation = [{ quality: 'auto', fetch_format: 'auto' }];
       }
 
@@ -56,7 +56,7 @@ const uploadBuffer = async (buffer, originalName = 'upload.png', folder = CLOUDI
         resolve({
           url: result.secure_url,
           publicId: result.public_id,
-          format: result.format || (resourceType === 'raw' ? 'pdf' : 'webp'),
+          format: result.format || (resourceType === 'raw' ? 'pdf' : (originalName.toLowerCase().endsWith('.svg') ? 'svg' : 'webp')),
           width: result.width || 0,
           height: result.height || 0,
           bytes: result.bytes || (buffer ? buffer.length : 0),

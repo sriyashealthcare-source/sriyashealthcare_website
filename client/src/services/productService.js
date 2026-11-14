@@ -80,13 +80,38 @@ export const productService = {
     return response.data;
   },
 
-  async createBrand(payload) {
-    const response = await api.post('/admin/brands', payload);
+  async uploadBrandLogo(file, onProgress) {
+    const formData = new FormData();
+    formData.append('logo', file);
+    const response = await api.post('/admin/brands/upload-logo', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (progressEvent) => {
+        if (onProgress && progressEvent.total) {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress(percent);
+        }
+      }
+    });
     return response.data;
   },
 
-  async updateBrand(id, payload) {
-    const response = await api.put(`/admin/brands/${encodeURIComponent(id)}`, payload);
+  async createBrand(payloadOrFormData) {
+    const isFormData = payloadOrFormData instanceof FormData;
+    const response = await api.post(
+      '/admin/brands',
+      payloadOrFormData,
+      isFormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {}
+    );
+    return response.data;
+  },
+
+  async updateBrand(id, payloadOrFormData) {
+    const isFormData = payloadOrFormData instanceof FormData;
+    const response = await api.put(
+      `/admin/brands/${encodeURIComponent(id)}`,
+      payloadOrFormData,
+      isFormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {}
+    );
     return response.data;
   },
 

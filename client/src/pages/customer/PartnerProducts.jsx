@@ -248,8 +248,9 @@ export default function PartnerProducts() {
                     className="partner-hero-logo"
                   />
                 ) : (
-                  <div className="partner-hero-fallback-icon" aria-hidden="true">
-                    <span>{brand.icon || '🔬'}</span>
+                  <div className="partner-hero-fallback-badge">
+                    <span className="partner-hero-fallback-icon" aria-hidden="true">{brand.icon || '🔬'}</span>
+                    <span className="partner-hero-fallback-name">{brand.name}</span>
                   </div>
                 )}
               </div>

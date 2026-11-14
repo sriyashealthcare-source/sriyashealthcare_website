@@ -1735,18 +1735,26 @@
 
 .partner-card-logo-wrap {
   flex: 1;
-  height: 76px;
+  min-height: 76px;
+  max-width: 260px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  background: #ffffff;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(169, 130, 44, 0.14);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
 .partner-card-logo {
-  max-height: 72px;
-  max-width: 190px;
+  max-height: 60px;
+  max-width: 100%;
   width: auto;
+  height: auto;
   object-fit: contain;
-  mix-blend-mode: multiply;
+  object-position: left center;
+  display: block;
   transition: transform 0.35s var(--ease);
 }
 
@@ -1940,24 +1948,53 @@
 }
 
 .partner-hero-logo-box {
-  width: 180px;
-  height: 90px;
+  width: 220px;
+  min-height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  border-right: 1px solid rgba(169, 130, 44, 0.16);
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(169, 130, 44, 0.18);
+  box-shadow: 0 4px 14px rgba(169, 130, 44, 0.06);
 }
 
 .partner-hero-logo {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 72px;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  mix-blend-mode: multiply;
+  display: block;
+}
+
+.partner-hero-fallback-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .partner-hero-fallback-icon {
-  font-size: 2.8rem;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.partner-hero-fallback-name {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.brand-tab-logo {
+  max-height: 20px;
+  max-width: 32px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .partner-hero-text {

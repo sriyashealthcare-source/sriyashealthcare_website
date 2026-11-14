@@ -1,7 +1,31 @@
 const multer = require('multer');
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+const ALLOWED_BRAND_LOGO_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
 const ALLOWED_PDF_TYPES = ['application/pdf'];
+
+function isSafeSvg(buffer) {
+  if (!buffer) return false;
+  const content = buffer.toString('utf8');
+  if (!content.includes('<svg') && !content.includes('<SVG')) return false;
+
+  // Disallow scripts, event handlers, and remote code embedding
+  const dangerousPatterns = [
+    /<script/i,
+    /javascript:/i,
+    /onload\s*=/i,
+    /onerror\s*=/i,
+    /onclick\s*=/i,
+    /onmouseover\s*=/i,
+    /onfocus\s*=/i,
+    /<foreignObject/i,
+    /<iframe/i,
+    /<embed/i,
+    /<object/i
+  ];
+
+  return !dangerousPatterns.some(pattern => pattern.test(content));
+}
 
 const storage = multer.memoryStorage();
 
@@ -24,6 +48,17 @@ const fileFilter = (req, file, cb) => {
   return cb(err, false);
 };
 
+const brandLogoFileFilter = (req, file, cb) => {
+  const isSvg = file.mimetype === 'image/svg+xml' || file.originalname.toLowerCase().endsWith('.svg');
+  if (ALLOWED_BRAND_LOGO_TYPES.includes(file.mimetype) || isSvg) {
+    return cb(null, true);
+  }
+
+  const err = new Error('Only PNG, JPG, JPEG, WEBP, and safe SVG logo files are allowed.');
+  err.statusCode = 400;
+  return cb(err, false);
+};
+
 const upload = multer({
   storage,
   limits: {
@@ -33,18 +68,28 @@ const upload = multer({
   fileFilter
 });
 
+const brandLogoUpload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5 MB max per brand logo image
+    files: 1
+  },
+  fileFilter: brandLogoFileFilter
+});
+
 const uploadProductFiles = upload.fields([
   { name: 'images', maxCount: 10 },
   { name: 'brochure', maxCount: 1 }
 ]);
 
 const uploadCategoryHero = upload.single('heroImage');
-const uploadBrandLogo = upload.single('logo');
+const uploadBrandLogo = brandLogoUpload.single('logo');
 
 module.exports = {
   upload,
   uploadProductFiles,
   uploadCategoryHero,
-  uploadBrandLogo
+  uploadBrandLogo,
+  isSafeSvg
 };
 

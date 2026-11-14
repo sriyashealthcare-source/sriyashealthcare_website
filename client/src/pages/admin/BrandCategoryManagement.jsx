@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { productService } from '../../services/productService';
+import { resolveAssetUrl } from '../../utils/session';
 
 export default function BrandCategoryManagement() {
   const [brands, setBrands] = useState([]);
@@ -15,6 +16,15 @@ export default function BrandCategoryManagement() {
   const [brandIcon, setBrandIcon] = useState('🔬');
   const [brandDescription, setBrandDescription] = useState('');
   const [brandOrder, setBrandOrder] = useState('');
+  const [brandLogoUrl, setBrandLogoUrl] = useState('');
+  const [brandLogoPublicId, setBrandLogoPublicId] = useState('');
+  const [brandLogoPreview, setBrandLogoPreview] = useState('');
+  const [brandLogoFile, setBrandLogoFile] = useState(null);
+  const [brandLogoMarkedForRemoval, setBrandLogoMarkedForRemoval] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [logoFeedback, setLogoFeedback] = useState(null);
+  const logoFileInputRef = useRef(null);
 
   // Category Modal / Form state
   const [catModalOpen, setCatModalOpen] = useState(false);
@@ -67,6 +77,14 @@ export default function BrandCategoryManagement() {
     setBrandIcon('🔬');
     setBrandDescription('');
     setBrandOrder(String(brands.length + 1));
+    setBrandLogoUrl('');
+    setBrandLogoPublicId('');
+    setBrandLogoPreview('');
+    setBrandLogoFile(null);
+    setBrandLogoMarkedForRemoval(false);
+    setUploadingLogo(false);
+    setUploadProgress(0);
+    setLogoFeedback(null);
     setBrandModalOpen(true);
   };
 
@@ -77,18 +95,103 @@ export default function BrandCategoryManagement() {
     setBrandIcon(b.icon || '🔬');
     setBrandDescription(b.description || '');
     setBrandOrder(b.displayOrder !== undefined ? String(b.displayOrder) : '');
+    setBrandLogoUrl(b.logoUrl || '');
+    setBrandLogoPublicId(b.logoPublicId || '');
+    setBrandLogoPreview(b.logoUrl ? resolveAssetUrl(b.logoUrl) : '');
+    setBrandLogoFile(null);
+    setBrandLogoMarkedForRemoval(false);
+    setUploadingLogo(false);
+    setUploadProgress(0);
+    setLogoFeedback(null);
     setBrandModalOpen(true);
+  };
+
+  const handleLogoFileSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = '';
+
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml'];
+    const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+
+    if (!validTypes.includes(file.type) && !isSvg) {
+      setLogoFeedback({
+        type: 'error',
+        text: 'Unsupported file type. Please upload a PNG, JPG, JPEG, WEBP, or SVG image.'
+      });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setLogoFeedback({
+        type: 'error',
+        text: `File is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 5 MB.`
+      });
+      return;
+    }
+
+    const localUrl = URL.createObjectURL(file);
+    setBrandLogoPreview(localUrl);
+    setBrandLogoFile(file);
+    setBrandLogoMarkedForRemoval(false);
+    setLogoFeedback({ type: 'info', text: 'Uploading logo to Cloudinary...' });
+    setUploadingLogo(true);
+    setUploadProgress(0);
+
+    try {
+      const res = await productService.uploadBrandLogo(file, (percent) => {
+        setUploadProgress(percent);
+      });
+      if (res?.logo?.url) {
+        setBrandLogoUrl(res.logo.url);
+        setBrandLogoPublicId(res.logo.publicId || '');
+        setBrandLogoPreview(resolveAssetUrl(res.logo.url));
+        setLogoFeedback({
+          type: 'success',
+          text: '✓ Logo uploaded to Cloudinary successfully. Click "Save Brand" to persist.'
+        });
+      } else {
+        throw new Error(res?.message || 'Upload succeeded but no image URL was returned.');
+      }
+    } catch (err) {
+      setLogoFeedback({
+        type: 'error',
+        text: err.response?.data?.message || err.message || 'Failed to upload logo image to Cloudinary.'
+      });
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
+
+  const handleRemoveLogo = () => {
+    setBrandLogoUrl('');
+    setBrandLogoPublicId('');
+    setBrandLogoPreview('');
+    setBrandLogoFile(null);
+    setBrandLogoMarkedForRemoval(true);
+    setLogoFeedback({
+      type: 'info',
+      text: 'Logo removed. Click "Save Brand" to apply changes.'
+    });
   };
 
   const handleSaveBrand = async (e) => {
     e.preventDefault();
+    if (uploadingLogo) {
+      showToast('Please wait for the logo upload to finish before saving.', true);
+      return;
+    }
+
     try {
       const payload = {
         name: brandName.trim(),
         tabLabel: (brandTabLabel || brandName).trim(),
         icon: brandIcon.trim() || '🔬',
         description: brandDescription.trim(),
-        displayOrder: brandOrder !== '' ? Number(brandOrder) : undefined
+        displayOrder: brandOrder !== '' ? Number(brandOrder) : undefined,
+        logoUrl: brandLogoMarkedForRemoval ? '' : brandLogoUrl,
+        logoPublicId: brandLogoMarkedForRemoval ? '' : brandLogoPublicId,
+        removeLogo: brandLogoMarkedForRemoval
       };
       if (editingBrand) {
         const res = await productService.updateBrand(editingBrand._id, payload);
@@ -245,6 +348,7 @@ export default function BrandCategoryManagement() {
                 <thead>
                   <tr>
                     <th>Order</th>
+                    <th>Logo</th>
                     <th>Brand</th>
                     <th>Slug</th>
                     <th>Categories</th>
@@ -258,8 +362,23 @@ export default function BrandCategoryManagement() {
                     <tr key={b._id}>
                       <td>{b.displayOrder}</td>
                       <td>
+                        <div className="admin-brand-table-logo-box">
+                          {b.logoUrl ? (
+                            <img
+                              src={resolveAssetUrl(b.logoUrl)}
+                              alt={`${b.name} logo`}
+                              className="admin-brand-table-logo"
+                            />
+                          ) : (
+                            <div className="admin-brand-table-logo-fallback" title="No logo uploaded (displays brand name fallback)">
+                              <span>{b.icon || '🔬'}</span>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td>
                         <div className="admin-prod-name">
-                          {b.icon} {b.name}
+                          {b.name}
                         </div>
                         {b.description && (
                           <div className="admin-prod-sub">
@@ -483,6 +602,88 @@ export default function BrandCategoryManagement() {
                   onChange={(e) => setBrandDescription(e.target.value)}
                   placeholder="Brief overview of this partner brand..."
                 />
+              </div>
+
+              {/* DEDICATED BRAND LOGO IMAGE UPLOADER */}
+              <div className="admin-field" style={{ marginTop: '14px' }}>
+                <label>Brand Logo Image (Manufacturer Logo)</label>
+                <div className="admin-brand-logo-control">
+                  <div className="admin-brand-logo-preview-box">
+                    {brandLogoPreview ? (
+                      <img
+                        src={brandLogoPreview}
+                        alt="Brand logo preview"
+                        className="admin-brand-logo-preview-img"
+                      />
+                    ) : (
+                      <div className="admin-brand-logo-empty">
+                        <span className="admin-brand-logo-empty-icon">{brandIcon || '🔬'}</span>
+                        <span className="admin-brand-logo-empty-text">No logo uploaded</span>
+                        <small className="admin-brand-logo-empty-sub">
+                          The public website will display a clean fallback badge with "{brandName || 'Brand Name'}"
+                        </small>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="admin-brand-logo-actions-wrap">
+                    <div className="admin-brand-logo-btn-row">
+                      <input
+                        ref={logoFileInputRef}
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml"
+                        style={{ display: 'none' }}
+                        onChange={handleLogoFileSelect}
+                        id="brand-logo-file-input"
+                      />
+
+                      <button
+                        type="button"
+                        className="adm-btn adm-btn-secondary"
+                        disabled={uploadingLogo}
+                        onClick={() => logoFileInputRef.current?.click()}
+                        id="btn-upload-brand-logo"
+                      >
+                        {uploadingLogo
+                          ? `Uploading ${uploadProgress}%...`
+                          : brandLogoPreview
+                          ? 'Replace Logo'
+                          : 'Upload Logo'}
+                      </button>
+
+                      {brandLogoPreview && !uploadingLogo && (
+                        <button
+                          type="button"
+                          className="adm-btn adm-btn-danger"
+                          onClick={handleRemoveLogo}
+                          id="btn-remove-brand-logo"
+                        >
+                          Remove Logo
+                        </button>
+                      )}
+                    </div>
+
+                    {uploadingLogo && (
+                      <div className="admin-brand-upload-progress">
+                        <div
+                          className="admin-brand-upload-progress-bar"
+                          style={{ width: `${uploadProgress}%` }}
+                        />
+                      </div>
+                    )}
+
+                    {logoFeedback && (
+                      <div className={`admin-brand-feedback admin-brand-feedback--${logoFeedback.type}`}>
+                        {logoFeedback.text}
+                      </div>
+                    )}
+
+                    <div className="admin-field-hint">
+                      Supported formats: <strong>PNG, JPG, JPEG, WEBP, SVG</strong>. Max size: <strong>5 MB</strong>.<br />
+                      Uploaded image is stored securely on Cloudinary and displayed across the website.
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="admin-modal-actions">
