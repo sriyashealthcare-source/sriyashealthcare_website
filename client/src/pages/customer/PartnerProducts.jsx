@@ -2,7 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { productService } from '../../services/productService';
 import ProductCard from '../../components/product/ProductCard';
+import GlobalSearchBar from '../../components/common/GlobalSearchBar';
 import { resolveAssetUrl } from '../../utils/session';
+
+function normalizeSearchText(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/[™®©]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 export default function PartnerProducts() {
   const { partnerSlug } = useParams();
@@ -169,15 +179,21 @@ export default function PartnerProducts() {
 
     // Filter by search query within this partner's products
     if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
+      const q = normalizeSearchText(searchQuery);
+      const tokens = q.split(/\s+/).filter(Boolean);
+
       result = result.filter(p => {
-        return (
-          (p.name || '').toLowerCase().includes(q) ||
-          (p.shortSpecification || '').toLowerCase().includes(q) ||
-          (p.cardCategory || '').toLowerCase().includes(q) ||
-          (p.description || '').toLowerCase().includes(q) ||
-          (p.category?.name || '').toLowerCase().includes(q)
-        );
+        const name = normalizeSearchText(p.name);
+        const spec = normalizeSearchText(p.shortSpecification);
+        const cat = normalizeSearchText(p.category?.name || p.cardCategory);
+        const desc = normalizeSearchText(p.description);
+        const keywords = Array.isArray(p.keywords) ? normalizeSearchText(p.keywords.join(' ')) : '';
+        const specsText = Array.isArray(p.specifications)
+          ? normalizeSearchText(p.specifications.map(s => `${s.key || ''} ${s.value || ''}`).join(' '))
+          : '';
+        const combined = `${name} ${spec} ${cat} ${desc} ${keywords} ${specsText}`;
+
+        return tokens.every(token => combined.includes(token));
       });
     }
 
@@ -267,36 +283,14 @@ export default function PartnerProducts() {
 
           {/* B. Filter and Search Toolbar */}
           <div className="catalog-toolbar partner-toolbar">
-            <div className="catalog-search-box">
-              <svg
-                className="search-icon"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6" />
-                <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder={`Search within ${brand.name} products...`}
-                aria-label={`Search within ${brand.name} products`}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  className="search-clear-btn"
-                  onClick={() => setSearchQuery('')}
-                  aria-label="Clear search query"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
+            <GlobalSearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              onClear={() => setSearchQuery('')}
+              placeholder={`Search within ${brand.name} products...`}
+              ariaLabel={`Search within ${brand.name} products`}
+              id="partner-products-search-input"
+            />
 
             {/* Category Filter Pills (if multiple categories exist) */}
             {categoryFilterOptions.length > 2 && (
@@ -316,6 +310,18 @@ export default function PartnerProducts() {
               </div>
             )}
           </div>
+
+          {/* Search Result Feedback Indicator */}
+          {searchQuery.trim() && (
+            <div className="partner-products-container" style={{ marginBottom: '20px' }}>
+              <div className="partner-search-count-badge">
+                Showing <strong>{filteredProducts.length}</strong> {filteredProducts.length === 1 ? 'product' : 'products'} matching &ldquo;{searchQuery}&rdquo;
+                {selectedCategory !== 'all' && (
+                  <span> in category: <em>{categoryFilterOptions.find(c => c.id === selectedCategory)?.name || selectedCategory}</em></span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* C. Product Grid or Empty State */}
           <div className="partner-products-container">

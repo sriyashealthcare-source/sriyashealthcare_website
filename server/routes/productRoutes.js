@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getPublicProducts,
+  searchPublicProducts,
   getPublicProductBySlug,
   getPublicProductById,
   getPublicProductsByBrand,
@@ -18,6 +19,7 @@ const { validateProductInput } = require('../middleware/validationMiddleware');
 
 const publicProductRouter = express.Router();
 publicProductRouter.get('/', getPublicProducts);
+publicProductRouter.get('/search', searchPublicProducts);
 publicProductRouter.get('/slug/:slug', getPublicProductBySlug);
 publicProductRouter.get('/brand/:brand', getPublicProductsByBrand);
 publicProductRouter.get('/category/:category', getPublicProductsByCategory);

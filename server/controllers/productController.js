@@ -124,6 +124,14 @@ async function resolveCategoryRef(categoryInput, brandDoc) {
   return doc;
 }
 
+function normalizeSearchText(str) {
+  return String(str || '')
+    .toLowerCase()
+    .replace(/[™®©]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function filterActivePublicProducts(products) {
   return products.filter(p => {
     if (!p.isActive || p.deletedAt) return false;
@@ -133,13 +141,160 @@ function filterActivePublicProducts(products) {
   });
 }
 
+// GET /api/products/search (Dedicated Public Global Product Search)
+const searchPublicProducts = async (req, res, next) => {
+  try {
+    const rawQ = String(req.query.q || req.query.search || '').trim();
+    const brandParam = String(req.query.brand || '').trim();
+    const categoryParam = String(req.query.category || '').trim();
+    const sort = String(req.query.sort || 'relevance').trim();
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 60));
+
+    const filter = { isActive: true, deletedAt: null };
+
+    if (brandParam && brandParam !== 'all') {
+      const bDoc = await resolveBrandRef(brandParam);
+      if (!bDoc || !bDoc.isActive) {
+        return res.status(200).json({ success: true, count: 0, query: rawQ, products: [] });
+      }
+      filter.brand = bDoc._id;
+    }
+
+    if (categoryParam && categoryParam !== 'all') {
+      const or = [{ slug: categoryParam.toLowerCase() }, { name: categoryParam }];
+      if (isObjectId(categoryParam)) {
+        or.unshift({ _id: categoryParam });
+      }
+      const cDoc = await Category.findOne({ $or: or });
+      if (!cDoc || !cDoc.isActive) {
+        return res.status(200).json({ success: true, count: 0, query: rawQ, products: [] });
+      }
+      filter.category = cDoc._id;
+    }
+
+    let products = await Product.find(filter)
+      .populate('brand', 'name slug tabLabel icon logoUrl displayOrder isActive')
+      .populate('category', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
+      .sort({ displayOrder: 1, createdAt: 1 });
+
+    products = filterActivePublicProducts(products);
+
+    if (rawQ) {
+      const q = normalizeSearchText(rawQ);
+      const tokens = q.split(/\s+/).filter(Boolean);
+
+      const scored = [];
+      for (const p of products) {
+        const pName = normalizeSearchText(p.name);
+        const pSlug = normalizeSearchText(p.slug);
+        const pSpec = normalizeSearchText(p.shortSpecification);
+        const pDesc = normalizeSearchText(p.description);
+        const pCat = normalizeSearchText(p.cardCategory || p.category?.name);
+        const pBrand = normalizeSearchText(p.brand?.name || p.brand?.tabLabel);
+        const pBrandSlug = normalizeSearchText(p.brand?.slug);
+        const pLegacy = normalizeSearchText(p.legacyId);
+
+        const featuresText = Array.isArray(p.features) ? p.features.map(normalizeSearchText).join(' ') : '';
+        const specsText = Array.isArray(p.specifications)
+          ? p.specifications.map(s => `${normalizeSearchText(s?.name)} ${normalizeSearchText(s?.value)}`).join(' ')
+          : '';
+        const appsText = Array.isArray(p.applications) ? p.applications.map(normalizeSearchText).join(' ') : '';
+
+        let score = 0;
+
+        // Exact or leading name match
+        if (pName === q) {
+          score += 250;
+        } else if (pName.startsWith(q)) {
+          score += 150;
+        } else if (pName.includes(q)) {
+          score += 90;
+        }
+
+        if (pSlug === q || pSlug.includes(q) || pLegacy.includes(q)) {
+          score += 80;
+        }
+
+        if (pBrand === q || pBrand.startsWith(q)) {
+          score += 75;
+        } else if (pBrand.includes(q) || pBrandSlug.includes(q)) {
+          score += 55;
+        }
+
+        if (pCat === q || pCat.startsWith(q)) {
+          score += 60;
+        } else if (pCat.includes(q)) {
+          score += 45;
+        }
+
+        if (pSpec.includes(q)) {
+          score += 35;
+        }
+
+        if (pDesc.includes(q) || featuresText.includes(q) || specsText.includes(q) || appsText.includes(q)) {
+          score += 25;
+        }
+
+        // Multi-token match across all fields
+        if (tokens.length > 1) {
+          const allText = `${pName} ${pSlug} ${pSpec} ${pDesc} ${pCat} ${pBrand} ${featuresText} ${specsText} ${appsText}`;
+          const allTokensMatch = tokens.every(t => allText.includes(t));
+          if (allTokensMatch) {
+            score += 50;
+          }
+        }
+
+        if (score > 0) {
+          scored.push({ product: p, score });
+        }
+      }
+
+      if (sort === 'relevance') {
+        scored.sort((a, b) => b.score - a.score || (a.product.displayOrder || 0) - (b.product.displayOrder || 0));
+        products = scored.map(item => item.product);
+      } else if (sort === 'name') {
+        scored.sort((a, b) => (a.product.name || '').localeCompare(b.product.name || ''));
+        products = scored.map(item => item.product);
+      } else if (sort === 'name-desc') {
+        scored.sort((a, b) => (b.product.name || '').localeCompare(a.product.name || ''));
+        products = scored.map(item => item.product);
+      } else if (sort === 'newest') {
+        scored.sort((a, b) => new Date(b.product.createdAt) - new Date(a.product.createdAt));
+        products = scored.map(item => item.product);
+      }
+    } else {
+      if (sort === 'name') {
+        products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      } else if (sort === 'name-desc') {
+        products.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+      } else if (sort === 'newest') {
+        products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      }
+    }
+
+    const totalMatches = products.length;
+    const paginated = products.slice(0, limit);
+
+    res.status(200).json({
+      success: true,
+      query: rawQ,
+      count: paginated.length,
+      total: totalMatches,
+      products: paginated
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // GET /api/products (Public)
 const getPublicProducts = async (req, res, next) => {
   try {
-    const { search, brand, category, sort } = req.query;
+    const searchVal = String(req.query.q || req.query.search || '').trim();
+    const { brand, category, sort } = req.query;
     const filter = { isActive: true, deletedAt: null };
 
-    if (brand) {
+    if (brand && brand !== 'all') {
       const bDoc = await resolveBrandRef(brand);
       if (!bDoc || !bDoc.isActive) {
         return res.status(200).json({ success: true, count: 0, products: [] });
@@ -147,7 +302,7 @@ const getPublicProducts = async (req, res, next) => {
       filter.brand = bDoc._id;
     }
 
-    if (category) {
+    if (category && category !== 'all') {
       const catVal = String(category).trim();
       const or = [{ slug: catVal.toLowerCase() }, { name: catVal }];
       if (isObjectId(catVal)) {
@@ -167,21 +322,27 @@ const getPublicProducts = async (req, res, next) => {
 
     products = filterActivePublicProducts(products);
 
-    if (search && String(search).trim()) {
-      const q = String(search).trim().toLowerCase();
+    if (searchVal) {
+      const q = normalizeSearchText(searchVal);
+      const tokens = q.split(/\s+/).filter(Boolean);
       products = products.filter(p => {
-        const nameMatch = (p.name || '').toLowerCase().includes(q);
-        const specMatch = (p.shortSpecification || '').toLowerCase().includes(q);
-        const descMatch = (p.description || '').toLowerCase().includes(q);
-        const catMatch = (p.cardCategory || '').toLowerCase().includes(q) ||
-          (p.category?.name || '').toLowerCase().includes(q);
-        const brandMatch = (p.brand?.name || '').toLowerCase().includes(q);
-        return nameMatch || specMatch || descMatch || catMatch || brandMatch;
+        const pName = normalizeSearchText(p.name);
+        const pSpec = normalizeSearchText(p.shortSpecification);
+        const pDesc = normalizeSearchText(p.description);
+        const pCat = normalizeSearchText(p.cardCategory || p.category?.name);
+        const pBrand = normalizeSearchText(p.brand?.name || p.brand?.tabLabel);
+        const pSlug = normalizeSearchText(p.slug);
+        const pLegacy = normalizeSearchText(p.legacyId);
+
+        const allText = `${pName} ${pSpec} ${pDesc} ${pCat} ${pBrand} ${pSlug} ${pLegacy}`;
+        return allText.includes(q) || (tokens.length > 1 && tokens.every(t => allText.includes(t)));
       });
     }
 
     if (sort === 'name') {
       products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    } else if (sort === 'name-desc') {
+      products.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
     } else if (sort === 'newest') {
       products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
@@ -839,6 +1000,7 @@ const deleteProduct = async (req, res, next) => {
 
 module.exports = {
   getPublicProducts,
+  searchPublicProducts,
   getPublicProductBySlug,
   getPublicProductById,
   getPublicProductsByBrand,

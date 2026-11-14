@@ -2,7 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { productService } from '../../services/productService';
 import ProductCard from '../../components/product/ProductCard';
+import GlobalSearchBar from '../../components/common/GlobalSearchBar';
 import { resolveAssetUrl } from '../../utils/session';
+
+function normalizeSearchText(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/[™®©]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -76,17 +86,23 @@ export default function Products() {
 
   // Filter products when search is active vs normal brand view
   const searchResults = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return null;
+    if (!searchQuery.trim()) return null;
+    const q = normalizeSearchText(searchQuery);
+    const tokens = q.split(/\s+/).filter(Boolean);
+
     return products.filter(p => {
-      return (
-        (p.name || '').toLowerCase().includes(q) ||
-        (p.shortSpecification || '').toLowerCase().includes(q) ||
-        (p.cardCategory || '').toLowerCase().includes(q) ||
-        (p.description || '').toLowerCase().includes(q) ||
-        (p.brand?.name || '').toLowerCase().includes(q) ||
-        (p.category?.name || '').toLowerCase().includes(q)
-      );
+      const name = normalizeSearchText(p.name);
+      const spec = normalizeSearchText(p.shortSpecification);
+      const cat = normalizeSearchText(p.category?.name || p.cardCategory);
+      const desc = normalizeSearchText(p.description);
+      const brand = normalizeSearchText(p.brand?.name);
+      const keywords = Array.isArray(p.keywords) ? normalizeSearchText(p.keywords.join(' ')) : '';
+      const specsText = Array.isArray(p.specifications)
+        ? normalizeSearchText(p.specifications.map(s => `${s.key || ''} ${s.value || ''}`).join(' '))
+        : '';
+      const combined = `${name} ${spec} ${cat} ${desc} ${brand} ${keywords} ${specsText}`;
+
+      return tokens.every(token => combined.includes(token));
     });
   }, [products, searchQuery]);
 
@@ -237,32 +253,14 @@ export default function Products() {
 
       {/* SEARCH BAR */}
       <div className="catalog-toolbar">
-        <div className="catalog-search-box">
-          <span className="catalog-search-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-              <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </span>
-          <input
-            type="search"
-            className="catalog-search-input"
-            placeholder="Search surgical sutures, meshes, adhesives, biomaterials..."
-            aria-label="Search products"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              className="catalog-search-clear"
-              onClick={() => setSearchQuery('')}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
-        </div>
+        <GlobalSearchBar
+          value={searchQuery}
+          onChange={setSearchQuery}
+          onClear={() => setSearchQuery('')}
+          placeholder="Search surgical sutures, meshes, adhesives, biomaterials..."
+          ariaLabel="Search products"
+          id="products-catalogue-search-input"
+        />
       </div>
 
       {/* LOADING STATE */}

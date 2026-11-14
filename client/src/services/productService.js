@@ -7,6 +7,12 @@ export const productService = {
     return response.data;
   },
 
+  async searchPublicProducts(params = {}) {
+    const searchParams = typeof params === 'string' ? { q: params } : params;
+    const response = await api.get('/products/search', { params: searchParams });
+    return response.data;
+  },
+
   async getPublicProductBySlug(slug) {
     const response = await api.get(`/products/slug/${encodeURIComponent(slug)}`);
     return response.data;
