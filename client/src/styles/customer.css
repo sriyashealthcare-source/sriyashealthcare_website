@@ -193,12 +193,19 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Stacking Context Hierarchy for Mobile Navigation & Hero */
+/* Layer 1: Main Homepage Content & Hero Morph Traveler: z-index 1000 - 1005 */
+/* Layer 2: Mobile Navigation Backdrop: z-index 1100 */
+/* Layer 3: Mobile Navigation Drawer: z-index 1150 */
+/* Layer 4: Close Button & Drawer Interactive Controls */
+
 .mobile-nav-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 998;
+  z-index: 1100;
   background: rgba(15, 18, 16, 0.45);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease;
@@ -214,7 +221,7 @@
   top: 66px;
   left: 12px;
   right: 12px;
-  z-index: 999;
+  z-index: 1150;
   background: #fbf9f4;
   border: 1px solid rgba(169, 130, 44, 0.35);
   border-radius: 16px;
@@ -231,6 +238,13 @@
   pointer-events: auto;
 }
 
+/* Explicit suppression of hero traveler when mobile navigation menu is active */
+body.mobile-nav-open .hp-hero-morph-traveler {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .mobile-nav-drawer-inner {
   padding: 18px 18px 20px;
   display: flex;
@@ -241,9 +255,39 @@
 .mobile-nav-brand-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(169, 130, 44, 0.16);
+}
+
+.mobile-nav-brand-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-nav-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(169, 130, 44, 0.08);
+  border: 1px solid rgba(169, 130, 44, 0.28);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mobile-nav-close-btn:hover,
+.mobile-nav-close-btn:focus-visible {
+  background: rgba(169, 130, 44, 0.18);
+  border-color: var(--gold-dark);
+  color: var(--gold-deep);
+  transform: scale(1.05);
 }
 
 .mobile-nav-brand-row img {

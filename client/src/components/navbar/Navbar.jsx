@@ -30,6 +30,23 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location.pathname, location.hash]);
 
+  // Lock background scrolling and add active class to body when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.classList.add('mobile-nav-open');
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.classList.remove('mobile-nav-open');
+        document.body.style.overflow = prevOverflow || '';
+      };
+    } else {
+      document.body.classList.remove('mobile-nav-open');
+      document.body.style.overflow = '';
+    }
+    return undefined;
+  }, [mobileMenuOpen]);
+
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
     const handleKeyDown = (e) => {
@@ -170,11 +187,35 @@ export default function Navbar() {
       >
         <div className="mobile-nav-drawer-inner">
           <div className="mobile-nav-brand-row">
-            <img src={logoSrc} alt={logoAlt} />
-            <div>
-              <strong>{brandTitle}</strong>
-              {brandSubtitle ? <small>{brandSubtitle}</small> : null}
+            <div className="mobile-nav-brand-identity">
+              <img src={logoSrc} alt={logoAlt} />
+              <div>
+                <strong>{brandTitle}</strong>
+                {brandSubtitle ? <small>{brandSubtitle}</small> : null}
+              </div>
             </div>
+            <button
+              type="button"
+              className="mobile-nav-close-btn"
+              onClick={closeMenu}
+              aria-label="Close navigation menu"
+              id="mobile-nav-close-btn"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
           </div>
 
           <ul className="mobile-nav-list">

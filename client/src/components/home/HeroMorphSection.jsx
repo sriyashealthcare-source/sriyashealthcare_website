@@ -4,8 +4,8 @@ import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 
-function smoothstep(t) {
-  return t * t * (3 - 2 * t);
+function easeOutQuad(t) {
+  return t * (2 - t);
 }
 
 function getMorphDistance() {
@@ -168,10 +168,11 @@ export default function HeroMorphSection({
   }, [useFixedMorph, setScrollProgress]);
 
   const rawProgress = useFixedMorph ? scrollProgress : 0;
-  const eased = smoothstep(rawProgress);
+  const eased = easeOutQuad(rawProgress);
 
   // Natural gentle fadeout as hero section scrolls past
   const currentScrollY = typeof window !== 'undefined' ? (window.scrollY || document.documentElement.scrollTop || 0) : 0;
+  const currentScrollX = typeof window !== 'undefined' ? (window.scrollX || document.documentElement.scrollLeft || 0) : 0;
   const morphDist = getMorphDistance();
   const copyFadeProgress = Math.min(1, Math.max(0, (currentScrollY - 40) / (morphDist * 1.15)));
   const copyOpacity = useFixedMorph ? Math.max(0, 1 - copyFadeProgress) : 1;
@@ -214,6 +215,11 @@ export default function HeroMorphSection({
     const tx = currentCenterX - startWidth / 2;
     const ty = currentCenterY - startHeight / 2;
 
+    const isSuppressedByMobileNav =
+      typeof document !== 'undefined' &&
+      document.body &&
+      document.body.classList.contains('mobile-nav-open');
+
     emblemStyle = {
       position: 'fixed',
       left: 0,
@@ -222,7 +228,8 @@ export default function HeroMorphSection({
       height: `${startHeight}px`,
       transformOrigin: 'center center',
       transform: `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${currentScale.toFixed(4)})`,
-      opacity: isEmblemDocked ? 0 : 1,
+      opacity: isEmblemDocked || isSuppressedByMobileNav ? 0 : 1,
+      visibility: isSuppressedByMobileNav ? 'hidden' : 'visible',
       pointerEvents: 'none',
       zIndex: 1005,
       willChange: 'transform, opacity'
