@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { productService } from '../../services/productService';
 import { resolveAssetUrl } from '../../utils/session';
 import GlobalSearchBar from '../../components/common/GlobalSearchBar';
+import SeoHead from '../../components/common/SeoHead';
 
 export default function Partners() {
   const [brands, setBrands] = useState([]);
@@ -226,9 +227,39 @@ export default function Partners() {
 
   const isSearchActive = debouncedQuery.length >= 2;
 
+  const productsBreadcrumbSchema = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Products Directory', item: 'https://sriyashealthcare.com/products' }
+      ]
+    }
+  ];
+
   return (
-    <section className="partners-page" id="partners-page" aria-label="Our Partners and Products">
-      {/* ─── 1. GLOBAL SEARCH HERO SECTION ─── */}
+    <>
+      <SeoHead
+        title="Medical & Surgical Products Directory | Sriyas Healthcare Chennai"
+        description="Browse our comprehensive catalogue of world-class surgical sutures, hernia meshes, tissue adhesives, wound care dressings, and medical equipment in India."
+        canonicalPath="/products"
+        ogType="website"
+        schema={productsBreadcrumbSchema}
+      />
+
+      <section className="partners-page" id="partners-page" aria-label="Our Partners and Products">
+        <div style={{ maxWidth: '1200px', margin: '0 auto 16px', padding: '0 24px' }}>
+          <nav className="partner-breadcrumbs" aria-label="Breadcrumbs">
+            <Link to="/" className="breadcrumb-link">
+              Home
+            </Link>
+            <span className="breadcrumb-sep">/</span>
+            <span className="breadcrumb-current">Products Directory</span>
+          </nav>
+        </div>
+
+        {/* ─── 1. GLOBAL SEARCH HERO SECTION ─── */}
       <div className="products-global-search-hero">
         <div className="partners-eyebrow">AUTHORIZED MEDICAL DISTRIBUTOR</div>
         <h1 className="products-search-heading">Find the Right Healthcare Product</h1>
@@ -612,5 +643,6 @@ export default function Partners() {
         )}
       </div>
     </section>
+  </>
   );
 }

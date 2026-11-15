@@ -118,6 +118,57 @@ const animationSettingsSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const seoSettingsSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      trim: true,
+      default: 'Sriyas Healthcare | Surgical Products & Medical Device Distributor in Chennai, India'
+    },
+    description: {
+      type: String,
+      trim: true,
+      default:
+        'Sriyas Healthcare Private Limited is a Chennai-based healthcare distributor supplying surgical sutures, medical devices, tissue adhesives, surgical meshes and wound care solutions across India.'
+    },
+    keywords: {
+      type: String,
+      trim: true,
+      default:
+        'Sriyas Healthcare, surgical products distributor Chennai, medical device distributor India, surgical sutures supplier, tissue adhesives, hernia mesh, wound care solutions'
+    },
+    canonicalUrl: {
+      type: String,
+      trim: true,
+      default: 'https://sriyashealthcare.com'
+    },
+    ogTitle: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    ogDescription: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    ogImage: {
+      type: String,
+      trim: true,
+      default: '/assets/logos/sriyas-emblem.png'
+    },
+    robotsIndex: {
+      type: Boolean,
+      default: true
+    },
+    robotsFollow: {
+      type: Boolean,
+      default: true
+    }
+  },
+  { _id: false }
+);
+
 const homepageSnapshotSchema = new mongoose.Schema(
   {
     hero: {
@@ -240,6 +291,10 @@ const homepageSnapshotSchema = new mongoose.Schema(
         imageHoverEnabled: true,
         counterAnimationEnabled: true
       })
+    },
+    seo: {
+      type: seoSettingsSchema,
+      default: () => ({})
     },
     sectionOrder: {
       type: [String],

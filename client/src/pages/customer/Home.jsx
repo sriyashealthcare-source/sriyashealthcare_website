@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { homepageService } from '../../services/homepageService';
 import HomepageContentRenderer from '../../components/home/HomepageContentRenderer';
+import SeoHead from '../../components/common/SeoHead';
 import '../../styles/homepage.css';
 
 const BASELINE_HERO = {
@@ -32,15 +34,10 @@ const BASELINE_HERO = {
 export default function Home() {
   const [homepage, setHomepage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const isAboutRoute = location.pathname === '/about';
 
   useEffect(() => {
-    document.title = 'Sriyas Healthcare Pvt Ltd — Surgical & Healthcare Solutions';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.content =
-        'Sriyas Healthcare Private Limited is an authorized surgical and medical distribution partner based in Chennai, serving hospitals and clinicians across India.';
-    }
-
     let active = true;
 
     async function loadHomepage() {
@@ -84,16 +81,130 @@ export default function Home() {
     };
   }, []);
 
-  if (loading && !homepage) {
-    return (
-      <HomepageContentRenderer
-        homepage={{
-          hero: BASELINE_HERO,
-          sectionOrder: []
-        }}
-      />
-    );
-  }
+  // Handle smooth scroll when navigating to /about or with #about-sriyas hash
+  useEffect(() => {
+    if (isAboutRoute || location.hash === '#about-sriyas') {
+      const timer = setTimeout(() => {
+        const el = document.getElementById('about-sriyas');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [isAboutRoute, location.hash, loading]);
 
-  return <HomepageContentRenderer homepage={homepage || { hero: BASELINE_HERO, sectionOrder: [] }} />;
+  const seoData = homepage?.seo || {};
+  const pageTitle = isAboutRoute
+    ? 'About Sriyas Healthcare | Advanced Surgical Solutions Chennai'
+    : seoData.title ||
+      'Sriyas Healthcare | Surgical Products & Medical Device Distributor in Chennai, India';
+  const pageDesc = isAboutRoute
+    ? 'Learn about Sriyas Healthcare Private Limited — our mission, leadership, values, and dedication to supplying hospitals with world-class surgical devices.'
+    : seoData.description ||
+      'Sriyas Healthcare Private Limited is a Chennai-based healthcare distributor supplying surgical sutures, medical devices, tissue adhesives, surgical meshes and wound care solutions across India.';
+  const canonicalUrl = isAboutRoute
+    ? 'https://sriyashealthcare.com/about'
+    : seoData.canonicalUrl || 'https://sriyashealthcare.com';
+
+  const homeSchemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': 'https://sriyashealthcare.com/#organization',
+      name: 'Sriyas Healthcare Private Limited',
+      alternateName: 'Sriyas Healthcare',
+      url: 'https://sriyashealthcare.com',
+      logo: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      description:
+        'Premier surgical products and medical device distribution company based in Chennai, India, supplying sutures, surgical meshes, tissue adhesives, and advanced wound care solutions.',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam',
+        addressLocality: 'Chennai',
+        addressRegion: 'Tamil Nadu',
+        postalCode: '600077',
+        addressCountry: 'IN'
+      },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          telephone: '+91-9600804456',
+          contactType: 'sales & customer support',
+          areaServed: 'IN',
+          availableLanguage: ['en', 'ta']
+        },
+        {
+          '@type': 'ContactPoint',
+          telephone: '+91-9367772801',
+          contactType: 'hospital procurement enquiry',
+          areaServed: 'IN',
+          availableLanguage: ['en', 'ta']
+        }
+      ],
+      email: 'Sriyashealthcare@gmail.com',
+      taxID: '33ABQCS4744P1ZJ'
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': ['LocalBusiness', 'WholesaleStore'],
+      '@id': 'https://sriyashealthcare.com/#localbusiness',
+      name: 'Sriyas Healthcare Private Limited',
+      image: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      url: 'https://sriyashealthcare.com',
+      telephone: '+919600804456',
+      priceRange: '$$',
+      description:
+        'Authorized distributor of world-class surgical sutures, tissue adhesives, hernia meshes, and wound care devices in Chennai, Tamil Nadu, India.',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam',
+        addressLocality: 'Chennai',
+        addressRegion: 'Tamil Nadu',
+        postalCode: '600077',
+        addressCountry: 'IN'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: '13.0458',
+        longitude: '80.1472'
+      }
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': 'https://sriyashealthcare.com/#website',
+      url: 'https://sriyashealthcare.com',
+      name: 'Sriyas Healthcare',
+      description: 'Surgical Products & Medical Device Distributor in Chennai, India',
+      publisher: {
+        '@id': 'https://sriyashealthcare.com/#organization'
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://sriyashealthcare.com/products?q={search_term_string}'
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    }
+  ];
+
+  return (
+    <>
+      <SeoHead
+        title={pageTitle}
+        description={pageDesc}
+        canonicalUrl={canonicalUrl}
+        ogImage={seoData.ogImage || '/assets/logos/sriyas-emblem.png'}
+        ogType="website"
+        noindex={seoData.robotsIndex === false}
+        schema={homeSchemas}
+      />
+      <HomepageContentRenderer
+        homepage={homepage || { hero: BASELINE_HERO, sectionOrder: [] }}
+      />
+    </>
+  );
 }

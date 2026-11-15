@@ -1379,18 +1379,224 @@ body.mobile-nav-open .hp-hero-morph-traveler {
 
 /* ═══ FOOTER ═══ */
 .footer {
-  background: var(--ink);
-  color: rgba(255, 255, 255, 0.75);
-  padding: 34px 6%;
-  text-align: center;
-  font-size: 0.86rem;
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  background: #111412;
+  color: rgba(255, 255, 255, 0.72);
+  padding: 60px 5% 30px;
+  font-size: 0.88rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.28);
   margin-top: auto;
 }
 
-.footer span {
-  color: var(--gold-light);
+.footer-container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.footer-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.footer-emblem-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.footer-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand-name {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #D4AF37;
+  line-height: 1.15;
+}
+
+.footer-brand-sub {
+  font-family: var(--font-body, 'Montserrat', sans-serif);
+  font-size: 0.68rem;
   font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #A9822C;
+}
+
+.footer-tagline {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 0.96rem;
+  color: #E9DFCC;
+  margin: 0 0 10px;
+}
+
+.footer-desc {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 14px;
+}
+
+.footer-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 6px;
+  font-size: 0.74rem;
+  color: #D4AF37;
+}
+
+.footer-heading {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 18px;
+  letter-spacing: 0.04em;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: #D4AF37;
+  border-radius: 1px;
+}
+
+.footer-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.84rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.footer-nav-link:hover {
+  color: #D4AF37;
+  transform: translateX(3px);
+}
+
+.footer-nav-link--muted {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.78rem;
+}
+
+.footer-address {
+  font-style: normal;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 16px;
+}
+
+.footer-contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+
+.footer-contact-icon {
+  font-size: 0.9rem;
+}
+
+.footer-contact-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-link:hover {
+  color: #D4AF37;
+}
+
+.footer-contact-sep {
+  margin: 0 6px;
+  color: rgba(212, 175, 55, 0.5);
+}
+
+.footer-hours {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+}
+
+.footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.footer-copyright span {
+  color: #D4AF37;
+  font-weight: 600;
+}
+
+.footer-compliance {
+  font-size: 0.75rem;
+  color: rgba(212, 175, 55, 0.75);
+}
+
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 580px) {
+  .footer {
+    padding: 44px 5% 24px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
 }
 
 /* ═══ RESPONSIVE BREAKPOINTS ═══ */

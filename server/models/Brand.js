@@ -41,6 +41,21 @@ const brandSchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    seoTitle: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    seoDescription: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    logoAlt: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     displayOrder: {
       type: Number,
       default: 0,

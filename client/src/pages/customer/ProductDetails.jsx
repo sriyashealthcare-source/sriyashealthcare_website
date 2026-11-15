@@ -4,6 +4,8 @@ import { productService } from '../../services/productService';
 import { analyticsService } from '../../services/analyticsService';
 import { useEnquiry } from '../../context/EnquiryContext';
 import ImageGallery from '../../components/product-details/ImageGallery';
+import ProductCard from '../../components/product/ProductCard';
+import SeoHead from '../../components/common/SeoHead';
 import { resolveAssetUrl } from '../../utils/session';
 
 export default function ProductDetails() {
@@ -14,6 +16,7 @@ export default function ProductDetails() {
   const location = useLocation();
 
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const trackedRef = useRef('');
@@ -44,17 +47,18 @@ export default function ProductDetails() {
         setProduct(prod);
         setPageProduct(prod);
 
-        // Dynamic SEO Page Title & Meta Description
-        document.title = `${prod.name} | Sriyas Healthcare Pvt Ltd`;
-        let metaDesc = document.querySelector('meta[name="description"]');
-        if (!metaDesc) {
-          metaDesc = document.createElement('meta');
-          metaDesc.name = 'description';
-          document.head.appendChild(metaDesc);
+        // Fetch related products from the same brand
+        if (prod.brand) {
+          const brandId = prod.brand.slug || prod.brand._id || prod.brand;
+          productService.getPublicProducts({ brand: brandId })
+            .then((bRes) => {
+              if (isMounted && bRes?.products) {
+                const others = bRes.products.filter(p => String(p._id) !== String(prod._id));
+                setRelatedProducts(others.slice(0, 3));
+              }
+            })
+            .catch(() => {});
         }
-        metaDesc.content = prod.description
-          ? `${prod.name}: ${prod.description.slice(0, 150)}...`
-          : `Explore technical specifications and details for ${prod.name} provided by Sriyas Healthcare.`;
 
         // Record persistent product view event once per product detail visit
         if (trackedRef.current !== String(prod._id)) {
@@ -140,8 +144,73 @@ export default function ProductDetails() {
       ? `${product.category.name} · ${product.cardCategory}`
       : product.category?.name || product.cardCategory || '');
 
+  const seoTitle =
+    product.seoTitle ||
+    `${product.name} | ${brandName} | Sriyas Healthcare`;
+  const seoDesc =
+    product.seoDescription ||
+    (product.description
+      ? `${product.name} from ${brandName}: ${product.description.slice(0, 140)}... Distributed by Sriyas Healthcare.`
+      : `Explore technical specifications and hospital enquiries for ${product.name} (${brandName}) from Sriyas Healthcare Chennai.`);
+  const canonicalPath = `/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.slug || '')}`;
+
+  const primaryImgObj =
+    (product.images || []).find((img) => img.isPrimary) || (product.images || [])[0];
+  const primaryImgUrl = primaryImgObj?.url ? resolveAssetUrl(primaryImgObj.url) : '';
+
+  const jsonLdSchemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://sriyashealthcare.com/products' },
+        ...(brandSlug
+          ? [
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: brandName,
+                item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}`
+              }
+            ]
+          : []),
+        {
+          '@type': 'ListItem',
+          position: brandSlug ? 4 : 3,
+          name: product.name,
+          item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.slug)}`
+        }
+      ]
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      image: primaryImgUrl || 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      description: product.description || product.shortSpecification || seoDesc,
+      brand: {
+        '@type': 'Brand',
+        name: brandName
+      },
+      sku: product.legacyId || product.slug,
+      category: detailCategoryLabel,
+      url: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.slug)}`
+    }
+  ];
+
   return (
-    <section className="univ-detail" id="univ-detail" aria-label="Product Details">
+    <>
+      <SeoHead
+        title={seoTitle}
+        description={seoDesc}
+        canonicalPath={canonicalPath}
+        ogImage={primaryImgUrl}
+        ogType="product"
+        schema={jsonLdSchemas}
+      />
+
+      <section className="univ-detail" id="univ-detail" aria-label="Product Details">
       <div style={{ maxWidth: '1100px', margin: '0 auto 28px' }}>
         {/* Breadcrumb Navigation: Home > Products > Partner Name > Product Name */}
         <nav className="partner-breadcrumbs" aria-label="Breadcrumbs" style={{ marginBottom: '16px' }}>
@@ -316,6 +385,24 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+
+      {/* Related Products from the same manufacturer/category */}
+      {Array.isArray(relatedProducts) && relatedProducts.length > 0 && (
+        <div style={{ maxWidth: '1100px', margin: '48px auto 0' }} className="related-products-section">
+          <div className="eyebrow" style={{ textAlign: 'left', marginBottom: '8px' }}>
+            MORE FROM {brandName.toUpperCase()}
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--ink)', margin: '0 0 24px' }}>
+            Related Surgical &amp; Healthcare Products
+          </h2>
+          <div className="prod-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' }}>
+            {relatedProducts.map((rp) => (
+              <ProductCard key={rp._id} product={rp} partnerSlug={brandSlug} />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
+  </>
   );
 }

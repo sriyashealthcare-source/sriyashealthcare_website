@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { enquiryService } from '../../services/enquiryService';
 import { trackAnalyticsEvent } from '../../utils/session';
+import SeoHead from '../../components/common/SeoHead';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -58,16 +60,73 @@ export default function Contact() {
     }
   };
 
+  const contactSchemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Contact Us', item: 'https://sriyashealthcare.com/contact' }
+      ]
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': ['LocalBusiness', 'WholesaleStore'],
+      '@id': 'https://sriyashealthcare.com/#localbusiness',
+      name: 'Sriyas Healthcare Private Limited',
+      image: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      url: 'https://sriyashealthcare.com/contact',
+      telephone: '+919600804456',
+      priceRange: '$$',
+      description:
+        'Authorized distributor of surgical sutures, tissue adhesives, hernia meshes, and wound care devices in Chennai, Tamil Nadu, India.',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam',
+        addressLocality: 'Chennai',
+        addressRegion: 'Tamil Nadu',
+        postalCode: '600077',
+        addressCountry: 'IN'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: '13.0458',
+        longitude: '80.1472'
+      }
+    }
+  ];
+
   return (
-    <section className="contact-section" id="contact-section" aria-label="Contact Information">
-      <div className="contact-header">
-        <div className="eyebrow">Reach Us</div>
-        <h2>Contact Sriyas Healthcare</h2>
-        <p>
-          We&apos;re here to help. Reach out to us through any of the channels below or submit
-          your product requirements using our secure enquiry form.
-        </p>
-      </div>
+    <>
+      <SeoHead
+        title="Contact Sriyas Healthcare | Medical Distributor in Chennai, India"
+        description="Contact Sriyas Healthcare Private Limited in Chennai for hospital supplies, surgical product quotes, clinical enquiries, and distribution partnerships. Call +91 96008 04456."
+        canonicalPath="/contact"
+        ogType="website"
+        schema={contactSchemas}
+      />
+
+      <section className="contact-section" id="contact-section" aria-label="Contact Information">
+        <div style={{ maxWidth: '1100px', margin: '0 auto 16px', padding: '0 16px' }}>
+          <nav className="partner-breadcrumbs" aria-label="Breadcrumbs">
+            <Link to="/" className="breadcrumb-link">
+              Home
+            </Link>
+            <span className="breadcrumb-sep">/</span>
+            <span className="breadcrumb-current">Contact Us</span>
+          </nav>
+        </div>
+
+        <div className="contact-header">
+          <div className="eyebrow">Reach Us</div>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', color: 'var(--ink)', margin: '8px 0 12px' }}>
+            Contact Sriyas Healthcare
+          </h1>
+          <p>
+            We&apos;re here to help. Reach out to us through any of the channels below or submit
+            your product requirements using our secure enquiry form.
+          </p>
+        </div>
 
       {/* Online Enquiry Form Card */}
       <div className="enquiry-form-card">
@@ -277,5 +336,6 @@ export default function Contact() {
         </a>
       </div>
     </section>
+  </>
   );
 }

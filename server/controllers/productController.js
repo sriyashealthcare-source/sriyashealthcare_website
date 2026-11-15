@@ -647,6 +647,11 @@ const createProduct = async (req, res, next) => {
       ? Number(req.body.displayOrder)
       : totalProducts + 1;
 
+    const seoTitle = (req.body.seoTitle || '').trim();
+    const seoDescription = (req.body.seoDescription || '').trim();
+    const imageAlt = (req.body.imageAlt || '').trim();
+    const ogImage = (req.body.ogImage || '').trim();
+
     // Handle uploaded images
     const images = [];
     const uploadedImageFiles = (req.files && req.files.images) ? req.files.images : [];
@@ -660,7 +665,8 @@ const createProduct = async (req, res, next) => {
         width: uploaded.width,
         height: uploaded.height,
         bytes: uploaded.bytes,
-        isPrimary: i === 0
+        isPrimary: i === 0,
+        alt: imageAlt || name
       });
     }
 
@@ -668,7 +674,7 @@ const createProduct = async (req, res, next) => {
     if (images.length === 0 && req.body.imageUrls) {
       const urls = parseListField(req.body.imageUrls);
       urls.forEach((u, idx) => {
-        images.push({ url: u, publicId: '', format: 'webp', width: 0, height: 0, bytes: 0, isPrimary: idx === 0 });
+        images.push({ url: u, publicId: '', format: 'webp', width: 0, height: 0, bytes: 0, isPrimary: idx === 0, alt: imageAlt || name });
       });
     }
 
@@ -702,6 +708,10 @@ const createProduct = async (req, res, next) => {
       specifications,
       applications,
       brochure,
+      seoTitle,
+      seoDescription,
+      imageAlt,
+      ogImage,
       isActive,
       displayOrder,
       deletedAt: null
@@ -873,11 +883,27 @@ const updateProduct = async (req, res, next) => {
       };
     }
 
+    const seoTitle = req.body.seoTitle !== undefined ? req.body.seoTitle.trim() : product.seoTitle;
+    const seoDescription = req.body.seoDescription !== undefined ? req.body.seoDescription.trim() : product.seoDescription;
+    const imageAlt = req.body.imageAlt !== undefined ? req.body.imageAlt.trim() : product.imageAlt;
+    const ogImage = req.body.ogImage !== undefined ? req.body.ogImage.trim() : product.ogImage;
+
+    // Optional safe custom slug update
+    let updatedSlug = product.slug;
+    if (req.body.slug && makeSlug(req.body.slug) !== product.slug) {
+      const candidateSlug = makeSlug(req.body.slug);
+      const slugClash = await Product.findOne({ slug: candidateSlug, _id: { $ne: product._id } });
+      if (!slugClash) {
+        updatedSlug = candidateSlug;
+      }
+    }
+
     const updated = await Product.findByIdAndUpdate(
       req.params.id,
       {
         $set: {
           name,
+          slug: updatedSlug,
           brand: brandDoc ? brandDoc._id : product.brand,
           category: categoryDoc ? categoryDoc._id : product.category,
           cardCategory,
@@ -889,6 +915,10 @@ const updateProduct = async (req, res, next) => {
           specifications,
           applications,
           brochure,
+          seoTitle,
+          seoDescription,
+          imageAlt,
+          ogImage,
           isActive,
           displayOrder
         }

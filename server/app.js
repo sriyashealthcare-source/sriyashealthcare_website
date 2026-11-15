@@ -9,6 +9,7 @@ const { getDatabaseStatus } = require('./config/database');
 const { isCloudinaryConfigured } = require('./config/cloudinary');
 const { sanitizeRequest } = require('./middleware/validationMiddleware');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const { getSitemapXml, getRobotsTxt } = require('./controllers/seoController');
 
 const authRoutes = require('./routes/authRoutes');
 const { publicProductRouter, adminProductRouter } = require('./routes/productRoutes');
@@ -102,6 +103,12 @@ app.get('/api/health', (req, res) => {
     cloudinaryConfigured: isCloudinaryConfigured()
   });
 });
+
+// Public SEO Endpoints (Sitemap & Robots)
+app.get('/sitemap.xml', getSitemapXml);
+app.get('/robots.txt', getRobotsTxt);
+app.get('/api/sitemap.xml', getSitemapXml);
+app.get('/api/robots.txt', getRobotsTxt);
 
 // Mount Public Routes
 app.use('/api/auth', authRoutes);

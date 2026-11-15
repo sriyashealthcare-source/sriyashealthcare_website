@@ -8,7 +8,8 @@ const imageSchema = new mongoose.Schema(
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
     bytes: { type: Number, default: 0 },
-    isPrimary: { type: Boolean, default: false }
+    isPrimary: { type: Boolean, default: false },
+    alt: { type: String, default: '' }
   },
   { _id: false }
 );
@@ -102,6 +103,26 @@ const productSchema = new mongoose.Schema(
       filename: { type: String, default: '' },
       format: { type: String, default: 'pdf' },
       bytes: { type: Number, default: 0 }
+    },
+    seoTitle: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    seoDescription: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    imageAlt: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    ogImage: {
+      type: String,
+      trim: true,
+      default: ''
     },
     isActive: {
       type: Boolean,

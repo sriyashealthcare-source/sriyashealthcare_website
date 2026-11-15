@@ -54,6 +54,7 @@ export default function App() {
           {/* Public Customer Interface */}
           <Route element={<CustomerLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<Home />} />
             <Route path="/products" element={<Partners />} />
             <Route path="/products/:partnerSlug" element={<PartnerProducts />} />
             <Route path="/products/:partnerSlug/:productSlug" element={<ProductDetails />} />

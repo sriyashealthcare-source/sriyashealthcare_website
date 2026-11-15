@@ -11,6 +11,7 @@ import CtaEditorPanel from '../../components/admin/homepage/CtaEditorPanel';
 import StatisticsEditorPanel from '../../components/admin/homepage/StatisticsEditorPanel';
 import AnimationSettingsPanel from '../../components/admin/homepage/AnimationSettingsPanel';
 import SectionOrderPanel from '../../components/admin/homepage/SectionOrderPanel';
+import HomepageSeoPanel from '../../components/admin/homepage/HomepageSeoPanel';
 import HomepagePreviewModal from '../../components/admin/homepage/HomepagePreviewModal';
 import '../../styles/homepageEditor.css';
 
@@ -25,7 +26,8 @@ const TABS = [
   { id: 'values', label: 'Values Editor', toggleKey: 'values' },
   { id: 'callToAction', label: 'CTA Editor', toggleKey: 'callToAction' },
   { id: 'sectionOrder', label: 'Section Order & Visibility' },
-  { id: 'animations', label: 'Animation Settings' }
+  { id: 'animations', label: 'Animation Settings' },
+  { id: 'seo', label: 'SEO & Social Metadata' }
 ];
 
 export default function HomepageEditor() {
@@ -433,6 +435,18 @@ export default function HomepageEditor() {
             <AnimationSettingsPanel
               animationSettings={draft.animationSettings || {}}
               onChange={(nextAnim) => updateSection('animationSettings', nextAnim)}
+            />
+          )}
+
+          {activeTab === 'seo' && (
+            <HomepageSeoPanel
+              draft={draft}
+              onChange={(nextDraft) => {
+                setDraft(nextDraft);
+                setIsDirty(true);
+              }}
+              onSaveDraft={handleSaveDraft}
+              onPublish={handlePublish}
             />
           )}
         </section>

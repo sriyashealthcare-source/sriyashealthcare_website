@@ -26,6 +26,11 @@ export default function BrandCategoryManagement() {
   const [logoFeedback, setLogoFeedback] = useState(null);
   const logoFileInputRef = useRef(null);
 
+  // Brand SEO Fields
+  const [brandSeoTitle, setBrandSeoTitle] = useState('');
+  const [brandSeoDescription, setBrandSeoDescription] = useState('');
+  const [brandLogoAlt, setBrandLogoAlt] = useState('');
+
   // Category Modal / Form state
   const [catModalOpen, setCatModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
@@ -85,6 +90,9 @@ export default function BrandCategoryManagement() {
     setUploadingLogo(false);
     setUploadProgress(0);
     setLogoFeedback(null);
+    setBrandSeoTitle('');
+    setBrandSeoDescription('');
+    setBrandLogoAlt('');
     setBrandModalOpen(true);
   };
 
@@ -103,6 +111,9 @@ export default function BrandCategoryManagement() {
     setUploadingLogo(false);
     setUploadProgress(0);
     setLogoFeedback(null);
+    setBrandSeoTitle(b.seoTitle || '');
+    setBrandSeoDescription(b.seoDescription || '');
+    setBrandLogoAlt(b.logoAlt || (b.name ? `${b.name} logo` : ''));
     setBrandModalOpen(true);
   };
 
@@ -188,6 +199,9 @@ export default function BrandCategoryManagement() {
         tabLabel: (brandTabLabel || brandName).trim(),
         icon: brandIcon.trim() || '🔬',
         description: brandDescription.trim(),
+        seoTitle: brandSeoTitle.trim(),
+        seoDescription: brandSeoDescription.trim(),
+        logoAlt: brandLogoAlt.trim(),
         displayOrder: brandOrder !== '' ? Number(brandOrder) : undefined,
         logoUrl: brandLogoMarkedForRemoval ? '' : brandLogoUrl,
         logoPublicId: brandLogoMarkedForRemoval ? '' : brandLogoPublicId,
@@ -544,7 +558,7 @@ export default function BrandCategoryManagement() {
       {/* BRAND ADD/EDIT MODAL */}
       {brandModalOpen && (
         <div className="admin-modal-backdrop" role="dialog" aria-modal="true">
-          <div className="admin-modal-dialog" style={{ maxWidth: '520px' }}>
+          <div className="admin-modal-dialog" style={{ maxWidth: '640px' }}>
             <h3>{editingBrand ? `Edit Brand: ${editingBrand.name}` : 'Add Partner Brand'}</h3>
             <form onSubmit={handleSaveBrand} style={{ marginTop: '14px' }}>
               <div className="admin-form-grid">
@@ -683,6 +697,94 @@ export default function BrandCategoryManagement() {
                       Uploaded image is stored securely on Cloudinary and displayed across the website.
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* ─── BRAND SEO & SEARCH VISIBILITY ─── */}
+              <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid rgba(169, 130, 44, 0.2)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '1.15rem' }}>🌐</span>
+                  <h4 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>
+                    Brand SEO &amp; Google Preview
+                  </h4>
+                </div>
+                <p style={{ margin: '0 0 14px', fontSize: '0.8rem', color: 'var(--text-mute)' }}>
+                  Customize how this manufacturer&apos;s product catalogue appears in Google search results.
+                </p>
+
+                {/* Google Snippet Card */}
+                <div style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #DFE1E5',
+                  borderRadius: '10px',
+                  padding: '14px 16px',
+                  marginBottom: '16px',
+                  fontFamily: 'arial, sans-serif'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <img src="/favicon.png" alt="" width="16" height="16" style={{ borderRadius: '50%' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '13px', color: '#202124', fontWeight: 500, lineHeight: 1.2 }}>
+                        Sriyas Healthcare
+                      </span>
+                      <span style={{ fontSize: '11px', color: '#4D5156', lineHeight: 1.2 }}>
+                        https://sriyashealthcare.com/products/{editingBrand?.slug || (brandName ? brandName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'brand-slug')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: '16px', color: '#1A0DAB', lineHeight: 1.3, marginBottom: '3px', cursor: 'pointer' }}>
+                    {brandSeoTitle || `${brandName || 'Brand'} Surgical & Medical Products | Sriyas Healthcare`}
+                  </div>
+
+                  <div style={{ fontSize: '13px', color: '#4D5156', lineHeight: 1.45 }}>
+                    {brandSeoDescription || (brandDescription ? `${brandName}: ${brandDescription.slice(0, 130)}... Distributed by Sriyas Healthcare.` : `Explore authorized ${brandName || 'manufacturer'} surgical sutures, devices and hospital supplies from Sriyas Healthcare.`)}
+                  </div>
+                </div>
+
+                <div className="admin-field" style={{ marginBottom: '12px' }}>
+                  <label htmlFor="bm-seo-title">
+                    Custom SEO Title (Optional)
+                    <span style={{ float: 'right', fontSize: '0.74rem', color: 'var(--text-mute)' }}>
+                      {brandSeoTitle.length} chars (40–60 optimal)
+                    </span>
+                  </label>
+                  <input
+                    id="bm-seo-title"
+                    type="text"
+                    value={brandSeoTitle}
+                    onChange={(e) => setBrandSeoTitle(e.target.value)}
+                    placeholder={`${brandName || 'Brand'} Surgical & Medical Products | Sriyas Healthcare`}
+                  />
+                </div>
+
+                <div className="admin-field" style={{ marginBottom: '12px' }}>
+                  <label htmlFor="bm-seo-desc">
+                    Custom Meta Description (Optional)
+                    <span style={{ float: 'right', fontSize: '0.74rem', color: 'var(--text-mute)' }}>
+                      {brandSeoDescription.length} chars (120–160 optimal)
+                    </span>
+                  </label>
+                  <textarea
+                    id="bm-seo-desc"
+                    rows={2}
+                    value={brandSeoDescription}
+                    onChange={(e) => setBrandSeoDescription(e.target.value)}
+                    placeholder="Concise summary of this manufacturer portfolio for Google search snippets."
+                  />
+                </div>
+
+                <div className="admin-field">
+                  <label htmlFor="bm-logo-alt">
+                    Logo Alt Text (Accessibility &amp; SEO)
+                  </label>
+                  <input
+                    id="bm-logo-alt"
+                    type="text"
+                    value={brandLogoAlt}
+                    onChange={(e) => setBrandLogoAlt(e.target.value)}
+                    placeholder={`${brandName || 'Manufacturer'} official logo`}
+                  />
                 </div>
               </div>
 

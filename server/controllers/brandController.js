@@ -184,6 +184,9 @@ const createBrand = async (req, res, next) => {
 
     const totalBrands = await Brand.countDocuments({});
     const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : totalBrands + 1;
+    const seoTitle = (req.body.seoTitle || '').trim();
+    const seoDescription = (req.body.seoDescription || '').trim();
+    const logoAlt = (req.body.logoAlt || '').trim();
 
     const brand = await Brand.create({
       name,
@@ -193,6 +196,9 @@ const createBrand = async (req, res, next) => {
       description,
       logoUrl,
       logoPublicId,
+      seoTitle,
+      seoDescription,
+      logoAlt,
       displayOrder,
       isActive
     });
@@ -268,6 +274,10 @@ const updateBrand = async (req, res, next) => {
       }
     }
 
+    const seoTitle = req.body.seoTitle !== undefined ? req.body.seoTitle.trim() : brand.seoTitle;
+    const seoDescription = req.body.seoDescription !== undefined ? req.body.seoDescription.trim() : brand.seoDescription;
+    const logoAlt = req.body.logoAlt !== undefined ? req.body.logoAlt.trim() : brand.logoAlt;
+
     const updated = await Brand.findByIdAndUpdate(
       req.params.id,
       {
@@ -279,6 +289,9 @@ const updateBrand = async (req, res, next) => {
           description,
           logoUrl,
           logoPublicId,
+          seoTitle,
+          seoDescription,
+          logoAlt,
           displayOrder,
           isActive
         }

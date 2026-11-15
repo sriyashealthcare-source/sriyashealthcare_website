@@ -4,6 +4,7 @@ import { productService } from '../../services/productService';
 import { useEnquiry } from '../../context/EnquiryContext';
 import ProductCard from '../../components/product/ProductCard';
 import GlobalSearchBar from '../../components/common/GlobalSearchBar';
+import SeoHead from '../../components/common/SeoHead';
 import { resolveAssetUrl } from '../../utils/session';
 
 function normalizeSearchText(str) {
@@ -206,8 +207,56 @@ export default function PartnerProducts() {
 
   const brandLogoUrl = brand?.logoUrl ? resolveAssetUrl(brand.logoUrl) : '';
 
+  const brandName = brand ? brand.name : (partnerSlug || 'Partner');
+  const seoTitle =
+    brand?.seoTitle ||
+    `${brandName} Surgical & Medical Products | Sriyas Healthcare`;
+  const seoDesc =
+    brand?.seoDescription ||
+    (brand?.description
+      ? `${brandName}: ${brand.description.slice(0, 140)}... Distributed by Sriyas Healthcare.`
+      : `Explore authorized ${brandName} surgical sutures, medical devices, and equipment distributed by Sriyas Healthcare in India.`);
+  const canonicalPath = `/products/${encodeURIComponent(partnerSlug || '')}`;
+
+  const jsonLdSchemas = brand
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
+            { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://sriyashealthcare.com/products' },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: brandName,
+              item: `https://sriyashealthcare.com/products/${encodeURIComponent(partnerSlug)}`
+            }
+          ]
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Brand',
+          name: brand.name,
+          logo: brandLogoUrl || 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+          url: `https://sriyashealthcare.com/products/${encodeURIComponent(partnerSlug)}`,
+          description: brand.description || seoDesc
+        }
+      ]
+    : null;
+
   return (
-    <section className="partner-products-page" id="partner-products-page" aria-label="Partner Products">
+    <>
+      <SeoHead
+        title={seoTitle}
+        description={seoDesc}
+        canonicalPath={canonicalPath}
+        ogImage={brandLogoUrl}
+        ogType="website"
+        schema={jsonLdSchemas}
+      />
+
+      <section className="partner-products-page" id="partner-products-page" aria-label="Partner Products">
       <div className="partner-top-bar">
         {/* Breadcrumb Navigation */}
         <nav className="partner-breadcrumbs" aria-label="Breadcrumbs">
@@ -378,6 +427,7 @@ export default function PartnerProducts() {
         </>
       )}
     </section>
+  </>
   );
 }
 

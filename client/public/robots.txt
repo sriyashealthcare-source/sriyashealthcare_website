@@ -1,0 +1,13 @@
+# Sriyas Healthcare — Robots Exclusion Directives
+User-agent: *
+Allow: /
+Allow: /products
+Allow: /products/*
+Allow: /contact
+Allow: /assets/
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/admin/
+Disallow: /api/admin/*
+
+Sitemap: https://sriyashealthcare.com/sitemap.xml

@@ -35,6 +35,12 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
   const [isActive, setIsActive] = useState(true);
   const [displayOrder, setDisplayOrder] = useState('');
 
+  // SEO Fields
+  const [slug, setSlug] = useState('');
+  const [seoTitle, setSeoTitle] = useState('');
+  const [seoDescription, setSeoDescription] = useState('');
+  const [imageAlt, setImageAlt] = useState('');
+
   // Existing images (for edit mode)
   const [existingImages, setExistingImages] = useState([]);
   // Newly selected image files
@@ -94,6 +100,10 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
       setAppsText((initialData.applications || []).join('\n'));
       setIsActive(initialData.isActive !== false);
       setDisplayOrder(initialData.displayOrder !== undefined ? String(initialData.displayOrder) : '');
+      setSlug(initialData.slug || '');
+      setSeoTitle(initialData.seoTitle || '');
+      setSeoDescription(initialData.seoDescription || '');
+      setImageAlt(initialData.imageAlt || initialData.images?.[0]?.alt || '');
       setExistingImages(initialData.images || []);
       setExistingBrochure(
         initialData.brochure && initialData.brochure.url ? initialData.brochure : null
@@ -222,6 +232,11 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
     if (displayOrder !== '') {
       formData.append('displayOrder', String(displayOrder));
     }
+
+    formData.append('slug', slug.trim());
+    formData.append('seoTitle', seoTitle.trim());
+    formData.append('seoDescription', seoDescription.trim());
+    formData.append('imageAlt', imageAlt.trim());
 
     if (isEdit) {
       formData.append('existingImages', JSON.stringify(existingImages));
@@ -654,6 +669,116 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
               onChange={(e) => setDisplayOrder(e.target.value)}
               placeholder="Auto"
             />
+          </div>
+        </div>
+
+        {/* ─── SEARCH ENGINE OPTIMISATION (SEO) SECTION ─── */}
+        <div style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid rgba(169, 130, 44, 0.2)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '1.2rem' }}>🌐</span>
+            <h3 style={{ margin: 0, fontSize: '1.15rem', color: 'var(--ink)' }}>
+              Search Engine Optimisation (SEO) &amp; Google Preview
+            </h3>
+          </div>
+          <p style={{ margin: '0 0 16px', fontSize: '0.82rem', color: 'var(--text-mute)' }}>
+            Customize how this product appears on Google and in browser tabs. Leave fields blank to automatically use standard formatted fallbacks.
+          </p>
+
+          {/* Google SERP Snippet Preview */}
+          <div style={{
+            background: '#FFFFFF',
+            border: '1px solid #DFE1E5',
+            borderRadius: '10px',
+            padding: '16px 18px',
+            marginBottom: '20px',
+            fontFamily: 'arial, sans-serif'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <img src="/favicon.png" alt="" width="16" height="16" style={{ borderRadius: '50%' }} />
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '13px', color: '#202124', fontWeight: 500, lineHeight: 1.2 }}>
+                  Sriyas Healthcare
+                </span>
+                <span style={{ fontSize: '11px', color: '#4D5156', lineHeight: 1.2 }}>
+                  https://sriyashealthcare.com/products/
+                  {brands.find(b => String(b._id) === String(brandId))?.slug || 'partner'}
+                  /{slug || (name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'product-slug')}
+                </span>
+              </div>
+            </div>
+
+            <div style={{ fontSize: '17px', color: '#1A0DAB', lineHeight: 1.3, marginBottom: '4px', cursor: 'pointer' }}>
+              {seoTitle || (name ? `${name} | ${brands.find(b => String(b._id) === String(brandId))?.name || 'Partner'} | Sriyas Healthcare` : 'Product Title | Sriyas Healthcare')}
+            </div>
+
+            <div style={{ fontSize: '13px', color: '#4D5156', lineHeight: 1.45 }}>
+              {seoDescription || (description ? `${name || 'Product'}: ${description.slice(0, 140)}...` : 'Explore technical specifications, indications, and hospital enquiries from Sriyas Healthcare.')}
+            </div>
+          </div>
+
+          <div className="admin-form-grid">
+            <div className="admin-field">
+              <label htmlFor="pf-seo-title">
+                Custom SEO Title (Optional)
+                <span style={{ float: 'right', fontSize: '0.74rem', color: 'var(--text-mute)' }}>
+                  {seoTitle.length} chars (40–60 optimal)
+                </span>
+              </label>
+              <input
+                id="pf-seo-title"
+                type="text"
+                value={seoTitle}
+                onChange={(e) => setSeoTitle(e.target.value)}
+                placeholder={name ? `${name} | ${brands.find(b => String(b._id) === String(brandId))?.name || 'Partner'} | Sriyas Healthcare` : 'e.g. I-Col™ Surgical Suture | Peters Surgical | Sriyas Healthcare'}
+              />
+            </div>
+
+            <div className="admin-field">
+              <label htmlFor="pf-slug">
+                Custom URL Slug
+              </label>
+              <input
+                id="pf-slug"
+                type="text"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]+/g, ''))}
+                placeholder={name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'auto-generated-from-name'}
+              />
+            </div>
+          </div>
+
+          <div className="admin-form-grid" style={{ marginTop: '12px' }}>
+            <div className="admin-field">
+              <label htmlFor="pf-seo-desc">
+                Custom Meta Description (Optional)
+                <span style={{ float: 'right', fontSize: '0.74rem', color: 'var(--text-mute)' }}>
+                  {seoDescription.length} chars (120–160 optimal)
+                </span>
+              </label>
+              <textarea
+                id="pf-seo-desc"
+                rows={2}
+                value={seoDescription}
+                onChange={(e) => setSeoDescription(e.target.value)}
+                placeholder="Brief summary for Google search results. If empty, the product description will be used automatically."
+              />
+            </div>
+
+            <div className="admin-field">
+              <label htmlFor="pf-image-alt">
+                Primary Image Alt Text (Accessibility &amp; SEO)
+              </label>
+              <input
+                id="pf-image-alt"
+                type="text"
+                value={imageAlt}
+                onChange={(e) => setImageAlt(e.target.value)}
+                placeholder={name ? `${name} surgical medical packaging` : 'Descriptive alt text for product photo'}
+              />
+              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: 'var(--text-mute)' }}>
+                Describes the product visually for Google Image Search and screen readers.
+              </p>
+            </div>
           </div>
         </div>
       </div>

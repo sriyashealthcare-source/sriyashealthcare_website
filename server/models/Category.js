@@ -31,6 +31,16 @@ const categorySchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    seoTitle: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    seoDescription: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     heroGradient: {
       type: String,
       trim: true,
