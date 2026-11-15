@@ -20,9 +20,6 @@ export function useGalleryParallax({
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) return undefined;
 
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) return undefined;
-
     const container = containerRef.current;
     if (!container) return undefined;
 
@@ -34,6 +31,11 @@ export function useGalleryParallax({
 
     const updateParallax = () => {
       if (!isIntersecting || !container) return;
+      if (window.innerWidth <= 768) {
+        const items = container.querySelectorAll('.hp-workplace-media img');
+        items.forEach((img) => img.style.removeProperty('--parallax-y'));
+        return;
+      }
       const rect = container.getBoundingClientRect();
       const windowHeight = window.innerHeight || 800;
       // Center of section relative to center of viewport
