@@ -29,8 +29,8 @@ export function useGalleryParallax({
     let rafId = null;
     let isIntersecting = false;
 
-    // Restrained speed factors for alternating cards to create subtle organic depth
-    const speeds = [-0.035, 0.045, -0.025, 0.035, -0.03, 0.04];
+    // Enhanced speeds for alternating cards to create distinct, luxurious depth
+    const speeds = [-0.07, 0.08, -0.06, 0.075, -0.065, 0.08];
 
     const updateParallax = () => {
       if (!isIntersecting || !container) return;
@@ -43,8 +43,8 @@ export function useGalleryParallax({
       items.forEach((img, idx) => {
         const speed = speeds[idx % speeds.length];
         const rawOffset = centerDelta * speed;
-        // Bounded strictly between -14px and +14px to prevent excessive translation
-        const clampedOffset = Math.max(-14, Math.min(14, Math.round(rawOffset * 10) / 10));
+        // Bounded strictly between -28px and +28px for clearly noticeable multi-plane depth
+        const clampedOffset = Math.max(-28, Math.min(28, Math.round(rawOffset * 10) / 10));
         img.style.setProperty('--parallax-y', `${clampedOffset}px`);
       });
       rafId = null;

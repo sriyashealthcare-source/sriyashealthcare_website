@@ -12,6 +12,9 @@ let dbStatus = {
 };
 
 const connectDatabase = async () => {
+  if (process.env.USE_LOCAL_DB === 'true' || process.env.NODE_ENV === 'test') {
+    return activateLocalDbAdapter();
+  }
   const mongoUri = (process.env.MONGODB_URI || '').trim();
   dbStatus.uriConfigured = Boolean(mongoUri);
 
