@@ -3,6 +3,7 @@ const HomepageContent = require('../models/HomepageContent');
 const CANONICAL_SECTION_ORDER = [
   'hero',
   'about',
+  'statistics',
   'workplace',
   'leadership',
   'team',
@@ -90,6 +91,14 @@ function createDefaultHomepagePayload() {
           displayOrder: 2
         }
       ]
+    },
+    statistics: {
+      enabled: true,
+      eyebrow: 'Key Milestones & Healthcare Reach',
+      heading: 'Delivering Dependability at Scale',
+      subtitle:
+        'Verified distribution metrics and milestones supporting healthcare institutions across India.',
+      items: []
     },
     workplace: {
       enabled: true,
@@ -423,6 +432,12 @@ function createDefaultHomepagePayload() {
         aspectRatio: '16/9'
       }
     },
+    animationSettings: {
+      scrollRevealEnabled: true,
+      galleryParallaxEnabled: true,
+      imageHoverEnabled: true,
+      counterAnimationEnabled: true
+    },
     sectionOrder: [...CANONICAL_SECTION_ORDER]
   };
 }
@@ -496,6 +511,23 @@ function upgradeLegacySnapshotIfNeeded(snapshot) {
     out.sectionOrder = [...CANONICAL_SECTION_ORDER];
   }
 
+  if (!out.statistics) {
+    out.statistics = defaults.statistics;
+  }
+  if (!out.animationSettings) {
+    out.animationSettings = defaults.animationSettings;
+  }
+  if (!Array.isArray(out.sectionOrder)) {
+    out.sectionOrder = [...CANONICAL_SECTION_ORDER];
+  } else if (!out.sectionOrder.includes('statistics')) {
+    const aboutIdx = out.sectionOrder.indexOf('about');
+    if (aboutIdx !== -1) {
+      out.sectionOrder.splice(aboutIdx + 1, 0, 'statistics');
+    } else {
+      out.sectionOrder.push('statistics');
+    }
+  }
+
   return out;
 }
 
@@ -516,7 +548,13 @@ async function ensureHomepageInitialized() {
     });
   } else {
     const plain = typeof doc.toObject === 'function' ? doc.toObject() : doc;
-    if (!plain.published?.workplace || !plain.draft?.workplace || !plain.published?.leadership) {
+    if (
+      !plain.published?.workplace ||
+      !plain.draft?.workplace ||
+      !plain.published?.leadership ||
+      !plain.published?.statistics ||
+      !plain.published?.animationSettings
+    ) {
       const nextDraft = upgradeLegacySnapshotIfNeeded(plain.draft);
       const nextPublished = upgradeLegacySnapshotIfNeeded(plain.published);
       doc = await HomepageContent.findOneAndUpdate(

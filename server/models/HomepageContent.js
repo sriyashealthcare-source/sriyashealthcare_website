@@ -93,6 +93,31 @@ const valueItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const statisticItemSchema = new mongoose.Schema(
+  {
+    id: { type: String, required: true, trim: true },
+    title: { type: String, required: true, trim: true },
+    value: { type: Number, required: true, default: 0 },
+    prefix: { type: String, trim: true, default: '' },
+    suffix: { type: String, trim: true, default: '' },
+    description: { type: String, trim: true, default: '' },
+    decimals: { type: Number, default: 0 },
+    displayOrder: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true }
+  },
+  { _id: false }
+);
+
+const animationSettingsSchema = new mongoose.Schema(
+  {
+    scrollRevealEnabled: { type: Boolean, default: true },
+    galleryParallaxEnabled: { type: Boolean, default: true },
+    imageHoverEnabled: { type: Boolean, default: true },
+    counterAnimationEnabled: { type: Boolean, default: true }
+  },
+  { _id: false }
+);
+
 const homepageSnapshotSchema = new mongoose.Schema(
   {
     hero: {
@@ -138,6 +163,13 @@ const homepageSnapshotSchema = new mongoose.Schema(
         default: 'split-collage'
       },
       images: { type: [aboutImageSchema], default: [] }
+    },
+    statistics: {
+      enabled: { type: Boolean, default: true },
+      eyebrow: { type: String, trim: true, default: 'Key Milestones & Reach' },
+      heading: { type: String, trim: true, default: 'Delivering Dependability at Scale' },
+      subtitle: { type: String, trim: true, default: '' },
+      items: { type: [statisticItemSchema], default: [] }
     },
     workplace: {
       enabled: { type: Boolean, default: true },
@@ -200,11 +232,21 @@ const homepageSnapshotSchema = new mongoose.Schema(
       },
       backgroundImage: { type: mediaRefSchema, default: () => ({}) }
     },
+    animationSettings: {
+      type: animationSettingsSchema,
+      default: () => ({
+        scrollRevealEnabled: true,
+        galleryParallaxEnabled: true,
+        imageHoverEnabled: true,
+        counterAnimationEnabled: true
+      })
+    },
     sectionOrder: {
       type: [String],
       default: [
         'hero',
         'about',
+        'statistics',
         'workplace',
         'leadership',
         'team',

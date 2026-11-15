@@ -13,6 +13,12 @@ const SECTION_META = {
     tabId: 'about',
     badge: 'Overview'
   },
+  statistics: {
+    label: 'Key Statistics & Impact Counter',
+    desc: 'Animated milestones, years of experience, partner count & healthcare metrics',
+    tabId: 'statistics',
+    badge: 'Metrics'
+  },
   workplace: {
     label: 'Company Gallery & Workplace',
     desc: 'Office interior, clinical distribution operations & team workspace photo gallery',
@@ -54,6 +60,7 @@ const SECTION_META = {
 const ALL_SECTION_KEYS = [
   'hero',
   'about',
+  'statistics',
   'workplace',
   'leadership',
   'team',

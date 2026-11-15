@@ -1,6 +1,7 @@
 import React from 'react';
 import HeroMorphSection from './HeroMorphSection';
 import AboutSection from './AboutSection';
+import StatisticsSection from './StatisticsSection';
 import WorkplaceGallerySection from './WorkplaceGallerySection';
 import ProfileShowcaseSection from './ProfileShowcaseSection';
 import WhatWeDoSection from './WhatWeDoSection';
@@ -11,6 +12,7 @@ import ContinueToProductsTrigger from './ContinueToProductsTrigger';
 const DEFAULT_ORDER = [
   'hero',
   'about',
+  'statistics',
   'workplace',
   'leadership',
   'team',
@@ -25,6 +27,13 @@ export default function HomepageContentRenderer({
   forceMobile = false
 }) {
   if (!homepage) return null;
+
+  const animationSettings = homepage.animationSettings || {
+    scrollRevealEnabled: true,
+    galleryParallaxEnabled: true,
+    imageHoverEnabled: true,
+    counterAnimationEnabled: true
+  };
 
   let order =
     Array.isArray(homepage.sectionOrder) && homepage.sectionOrder.length > 0
@@ -52,6 +61,17 @@ export default function HomepageContentRenderer({
           <AboutSection
             key="about"
             about={homepage.about}
+            animationSettings={animationSettings}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
+        );
+      case 'statistics':
+        return (
+          <StatisticsSection
+            key="statistics"
+            statistics={homepage.statistics}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -61,6 +81,7 @@ export default function HomepageContentRenderer({
           <WorkplaceGallerySection
             key="workplace"
             workplace={homepage.workplace}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -73,6 +94,7 @@ export default function HomepageContentRenderer({
             section={homepage.leadership}
             variant="leadership"
             tinted={false}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -85,6 +107,7 @@ export default function HomepageContentRenderer({
             section={homepage.team}
             variant="team"
             tinted={false}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -94,6 +117,7 @@ export default function HomepageContentRenderer({
           <WhatWeDoSection
             key="whatWeDo"
             whatWeDo={homepage.whatWeDo}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -103,6 +127,7 @@ export default function HomepageContentRenderer({
           <ValuesSection
             key="values"
             values={homepage.values}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -112,6 +137,7 @@ export default function HomepageContentRenderer({
           <CtaSection
             key="callToAction"
             callToAction={homepage.callToAction}
+            animationSettings={animationSettings}
             isPreview={isPreview}
             forceMobile={forceMobile}
           />
@@ -121,11 +147,19 @@ export default function HomepageContentRenderer({
     }
   };
 
+  const animClassNames = [
+    animationSettings.scrollRevealEnabled === false ? 'hp-scroll-reveal-off' : '',
+    animationSettings.imageHoverEnabled === false ? 'hp-image-hover-off' : '',
+    animationSettings.galleryParallaxEnabled === false ? 'hp-gallery-parallax-off' : ''
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <div
       className={`hp-root ${isPreview ? 'hp-root--preview' : ''} ${
         forceMobile ? 'hp-root--forced-mobile' : ''
-      }`}
+      } ${animClassNames}`}
     >
       {order.map(renderSection)}
       <ContinueToProductsTrigger isPreview={isPreview} />

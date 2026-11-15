@@ -4,10 +4,15 @@ import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function AboutSection({
   about = {},
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
 
   if (about.enabled === false) return null;
 
@@ -35,32 +40,32 @@ export default function AboutSection({
           <div className="hp-about-content hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
             {about.eyebrow && <span className="hp-eyebrow">{about.eyebrow}</span>}
             {about.heading && (
-              <h2 id="about-heading" className="hp-heading">
+              <h2 id="about-heading" className="hp-heading hp-reveal-heading">
                 {about.heading}
               </h2>
             )}
             <div className="hp-gold-rule" aria-hidden="true" />
 
             {about.introduction && (
-              <p className="hp-lead-paragraph">{about.introduction}</p>
+              <p className="hp-lead-paragraph hp-reveal-text">{about.introduction}</p>
             )}
             {about.supportingText && (
-              <p className="hp-body-paragraph">{about.supportingText}</p>
+              <p className="hp-body-paragraph hp-reveal-text">{about.supportingText}</p>
             )}
             {about.hospitalCommitment && (
-              <p className="hp-body-paragraph">{about.hospitalCommitment}</p>
+              <p className="hp-body-paragraph hp-reveal-text">{about.hospitalCommitment}</p>
             )}
 
             {(about.vision || about.mission) && (
               <div className="hp-purpose-cards">
                 {about.vision && (
-                  <article className="hp-purpose-card">
+                  <article className="hp-purpose-card hp-reveal-child" style={{ '--reveal-delay': '140ms' }}>
                     <span className="hp-purpose-label">Our Vision</span>
                     <p>{about.vision}</p>
                   </article>
                 )}
                 {about.mission && (
-                  <article className="hp-purpose-card">
+                  <article className="hp-purpose-card hp-reveal-child" style={{ '--reveal-delay': '200ms' }}>
                     <span className="hp-purpose-label">Our Mission</span>
                     <p>{about.mission}</p>
                   </article>
@@ -72,7 +77,7 @@ export default function AboutSection({
           {/* Editorial Media Composition */}
           {images.length > 0 && (
             <div
-              className={`hp-about-visuals hp-reveal-child ${
+              className={`hp-about-visuals hp-reveal-media ${
                 images.length === 1 ? 'hp-about-visuals--single' : ''
               }`}
               style={{ '--reveal-delay': '120ms' }}

@@ -5,10 +5,15 @@ import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function CtaSection({
   callToAction = {},
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
 
   if (callToAction.enabled === false) return null;
 
@@ -40,11 +45,11 @@ export default function CtaSection({
           {callToAction.eyebrow && (
             <span className="hp-eyebrow hp-eyebrow--light">{callToAction.eyebrow}</span>
           )}
-          <h2 id="cta-heading" className="hp-cta-heading">
+          <h2 id="cta-heading" className="hp-cta-heading hp-reveal-heading">
             {callToAction.heading || 'Partnering for Better Healthcare.'}
           </h2>
           {callToAction.supportingText && (
-            <p className="hp-cta-sub">{callToAction.supportingText}</p>
+            <p className="hp-cta-sub hp-reveal-text">{callToAction.supportingText}</p>
           )}
 
           <div className="hp-cta-actions">

@@ -1,13 +1,27 @@
 import React from 'react';
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
+import { useGalleryParallax } from '../../hooks/useGalleryParallax';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function WorkplaceGallerySection({
   workplace = {},
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const galleryParallaxEnabled = animationSettings.galleryParallaxEnabled !== false;
+
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
+
+  const parallaxGridRef = useGalleryParallax({
+    enabled: galleryParallaxEnabled,
+    isPreview,
+    forceMobile
+  });
 
   if (workplace.enabled === false) return null;
 
@@ -25,21 +39,28 @@ export default function WorkplaceGallerySection({
     <section
       ref={sectionRef}
       id="our-workplace"
-      className={`hp-section hp-section--tinted hp-workplace-section ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-section--tinted hp-workplace-section ${
+        isVisible ? 'is-revealed' : ''
+      }`}
       aria-labelledby="workplace-heading"
     >
       <div className="hp-container">
         <header className="hp-section-header hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
           {workplace.eyebrow && <span className="hp-eyebrow">{workplace.eyebrow}</span>}
           {workplace.heading && (
-            <h2 id="workplace-heading" className="hp-heading">
+            <h2 id="workplace-heading" className="hp-heading hp-reveal-heading">
               {workplace.heading}
             </h2>
           )}
-          {workplace.subtitle && <p className="hp-section-subtitle">{workplace.subtitle}</p>}
+          {workplace.subtitle && (
+            <p className="hp-section-subtitle hp-reveal-text">{workplace.subtitle}</p>
+          )}
         </header>
 
-        <div className={`hp-workplace-grid hp-workplace-grid--${layoutStyle}`}>
+        <div
+          ref={parallaxGridRef}
+          className={`hp-workplace-grid hp-workplace-grid--${layoutStyle}`}
+        >
           {images.map((item, idx) => (
             <figure
               key={item.id || idx}
@@ -58,6 +79,7 @@ export default function WorkplaceGallerySection({
                   media={item}
                   alt={item.alt || item.title || item.caption || 'Sriyas Healthcare workplace'}
                   forceMobile={forceMobile}
+                  className="hp-parallax-img"
                   fallback={
                     <div className="hp-media-fallback">
                       <span>Office &amp; Workplace Visual</span>
@@ -82,4 +104,3 @@ export default function WorkplaceGallerySection({
     </section>
   );
 }
-

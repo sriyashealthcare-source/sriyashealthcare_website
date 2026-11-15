@@ -4,10 +4,15 @@ import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function ValuesSection({
   values = {},
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
 
   if (values.enabled === false) return null;
 
@@ -37,19 +42,19 @@ export default function ValuesSection({
           <div className="hp-values-intro hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
             {values.eyebrow && <span className="hp-eyebrow">{values.eyebrow}</span>}
             {values.heading && (
-              <h2 id="values-heading" className="hp-heading">
+              <h2 id="values-heading" className="hp-heading hp-reveal-heading">
                 {values.heading}
               </h2>
             )}
             <div className="hp-gold-rule" aria-hidden="true" />
             {values.subtitle && (
-              <p className="hp-section-subtitle hp-section-subtitle--left">
+              <p className="hp-section-subtitle hp-section-subtitle--left hp-reveal-text">
                 {values.subtitle}
               </p>
             )}
 
             {hasFeatureImage && (
-              <div className="hp-values-feature-frame">
+              <div className="hp-values-feature-frame hp-reveal-media">
                 <ResponsiveMediaImage
                   media={values.featureImage}
                   alt={values.featureImage?.alt || 'Sriyas Healthcare values and operations'}
@@ -82,4 +87,3 @@ export default function ValuesSection({
     </section>
   );
 }
-

@@ -215,6 +215,40 @@ function sanitizeValueItems(rawItems) {
     .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
+function sanitizeStatisticItems(rawItems) {
+  if (!Array.isArray(rawItems)) return [];
+  return rawItems
+    .slice(0, 12)
+    .map((entry, idx) => {
+      const item = entry && typeof entry === 'object' ? entry : {};
+      const numVal = Number(item.value);
+      return {
+        id: cleanText(item.id, '', 80) || makeItemId('stat'),
+        title: cleanText(item.title, '', 140),
+        value: Number.isFinite(numVal) ? numVal : 0,
+        prefix: cleanText(item.prefix, '', 30),
+        suffix: cleanText(item.suffix, '', 30),
+        description: cleanText(item.description, '', 300),
+        decimals: Number.isInteger(Number(item.decimals)) ? Math.min(3, Math.max(0, Number(item.decimals))) : 0,
+        displayOrder: Number.isFinite(Number(item.displayOrder)) ? Number(item.displayOrder) : idx + 1,
+        isActive: cleanBool(item.isActive, true)
+      };
+    })
+    .filter((item) => Boolean(item.title))
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
+function sanitizeAnimationSettings(rawIn, fallback = {}) {
+  const input = rawIn && typeof rawIn === 'object' ? rawIn : {};
+  const fb = fallback && typeof fallback === 'object' ? fallback : {};
+  return {
+    scrollRevealEnabled: cleanBool(input.scrollRevealEnabled, fb.scrollRevealEnabled !== false),
+    galleryParallaxEnabled: cleanBool(input.galleryParallaxEnabled, fb.galleryParallaxEnabled !== false),
+    imageHoverEnabled: cleanBool(input.imageHoverEnabled, fb.imageHoverEnabled !== false),
+    counterAnimationEnabled: cleanBool(input.counterAnimationEnabled, fb.counterAnimationEnabled !== false)
+  };
+}
+
 function sanitizeSnapshot(rawInput, fallbackSnapshot) {
   const base = upgradeLegacySnapshotIfNeeded(fallbackSnapshot || createDefaultHomepagePayload());
   const input = rawInput && typeof rawInput === 'object' ? rawInput : {};
@@ -223,12 +257,14 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
 
   const heroIn = input.hero && typeof input.hero === 'object' ? input.hero : base.hero;
   const aboutIn = input.about && typeof input.about === 'object' ? input.about : base.about;
+  const statIn = input.statistics && typeof input.statistics === 'object' ? input.statistics : base.statistics;
   const wpIn = input.workplace && typeof input.workplace === 'object' ? input.workplace : base.workplace;
   const leadIn = input.leadership && typeof input.leadership === 'object' ? input.leadership : base.leadership;
   const teamIn = input.team && typeof input.team === 'object' ? input.team : base.team;
   const wwdIn = input.whatWeDo && typeof input.whatWeDo === 'object' ? input.whatWeDo : base.whatWeDo;
   const valIn = input.values && typeof input.values === 'object' ? input.values : base.values;
   const ctaIn = input.callToAction && typeof input.callToAction === 'object' ? input.callToAction : base.callToAction;
+  const animIn = input.animationSettings && typeof input.animationSettings === 'object' ? input.animationSettings : base.animationSettings;
 
   return {
     hero: {
@@ -261,6 +297,13 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
         ? aboutIn.layoutPreset
         : base.about.layoutPreset,
       images: Array.isArray(aboutIn.images) ? sanitizeAboutImages(aboutIn.images) : base.about.images
+    },
+    statistics: {
+      enabled: cleanBool(statIn.enabled, base.statistics ? base.statistics.enabled !== false : true),
+      eyebrow: cleanText(statIn.eyebrow, base.statistics?.eyebrow || 'Key Milestones & Healthcare Reach', 80),
+      heading: cleanText(statIn.heading, base.statistics?.heading || 'Delivering Dependability at Scale', 180),
+      subtitle: cleanText(statIn.subtitle, base.statistics?.subtitle || '', 500),
+      items: Array.isArray(statIn.items) ? sanitizeStatisticItems(statIn.items) : (base.statistics?.items || [])
     },
     workplace: {
       enabled: cleanBool(wpIn.enabled, base.workplace.enabled),
@@ -320,6 +363,7 @@ function sanitizeSnapshot(rawInput, fallbackSnapshot) {
       contactAddress: cleanText(ctaIn.contactAddress, base.callToAction.contactAddress, 360),
       backgroundImage: cleanMediaRef(ctaIn.backgroundImage, base.callToAction.backgroundImage)
     },
+    animationSettings: sanitizeAnimationSettings(animIn, base.animationSettings),
     sectionOrder: normalizeSectionOrder(input.sectionOrder || base.sectionOrder)
   };
 }
@@ -368,6 +412,11 @@ function filterActiveSnapshotForDisplay(snapshot) {
   const plain = sanitizeSnapshot(snapshot, createDefaultHomepagePayload());
   if (plain.workplace && Array.isArray(plain.workplace.images)) {
     plain.workplace.images = plain.workplace.images.filter((item) => item.isActive !== false && item.url);
+  }
+  if (plain.statistics && Array.isArray(plain.statistics.items)) {
+    plain.statistics.items = plain.statistics.items.filter(
+      (item) => item.isActive !== false && item.title && Number.isFinite(Number(item.value))
+    );
   }
   if (plain.leadership && Array.isArray(plain.leadership.items)) {
     plain.leadership.items = plain.leadership.items.filter((item) => item.isActive !== false && item.name);

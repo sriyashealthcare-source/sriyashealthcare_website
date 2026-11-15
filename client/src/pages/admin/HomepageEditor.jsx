@@ -8,6 +8,8 @@ import PeopleProfilesEditorPanel from '../../components/admin/homepage/PeoplePro
 import WhatWeDoEditorPanel from '../../components/admin/homepage/WhatWeDoEditorPanel';
 import ValuesEditorPanel from '../../components/admin/homepage/ValuesEditorPanel';
 import CtaEditorPanel from '../../components/admin/homepage/CtaEditorPanel';
+import StatisticsEditorPanel from '../../components/admin/homepage/StatisticsEditorPanel';
+import AnimationSettingsPanel from '../../components/admin/homepage/AnimationSettingsPanel';
 import SectionOrderPanel from '../../components/admin/homepage/SectionOrderPanel';
 import HomepagePreviewModal from '../../components/admin/homepage/HomepagePreviewModal';
 import '../../styles/homepageEditor.css';
@@ -15,13 +17,15 @@ import '../../styles/homepageEditor.css';
 const TABS = [
   { id: 'hero', label: 'Hero Editor', toggleKey: 'hero' },
   { id: 'about', label: 'About Editor', toggleKey: 'about' },
+  { id: 'statistics', label: 'Statistics Editor', toggleKey: 'statistics' },
   { id: 'workplace', label: 'Company Gallery Editor', toggleKey: 'workplace' },
   { id: 'leadership', label: 'Leadership Editor', toggleKey: 'leadership' },
   { id: 'team', label: 'Team Members Editor', toggleKey: 'team' },
   { id: 'whatWeDo', label: 'What We Do Editor', toggleKey: 'whatWeDo' },
   { id: 'values', label: 'Values Editor', toggleKey: 'values' },
   { id: 'callToAction', label: 'CTA Editor', toggleKey: 'callToAction' },
-  { id: 'sectionOrder', label: 'Section Order & Visibility' }
+  { id: 'sectionOrder', label: 'Section Order & Visibility' },
+  { id: 'animations', label: 'Animation Settings' }
 ];
 
 export default function HomepageEditor() {
@@ -354,6 +358,13 @@ export default function HomepageEditor() {
             />
           )}
 
+          {activeTab === 'statistics' && (
+            <StatisticsEditorPanel
+              statistics={draft.statistics || {}}
+              onChange={(nextStats) => updateSection('statistics', nextStats)}
+            />
+          )}
+
           {activeTab === 'workplace' && (
             <WorkplaceGalleryEditorPanel
               workplace={draft.workplace}
@@ -415,6 +426,13 @@ export default function HomepageEditor() {
               onSaveOrder={handleSaveDraft}
               isSaving={saving}
               isDirty={isDirty}
+            />
+          )}
+
+          {activeTab === 'animations' && (
+            <AnimationSettingsPanel
+              animationSettings={draft.animationSettings || {}}
+              onChange={(nextAnim) => updateSection('animationSettings', nextAnim)}
             />
           )}
         </section>

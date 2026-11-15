@@ -18,10 +18,15 @@ export default function ProfileShowcaseSection({
   section = {},
   variant = 'leadership',
   tinted = false,
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
 
   if (section.enabled === false) return null;
 
@@ -46,11 +51,11 @@ export default function ProfileShowcaseSection({
         <header className="hp-section-header hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
           {section.eyebrow && <span className="hp-eyebrow">{section.eyebrow}</span>}
           {section.heading && (
-            <h2 id={`${id}-heading`} className="hp-heading">
+            <h2 id={`${id}-heading`} className="hp-heading hp-reveal-heading">
               {section.heading}
             </h2>
           )}
-          {section.subtitle && <p className="hp-section-subtitle">{section.subtitle}</p>}
+          {section.subtitle && <p className="hp-section-subtitle hp-reveal-text">{section.subtitle}</p>}
         </header>
 
         <div

@@ -4,10 +4,15 @@ import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function WhatWeDoSection({
   whatWeDo = {},
+  animationSettings = {},
   isPreview = false,
   forceMobile = false
 }) {
-  const [sectionRef, isVisible] = useRevealOnScroll({ immediate: isPreview });
+  const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
+  const [sectionRef, isVisible] = useRevealOnScroll({
+    immediate: isPreview || !scrollRevealEnabled,
+    disabled: !scrollRevealEnabled
+  });
 
   if (whatWeDo.enabled === false) return null;
 
@@ -30,11 +35,13 @@ export default function WhatWeDoSection({
         <header className="hp-section-header hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
           {whatWeDo.eyebrow && <span className="hp-eyebrow">{whatWeDo.eyebrow}</span>}
           {whatWeDo.heading && (
-            <h2 id="wwd-heading" className="hp-heading">
+            <h2 id="wwd-heading" className="hp-heading hp-reveal-heading">
               {whatWeDo.heading}
             </h2>
           )}
-          {whatWeDo.subtitle && <p className="hp-section-subtitle">{whatWeDo.subtitle}</p>}
+          {whatWeDo.subtitle && (
+            <p className="hp-section-subtitle hp-reveal-text">{whatWeDo.subtitle}</p>
+          )}
         </header>
 
         <div className="hp-wwd-grid">

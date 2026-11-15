@@ -2,12 +2,18 @@ import { useState, useEffect, useRef } from 'react';
 
 /**
  * Lightweight IntersectionObserver hook for scroll-triggered reveal animations.
- * Respects prefers-reduced-motion and preview mode automatically.
+ * Respects prefers-reduced-motion, admin animation settings, and preview mode automatically.
+ * Runs once per section entry to prevent unnecessary re-renders and scroll jitter.
  */
-export function useRevealOnScroll({ threshold = 0.12, rootMargin = '0px 0px -40px 0px', immediate = false } = {}) {
+export function useRevealOnScroll({
+  threshold = 0.12,
+  rootMargin = '0px 0px -40px 0px',
+  immediate = false,
+  disabled = false
+} = {}) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(() => {
-    if (immediate) return true;
+    if (immediate || disabled) return true;
     if (typeof window !== 'undefined' && window.matchMedia) {
       return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
@@ -15,7 +21,7 @@ export function useRevealOnScroll({ threshold = 0.12, rootMargin = '0px 0px -40p
   });
 
   useEffect(() => {
-    if (immediate || isVisible) {
+    if (immediate || disabled || isVisible) {
       setIsVisible(true);
       return undefined;
     }
@@ -41,8 +47,7 @@ export function useRevealOnScroll({ threshold = 0.12, rootMargin = '0px 0px -40p
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [immediate, isVisible, threshold, rootMargin]);
+  }, [immediate, disabled, isVisible, threshold, rootMargin]);
 
   return [ref, isVisible];
 }
-
