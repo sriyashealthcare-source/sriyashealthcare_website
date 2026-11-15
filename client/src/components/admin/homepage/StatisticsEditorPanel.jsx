@@ -1,13 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import '../../../styles/statisticsEditor.css';
 
 function makeId() {
   return `stat-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
 }
 
-export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
-  const [editingId, setEditingId] = useState(null);
+function formatPreviewNumber(val, decimals = 0) {
+  const num = Number(val);
+  if (!Number.isFinite(num)) return '0';
+  const dec = Math.max(0, Math.min(3, Number(decimals) || 0));
+  return dec > 0 ? num.toFixed(dec) : Math.round(num).toLocaleString('en-IN');
+}
 
+export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
   const items = Array.isArray(statistics.items) ? [...statistics.items] : [];
+
+  // Track expanded state for each card (map of id -> boolean)
+  const [expandedMap, setExpandedMap] = useState(() => {
+    const map = {};
+    // Initially expand the first card or all cards if 2 or fewer
+    items.forEach((it, idx) => {
+      map[it.id] = idx === 0 || items.length <= 2;
+    });
+    return map;
+  });
+
+  // Track which item was newly added to scroll & focus
+  const [newlyAddedId, setNewlyAddedId] = useState(null);
+  const cardRefs = useRef({});
+  const titleInputRefs = useRef({});
+
+  // When a new item is added, scroll into view and focus its title input
+  useEffect(() => {
+    if (newlyAddedId) {
+      const cardEl = cardRefs.current[newlyAddedId];
+      if (cardEl) {
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      const titleInput = titleInputRefs.current[newlyAddedId];
+      if (titleInput) {
+        const timer = setTimeout(() => {
+          titleInput.focus();
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+      setNewlyAddedId(null);
+    }
+  }, [newlyAddedId]);
 
   const updateField = (field, value) => {
     onChange({
@@ -19,7 +58,7 @@ export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
   const handleAddItem = () => {
     const newItem = {
       id: makeId(),
-      title: 'New Milestone Metric',
+      title: '',
       value: 0,
       prefix: '',
       suffix: '+',
@@ -30,7 +69,9 @@ export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
     };
     const nextItems = [...items, newItem];
     updateField('items', nextItems);
-    setEditingId(newItem.id);
+
+    setExpandedMap(prev => ({ ...prev, [newItem.id]: true }));
+    setNewlyAddedId(newItem.id);
   };
 
   const handleUpdateItem = (id, updates) => {
@@ -38,11 +79,20 @@ export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
     updateField('items', nextItems);
   };
 
-  const handleRemoveItem = (id) => {
-    if (!window.confirm('Are you sure you want to remove this statistic?')) return;
-    const nextItems = items.filter((it) => it.id !== id);
+  const handleRemoveItem = (id, title) => {
+    const displayName = title ? `"${title}"` : 'this milestone';
+    if (!window.confirm(`Are you sure you want to delete ${displayName}? This action cannot be undone once published.`)) {
+      return;
+    }
+    const nextItems = items
+      .filter((it) => it.id !== id)
+      .map((it, idx) => ({ ...it, displayOrder: idx + 1 }));
     updateField('items', nextItems);
-    if (editingId === id) setEditingId(null);
+    setExpandedMap(prev => {
+      const copy = { ...prev };
+      delete copy[id];
+      return copy;
+    });
   };
 
   const handleMove = (index, direction) => {
@@ -55,284 +105,505 @@ export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
     updateField('items', reordered);
   };
 
+  const toggleExpand = (id) => {
+    setExpandedMap(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const toggleAllExpand = (expand) => {
+    const newMap = {};
+    items.forEach(it => {
+      newMap[it.id] = expand;
+    });
+    setExpandedMap(newMap);
+  };
+
+  const activeCount = items.filter(it => it.isActive !== false).length;
+  const isSectionActive = statistics.enabled !== false;
+
   return (
-    <div className="hp-panel">
-      <div className="hp-panel-header">
-        <div>
-          <h2 className="hp-panel-title">Statistics &amp; Impact Counters</h2>
-          <p className="hp-panel-desc">
-            Manage company milestones, verified institutional metrics, and numerical statistics.
-            When visitors scroll to this section, numbers count smoothly into view.
+    <div className="hp-stats-editor-root">
+      {/* ─────────────────────────────────────────────────────────────
+          1. Header Card with Section Status Toggle
+          ───────────────────────────────────────────────────────────── */}
+      <div className="hp-stats-panel-header">
+        <div className="hp-stats-header-info">
+          <div className="hp-stats-badge-pill">
+            <span className="hp-stats-badge-dot" />
+            <span>Homepage Metrics</span>
+          </div>
+          <h2 className="hp-stats-title">Statistics &amp; Impact Counters</h2>
+          <p className="hp-stats-desc">
+            Manage company milestones, verified institutional metrics, and numerical statistics displayed on your homepage.
           </p>
         </div>
-        <div className="hp-panel-toggle">
-          <label className="hp-switch" aria-label="Enable Statistics Section">
+
+        {/* Section Active status control */}
+        <div className="hp-stats-status-control">
+          <div className="hp-stats-status-indicator">
+            <span
+              className={`hp-stats-status-dot ${isSectionActive ? 'is-active' : 'is-disabled'}`}
+              aria-hidden="true"
+            />
+            <span className="hp-stats-status-text">
+              {isSectionActive ? 'Section Active' : 'Section Disabled'}
+            </span>
+          </div>
+          <label className="hp-stats-toggle-switch" title="Toggle section visibility on live website">
             <input
               type="checkbox"
-              checked={statistics.enabled !== false}
+              checked={isSectionActive}
               onChange={(e) => updateField('enabled', e.target.checked)}
             />
-            <span className="hp-switch-slider" />
+            <span className="hp-stats-toggle-track">
+              <span className="hp-stats-toggle-thumb" />
+            </span>
           </label>
-          <span className="hp-switch-label">
-            {statistics.enabled !== false ? 'Section Active' : 'Section Disabled'}
-          </span>
         </div>
       </div>
 
-      <div className="hp-card" style={{ marginBottom: '24px' }}>
-        <h3 className="hp-card-heading">Section Header Content</h3>
-        <div className="hp-form-grid hp-form-grid--2col">
-          <div className="hp-form-group">
-            <label className="hp-form-label">Section Eyebrow</label>
+      {/* ─────────────────────────────────────────────────────────────
+          2. Section Header Content Card
+          ───────────────────────────────────────────────────────────── */}
+      <div className="hp-stats-card">
+        <div className="hp-stats-card-header">
+          <div className="hp-stats-card-title-wrap">
+            <div className="hp-stats-card-icon" aria-hidden="true">📋</div>
+            <div>
+              <h3 className="hp-stats-card-title">Section Header Content</h3>
+              <p className="hp-stats-card-desc">
+                Configure the eyebrow label, main heading, and narrative introduction displayed above the statistics grid.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="hp-stats-form-grid">
+          <div className="hp-stats-form-group">
+            <label className="hp-stats-label" htmlFor="stats-eyebrow">
+              <span>Section Eyebrow</span>
+              <span className="hp-stats-opt">(Optional)</span>
+            </label>
             <input
+              id="stats-eyebrow"
               type="text"
-              className="hp-input"
+              className="hp-stats-input"
               value={statistics.eyebrow || ''}
               placeholder="e.g. Key Milestones & Reach"
               onChange={(e) => updateField('eyebrow', e.target.value)}
             />
+            <span className="hp-stats-input-hint">
+              Small uppercase badge rendered directly above the primary heading.
+            </span>
           </div>
 
-          <div className="hp-form-group">
-            <label className="hp-form-label">Main Heading</label>
+          <div className="hp-stats-form-group">
+            <label className="hp-stats-label" htmlFor="stats-heading">
+              <span>Main Heading</span>
+              <span className="hp-stats-opt">(Optional)</span>
+            </label>
             <input
+              id="stats-heading"
               type="text"
-              className="hp-input"
+              className="hp-stats-input"
               value={statistics.heading || ''}
               placeholder="e.g. Delivering Dependability at Scale"
               onChange={(e) => updateField('heading', e.target.value)}
             />
+            <span className="hp-stats-input-hint">
+              Primary headline introducing company metrics and healthcare partnerships.
+            </span>
           </div>
         </div>
 
-        <div className="hp-form-group" style={{ marginTop: '16px' }}>
-          <label className="hp-form-label">Subtitle / Narrative Summary</label>
+        <div className="hp-stats-form-group" style={{ marginTop: '20px' }}>
+          <label className="hp-stats-label" htmlFor="stats-subtitle">
+            <span>Subtitle / Narrative Summary</span>
+            <span className="hp-stats-opt">(Optional)</span>
+          </label>
           <textarea
-            className="hp-textarea"
-            rows="2"
+            id="stats-subtitle"
+            className="hp-stats-textarea"
+            rows="3"
             value={statistics.subtitle || ''}
-            placeholder="Brief introduction explaining company scale, distribution footprint, or institutional partnerships..."
+            placeholder="Brief introduction explaining company scale, distribution footprint, institutional partnerships, or years of dedicated service..."
             onChange={(e) => updateField('subtitle', e.target.value)}
           />
+          <span className="hp-stats-input-hint">
+            Concise contextual paragraph bridging your corporate overview with institutional proof points.
+          </span>
         </div>
       </div>
 
-      <div className="hp-card">
-        <div className="hp-card-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <div>
-            <h3 className="hp-card-heading" style={{ margin: 0 }}>Verified Numerical Statistics</h3>
-            <p className="hp-panel-desc" style={{ margin: '4px 0 0' }}>
-              Only publish verified factual numbers. If no statistics are active, this section is completely hidden from public visitors.
-            </p>
+      {/* ─────────────────────────────────────────────────────────────
+          3. Verified Numerical Statistics List Card
+          ───────────────────────────────────────────────────────────── */}
+      <div className="hp-stats-card">
+        <div className="hp-stats-card-header">
+          <div className="hp-stats-card-title-wrap">
+            <div className="hp-stats-card-icon" aria-hidden="true">🔢</div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                <h3 className="hp-stats-card-title">Verified Numerical Statistics</h3>
+                <span className="hp-stats-count-tag">
+                  {items.length} {items.length === 1 ? 'Metric' : 'Metrics'} ({activeCount} Active)
+                </span>
+              </div>
+              <p className="hp-stats-card-desc">
+                Only publish verified factual numbers. If no statistics are active, this section remains hidden from public visitors.
+              </p>
+            </div>
           </div>
-          <button
-            type="button"
-            className="adm-btn adm-btn-secondary adm-btn-sm"
-            onClick={handleAddItem}
-          >
-            + Add Statistic
-          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+            {items.length > 1 && (
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <button
+                  type="button"
+                  className="hp-stat-toggle-expand-btn"
+                  onClick={() => toggleAllExpand(true)}
+                  title="Expand all cards"
+                >
+                  Expand All
+                </button>
+                <button
+                  type="button"
+                  className="hp-stat-toggle-expand-btn"
+                  onClick={() => toggleAllExpand(false)}
+                  title="Collapse all cards"
+                >
+                  Collapse All
+                </button>
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="hp-stats-add-btn"
+              onClick={handleAddItem}
+              id="stats-add-metric-btn"
+            >
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              </svg>
+              <span>Add Statistic</span>
+            </button>
+          </div>
         </div>
 
+        {/* Empty State */}
         {items.length === 0 ? (
-          <div className="hp-empty-slate" style={{ padding: '36px', textAlign: 'center', background: '#faf8f2', borderRadius: '12px', border: '1px dashed #d8cca8' }}>
-            <p style={{ margin: '0 0 12px', color: '#68604c', fontWeight: 500 }}>
-              No company statistics have been added yet.
-            </p>
-            <p style={{ margin: '0 0 16px', fontSize: '0.85rem', color: '#8e8673' }}>
-              The statistics section is currently hidden from the live website. Click below to add verified metrics (e.g. Years of Experience, Partner Brands, or Product Lines).
+          <div className="hp-stats-empty-state">
+            <span className="hp-stats-empty-icon" aria-hidden="true">📊</span>
+            <h4 className="hp-stats-empty-title">No Verified Statistics Added Yet</h4>
+            <p className="hp-stats-empty-desc">
+              The statistics section is currently hidden from the live website. Click below to add verified institutional numbers (e.g. Healthcare Partners, Years of Service, or Product Lines).
             </p>
             <button
               type="button"
-              className="adm-btn adm-btn-primary adm-btn-sm"
+              className="hp-stats-add-btn"
               onClick={handleAddItem}
             >
-              Add First Statistic
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              </svg>
+              <span>Add First Statistic</span>
             </button>
           </div>
         ) : (
-          <div className="hp-stat-items-list" style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          /* List of Statistic Cards */
+          <div className="hp-stats-list">
             {items.map((item, idx) => {
-              const isExpanded = editingId === item.id;
+              const isExpanded = Boolean(expandedMap[item.id]);
+              const formattedNumber = formatPreviewNumber(item.value, item.decimals);
+              const isItemActive = item.isActive !== false;
+              const hasTitleError = !String(item.title || '').trim();
+              const hasValueError = !Number.isFinite(Number(item.value));
+
               return (
                 <div
-                  key={item.id}
-                  className="hp-stat-item-row"
-                  style={{
-                    border: '1px solid #e7decd',
-                    borderRadius: '12px',
-                    background: '#ffffff',
-                    padding: '16px',
-                    transition: 'all 0.2s ease'
-                  }}
+                  key={item.id || idx}
+                  ref={(el) => { cardRefs.current[item.id] = el; }}
+                  className={`hp-stat-card-item ${isExpanded ? 'is-expanded' : ''}`}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
-                      <span
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '28px',
-                          height: '28px',
-                          borderRadius: '50%',
-                          background: '#f4f0e6',
-                          color: '#8A6A1F',
-                          fontWeight: 700,
-                          fontSize: '0.82rem'
-                        }}
-                      >
-                        {idx + 1}
+                  {/* Card Header Strip */}
+                  <div
+                    className="hp-stat-item-header"
+                    onClick={() => toggleExpand(item.id)}
+                    title={isExpanded ? 'Click to collapse card' : 'Click to expand and edit card'}
+                  >
+                    <div className="hp-stat-item-meta">
+                      {/* Order Indicator */}
+                      <span className="hp-stat-order-pill" title={`Display Order: #${idx + 1}`}>
+                        #{idx + 1}
                       </span>
-                      <div style={{ minWidth: 0 }}>
-                        <div style={{ fontWeight: 600, color: '#242424', fontSize: '0.98rem' }}>
-                          <span style={{ color: '#A9822C', marginRight: '6px' }}>
-                            {item.prefix}{item.value}{item.suffix}
+
+                      {/* Title & Preview Badge */}
+                      <div className="hp-stat-item-titles">
+                        <div className="hp-stat-item-main-title">
+                          <span className="hp-stat-item-preview-badge">
+                            {item.prefix}{formattedNumber}{item.suffix}
                           </span>
-                          {item.title}
+                          <span>{item.title || <em style={{ color: '#9CA3AF', fontWeight: 400 }}>Untitled Statistic</em>}</span>
                         </div>
-                        {item.description && (
-                          <div style={{ fontSize: '0.82rem', color: '#777', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                            {item.description}
-                          </div>
+                        {item.description ? (
+                          <p className="hp-stat-item-subtitle">{item.description}</p>
+                        ) : (
+                          <p className="hp-stat-item-subtitle" style={{ fontStyle: 'italic', color: '#999' }}>
+                            No description entered
+                          </p>
                         )}
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', cursor: 'pointer', marginRight: '8px' }}>
-                        <input
-                          type="checkbox"
-                          checked={item.isActive !== false}
-                          onChange={(e) => handleUpdateItem(item.id, { isActive: e.target.checked })}
+                    {/* Card Actions */}
+                    <div className="hp-stat-item-actions" onClick={(e) => e.stopPropagation()}>
+                      {/* Active/Inactive Badge */}
+                      <span className={`hp-stat-active-pill ${isItemActive ? 'is-active' : 'is-inactive'}`}>
+                        <span
+                          style={{
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: isItemActive ? '#16A34A' : '#9CA3AF'
+                          }}
                         />
-                        <span>{item.isActive !== false ? 'Active' : 'Hidden'}</span>
-                      </label>
+                        <span>{isItemActive ? 'Active' : 'Hidden'}</span>
+                      </span>
 
+                      {/* Reorder Buttons */}
                       <button
                         type="button"
-                        className="adm-btn adm-btn-ghost adm-btn-sm"
+                        className="hp-stat-icon-btn"
                         disabled={idx === 0}
                         onClick={() => handleMove(idx, -1)}
                         title="Move Up"
+                        aria-label="Move Up"
                       >
-                        ▲
+                        ↑
                       </button>
                       <button
                         type="button"
-                        className="adm-btn adm-btn-ghost adm-btn-sm"
+                        className="hp-stat-icon-btn"
                         disabled={idx === items.length - 1}
                         onClick={() => handleMove(idx, 1)}
                         title="Move Down"
+                        aria-label="Move Down"
                       >
-                        ▼
+                        ↓
                       </button>
+
+                      {/* Expand / Collapse Control */}
                       <button
                         type="button"
-                        className="adm-btn adm-btn-secondary adm-btn-sm"
-                        onClick={() => setEditingId(isExpanded ? null : item.id)}
+                        className="hp-stat-toggle-expand-btn"
+                        onClick={() => toggleExpand(item.id)}
+                        aria-expanded={isExpanded}
                       >
-                        {isExpanded ? 'Done' : 'Edit'}
+                        <span>{isExpanded ? 'Done' : 'Edit'}</span>
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          style={{ transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}
+                        >
+                          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </button>
+
+                      {/* Delete Button */}
                       <button
                         type="button"
-                        className="adm-btn adm-btn-danger adm-btn-sm"
-                        onClick={() => handleRemoveItem(item.id)}
-                        title="Delete"
+                        className="hp-stat-icon-btn hp-stat-icon-btn-delete"
+                        onClick={() => handleRemoveItem(item.id, item.title)}
+                        title="Delete statistic"
+                        aria-label="Delete statistic"
                       >
-                        ×
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                          <path d="M3 4h10M6 4V2.5a.5.5 0 01.5-.5h3a.5.5 0 01.5.5V4M5 4v9a1 1 0 001 1h4a1 1 0 001-1V4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </button>
                     </div>
                   </div>
 
+                  {/* Expanded Editing Area & Live Preview */}
                   {isExpanded && (
-                    <div
-                      style={{
-                        marginTop: '16px',
-                        paddingTop: '16px',
-                        borderTop: '1px solid #f0eae1'
-                      }}
-                    >
-                      <div className="hp-form-grid hp-form-grid--2col">
-                        <div className="hp-form-group">
-                          <label className="hp-form-label">Metric Title</label>
+                    <div className="hp-stat-item-body">
+                      {/* Left: Input Form Grid */}
+                      <div className="hp-stat-editor-fields">
+                        {/* Row 1: Metric Title (Full Width) */}
+                        <div className="hp-stats-form-group">
+                          <label className="hp-stats-label" htmlFor={`stat-title-${item.id}`}>
+                            <span>Metric Title <span className="hp-stats-req">*</span></span>
+                          </label>
                           <input
+                            ref={(el) => { titleInputRefs.current[item.id] = el; }}
+                            id={`stat-title-${item.id}`}
                             type="text"
-                            className="hp-input"
+                            className={`hp-stats-input ${hasTitleError ? 'has-error' : ''}`}
                             value={item.title || ''}
-                            placeholder="e.g. Years of Experience"
+                            placeholder="Healthcare Partners"
                             onChange={(e) => handleUpdateItem(item.id, { title: e.target.value })}
                           />
+                          {hasTitleError ? (
+                            <span className="hp-stats-error-msg">Metric Title is required to display on the live website.</span>
+                          ) : (
+                            <span className="hp-stats-input-hint">The primary milestone label displayed beneath the numerical counter.</span>
+                          )}
                         </div>
 
-                        <div className="hp-form-group">
-                          <label className="hp-form-label">Numeric Value (Number to count to)</label>
-                          <input
-                            type="number"
-                            step="any"
-                            className="hp-input"
-                            value={item.value !== undefined ? item.value : ''}
-                            placeholder="e.g. 10 or 25"
-                            onChange={(e) =>
-                              handleUpdateItem(item.id, {
-                                value: e.target.value === '' ? 0 : Number(e.target.value)
-                              })
-                            }
-                          />
+                        {/* Row 2: Value, Prefix, Suffix */}
+                        <div className="hp-stat-row-3col">
+                          <div className="hp-stats-form-group">
+                            <label className="hp-stats-label" htmlFor={`stat-val-${item.id}`}>
+                              <span>Numeric Value <span className="hp-stats-req">*</span></span>
+                            </label>
+                            <input
+                              id={`stat-val-${item.id}`}
+                              type="number"
+                              step="any"
+                              className={`hp-stats-input ${hasValueError ? 'has-error' : ''}`}
+                              value={item.value !== undefined ? item.value : ''}
+                              placeholder="25"
+                              onChange={(e) =>
+                                handleUpdateItem(item.id, {
+                                  value: e.target.value === '' ? '' : Number(e.target.value)
+                                })
+                              }
+                            />
+                            {hasValueError ? (
+                              <span className="hp-stats-error-msg">Enter a valid number.</span>
+                            ) : (
+                              <span className="hp-stats-input-hint">Target number counted up to.</span>
+                            )}
+                          </div>
+
+                          <div className="hp-stats-form-group">
+                            <label className="hp-stats-label" htmlFor={`stat-pre-${item.id}`}>
+                              <span>Prefix</span>
+                              <span className="hp-stats-opt">(Optional)</span>
+                            </label>
+                            <input
+                              id={`stat-pre-${item.id}`}
+                              type="text"
+                              className="hp-stats-input"
+                              value={item.prefix || ''}
+                              placeholder="e.g. ₹ or +"
+                              onChange={(e) => handleUpdateItem(item.id, { prefix: e.target.value })}
+                            />
+                            <span className="hp-stats-input-hint">Placed before number.</span>
+                          </div>
+
+                          <div className="hp-stats-form-group">
+                            <label className="hp-stats-label" htmlFor={`stat-suf-${item.id}`}>
+                              <span>Suffix</span>
+                              <span className="hp-stats-opt">(Optional)</span>
+                            </label>
+                            <input
+                              id={`stat-suf-${item.id}`}
+                              type="text"
+                              className="hp-stats-input"
+                              value={item.suffix || ''}
+                              placeholder="e.g. + or Years"
+                              onChange={(e) => handleUpdateItem(item.id, { suffix: e.target.value })}
+                            />
+                            <span className="hp-stats-input-hint">Placed after number.</span>
+                          </div>
+                        </div>
+
+                        {/* Row 3: Decimal Precision, Description */}
+                        <div className="hp-stat-row-2col">
+                          <div className="hp-stats-form-group">
+                            <label className="hp-stats-label" htmlFor={`stat-dec-${item.id}`}>
+                              <span>Decimal Precision</span>
+                            </label>
+                            <select
+                              id={`stat-dec-${item.id}`}
+                              className="hp-stats-select"
+                              value={item.decimals || 0}
+                              onChange={(e) =>
+                                handleUpdateItem(item.id, { decimals: Number(e.target.value) })
+                              }
+                            >
+                              <option value="0">0 (Whole numbers, e.g. 25)</option>
+                              <option value="1">1 decimal (e.g. 25.5)</option>
+                              <option value="2">2 decimals (e.g. 99.95)</option>
+                            </select>
+                            <span className="hp-stats-input-hint">Number of decimal places.</span>
+                          </div>
+
+                          <div className="hp-stats-form-group">
+                            <label className="hp-stats-label" htmlFor={`stat-desc-${item.id}`}>
+                              <span>Description</span>
+                              <span className="hp-stats-opt">(Optional)</span>
+                            </label>
+                            <input
+                              id={`stat-desc-${item.id}`}
+                              type="text"
+                              className="hp-stats-input"
+                              value={item.description || ''}
+                              placeholder="A short explanation of this milestone"
+                              onChange={(e) =>
+                                handleUpdateItem(item.id, { description: e.target.value })
+                              }
+                            />
+                            <span className="hp-stats-input-hint">Secondary explanation shown below the title.</span>
+                          </div>
+                        </div>
+
+                        {/* Active Toggle Control for this Card */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '6px' }}>
+                          <label className="hp-stats-toggle-switch">
+                            <input
+                              type="checkbox"
+                              checked={isItemActive}
+                              onChange={(e) => handleUpdateItem(item.id, { isActive: e.target.checked })}
+                            />
+                            <span className="hp-stats-toggle-track">
+                              <span className="hp-stats-toggle-thumb" />
+                            </span>
+                          </label>
+                          <span style={{ fontSize: '0.84rem', fontWeight: 600, color: isItemActive ? '#15803D' : '#6B7280' }}>
+                            {isItemActive ? 'Published & Visible on Homepage' : 'Hidden from Homepage Visitors'}
+                          </span>
                         </div>
                       </div>
 
-                      <div className="hp-form-grid hp-form-grid--3col" style={{ marginTop: '12px' }}>
-                        <div className="hp-form-group">
-                          <label className="hp-form-label">Prefix (Optional)</label>
-                          <input
-                            type="text"
-                            className="hp-input"
-                            value={item.prefix || ''}
-                            placeholder="e.g. ₹ or +"
-                            onChange={(e) => handleUpdateItem(item.id, { prefix: e.target.value })}
-                          />
+                      {/* Right: Real-time Live Homepage Preview */}
+                      <div className="hp-stat-preview-container">
+                        <div className="hp-stat-preview-header">
+                          <span>Live Homepage Preview</span>
+                          <span className="hp-stat-preview-tag">👁 Real-time</span>
                         </div>
 
-                        <div className="hp-form-group">
-                          <label className="hp-form-label">Suffix (Optional)</label>
-                          <input
-                            type="text"
-                            className="hp-input"
-                            value={item.suffix || ''}
-                            placeholder="e.g. + or % or Years"
-                            onChange={(e) => handleUpdateItem(item.id, { suffix: e.target.value })}
-                          />
-                        </div>
+                        <article className="hp-stat-live-preview-card">
+                          <div className="hp-stat-preview-metric-wrap">
+                            {item.prefix && (
+                              <span className="hp-stat-preview-affix hp-stat-preview-prefix">{item.prefix}</span>
+                            )}
+                            <span className="hp-stat-preview-number">{formattedNumber}</span>
+                            {item.suffix && (
+                              <span className="hp-stat-preview-affix hp-stat-preview-suffix">{item.suffix}</span>
+                            )}
+                          </div>
+                          <h4 className="hp-stat-preview-title">
+                            {item.title || 'METRIC TITLE'}
+                          </h4>
+                          {item.description ? (
+                            <p className="hp-stat-preview-desc">{item.description}</p>
+                          ) : (
+                            <p className="hp-stat-preview-desc" style={{ color: '#A0A0A0', fontStyle: 'italic' }}>
+                              Optional milestone description
+                            </p>
+                          )}
+                        </article>
 
-                        <div className="hp-form-group">
-                          <label className="hp-form-label">Decimals (0 for whole numbers)</label>
-                          <select
-                            className="hp-select"
-                            value={item.decimals || 0}
-                            onChange={(e) =>
-                              handleUpdateItem(item.id, { decimals: Number(e.target.value) })
-                            }
-                          >
-                            <option value="0">0 (e.g. 10)</option>
-                            <option value="1">1 decimal (e.g. 10.5)</option>
-                            <option value="2">2 decimals (e.g. 99.95)</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="hp-form-group" style={{ marginTop: '12px' }}>
-                        <label className="hp-form-label">Description (Optional)</label>
-                        <input
-                          type="text"
-                          className="hp-input"
-                          value={item.description || ''}
-                          placeholder="e.g. Dedicated healthcare distribution service across Tamil Nadu"
-                          onChange={(e) =>
-                            handleUpdateItem(item.id, { description: e.target.value })
-                          }
-                        />
+                        <p className="hp-stat-preview-hint">
+                          Preview reflects live homepage card styling, typography, and gold gradient numbers.
+                        </p>
                       </div>
                     </div>
                   )}
@@ -345,4 +616,3 @@ export default function StatisticsEditorPanel({ statistics = {}, onChange }) {
     </div>
   );
 }
-
