@@ -232,30 +232,105 @@ function injectMetadataIntoHtml(templateHtml, routeMeta) {
   return html;
 }
 
+const https = require('https');
+
+function fetchJson(url, timeoutMs = 7000) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, { headers: { 'User-Agent': 'SriyasSeoGenerator/1.0' } }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error(`Failed to parse JSON from ${url}: ${e.message}`));
+          }
+        } else {
+          reject(new Error(`HTTP ${res.statusCode} from ${url}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      reject(new Error(`Timeout fetching ${url}`));
+    });
+  });
+}
+
+async function loadPublishedData() {
+  // 1. Try public Render API first (works in all environments, zero DB credential exposure)
+  try {
+    console.log('[Data] Checking live published backend API (Render)...');
+    const [brandsRes, prodsRes, hpRes] = await Promise.all([
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/brands', 6000),
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/products', 6000),
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/homepage', 6000).catch(() => null)
+    ]);
+
+    const apiBrands = (brandsRes && brandsRes.brands) ? brandsRes.brands : [];
+    const apiProducts = (prodsRes && prodsRes.products) ? prodsRes.products : [];
+    if (apiBrands.length > 0 && apiProducts.length > 0) {
+      console.log(`[Data] Successfully loaded from live Render backend (${apiBrands.length} brands, ${apiProducts.length} products).`);
+      return {
+        activeBrands: apiBrands.filter(b => b.isActive !== false),
+        activeProducts: apiProducts.filter(p => p.isActive !== false && !p.deletedAt),
+        hpDoc: hpRes
+      };
+    }
+  } catch (err) {
+    console.log(`[Data] Live API check: ${err.message}. Trying database connection...`);
+  }
+
+  // 2. Fall back to local MongoDB / localDbEngine
+  try {
+    await connectDatabase();
+    const [brands, products, hpDoc] = await Promise.all([
+      Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
+      Product.find({ isActive: true, deletedAt: null }).populate('brand').sort({ displayOrder: 1, name: 1 }),
+      HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null)
+    ]);
+
+    const activeBrands = (brands || []).filter(b => b.isActive !== false);
+    const activeProducts = (products || []).filter(p => (p.brand?.isActive !== false) && p.isActive !== false && !p.deletedAt);
+    if (activeBrands.length > 0) {
+      console.log(`[Data] Successfully loaded from database adapter (${activeBrands.length} brands, ${activeProducts.length} products).`);
+      return { activeBrands, activeProducts, hpDoc };
+    }
+  } catch (dbErr) {
+    console.warn('[Data] Database connection attempt:', dbErr.message);
+  }
+
+  // 3. Fallback to localDbEngine file directly if available
+  try {
+    const { getLocalDb } = require('../server/utils/localDbEngine');
+    const localDb = getLocalDb();
+    const activeBrands = (localDb.brands || []).filter(b => b.isActive !== false);
+    const activeProducts = (localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
+    if (activeBrands.length > 0) {
+      console.log(`[Data] Loaded from localDbEngine backup (${activeBrands.length} brands, ${activeProducts.length} products).`);
+      return { activeBrands, activeProducts, hpDoc: localDb.homepageContent?.[0] || null };
+    }
+  } catch (_) {}
+
+  return { activeBrands: [], activeProducts: [], hpDoc: null };
+}
+
 async function run() {
   console.log('═══════════════════════════════════════════════════════════════');
   console.log('  SRIYAS HEALTHCARE — SEO ASSET & PRERENDER GENERATOR');
   console.log('═══════════════════════════════════════════════════════════════');
 
-  await connectDatabase();
-
-  // 1. Fetch data
-  const [brands, products, hpDoc] = await Promise.all([
-    Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
-    Product.find({ isActive: true, deletedAt: null }).populate('brand').sort({ displayOrder: 1, name: 1 }),
-    HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null)
-  ]);
-
-  const activeBrands = brands || [];
-  const activeProducts = (products || []).filter(p => p.brand && p.brand.isActive !== false);
-  const hpPublished = hpDoc?.published || {};
+  const { activeBrands, activeProducts, hpDoc } = await loadPublishedData();
+  const hpPublished = hpDoc?.homepage || hpDoc?.published || {};
   const hpSeo = hpPublished.seo || {};
 
-  console.log(`[Data] Found ${activeBrands.length} active brands and ${activeProducts.length} active products.`);
+  console.log(`[Data] Total active brands: ${activeBrands.length}, active products: ${activeProducts.length}`);
 
   // 2. Generate Sitemap.xml & Robots.txt
   console.log('[Assets] Generating sitemap.xml and robots.txt...');
-  const sitemapXml = await buildSitemapXml();
+  const sitemapXml = await buildSitemapXml(activeBrands, activeProducts, hpDoc);
   const robotsTxt = buildRobotsTxt();
 
   ensureDirSync(publicDir);

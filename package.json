@@ -14,6 +14,7 @@
     "build:server": "cd server && npm install",
     "build:client": "cd client && npm install --include=dev && npm run build",
     "build": "cd server && npm install && cd ../client && npm install --include=dev && npm run build",
+    "deploy": "cd client && npm run build && npx wrangler deploy",
     "start": "node server/server.js"
   },
   "engines": {

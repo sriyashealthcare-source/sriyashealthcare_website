@@ -28,14 +28,23 @@ function escapeXml(unsafe) {
 }
 
 /**
- * Generates dynamic sitemap XML from current active database content
+ * Generates dynamic sitemap XML from current active database content or provided items
  */
-async function buildSitemapXml() {
-  const [brands, products, homepageDoc] = await Promise.all([
-    Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
-    Product.find({ isActive: true, deletedAt: null }).populate('brand').sort({ displayOrder: 1, name: 1 }),
-    HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null)
-  ]);
+async function buildSitemapXml(providedBrands = null, providedProducts = null, providedHomepageDoc = null) {
+  let brands = providedBrands;
+  let products = providedProducts;
+  let homepageDoc = providedHomepageDoc;
+
+  if (!brands || !products) {
+    const [dbBrands, dbProducts, dbHp] = await Promise.all([
+      Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
+      Product.find({ isActive: true, deletedAt: null }).populate('brand').sort({ displayOrder: 1, name: 1 }),
+      HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null)
+    ]);
+    brands = brands || dbBrands;
+    products = products || dbProducts;
+    homepageDoc = homepageDoc || dbHp;
+  }
 
   const lastHomeMod = homepageDoc?.lastPublishedAt || homepageDoc?.updatedAt || new Date();
 
