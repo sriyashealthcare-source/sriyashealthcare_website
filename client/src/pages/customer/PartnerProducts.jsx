@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { productService } from '../../services/productService';
+import { useEnquiry } from '../../context/EnquiryContext';
 import ProductCard from '../../components/product/ProductCard';
 import GlobalSearchBar from '../../components/common/GlobalSearchBar';
 import { resolveAssetUrl } from '../../utils/session';
@@ -27,6 +28,7 @@ export default function PartnerProducts() {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { setPageBrand } = useEnquiry();
 
   useEffect(() => {
     let isMounted = true;
@@ -72,6 +74,7 @@ export default function PartnerProducts() {
 
         if (!isMounted) return;
         setBrand(brandData);
+        setPageBrand(brandData);
 
         // SEO metadata
         document.title = `${brandData.name} Products | Sriyas Healthcare Pvt Ltd`;
@@ -127,6 +130,7 @@ export default function PartnerProducts() {
 
     return () => {
       isMounted = false;
+      setPageBrand(null);
     };
   }, [partnerSlug, navigate, initialCategoryParam]);
 

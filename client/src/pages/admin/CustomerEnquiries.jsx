@@ -22,6 +22,7 @@ export default function CustomerEnquiries() {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sourceFilter, setSourceFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [counts, setCounts] = useState({ all: 0, new: 0, contacted: 0, follow_up: 0, resolved: 0, closed: 0 });
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,8 @@ export default function CustomerEnquiries() {
       const params = {
         page: pageNum,
         limit: 15,
-        status: statusFilter
+        status: statusFilter,
+        source: sourceFilter
       };
       if (searchQuery.trim()) {
         params.search = searchQuery.trim();
@@ -61,11 +63,11 @@ export default function CustomerEnquiries() {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, searchQuery]);
+  }, [statusFilter, sourceFilter, searchQuery]);
 
   useEffect(() => {
     loadEnquiries(page);
-  }, [page, statusFilter, loadEnquiries]);
+  }, [page, statusFilter, sourceFilter, loadEnquiries]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -162,25 +164,44 @@ export default function CustomerEnquiries() {
         </div>
       </div>
 
-      {/* Status Filter Tabs */}
-      <div className="brand-tabs" style={{ marginBottom: '20px', flexWrap: 'wrap' }}>
-        {[
-          { key: 'all', label: 'All Enquiries', count: counts.all },
-          { key: 'new', label: 'New', count: counts.new },
-          { key: 'contacted', label: 'Contacted', count: counts.contacted },
-          { key: 'follow_up', label: 'Follow-up', count: counts.follow_up },
-          { key: 'resolved', label: 'Resolved', count: counts.resolved },
-          { key: 'closed', label: 'Closed', count: counts.closed }
-        ].map(tab => (
-          <button
-            key={tab.key}
-            type="button"
-            className={`brand-tab ${statusFilter === tab.key ? 'active' : ''}`}
-            onClick={() => handleStatusFilterChange(tab.key)}
+      {/* Status & Source Filters */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
+        <div className="brand-tabs" style={{ margin: 0, flexWrap: 'wrap' }}>
+          {[
+            { key: 'all', label: 'All Enquiries', count: counts.all },
+            { key: 'new', label: 'New', count: counts.new },
+            { key: 'contacted', label: 'Contacted', count: counts.contacted },
+            { key: 'follow_up', label: 'Follow-up', count: counts.follow_up },
+            { key: 'resolved', label: 'Resolved', count: counts.resolved },
+            { key: 'closed', label: 'Closed', count: counts.closed }
+          ].map(tab => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`brand-tab ${statusFilter === tab.key ? 'active' : ''}`}
+              onClick={() => handleStatusFilterChange(tab.key)}
+            >
+              {tab.label} ({tab.count})
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-mute)' }}>Source:</span>
+          <select
+            value={sourceFilter}
+            onChange={(e) => {
+              setSourceFilter(e.target.value);
+              setPage(1);
+            }}
+            className="adm-input"
+            style={{ padding: '6px 12px', fontSize: '0.84rem' }}
           >
-            {tab.label} ({tab.count})
-          </button>
-        ))}
+            <option value="all">All Sources</option>
+            <option value="floating">💬 Floating Widget Only</option>
+            <option value="contact">📄 Contact Page Only</option>
+          </select>
+        </div>
       </div>
 
       {/* Search Bar */}
@@ -243,6 +264,7 @@ export default function CustomerEnquiries() {
               <thead>
                 <tr>
                   <th>Customer Name</th>
+                  <th>Source</th>
                   <th>Contact Info</th>
                   <th>Hospital / Company</th>
                   <th>Product of Interest</th>
@@ -263,6 +285,35 @@ export default function CustomerEnquiries() {
                       )}
                     </td>
                     <td>
+                      {enq.enquirySource === 'Floating Product Enquiry Widget' ? (
+                        <span
+                          className="adm-badge"
+                          style={{
+                            background: 'rgba(212, 175, 55, 0.16)',
+                            color: '#8A6A1F',
+                            border: '1px solid rgba(212, 175, 55, 0.45)',
+                            fontSize: '0.74rem',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          💬 Floating Widget
+                        </span>
+                      ) : (
+                        <span
+                          className="adm-badge"
+                          style={{
+                            background: 'rgba(27, 42, 74, 0.08)',
+                            color: '#1B2A4A',
+                            border: '1px solid rgba(27, 42, 74, 0.2)',
+                            fontSize: '0.74rem',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          📄 Contact Page
+                        </span>
+                      )}
+                    </td>
+                    <td>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.86rem' }}>
                         <a href={`tel:${enq.phone}`} style={{ color: 'var(--gold-deep)', textDecoration: 'none' }}>
                           📞 {enq.phone}
@@ -275,7 +326,19 @@ export default function CustomerEnquiries() {
                     <td>{enq.company || '—'}</td>
                     <td>
                       {enq.productOfInterest?.productName ? (
-                        <strong style={{ color: 'var(--ink)' }}>{enq.productOfInterest.productName}</strong>
+                        <div>
+                          <strong style={{ color: 'var(--ink)' }}>{enq.productOfInterest.productName}</strong>
+                          {(enq.brandOfInterest?.brandName || enq.productOfInterest?.brandName) && (
+                            <div style={{ fontSize: '0.78rem', color: 'var(--gold-dark)', fontWeight: 600 }}>
+                              🏷️ {enq.brandOfInterest?.brandName || enq.productOfInterest?.brandName}
+                            </div>
+                          )}
+                        </div>
+                      ) : enq.brandOfInterest?.brandName ? (
+                        <div>
+                          <strong style={{ color: 'var(--ink)' }}>{enq.brandOfInterest.brandName}</strong>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-mute)' }}>Brand Catalogue</div>
+                        </div>
                       ) : (
                         <span style={{ color: 'var(--text-mute)', fontSize: '0.85rem' }}>{enq.subject || 'General Enquiry'}</span>
                       )}
@@ -362,10 +425,44 @@ export default function CustomerEnquiries() {
               </div>
 
               <div>
-                <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', color: 'var(--text-mute)', fontWeight: 600 }}>Product of Interest</span>
-                <div style={{ fontWeight: 600, color: 'var(--ink)' }}>
-                  {selectedEnquiry.productOfInterest?.productName || 'General Enquiry'}
+                <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', color: 'var(--text-mute)', fontWeight: 600 }}>Enquiry Source</span>
+                <div style={{ marginTop: '4px' }}>
+                  {selectedEnquiry.enquirySource === 'Floating Product Enquiry Widget' ? (
+                    <span className="adm-badge" style={{ background: 'rgba(212, 175, 55, 0.16)', color: '#8A6A1F', border: '1px solid rgba(212, 175, 55, 0.45)' }}>
+                      💬 Floating Product Enquiry Widget
+                    </span>
+                  ) : (
+                    <span className="adm-badge" style={{ background: 'rgba(27, 42, 74, 0.08)', color: '#1B2A4A', border: '1px solid rgba(27, 42, 74, 0.2)' }}>
+                      📄 {selectedEnquiry.enquirySource || 'Contact Page'}
+                    </span>
+                  )}
                 </div>
+              </div>
+
+              <div>
+                <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', color: 'var(--text-mute)', fontWeight: 600 }}>Source Page</span>
+                <div style={{ marginTop: '4px' }}>
+                  <a
+                    href={selectedEnquiry.sourcePage || '/contact'}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ fontSize: '0.88rem', color: 'var(--gold-deep)', fontWeight: 600, textDecoration: 'underline' }}
+                  >
+                    {selectedEnquiry.sourcePage || '/contact'} ↗
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', color: 'var(--text-mute)', fontWeight: 600 }}>Product / Brand</span>
+                <div style={{ fontWeight: 600, color: 'var(--ink)' }}>
+                  {selectedEnquiry.productOfInterest?.productName || (selectedEnquiry.brandOfInterest?.brandName ? `${selectedEnquiry.brandOfInterest.brandName} Catalogue` : 'General Enquiry')}
+                </div>
+                {(selectedEnquiry.brandOfInterest?.brandName || selectedEnquiry.productOfInterest?.brandName) && (
+                  <div style={{ fontSize: '0.82rem', color: 'var(--gold-dark)', fontWeight: 600, marginTop: '2px' }}>
+                    Manufacturer: {selectedEnquiry.brandOfInterest?.brandName || selectedEnquiry.productOfInterest?.brandName}
+                  </div>
+                )}
               </div>
 
               <div>

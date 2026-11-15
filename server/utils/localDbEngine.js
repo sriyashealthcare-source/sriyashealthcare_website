@@ -441,6 +441,33 @@ function attachLocalAdapterToModel(Model) {
     saveStore();
     return { deletedCount };
   };
+
+  Model.aggregate = async function (pipeline = []) {
+    reloadStore();
+    let docs = [...(store[modelName] || [])];
+    for (const stage of pipeline) {
+      if (stage.$match) {
+        docs = docs.filter(d => matchesFilter(d, stage.$match));
+      }
+      if (stage.$group) {
+        const idExpr = stage.$group._id;
+        const groups = {};
+        for (const doc of docs) {
+          let key;
+          if (typeof idExpr === 'string' && idExpr.startsWith('$')) {
+            const field = idExpr.slice(1);
+            key = doc[field];
+          } else {
+            key = idExpr;
+          }
+          if (!groups[key]) groups[key] = { _id: key, count: 0 };
+          groups[key].count += 1;
+        }
+        docs = Object.values(groups);
+      }
+    }
+    return docs;
+  };
 }
 
 function activateLocalDbAdapter() {

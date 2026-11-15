@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { productService } from '../../services/productService';
 import { analyticsService } from '../../services/analyticsService';
+import { useEnquiry } from '../../context/EnquiryContext';
 import ImageGallery from '../../components/product-details/ImageGallery';
 import { resolveAssetUrl } from '../../utils/session';
 
@@ -16,6 +17,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const trackedRef = useRef('');
+  const { setPageProduct, openDrawer } = useEnquiry();
 
   useEffect(() => {
     let isMounted = true;
@@ -40,6 +42,7 @@ export default function ProductDetails() {
         }
 
         setProduct(prod);
+        setPageProduct(prod);
 
         // Dynamic SEO Page Title & Meta Description
         document.title = `${prod.name} | Sriyas Healthcare Pvt Ltd`;
@@ -78,6 +81,7 @@ export default function ProductDetails() {
     loadProduct();
     return () => {
       isMounted = false;
+      setPageProduct(null);
     };
   }, [effectiveProductSlug, partnerSlug, location.state]);
 
@@ -291,15 +295,23 @@ export default function ProductDetails() {
             </div>
           )}
 
-          <div style={{ marginTop: '28px' }}>
+          <div style={{ marginTop: '28px', display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <button
+              type="button"
+              className="hero-cta"
+              id="enquire-prod-btn"
+              onClick={() => openDrawer({ product })}
+              style={{ display: 'inline-flex', padding: '13px 32px', fontSize: '0.92rem', cursor: 'pointer', border: 'none' }}
+            >
+              ✉ Enquire About This Product
+            </button>
             <Link
               to="/contact"
               state={{ productId: product._id, productName: product.name }}
-              className="hero-cta"
-              id="enquire-prod-btn"
-              style={{ display: 'inline-flex', padding: '13px 32px', fontSize: '0.92rem' }}
+              className="detail-back"
+              style={{ marginBottom: 0, padding: '12px 20px', textDecoration: 'none' }}
             >
-              ✉ Enquire About This Product
+              Full Contact Page
             </Link>
           </div>
         </div>

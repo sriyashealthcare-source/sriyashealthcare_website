@@ -38,6 +38,28 @@ const customerEnquirySchema = new mongoose.Schema(
         type: String,
         trim: true,
         default: ''
+      },
+      brandName: {
+        type: String,
+        trim: true,
+        default: ''
+      }
+    },
+    brandOfInterest: {
+      brandId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brand',
+        default: null
+      },
+      brandName: {
+        type: String,
+        trim: true,
+        default: ''
+      },
+      brandSlug: {
+        type: String,
+        trim: true,
+        default: ''
       }
     },
     subject: {
@@ -54,6 +76,12 @@ const customerEnquirySchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: '/contact'
+    },
+    enquirySource: {
+      type: String,
+      trim: true,
+      default: 'Contact Page',
+      index: true
     },
     visitorSessionId: {
       type: String,

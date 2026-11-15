@@ -5,11 +5,14 @@ export const enquiryService = {
   // Public customer enquiry submission
   async submitEnquiry(formData) {
     const payload = {
+      sourcePage: window.location.pathname,
       ...formData,
       visitorSessionId: getVisitorSessionId(),
-      visitorId: getVisitorId(),
-      sourcePage: window.location.pathname
+      visitorId: getVisitorId()
     };
+    if (formData.sourcePage) {
+      payload.sourcePage = formData.sourcePage;
+    }
     const response = await api.post('/enquiries', payload);
     return response.data;
   },
