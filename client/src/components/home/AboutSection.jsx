@@ -36,8 +36,8 @@ export default function AboutSection({
     >
       <div className="hp-container">
         <div className={`hp-about-grid ${images.length === 0 ? 'hp-about-grid--no-media' : ''}`}>
-          {/* Company Narrative Column */}
-          <div className="hp-about-content hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
+          {/* Company Narrative Column — Signature Left Entrance */}
+          <div className="hp-about-content hp-converge-left" style={{ '--reveal-delay': '0ms' }}>
             {about.eyebrow && <span className="hp-eyebrow">{about.eyebrow}</span>}
             {about.heading && (
               <h2 id="about-heading" className="hp-heading hp-reveal-heading">
@@ -74,10 +74,10 @@ export default function AboutSection({
             )}
           </div>
 
-          {/* Editorial Media Composition */}
+          {/* Editorial Media Composition — Signature Right Entrance */}
           {images.length > 0 && (
             <div
-              className={`hp-about-visuals hp-reveal-media ${
+              className={`hp-about-visuals hp-converge-right ${
                 images.length === 1 ? 'hp-about-visuals--single' : ''
               }`}
               style={{ '--reveal-delay': '120ms' }}

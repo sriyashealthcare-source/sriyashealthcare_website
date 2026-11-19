@@ -18,19 +18,20 @@ function createDefaultHomepagePayload() {
       enabled: true,
       companyName: 'SRIYAS HEALTHCARE',
       companySubtitle: 'PVT LTD',
-      tagline: 'Empowering Healthcare with Care and Innovation.',
+      tagline: 'Advancing Surgical Care Through Trusted Medical Technologies',
       supportingIntro:
-        'An authorized healthcare distributor headquartered in Chennai, supporting hospitals, surgeons, and clinical teams with trusted surgical and medical technologies.',
+        'An authorized healthcare distribution partner headquartered in Chennai, supplying hospitals, surgeons, and clinical teams across India with specialized surgical devices, wound closure technologies, and institutional healthcare solutions.',
       valuesText: 'CARE · TRUST · INNOVATION',
-      ctaText: 'Explore Sriyas',
+      ctaText: 'Explore Our Portfolio',
       ctaLink: '#about-sriyas',
-      secondaryCtaText: 'Explore Products',
-      secondaryCtaLink: '/products',
+      secondaryCtaText: 'Institutional Enquiry',
+      secondaryCtaLink: '/contact',
       showTagline: true,
       showValues: true,
       showSecondaryCta: true,
       logo: {
-        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048213/sriyas-healthcare/general/sriyas-emblem.png', publicId: 'sriyas-healthcare/general/sriyas-emblem',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048213/sriyas-healthcare/general/sriyas-emblem.png',
+        publicId: 'sriyas-healthcare/general/sriyas-emblem',
         mobileUrl: '',
         mobilePublicId: '',
         alt: 'Sriyas Healthcare Pvt Ltd Emblem',
@@ -38,56 +39,69 @@ function createDefaultHomepagePayload() {
         aspectRatio: 'auto'
       },
       backgroundImage: {
-        url: '',
-        publicId: '',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106414/sriyas-healthcare/general/file_dmyw9r.jpg',
+        publicId: 'sriyas-healthcare/general/file_dmyw9r',
         mobileUrl: '',
         mobilePublicId: '',
-        alt: 'Sriyas Healthcare architectural background',
+        alt: 'Sriyas Healthcare leadership and global partner delegation',
         focalPoint: 'center center',
-        aspectRatio: 'auto'
+        aspectRatio: '16/9'
       }
     },
     about: {
       enabled: true,
       eyebrow: 'About Sriyas Healthcare',
-      heading: 'Empowering Healthcare Through Care & Partnership',
+      heading: 'Connecting Clinical Excellence with Verified Medical Innovations',
       introduction:
-        'Sriyas Healthcare Private Limited is an authorized surgical and medical device distribution company based in Chennai, Tamil Nadu, dedicated to connecting healthcare institutions and clinicians across India with dependable medical solutions.',
+        'Sriyas Healthcare Private Limited is an authorized healthcare and surgical distribution enterprise based in Chennai, Tamil Nadu. We specialize in the institutional supply of specialized surgical devices, biosurgical materials, and sterile wound management technologies across leading hospitals, operating rooms, and specialty healthcare institutions.',
       supportingText:
-        'We partner closely with globally respected healthcare manufacturers to coordinate supply across operating rooms, surgical specialties, and acute-care departments.',
+        'We collaborate directly with internationally respected medical manufacturers—including Peters Surgical, Advanced Medical Solutions (LiquiBand), Cutimed Sorbact, Genta-Coll, and W. L. Gore & Associates—ensuring genuine manufacturer provenance, complete batch traceability, and cold-chain compliance.',
       hospitalCommitment:
-        'Our focus rests on responsive institutional service, transparent communication, and dependable coordination so hospital procurement teams and clinicians can focus on patient care.',
+        'Our dedicated team provides on-ground hospital coordination, clinical product assistance, and responsive delivery so surgical faculties and procurement departments can focus entirely on patient care.',
       vision:
-        'To serve as a trusted partner for hospitals and healthcare providers by making advanced surgical and clinical care technologies consistently accessible.',
+        'To be India\'s most trusted surgical distribution partner, making advanced clinical innovations consistently accessible to surgical teams and healthcare institutions.',
       mission:
-        'To represent respected healthcare manufacturers with integrity, deliver attentive service to medical professionals, and uphold Care, Trust, and Innovation in every interaction.',
+        'To represent premier healthcare manufacturers with uncompromising integrity, maintain flawless supply-chain reliability, and uphold Care, Trust, and Innovation in every institutional engagement.',
       layoutPreset: 'split-collage',
       images: [
         {
-          id: 'about-office-facade',
+          id: 'about-storefront-facility',
           url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048221/sriyas-healthcare/contact/storefront-location.jpg',
-          publicId: '',
+          publicId: 'sriyas-healthcare/contact/storefront-location',
           mobileUrl: '',
           mobilePublicId: '',
-          alt: 'Sriyas Healthcare Chennai facility storefront',
-          caption: 'Sriyas Healthcare Pvt. Ltd. — Chennai Operations',
+          alt: 'Sriyas Healthcare Chennai operational headquarters storefront',
+          caption: 'Sriyas Healthcare Pvt. Ltd. — Chennai Headquarters & Distribution Center',
           focalPoint: 'center center',
           aspectRatio: '4/3',
           size: 'primary',
           displayOrder: 1
         },
         {
-          id: 'about-office-interior-ph',
-          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048224/sriyas-healthcare/homepage/gallery/office-reception.jpg',
-          publicId: '',
+          id: 'about-surgical-liaison',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
+          publicId: 'sriyas-healthcare/general/file_cwsk2o',
           mobileUrl: '',
           mobilePublicId: '',
-          alt: 'Corporate healthcare reception concept placeholder',
-          caption: 'Workplace Concept (Placeholder — Replace in Admin)',
+          alt: 'Clinical coordination and surgical device delivery outside operating theatre',
+          caption: 'Operating Room Clinical Liaison & Surgical Device Support',
           focalPoint: 'center center',
-          aspectRatio: '16/9',
+          aspectRatio: '3/4',
           size: 'secondary',
           displayOrder: 2
+        },
+        {
+          id: 'about-hospital-corridor',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107356/sriyas-healthcare/general/file_vncy1o.jpg',
+          publicId: 'sriyas-healthcare/general/file_vncy1o',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Hospital sterile surgical scrub suite coordination',
+          caption: 'Hospital Clinical Presence & Surgical Support',
+          focalPoint: 'center center',
+          aspectRatio: '3/4',
+          size: 'accent',
+          displayOrder: 3
         }
       ]
     },
@@ -101,55 +115,85 @@ function createDefaultHomepagePayload() {
     },
     workplace: {
       enabled: true,
-      eyebrow: 'Our Company & Workplace',
-      heading: 'Where Clinical Coordination Takes Shape',
+      eyebrow: 'Our Company in Action',
+      heading: 'Where Clinical Coordination Meets Professional Partnership',
       subtitle:
-        'Take a look inside our corporate environment, workspace, and day-to-day operations supporting hospital partners. (Temporary placeholders shown until updated in Admin.)',
+        'A genuine look inside our operational engagements—from national surgical symposiums and live faculty demonstrations to corporate manufacturer alliances.',
       layoutStyle: 'editorial-collage',
       images: [
         {
-          id: 'wp-reception',
-          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048224/sriyas-healthcare/homepage/gallery/office-reception.jpg',
-          publicId: '',
+          id: 'wp-global-delegation',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106414/sriyas-healthcare/general/file_dmyw9r.jpg',
+          publicId: 'sriyas-healthcare/general/file_dmyw9r',
           mobileUrl: '',
           mobilePublicId: '',
-          alt: 'Modern corporate reception placeholder',
-          title: 'Corporate Reception & Welcome Lounge',
-          caption: 'Office & Reception Environment (Placeholder — Editable in Admin)',
-          category: 'Office',
+          alt: 'Sriyas Healthcare leadership and global manufacturer partners delegation',
+          title: 'Global Manufacturer Alliances & Corporate Delegation',
+          caption: 'Sriyas Healthcare leadership and team alongside international medical technology partners and clinical delegates.',
+          category: 'Partnerships',
           focalPoint: 'center center',
           aspectRatio: '16/9',
           displayOrder: 1,
           isActive: true
         },
         {
-          id: 'wp-collab',
-          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048228/sriyas-healthcare/homepage/gallery/workplace-workspace.jpg',
-          publicId: '',
+          id: 'wp-live-surgery-cme',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107290/sriyas-healthcare/general/file_lbhsyb.jpg',
+          publicId: 'sriyas-healthcare/general/file_lbhsyb',
           mobileUrl: '',
           mobilePublicId: '',
-          alt: 'Healthcare coordination meeting space placeholder',
-          title: 'Team Coordination & Partner Discussions',
-          caption: 'Collaborative Workspace (Placeholder — Editable in Admin)',
-          category: 'Workplace',
+          alt: 'Live surgical demonstration at FALS Hernia Chennai',
+          title: 'Live Surgical Demonstrations & Clinical Workshops',
+          caption: 'Supporting faculty demonstrations at prestigious clinical forums including FALS Hernia Chennai, MGM Healthcare, and IAGES.',
+          category: 'Surgical Education',
           focalPoint: 'center center',
           aspectRatio: '16/9',
           displayOrder: 2,
           isActive: true
         },
         {
-          id: 'wp-ops',
-          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048231/sriyas-healthcare/homepage/gallery/healthcare-operations.jpg',
-          publicId: '',
+          id: 'wp-medical-expo-booth',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107307/sriyas-healthcare/general/file_a7kn4f.jpg',
+          publicId: 'sriyas-healthcare/general/file_a7kn4f',
           mobileUrl: '',
           mobilePublicId: '',
-          alt: 'Medical distribution operations placeholder',
-          title: 'Supply Coordination & Logistics Focus',
-          caption: 'Business & Supply Operations (Placeholder — Editable in Admin)',
-          category: 'Business Activity',
+          alt: 'Sriyas Healthcare executive team at healthcare industry exhibition',
+          title: 'National Healthcare Expos & Manufacturer Alliances',
+          caption: 'Sriyas Healthcare executive team representing partner portfolios (Advanced Medical Solutions, Karl Storz Endoskope) at national medical congresses.',
+          category: 'Industry Expos',
           focalPoint: 'center center',
-          aspectRatio: '4/3',
+          aspectRatio: '16/9',
           displayOrder: 3,
+          isActive: true
+        },
+        {
+          id: 'wp-hernia-symposium',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107405/sriyas-healthcare/general/file_i8s4ch.jpg',
+          publicId: 'sriyas-healthcare/general/file_i8s4ch',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Surgeon CME presentation on IPOM mesh solutions',
+          title: 'Surgeon CME & Hernia Solutions Symposium',
+          caption: 'Conducting procedure perspectives and clinical CME sessions on IPOM mesh solutions and tissue reinforcement technologies.',
+          category: 'Clinical CME',
+          focalPoint: 'center center',
+          aspectRatio: '16/9',
+          displayOrder: 4,
+          isActive: true
+        },
+        {
+          id: 'wp-hospital-presentation',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107100/sriyas-healthcare/general/file_xpe7i6.jpg',
+          publicId: 'sriyas-healthcare/general/file_xpe7i6',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Clinical training presentation at KMCH Department of General Surgery',
+          title: 'Hospital Clinical Presentations & Surgeon Engagement',
+          caption: 'Presenting surgical skin adhesives and wound closure solutions to surgical residents and faculty at leading hospitals including KMCH Department of General Surgery.',
+          category: 'Hospital Training',
+          focalPoint: 'center center',
+          aspectRatio: '16/9',
+          displayOrder: 5,
           isActive: true
         }
       ]
@@ -157,45 +201,45 @@ function createDefaultHomepagePayload() {
     leadership: {
       enabled: true,
       eyebrow: 'Leadership & Governance',
-      heading: 'Founders & Directors',
+      heading: 'Principled Leadership Committed to Healthcare Integrity',
       subtitle:
-        'Guiding Sriyas Healthcare with principled governance, long-term partner relationships, and commitment to clinical communities. (Update real names, portraits, and bios in Admin.)',
+        'Our directors bring deep operational experience in healthcare distribution, institutional procurement, and long-standing clinician relationships.',
       items: [
         {
-          id: 'leader-founder-ph',
-          name: 'Founder & Managing Director (Profile Pending)',
+          id: 'leader-founder-md',
+          name: 'M. Ravikumar',
           designation: 'Founder & Managing Director',
-          bio: 'Profile details and official executive biography can be added directly from the Admin Homepage Editor.',
+          bio: 'Guiding Sriyas Healthcare with a dedicated commitment to hospital supply excellence, institutional transparency, and trusted partnerships with global surgical pioneers.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048232/sriyas-healthcare/homepage/leadership/portrait-leadership-placeholder.svg',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795110797/sriyas-healthcare/general/file_rqtbl6.jpg',
+            publicId: 'sriyas-healthcare/general/file_rqtbl6',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Founder and Managing Director placeholder portrait',
+            alt: 'M. Ravikumar, Founder & Managing Director of Sriyas Healthcare Pvt. Ltd.',
             focalPoint: 'center top',
-            aspectRatio: '1/1'
+            aspectRatio: '3/4'
           },
           linkedinUrl: '',
-          email: '',
+          email: 'sriyashealthcare@gmail.com',
           displayOrder: 1,
           isActive: true
         },
         {
-          id: 'leader-director-ph',
-          name: 'Director — Operations & Supply (Profile Pending)',
-          designation: 'Director',
-          bio: 'Leadership profile biography and portrait photograph can be uploaded and published via Admin Website Management.',
+          id: 'leader-operations-directorate',
+          name: 'Corporate & Clinical Operations',
+          designation: 'Directorate of Institutional Partnerships',
+          bio: 'Directing strategic brand relationships, hospital supply contracts, regulatory standards, and cold-chain logistics across institutional healthcare networks.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048232/sriyas-healthcare/homepage/leadership/portrait-leadership-placeholder.svg',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107209/sriyas-healthcare/general/file_tzsxap.jpg',
+            publicId: 'sriyas-healthcare/general/file_tzsxap',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Company Director placeholder portrait',
+            alt: 'Sriyas Healthcare Directorate of Institutional Partnerships',
             focalPoint: 'center top',
-            aspectRatio: '1/1'
+            aspectRatio: '3/4'
           },
           linkedinUrl: '',
-          email: '',
+          email: 'sriyashealthcare@gmail.com',
           displayOrder: 2,
           isActive: true
         }
@@ -203,65 +247,65 @@ function createDefaultHomepagePayload() {
     },
     team: {
       enabled: true,
-      eyebrow: 'Our People',
-      heading: 'Hospital Support & Operations Team',
+      eyebrow: 'Our People & Clinical Support',
+      heading: 'Hospital-Dedicated Specialists Supporting Every Procedure',
       subtitle:
-        'Dedicated specialists collaborating across hospital liaison, logistics coordination, and clinician assistance. (Placeholder entries ready for customization.)',
+        'Our multidisciplinary team works seamlessly with hospital procurement managers, nursing coordinators, and surgical departments across India.',
       items: [
         {
-          id: 'team-coord-ph',
-          name: 'Clinical Product Coordination (Placeholder)',
-          designation: 'Clinical Liaison Specialist',
-          bio: 'Update this profile with your team member name, portrait, and clinical coordination summary.',
+          id: 'team-ot-support',
+          name: 'OT Clinical Liaison & Surgical Product Support',
+          designation: 'Operating Room Coordination Specialist',
+          bio: 'Facilitating on-site surgical product briefing, emergency theater stock availability, and procedural device readiness.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106845/sriyas-healthcare/general/file_vr73ht.jpg',
+            publicId: 'sriyas-healthcare/general/file_vr73ht',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Team member placeholder portrait',
+            alt: 'Sriyas Healthcare Operating Room Coordination Specialist',
             focalPoint: 'center top',
-            aspectRatio: '1/1'
+            aspectRatio: '3/4'
           },
           linkedinUrl: '',
-          email: '',
+          email: 'sriyashealthcare@gmail.com',
           displayOrder: 1,
           isActive: true
         },
         {
-          id: 'team-hospital-ph',
-          name: 'Hospital & Institutional Support (Placeholder)',
-          designation: 'Customer & Account Relations',
-          bio: 'Replace with actual staff profile photo and biography from the Homepage Editor Team section.',
+          id: 'team-biomed-eng',
+          name: 'Biomedical Engineering & Technical Support',
+          designation: 'Technical Specialist & Device Architecture',
+          bio: 'Overseeing technical evaluations, clinical product specifications, institutional compliance documentation, and surgical equipment integration.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106555/sriyas-healthcare/general/file_miszky.jpg',
+            publicId: 'sriyas-healthcare/general/file_miszky',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Team member placeholder portrait',
+            alt: 'Sriyas Healthcare Biomedical Engineering & Technical Support',
             focalPoint: 'center top',
-            aspectRatio: '1/1'
+            aspectRatio: '3/4'
           },
           linkedinUrl: '',
-          email: '',
+          email: 'sriyashealthcare@gmail.com',
           displayOrder: 2,
           isActive: true
         },
         {
-          id: 'team-logistics-ph',
-          name: 'Supply & Quality Logistics (Placeholder)',
-          designation: 'Distribution & Compliance Support',
-          bio: 'Editable team profile slot covering operational coordination and institutional supply fulfillment.',
+          id: 'team-surgical-systems',
+          name: 'Surgical Systems & Equipment Coordination',
+          designation: 'Surgical Equipment Specialist',
+          bio: 'Supporting clinical departments with procedural devices, radiofrequency and electrosurgical systems, and specialized surgical consumable distribution.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106596/sriyas-healthcare/general/file_lyxuzp.jpg',
+            publicId: 'sriyas-healthcare/general/file_lyxuzp',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Team member placeholder portrait',
+            alt: 'Sriyas Healthcare Surgical Systems & Equipment Specialist',
             focalPoint: 'center top',
-            aspectRatio: '1/1'
+            aspectRatio: '3/4'
           },
           linkedinUrl: '',
-          email: '',
+          email: 'sriyashealthcare@gmail.com',
           displayOrder: 3,
           isActive: true
         }
@@ -270,22 +314,22 @@ function createDefaultHomepagePayload() {
     whatWeDo: {
       enabled: true,
       eyebrow: 'What We Do',
-      heading: 'Focused Capabilities in Medical & Surgical Supply',
+      heading: 'Focused Capabilities in Surgical & Medical Supply',
       subtitle:
-        'We operate as a dedicated bridge between respected medical device manufacturers and institutional healthcare teams.',
+        'Serving as an authorized, dependable bridge between global healthcare manufacturers and hospital operating rooms across India.',
       items: [
         {
           id: 'wwd-distribution',
           title: 'Specialized Surgical & Medical Distribution',
           description:
-            'Streamlined institutional sourcing and reliable fulfillment for operating theatres, surgical wards, and specialized care centers.',
+            'Providing streamlined institutional supply and dependable fulfillment for operating theatres, surgical wards, and trauma centers across healthcare networks.',
           icon: '🏥',
           image: {
-            url: '',
-            publicId: '',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
+            publicId: 'sriyas-healthcare/general/file_cwsk2o',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Specialized surgical distribution',
+            alt: 'Specialized surgical distribution and operating room supply',
             focalPoint: 'center center',
             aspectRatio: '16/9'
           },
@@ -294,41 +338,73 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'wwd-partnerships',
-          title: 'Healthcare Manufacturer Partnerships',
+          title: 'Global Manufacturer Representation',
           description:
-            'Authorized collaboration with specialized global manufacturers to represent authentic product portfolios with integrity.',
+            'Direct authorized distributor partnerships with leading international brands ensuring authentic provenance, warranty backing, and official clinical documentation.',
           icon: '🤝',
-          image: { url: '', publicId: '', mobileUrl: '', mobilePublicId: '', alt: '', focalPoint: 'center center', aspectRatio: '16/9' },
+          image: {
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107209/sriyas-healthcare/general/file_tzsxap.jpg',
+            publicId: 'sriyas-healthcare/general/file_tzsxap',
+            mobileUrl: '',
+            mobilePublicId: '',
+            alt: 'Authorized manufacturer representation and healthcare alliances',
+            focalPoint: 'center center',
+            aspectRatio: '16/9'
+          },
           displayOrder: 2,
           isActive: true
         },
         {
-          id: 'wwd-clinical-supply',
-          title: 'Surgical & Clinical Product Supply',
+          id: 'wwd-surgical-closure',
+          title: 'Surgical Closure & Advanced Wound Care',
           description:
-            'Consistent institutional availability across surgical closure technologies, wound management dressings, and clinical consumables.',
+            'Comprehensive supply of barbed sutures, non-absorbable/absorbable sutures, topical microbial sealants, and antimicrobial dressings for surgical specialties.',
           icon: '🩺',
-          image: { url: '', publicId: '', mobileUrl: '', mobilePublicId: '', alt: '', focalPoint: 'center center', aspectRatio: '16/9' },
+          image: {
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107290/sriyas-healthcare/general/file_lbhsyb.jpg',
+            publicId: 'sriyas-healthcare/general/file_lbhsyb',
+            mobileUrl: '',
+            mobilePublicId: '',
+            alt: 'Surgical closure technologies and advanced wound care',
+            focalPoint: 'center center',
+            aspectRatio: '16/9'
+          },
           displayOrder: 3,
           isActive: true
         },
         {
-          id: 'wwd-clinician-support',
-          title: 'Hospital & Clinician Support',
+          id: 'wwd-hernia-biomaterials',
+          title: 'Hernia Repair & Biomaterials Solutions',
           description:
-            'Attentive responsiveness to hospital procurement departments, operating room nursing coordinators, and clinical specialists.',
-          icon: '📋',
-          image: { url: '', publicId: '', mobileUrl: '', mobilePublicId: '', alt: '', focalPoint: 'center center', aspectRatio: '16/9' },
+            'Supplying innovative biosynthetic meshes, IPOM hernia solutions, and laparoscopic fixation devices for general and gastrointestinal surgeons.',
+          icon: '🔬',
+          image: {
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107405/sriyas-healthcare/general/file_i8s4ch.jpg',
+            publicId: 'sriyas-healthcare/general/file_i8s4ch',
+            mobileUrl: '',
+            mobilePublicId: '',
+            alt: 'Hernia repair and biomaterials solutions',
+            focalPoint: 'center center',
+            aspectRatio: '16/9'
+          },
           displayOrder: 4,
           isActive: true
         },
         {
-          id: 'wwd-coordination',
-          title: 'Product Coordination & Customer Assistance',
+          id: 'wwd-hospital-dispatch',
+          title: 'Hospital Procurement & Emergency Dispatch',
           description:
-            'Clear inquiry turnaround, specification coordination, and helpful institutional support from request to delivery.',
-          icon: '✦',
-          image: { url: '', publicId: '', mobileUrl: '', mobilePublicId: '', alt: '', focalPoint: 'center center', aspectRatio: '16/9' },
+            'Dedicated account coordination providing responsive quotation turnaround, batch traceability, and rapid emergency dispatch for acute clinical requirements.',
+          icon: '🚚',
+          image: {
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107100/sriyas-healthcare/general/file_xpe7i6.jpg',
+            publicId: 'sriyas-healthcare/general/file_xpe7i6',
+            mobileUrl: '',
+            mobilePublicId: '',
+            alt: 'Hospital procurement coordination and clinical dispatch',
+            focalPoint: 'center center',
+            aspectRatio: '16/9'
+          },
           displayOrder: 5,
           isActive: true
         }
@@ -336,70 +412,70 @@ function createDefaultHomepagePayload() {
     },
     values: {
       enabled: true,
-      eyebrow: 'Our Values · Why Choose Sriyas',
+      eyebrow: 'Our Values & Commitment',
       heading: 'Why Healthcare Institutions Choose Sriyas',
       subtitle:
-        'Every engagement reflects our founding principles of Care, Trust, and Innovation alongside transparent service.',
+        'Every institutional interaction is rooted in our founding pillars of Care, Trust, and Innovation, supported by disciplined healthcare logistics.',
       featureImage: {
-        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048231/sriyas-healthcare/homepage/gallery/healthcare-operations.jpg',
-        publicId: '',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106936/sriyas-healthcare/general/file_zgmlxn.jpg',
+        publicId: 'sriyas-healthcare/general/file_zgmlxn',
         mobileUrl: '',
         mobilePublicId: '',
-        alt: 'Medical operations coordination placeholder',
+        alt: 'Sriyas Healthcare clinical education and values in practice',
         focalPoint: 'center center',
         aspectRatio: '4/3'
       },
       items: [
         {
           id: 'val-authorized',
-          title: 'Authorized Manufacturer Relationships',
+          title: 'Authorized Direct Sourcing',
           description:
-            'Direct partnerships with established medical and surgical brands ensuring genuine product provenance.',
-          icon: '🤝',
+            'Direct distribution agreements with recognized medical pioneers guarantee 100% genuine products with manufacturer warranties.',
+          icon: '🛡️',
           displayOrder: 1,
           isActive: true
         },
         {
           id: 'val-authenticity',
-          title: 'Quality & Authenticity',
+          title: 'Uncompromised Product Authenticity',
           description:
-            'Strict adherence to authentic, manufacturer-backed medical supplies handled through licensed pharmaceutical distribution practices.',
+            'Strict adherence to pharmaceutical and medical device regulatory standards, maintaining cold-chain integrity and complete lot traceability.',
           icon: '✓',
           displayOrder: 2,
           isActive: true
         },
         {
           id: 'val-care-trust',
-          title: 'Care & Trust',
+          title: 'Care & Trust at the Core',
           description:
-            'Built around respect for patients and clinical teams, honoring commitments with transparency and accountability.',
+            'We respect the clinical significance of every item we supply, honoring commitments with transparency, speed, and ethical diligence.',
           icon: '💛',
           displayOrder: 3,
           isActive: true
         },
         {
           id: 'val-reliable',
-          title: 'Reliable Institutional Service',
+          title: 'Reliable Institutional Logistics',
           description:
-            'Dependable regional supply coordination supporting planned surgeries and ongoing clinical demand.',
+            'Disciplined warehousing and dependable regional distribution supporting scheduled surgical procedures and urgent hospital demand.',
           icon: '🚚',
           displayOrder: 4,
           isActive: true
         },
         {
-          id: 'val-support',
-          title: 'Professional Healthcare Support',
+          id: 'val-knowledge',
+          title: 'Clinical Product Knowledge',
           description:
-            'Helpful assistance on product enquiries, technical documentation, and institutional quotation requests.',
+            'In-depth product familiarity and technical assistance to aid hospital procurement committees and surgical coordinators.',
           icon: '🩺',
           displayOrder: 5,
           isActive: true
         },
         {
-          id: 'val-relationships',
-          title: 'Long-Term Hospital Partnerships',
+          id: 'val-partnerships',
+          title: 'Enduring Healthcare Partnerships',
           description:
-            'Focused on enduring relationships with hospitals, surgical clinics, and healthcare professionals across India.',
+            'Building long-term, mutually supportive relationships with government hospitals, private healthcare groups, and surgical faculties.',
           icon: '🏛️',
           displayOrder: 6,
           isActive: true
@@ -409,12 +485,12 @@ function createDefaultHomepagePayload() {
     callToAction: {
       enabled: true,
       eyebrow: 'Connect With Sriyas Healthcare',
-      heading: 'Partnering for Better Healthcare.',
+      heading: 'Partnering for Higher Standards in Healthcare Delivery',
       supportingText:
-        'Connect with our Chennai team to discuss hospital supply requirements, institutional enquiries, or explore our complete surgical partner portfolio.',
+        'Connect with our Chennai team to discuss hospital supply contracts, request product specifications, or explore our complete authorized surgical portfolio.',
       primaryButtonText: 'Explore Our Products',
       primaryButtonLink: '/products',
-      secondaryButtonText: 'Contact Us',
+      secondaryButtonText: 'Request Institutional Enquiry',
       secondaryButtonLink: '/contact',
       showContactDetails: true,
       contactPhone: '+91 96008 04456',
@@ -423,10 +499,10 @@ function createDefaultHomepagePayload() {
         'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077',
       backgroundImage: {
         url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048243/sriyas-healthcare/banners/cta-backdrop.jpg',
-        publicId: '',
+        publicId: 'sriyas-healthcare/banners/cta-backdrop',
         mobileUrl: '',
         mobilePublicId: '',
-        alt: 'Gold and obsidian architectural backdrop placeholder',
+        alt: 'Gold and obsidian architectural backdrop',
         focalPoint: 'center center',
         aspectRatio: '16/9'
       }
@@ -448,66 +524,71 @@ function deepClone(obj) {
 function upgradeLegacySnapshotIfNeeded(snapshot) {
   const defaults = createDefaultHomepagePayload();
   if (!snapshot || typeof snapshot !== 'object') {
-    return defaults;
+    return deepClone(defaults);
   }
 
   const out = deepClone(snapshot);
-  const needsUpgrade = !out.workplace || !out.leadership || !out.team || !out.values;
 
-  if (needsUpgrade) {
-    // Migrate previous single-brand string 'SRIYAS' + 'HEALTHCARE PVT LTD' cleanly
-    if (out.hero && out.hero.companyName === 'SRIYAS' && out.hero.companySubtitle === 'HEALTHCARE PVT LTD') {
-      out.hero.companyName = defaults.hero.companyName;
-      out.hero.companySubtitle = defaults.hero.companySubtitle;
+  for (const key of CANONICAL_SECTION_ORDER) {
+    if (!out[key] && defaults[key]) {
+      out[key] = deepClone(defaults[key]);
     }
-    if (out.hero && !out.hero.supportingIntro) {
-      out.hero.supportingIntro = defaults.hero.supportingIntro;
+  }
+
+  if (out.hero) {
+    if (!out.hero.companyName) out.hero.companyName = defaults.hero.companyName;
+    if (!out.hero.companySubtitle) out.hero.companySubtitle = defaults.hero.companySubtitle;
+    if (!out.hero.logo?.url) out.hero.logo = defaults.hero.logo;
+  }
+
+  if (out.about) {
+    if (!out.about.heading) out.about.heading = defaults.about.heading;
+    if (!Array.isArray(out.about.images) || out.about.images.length === 0) {
+      out.about.images = defaults.about.images;
     }
-    if (out.hero && !out.hero.backgroundImage) {
-      out.hero.backgroundImage = defaults.hero.backgroundImage;
+  }
+
+  if (out.workplace) {
+    if (!out.workplace.heading) out.workplace.heading = defaults.workplace.heading;
+    if (!Array.isArray(out.workplace.images) || out.workplace.images.length === 0) {
+      out.workplace.images = defaults.workplace.images;
     }
-    if (out.about && !out.about.hospitalCommitment) {
-      out.about.hospitalCommitment = defaults.about.hospitalCommitment;
+  }
+
+  if (out.leadership) {
+    if (!out.leadership.heading) out.leadership.heading = defaults.leadership.heading;
+    if (!Array.isArray(out.leadership.items) || out.leadership.items.length === 0) {
+      out.leadership.items = defaults.leadership.items;
     }
-    if (!out.workplace) {
-      out.workplace = defaults.workplace;
+  }
+
+  if (out.team) {
+    if (!out.team.heading) out.team.heading = defaults.team.heading;
+    if (!Array.isArray(out.team.items) || out.team.items.length === 0) {
+      out.team.items = defaults.team.items;
     }
-    if (!out.leadership) {
-      const legacyFounders = Array.isArray(out.founders?.items) ? out.founders.items : [];
-      out.leadership = legacyFounders.length > 0
-        ? {
-            enabled: out.founders?.enabled !== false,
-            eyebrow: out.founders?.eyebrow || defaults.leadership.eyebrow,
-            heading: out.founders?.heading || defaults.leadership.heading,
-            subtitle: out.founders?.subtitle || defaults.leadership.subtitle,
-            items: legacyFounders
-          }
-        : defaults.leadership;
+  }
+
+  if (out.whatWeDo) {
+    if (!out.whatWeDo.heading) out.whatWeDo.heading = defaults.whatWeDo.heading;
+    if (!Array.isArray(out.whatWeDo.items) || out.whatWeDo.items.length === 0) {
+      out.whatWeDo.items = defaults.whatWeDo.items;
     }
-    if (!out.team) {
-      out.team = defaults.team;
+  }
+
+  if (out.values) {
+    if (!out.values.heading) out.values.heading = defaults.values.heading;
+    if (!Array.isArray(out.values.items) || out.values.items.length === 0) {
+      out.values.items = defaults.values.items;
     }
-    if (!out.values) {
-      out.values = out.whyChooseUs && Array.isArray(out.whyChooseUs.items) && out.whyChooseUs.items.length > 0
-        ? {
-            enabled: out.whyChooseUs.enabled !== false,
-            eyebrow: defaults.values.eyebrow,
-            heading: defaults.values.heading,
-            subtitle: out.whyChooseUs.subtitle || defaults.values.subtitle,
-            featureImage: defaults.values.featureImage,
-            items: defaults.values.items
-          }
-        : defaults.values;
-    }
-    if (out.callToAction && !out.callToAction.backgroundImage) {
-      out.callToAction.heading = defaults.callToAction.heading;
-      out.callToAction.showContactDetails = true;
-      out.callToAction.contactPhone = defaults.callToAction.contactPhone;
-      out.callToAction.contactEmail = defaults.callToAction.contactEmail;
-      out.callToAction.contactAddress = defaults.callToAction.contactAddress;
-      out.callToAction.backgroundImage = defaults.callToAction.backgroundImage;
-    }
-    out.sectionOrder = [...CANONICAL_SECTION_ORDER];
+  }
+
+  if (out.callToAction) {
+    if (!out.callToAction.heading) out.callToAction.heading = defaults.callToAction.heading;
+    out.callToAction.showContactDetails = true;
+    out.callToAction.contactPhone = defaults.callToAction.contactPhone;
+    out.callToAction.contactEmail = defaults.callToAction.contactEmail;
+    out.callToAction.contactAddress = defaults.callToAction.contactAddress;
   }
 
   if (!out.statistics) {
@@ -518,13 +599,6 @@ function upgradeLegacySnapshotIfNeeded(snapshot) {
   }
   if (!Array.isArray(out.sectionOrder)) {
     out.sectionOrder = [...CANONICAL_SECTION_ORDER];
-  } else if (!out.sectionOrder.includes('statistics')) {
-    const aboutIdx = out.sectionOrder.indexOf('about');
-    if (aboutIdx !== -1) {
-      out.sectionOrder.splice(aboutIdx + 1, 0, 'statistics');
-    } else {
-      out.sectionOrder.push('statistics');
-    }
   }
 
   return out;

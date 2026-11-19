@@ -39,7 +39,8 @@ export default function ValuesSection({
             hasFeatureImage ? 'hp-values-layout--with-media' : ''
           }`}
         >
-          <div className="hp-values-intro hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
+          {/* Values Intro & Feature Image — Signature Left Entrance */}
+          <div className="hp-values-intro hp-converge-left" style={{ '--reveal-delay': '0ms' }}>
             {values.eyebrow && <span className="hp-eyebrow">{values.eyebrow}</span>}
             {values.heading && (
               <h2 id="values-heading" className="hp-heading hp-reveal-heading">
@@ -64,7 +65,8 @@ export default function ValuesSection({
             )}
           </div>
 
-          <div className="hp-wcu-grid">
+          {/* Values Grid Cards — Signature Right Entrance */}
+          <div className="hp-wcu-grid hp-converge-right">
             {items.map((item, idx) => (
               <article
                 key={item.id || idx}

@@ -67,12 +67,20 @@ export default function ProfileShowcaseSection({
                 : ''
           }`}
         >
-          {items.map((person, idx) => (
-            <article
-              key={person.id || idx}
-              className="hp-founder-card hp-reveal-child"
-              style={{ '--reveal-delay': `${80 + idx * 70}ms` }}
-            >
+          {items.map((person, idx) => {
+            const isLeadershipPair = variant === 'leadership' && items.length === 2;
+            const motionClass = isLeadershipPair
+              ? idx === 0
+                ? 'hp-converge-left'
+                : 'hp-converge-right'
+              : 'hp-reveal-child';
+
+            return (
+              <article
+                key={person.id || idx}
+                className={`hp-founder-card ${motionClass}`}
+                style={{ '--reveal-delay': `${80 + idx * 80}ms` }}
+              >
               <div className="hp-founder-portrait-wrap">
                 <ResponsiveMediaImage
                   media={person.photo}
@@ -120,7 +128,8 @@ export default function ProfileShowcaseSection({
                 )}
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

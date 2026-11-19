@@ -66,7 +66,7 @@ export function useRevealOnScroll({
     );
 
     const children = section.querySelectorAll(
-      '.hp-reveal-child, .hp-reveal-heading, .hp-reveal-text, .hp-reveal-media, .hp-stat-card, .hp-founder-card, .hp-wwd-card, .hp-wcu-card, .hp-workplace-card'
+      '.hp-reveal-child, .hp-reveal-heading, .hp-reveal-text, .hp-reveal-media, .hp-converge-left, .hp-converge-right, .hp-reveal-stagger, .hp-stat-card, .hp-founder-card, .hp-wwd-card, .hp-wcu-card, .hp-workplace-card'
     );
     children.forEach((child) => childObserver.observe(child));
 

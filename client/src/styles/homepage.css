@@ -47,45 +47,75 @@
   height: 100%;
 }
 
-/* ── Scroll Reveal Choreography ── */
+/* ── Scroll Reveal Choreography & Signature Convergence ── */
 .hp-reveal-child,
 .hp-reveal-heading,
 .hp-reveal-text,
-.hp-reveal-media {
+.hp-reveal-media,
+.hp-converge-left,
+.hp-converge-right,
+.hp-reveal-scale {
   opacity: 0;
   will-change: opacity, transform;
+}
+
+/* ── Animation 1: Signature Opposite-Direction Convergence ── */
+.hp-converge-left {
+  transform: translate3d(-65px, 0, 0);
+  transition:
+    opacity 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.hp-converge-right {
+  transform: translate3d(65px, 0, 0);
+  transition:
+    opacity 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+/* ── Animation 2 & 5: Scale and Upward Editorial Reveals ── */
+.hp-reveal-scale {
+  transform: translate3d(0, 32px, 0) scale(0.96);
+  transition:
+    opacity 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.88s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 
 .hp-reveal-heading {
   transform: translate3d(0, 32px, 0);
   transition:
-    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-    transform 0.72s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+    opacity 0.76s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.76s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 
 .hp-reveal-text {
   transform: translate3d(0, 26px, 0);
   transition:
-    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--reveal-delay, 0ms) + 70ms),
-    transform 0.72s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--reveal-delay, 0ms) + 70ms);
+    opacity 0.76s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--reveal-delay, 0ms) + 75ms),
+    transform 0.76s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--reveal-delay, 0ms) + 75ms);
 }
 
+/* ── Animation 3: Refined Image Mask Wipe & Scale Reveal ── */
 .hp-reveal-media {
-  transform: translate3d(0, 36px, 0) scale(0.96);
-  clip-path: inset(0% 0% 5% 0% round 16px);
+  transform: translate3d(0, 34px, 0) scale(0.97);
+  clip-path: inset(0% 0% 7% 0% round 16px);
   transition:
-    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms),
-    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms),
-    clip-path 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms);
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms),
+    clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 100ms);
 }
 
 .hp-reveal-child {
   transform: translate3d(0, 32px, 0);
   transition:
-    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+    opacity 0.78s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.78s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 
+.hp-converge-left.is-revealed,
+.hp-converge-right.is-revealed,
+.hp-reveal-scale.is-revealed,
 .hp-reveal-child.is-revealed,
 .hp-reveal-heading.is-revealed,
 .hp-reveal-text.is-revealed,
@@ -97,14 +127,20 @@
 .hp-values-intro.is-revealed .hp-reveal-text,
 .hp-cta-card.is-revealed .hp-reveal-heading,
 .hp-cta-card.is-revealed .hp-reveal-text,
+.hp-root--preview .hp-converge-left,
+.hp-root--preview .hp-converge-right,
+.hp-root--preview .hp-reveal-scale,
 .hp-root--preview .hp-reveal-child,
 .hp-root--preview .hp-reveal-heading,
 .hp-root--preview .hp-reveal-text,
+.hp-scroll-reveal-off .hp-converge-left,
+.hp-scroll-reveal-off .hp-converge-right,
+.hp-scroll-reveal-off .hp-reveal-scale,
 .hp-scroll-reveal-off .hp-reveal-child,
 .hp-scroll-reveal-off .hp-reveal-heading,
 .hp-scroll-reveal-off .hp-reveal-text {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .hp-reveal-media.is-revealed,
@@ -432,6 +468,29 @@
   will-change: transform, opacity;
 }
 
+/* ── Hero Coordinated Entrance Keyframes ── */
+@keyframes hpHeroSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-54px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hpHeroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .hp-hero-brand-name {
   margin: 0;
   font-family: var(--font-heading);
@@ -445,6 +504,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: hpHeroSlideLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
 }
 
 .hp-hero-brand-sub {
@@ -460,6 +520,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-transform: uppercase;
+  animation: hpHeroSlideLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 .hp-hero-morph-traveler {
@@ -500,6 +561,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   max-width: clamp(680px, 58vw, 880px);
+  animation: hpHeroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
 }
 
 .hp-hero-intro {
@@ -509,6 +571,7 @@
   line-height: 1.72;
   color: var(--text-mute);
   max-width: clamp(620px, 54vw, 820px);
+  animation: hpHeroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
 }
 
 .hp-hero-values {
@@ -522,6 +585,7 @@
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--gold-deep);
+  animation: hpHeroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
 }
 
 .hp-hero-values-rule {
@@ -536,6 +600,7 @@
   justify-content: center;
   gap: clamp(14px, 1.6vw, 22px);
   flex-wrap: wrap;
+  animation: hpHeroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
 }
 
 .hp-hero-actions .hp-btn-gold {
@@ -1582,6 +1647,15 @@
 }
 
 @media (max-width: 768px) {
+  /* Prevent horizontal overshoot on mobile while preserving signature convergence */
+  .hp-converge-left {
+    transform: translate3d(-18px, 0, 0);
+  }
+
+  .hp-converge-right {
+    transform: translate3d(18px, 0, 0);
+  }
+
   .hp-hero-section {
     padding: 86px 20px 64px;
   }
@@ -1962,10 +2036,20 @@
   .hp-reveal-child,
   .hp-reveal-heading,
   .hp-reveal-text,
-  .hp-reveal-media {
+  .hp-reveal-media,
+  .hp-converge-left,
+  .hp-converge-right,
+  .hp-reveal-scale,
+  .hp-hero-brand-name,
+  .hp-hero-brand-sub,
+  .hp-hero-tagline,
+  .hp-hero-intro,
+  .hp-hero-values,
+  .hp-hero-actions {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
+    animation: none !important;
     transition: none !important;
   }
 

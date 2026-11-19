@@ -61,19 +61,23 @@ export default function WorkplaceGallerySection({
           ref={parallaxGridRef}
           className={`hp-workplace-grid hp-workplace-grid--${layoutStyle}`}
         >
-          {images.map((item, idx) => (
-            <figure
-              key={item.id || idx}
-              className={`hp-workplace-card hp-reveal-child ${
-                layoutStyle === 'editorial-collage' && idx === 0 && images.length >= 3
-                  ? 'hp-workplace-card--featured'
-                  : ''
-              }`}
-              style={{
-                '--reveal-delay': `${80 + idx * 80}ms`,
-                '--float-delay': `${idx * 0.6}s`
-              }}
-            >
+          {images.map((item, idx) => {
+            const isFeatured = layoutStyle === 'editorial-collage' && idx === 0 && images.length >= 3;
+            const motionClass = isFeatured
+              ? 'hp-workplace-card--featured hp-reveal-scale'
+              : idx % 2 === 1
+                ? 'hp-converge-right'
+                : 'hp-converge-left';
+
+            return (
+              <figure
+                key={item.id || idx}
+                className={`hp-workplace-card ${motionClass}`}
+                style={{
+                  '--reveal-delay': `${80 + idx * 80}ms`,
+                  '--float-delay': `${idx * 0.6}s`
+                }}
+              >
               <div className="hp-workplace-media">
                 <ResponsiveMediaImage
                   media={item}
@@ -98,7 +102,8 @@ export default function WorkplaceGallerySection({
                 </figcaption>
               )}
             </figure>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -47,11 +47,13 @@ export default function WhatWeDoSection({
         <div className="hp-wwd-grid">
           {items.map((item, idx) => {
             const hasMedia = Boolean(item.image?.url || item.image?.mobileUrl);
+            const motionClass = idx % 2 === 0 ? 'hp-converge-left' : 'hp-converge-right';
+
             return (
               <article
                 key={item.id || idx}
-                className="hp-wwd-card hp-reveal-child"
-                style={{ '--reveal-delay': `${70 + idx * 65}ms` }}
+                className={`hp-wwd-card ${motionClass}`}
+                style={{ '--reveal-delay': `${70 + idx * 75}ms` }}
               >
                 {hasMedia ? (
                   <div className="hp-wwd-media">
