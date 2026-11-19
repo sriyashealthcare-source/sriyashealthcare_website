@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useEnquiry } from '../../context/EnquiryContext';
 import { enquiryService } from '../../services/enquiryService';
 import { resolveAssetUrl } from '../../utils/session';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 export default function EnquiryDrawer() {
   const {
@@ -207,7 +208,7 @@ export default function EnquiryDrawer() {
     const primaryImg = Array.isArray(drawerProduct.images)
       ? drawerProduct.images.find(img => img.isPrimary) || drawerProduct.images[0]
       : null;
-    const url = primaryImg?.url || drawerProduct.cardBg || '/assets/placeholders/peters-suture.svg';
+    const url = primaryImg?.url || drawerProduct.cardBg || SRIYAS_EMBLEM_URL;
     return resolveAssetUrl(url);
   }, [drawerProduct]);
 
@@ -316,7 +317,7 @@ export default function EnquiryDrawer() {
                     className="enquiry-context-thumb"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/assets/placeholders/peters-suture.svg';
+                      e.target.src = SRIYAS_EMBLEM_URL;
                     }}
                   />
                   <div className="enquiry-context-info">

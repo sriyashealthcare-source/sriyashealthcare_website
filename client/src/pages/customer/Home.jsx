@@ -4,6 +4,7 @@ import { homepageService } from '../../services/homepageService';
 import HomepageContentRenderer from '../../components/home/HomepageContentRenderer';
 import SeoHead from '../../components/common/SeoHead';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
+import { COMPANY_CONTACT } from '../../constants/contact';
 import '../../styles/homepage.css';
 
 const BASELINE_HERO = {
@@ -62,8 +63,8 @@ export default function Home() {
               secondaryButtonText: 'Contact Us',
               secondaryButtonLink: '/contact',
               showContactDetails: true,
-              contactPhone: '+91 96008 04456 · +91 93677 72801',
-              contactEmail: 'Sriyashealthcare@gmail.com',
+              contactPhone: COMPANY_CONTACT.displayPhone,
+              contactEmail: COMPANY_CONTACT.email,
               contactAddress:
                 'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077'
             },
@@ -130,20 +131,13 @@ export default function Home() {
       contactPoint: [
         {
           '@type': 'ContactPoint',
-          telephone: '+91-9600804456',
+          telephone: COMPANY_CONTACT.phone,
           contactType: 'sales & customer support',
-          areaServed: 'IN',
-          availableLanguage: ['en', 'ta']
-        },
-        {
-          '@type': 'ContactPoint',
-          telephone: '+91-9367772801',
-          contactType: 'hospital procurement enquiry',
           areaServed: 'IN',
           availableLanguage: ['en', 'ta']
         }
       ],
-      email: 'Sriyashealthcare@gmail.com',
+      email: COMPANY_CONTACT.email,
       taxID: '33ABQCS4744P1ZJ'
     },
     {

@@ -3,6 +3,7 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { resolveAssetUrl } from '../../utils/session';
+import { COMPANY_CONTACT } from '../../constants/contact';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -258,8 +259,18 @@ export default function Navbar() {
           </ul>
 
           <div className="mobile-nav-contact-quick">
-            <a href="tel:+919600804456">📞 +91 96008 04456</a>
-            <a href="mailto:Sriyashealthcare@gmail.com">✉ Sriyashealthcare@gmail.com</a>
+            <a
+              href={`tel:${COMPANY_CONTACT.phone}`}
+              aria-label={`Call Sriyas Healthcare at ${COMPANY_CONTACT.displayPhone}`}
+            >
+              📞 {COMPANY_CONTACT.displayPhone}
+            </a>
+            <a
+              href={`mailto:${COMPANY_CONTACT.email}`}
+              aria-label={`Email Sriyas Healthcare at ${COMPANY_CONTACT.email}`}
+            >
+              ✉ {COMPANY_CONTACT.email}
+            </a>
           </div>
         </div>
       </div>

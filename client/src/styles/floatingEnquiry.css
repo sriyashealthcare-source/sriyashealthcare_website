@@ -5,6 +5,7 @@
 /* --------------------------------------------------------------------------
    1. Floating Action Button (FAB) & Tooltip
    -------------------------------------------------------------------------- */
+.floating-contact-actions,
 .floating-enquiry-container {
   position: fixed;
   bottom: calc(24px + env(safe-area-inset-bottom, 0px));
@@ -13,45 +14,145 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  pointer-events: none; /* Allows click-through outside button/tooltip */
+  pointer-events: none; /* Allows click-through outside buttons */
 }
 
+/* --------------------------------------------------------------------------
+   1A. Pill-shaped Product Enquiry Button
+   -------------------------------------------------------------------------- */
+.floating-enquiry-pill,
+.floating-enquiry-tooltip {
+  pointer-events: auto;
+  position: relative;
+  height: 48px;
+  padding: 0 18px 0 14px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #1B2A4A 0%, #0F172A 100%);
+  color: #FBF9F4;
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.32), 0 2px 8px rgba(0, 0, 0, 0.16);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--font-body, 'Montserrat', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease,
+              background 0.22s ease;
+  outline: none;
+}
+
+.floating-enquiry-pill:hover,
+.floating-enquiry-tooltip:hover {
+  transform: translateY(-2px);
+  border-color: #D4AF37;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.42), 0 0 16px rgba(212, 175, 55, 0.28);
+  background: linear-gradient(135deg, #22355C 0%, #131D33 100%);
+}
+
+.floating-enquiry-pill:active,
+.floating-enquiry-tooltip:active {
+  transform: scale(0.97);
+}
+
+.floating-enquiry-pill:focus-visible,
+.floating-enquiry-tooltip:focus-visible {
+  outline: 3px solid rgba(212, 175, 55, 0.6);
+  outline-offset: 3px;
+}
+
+.floating-enquiry-pill.is-drawer-open {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  color: #0F172A;
+  border-color: #FFFFFF;
+}
+
+.floating-enquiry-pill-icon {
+  color: #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.floating-enquiry-pill:hover .floating-enquiry-pill-icon {
+  transform: scale(1.08);
+}
+
+.floating-enquiry-pill.is-drawer-open .floating-enquiry-pill-icon {
+  color: #0F172A;
+}
+
+.floating-enquiry-pill-text {
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   1B. Circular Gold WhatsApp Button & Tooltip
+   -------------------------------------------------------------------------- */
+.floating-whatsapp-btn,
 .floating-enquiry-btn {
   pointer-events: auto;
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
   background: linear-gradient(135deg, #E6C86E 0%, #D4AF37 40%, #B8860B 80%, #996515 100%);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(184, 134, 11, 0.38), 0 4px 10px rgba(0, 0, 0, 0.16);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(184, 134, 11, 0.4), 0 4px 10px rgba(0, 0, 0, 0.16);
   transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.24s ease;
+              border-color 0.24s ease;
   outline: none;
   padding: 0;
 }
 
+.floating-whatsapp-btn:hover,
 .floating-enquiry-btn:hover {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 12px 30px rgba(184, 134, 11, 0.5), 0 6px 14px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 30px rgba(184, 134, 11, 0.55), 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 
+.floating-whatsapp-btn:active,
 .floating-enquiry-btn:active {
   transform: scale(0.96);
 }
 
+.floating-whatsapp-btn:focus-visible,
 .floating-enquiry-btn:focus-visible {
-  outline: 3px solid rgba(212, 175, 55, 0.6);
+  outline: 3px solid rgba(212, 175, 55, 0.65);
   outline-offset: 3px;
 }
 
-/* Pulsing subtle glow ring around button */
+.floating-whatsapp-icon,
+.floating-enquiry-icon {
+  width: 28px;
+  height: 28px;
+  fill: #FFFFFF;
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.22));
+  transition: transform 0.2s ease;
+}
+
+.floating-whatsapp-btn:hover .floating-whatsapp-icon {
+  transform: scale(1.06);
+}
+
+/* Subtle pulse ring around WhatsApp button */
+.floating-whatsapp-pulse,
 .floating-enquiry-pulse {
   position: absolute;
   top: -4px;
@@ -60,12 +161,12 @@
   bottom: -4px;
   border-radius: 50%;
   border: 2px solid rgba(212, 175, 55, 0.65);
-  animation: enquiryPulse 3s infinite cubic-bezier(0.24, 0, 0.38, 1);
+  animation: whatsappPulse 3.2s infinite cubic-bezier(0.24, 0, 0.38, 1);
   pointer-events: none;
   opacity: 0;
 }
 
-@keyframes enquiryPulse {
+@keyframes whatsappPulse {
   0% {
     transform: scale(0.95);
     opacity: 0.8;
@@ -80,50 +181,44 @@
   }
 }
 
-.floating-enquiry-icon {
-  width: 26px;
-  height: 26px;
-  fill: currentColor;
-  display: block;
-  transition: transform 0.2s ease;
-}
-
-.floating-enquiry-btn:hover .floating-enquiry-icon {
-  transform: rotate(-4deg) scale(1.05);
-}
-
-/* Tooltip Pill on Desktop */
-.floating-enquiry-tooltip {
-  pointer-events: auto;
+/* Tooltip on desktop */
+.floating-whatsapp-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
   background: #1B2A4A;
   color: #FBF9F4;
   font-family: var(--font-body, 'Montserrat', sans-serif);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  padding: 8px 14px;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  padding: 6px 12px;
+  border-radius: 6px;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.35);
   user-select: none;
+  z-index: 1041;
 }
 
-.floating-enquiry-tooltip-gold {
-  color: #D4AF37;
-  font-size: 0.95rem;
-  line-height: 1;
+.floating-whatsapp-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1B2A4A transparent transparent transparent;
 }
 
-.floating-enquiry-tooltip:hover {
-  background: #0F172A;
-  border-color: #D4AF37;
-  transform: translateX(-3px);
+.floating-whatsapp-btn:hover .floating-whatsapp-tooltip,
+.floating-whatsapp-btn:focus-visible .floating-whatsapp-tooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------
@@ -667,25 +762,45 @@
    7. Mobile & Responsive Layout
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+  .floating-contact-actions,
   .floating-enquiry-container {
-    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: calc(14px + env(safe-area-inset-right, 0px));
     gap: 8px;
   }
 
-  .floating-enquiry-btn {
-    width: 52px;
-    height: 52px;
+  /* Keep both Product Enquiry and WhatsApp buttons accessible on mobile */
+  .floating-enquiry-pill,
+  .floating-enquiry-tooltip {
+    display: inline-flex;
+    height: 42px;
+    padding: 0 14px 0 12px;
+    font-size: 0.78rem;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.32);
   }
 
+  .floating-enquiry-pill-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .floating-whatsapp-btn,
+  .floating-enquiry-btn {
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 6px 18px rgba(184, 134, 11, 0.4);
+  }
+
+  .floating-whatsapp-icon,
   .floating-enquiry-icon {
     width: 24px;
     height: 24px;
   }
 
-  /* Hide tooltip on mobile to avoid covering content */
-  .floating-enquiry-tooltip {
-    display: none;
+  /* Disable hover tooltip on touch devices */
+  .floating-whatsapp-tooltip {
+    display: none !important;
   }
 
   /* Bottom sheet behavior on mobile */
@@ -722,11 +837,28 @@
 
 /* Extra small mobile screens (<= 380px) */
 @media (max-width: 380px) {
-  .floating-enquiry-btn {
-    width: 48px;
-    height: 48px;
+  .floating-contact-actions,
+  .floating-enquiry-container {
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    right: calc(10px + env(safe-area-inset-right, 0px));
+    gap: 6px;
   }
 
+  .floating-enquiry-pill,
+  .floating-enquiry-tooltip {
+    height: 38px;
+    padding: 0 10px 0 8px;
+    font-size: 0.73rem;
+    gap: 5px;
+  }
+
+  .floating-whatsapp-btn,
+  .floating-enquiry-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .floating-whatsapp-icon,
   .floating-enquiry-icon {
     width: 22px;
     height: 22px;

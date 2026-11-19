@@ -4,6 +4,7 @@ import { enquiryService } from '../../services/enquiryService';
 import { trackAnalyticsEvent } from '../../utils/session';
 import SeoHead from '../../components/common/SeoHead';
 import { SRIYAS_EMBLEM_URL, STOREFRONT_LOCATION_URL } from '../../utils/cloudinaryAssets';
+import { COMPANY_CONTACT } from '../../constants/contact';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -282,15 +283,23 @@ export default function Contact() {
         <div className="contact-card">
           <div className="contact-icon">📞</div>
           <h3>Phone</h3>
-          <a href="tel:+919600804456">9600804456</a>
-          <br />
-          <a href="tel:+919367772801">9367772801</a>
+          <a
+            href={`tel:${COMPANY_CONTACT.phone}`}
+            aria-label={`Call Sriyas Healthcare at ${COMPANY_CONTACT.displayPhone}`}
+          >
+            {COMPANY_CONTACT.displayPhone}
+          </a>
         </div>
 
         <div className="contact-card">
           <div className="contact-icon">✉</div>
           <h3>Email</h3>
-          <a href="mailto:Sriyashealthcare@gmail.com">Sriyashealthcare@gmail.com</a>
+          <a
+            href={`mailto:${COMPANY_CONTACT.email}`}
+            aria-label={`Email Sriyas Healthcare at ${COMPANY_CONTACT.email}`}
+          >
+            {COMPANY_CONTACT.email}
+          </a>
         </div>
 
         <div className="contact-card">

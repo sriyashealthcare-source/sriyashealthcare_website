@@ -417,8 +417,8 @@ function createDefaultHomepagePayload() {
       secondaryButtonText: 'Contact Us',
       secondaryButtonLink: '/contact',
       showContactDetails: true,
-      contactPhone: '+91 96008 04456 · +91 93677 72801',
-      contactEmail: 'Sriyashealthcare@gmail.com',
+      contactPhone: '+91 96008 04456',
+      contactEmail: 'sriyashealthcare@gmail.com',
       contactAddress:
         'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077',
       backgroundImage: {

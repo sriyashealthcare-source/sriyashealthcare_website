@@ -124,7 +124,7 @@ export default function CtaEditorPanel({ callToAction = {}, onChange }) {
                   type="text"
                   value={callToAction.contactPhone || ''}
                   onChange={(e) => updateField('contactPhone', e.target.value)}
-                  placeholder="+91 96008 04456 · +91 93677 72801"
+                  placeholder="+91 96008 04456"
                 />
               </div>
 
@@ -135,7 +135,7 @@ export default function CtaEditorPanel({ callToAction = {}, onChange }) {
                   type="email"
                   value={callToAction.contactEmail || ''}
                   onChange={(e) => updateField('contactEmail', e.target.value)}
-                  placeholder="Sriyashealthcare@gmail.com"
+                  placeholder="sriyashealthcare@gmail.com"
                 />
               </div>
             </div>

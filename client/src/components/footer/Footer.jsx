@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
+import { COMPANY_CONTACT } from '../../constants/contact';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -113,15 +114,23 @@ export default function Footer() {
               <div className="footer-contact-row">
                 <span className="footer-contact-icon" aria-hidden="true">📞</span>
                 <div>
-                  <a href="tel:+919600804456" className="footer-contact-link">+91 96008 04456</a>
-                  <span className="footer-contact-sep">·</span>
-                  <a href="tel:+919367772801" className="footer-contact-link">+91 93677 72801</a>
+                  <a
+                    href={`tel:${COMPANY_CONTACT.phone}`}
+                    className="footer-contact-link"
+                    aria-label={`Call Sriyas Healthcare at ${COMPANY_CONTACT.displayPhone}`}
+                  >
+                    {COMPANY_CONTACT.displayPhone}
+                  </a>
                 </div>
               </div>
               <div className="footer-contact-row">
                 <span className="footer-contact-icon" aria-hidden="true">✉</span>
-                <a href="mailto:Sriyashealthcare@gmail.com" className="footer-contact-link">
-                  Sriyashealthcare@gmail.com
+                <a
+                  href={`mailto:${COMPANY_CONTACT.email}`}
+                  className="footer-contact-link"
+                  aria-label={`Email Sriyas Healthcare at ${COMPANY_CONTACT.email}`}
+                >
+                  {COMPANY_CONTACT.email}
                 </a>
               </div>
               <div className="footer-contact-row">

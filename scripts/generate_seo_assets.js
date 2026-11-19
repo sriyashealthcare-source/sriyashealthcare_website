@@ -77,16 +77,9 @@ function buildOrganizationSchema() {
         contactType: 'sales & customer support',
         areaServed: 'IN',
         availableLanguage: ['en', 'ta']
-      },
-      {
-        '@type': 'ContactPoint',
-        telephone: '+91-9367772801',
-        contactType: 'hospital procurement enquiry',
-        areaServed: 'IN',
-        availableLanguage: ['en', 'ta']
       }
     ],
-    email: 'Sriyashealthcare@gmail.com',
+    email: 'sriyashealthcare@gmail.com',
     taxID: '33ABQCS4744P1ZJ'
   };
 }
@@ -447,7 +440,7 @@ async function run() {
       <main class="sr-only">
         <h1>Contact Sriyas Healthcare Private Limited</h1>
         <p>Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077, Tamil Nadu, India.</p>
-        <p>Phone: +91 96008 04456 / +91 93677 72801 | Email: Sriyashealthcare@gmail.com</p>
+        <p>Phone: <a href="tel:+919600804456">+91 9600804456</a> | Email: <a href="mailto:sriyashealthcare@gmail.com">sriyashealthcare@gmail.com</a></p>
       </main>
     `
   });

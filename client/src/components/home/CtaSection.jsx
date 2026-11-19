@@ -3,6 +3,35 @@ import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 
+function renderClickablePhones(phoneStr, isPreview) {
+  if (!phoneStr) return null;
+  // Support both single phone numbers and compound strings like "+91 96008 04456 · +91 93677 72801"
+  const tokens = phoneStr.split(/\s*([·/,|])\s*/);
+  return tokens.map((token, idx) => {
+    if (/^[·/,|]$/.test(token)) {
+      return (
+        <span key={idx} className="hp-cta-phone-sep" style={{ opacity: 0.65 }}>
+          {' '}{token}{' '}
+        </span>
+      );
+    }
+    const cleanNumber = token.replace(/[^\d+]/g, '');
+    if (!cleanNumber) return <span key={idx}>{token}</span>;
+    const telHref = cleanNumber.startsWith('+') ? cleanNumber : `+${cleanNumber}`;
+    return (
+      <a
+        key={idx}
+        href={`tel:${telHref}`}
+        className="hp-cta-contact-link"
+        onClick={isPreview ? (e) => e.preventDefault() : undefined}
+        aria-label={`Call Sriyas Healthcare at ${token}`}
+      >
+        {token}
+      </a>
+    );
+  });
+}
+
 export default function CtaSection({
   callToAction = {},
   animationSettings = {},
@@ -83,8 +112,8 @@ export default function CtaSection({
               <div className="hp-cta-contact-strip">
                 {callToAction.contactPhone && (
                   <div className="hp-cta-contact-item">
-                    <span>📞</span>
-                    <span>{callToAction.contactPhone}</span>
+                    <span aria-hidden="true">📞</span>
+                    <span>{renderClickablePhones(callToAction.contactPhone, isPreview)}</span>
                   </div>
                 )}
                 {callToAction.contactEmail && (
