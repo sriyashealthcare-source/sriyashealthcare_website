@@ -1,0 +1,3643 @@
+{
+  "Brand": [
+    {
+      "_id": "3cdaf38cd6ec21cb2897de48",
+      "createdAt": "2026-11-07T14:49:31.809Z",
+      "slug": "peters",
+      "name": "Peters Surgical",
+      "tabLabel": "Peters Surgical",
+      "icon": "🔬",
+      "logoUrl": "/assets/logos/peters-surgical.png",
+      "description": "High-performance surgical sutures, meshes, clips, surgical adhesives, and Caesarean section kits.",
+      "displayOrder": 1,
+      "isActive": true,
+      "updatedAt": "2026-11-14T15:44:46.674Z",
+      "logoPublicId": ""
+    },
+    {
+      "_id": "a442964e0705299d0edebdfd",
+      "createdAt": "2026-11-07T14:49:31.812Z",
+      "slug": "liquiband",
+      "name": "LiquiBand®",
+      "tabLabel": "LiquiBand®",
+      "icon": "💉",
+      "logoUrl": "/assets/logos/liquiband.png",
+      "description": "Advanced topical skin adhesives and laparoscopic hernia mesh fixation devices by Advanced Medical Solutions.",
+      "displayOrder": 2,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.714Z"
+    },
+    {
+      "_id": "174cfc5a46c3f32f366f01f2",
+      "createdAt": "2026-11-07T14:49:31.815Z",
+      "slug": "cutimed",
+      "name": "Cutimed® Sorbact®",
+      "tabLabel": "Cutimed® Sorbact®",
+      "icon": "🩹",
+      "logoUrl": "",
+      "description": "Clinically proven antibiotic-free wound infection management using physical DACC technology.",
+      "displayOrder": 3,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.717Z"
+    },
+    {
+      "_id": "2748e2cc45786d848ccbcb18",
+      "createdAt": "2026-11-07T14:49:31.819Z",
+      "slug": "gentacoll",
+      "name": "Genta-Coll® resorb",
+      "tabLabel": "Genta-Coll® resorb",
+      "icon": "🧬",
+      "logoUrl": "",
+      "description": "Haemostatic equine collagen sponge with gentamicin sulphate for infection protection and haemostasis.",
+      "displayOrder": 4,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.720Z"
+    },
+    {
+      "_id": "3f6ee4170b954093815e47a5",
+      "createdAt": "2026-11-07T14:49:31.822Z",
+      "slug": "gore",
+      "name": "W.L. Gore & Associates",
+      "tabLabel": "W.L. Gore & Associates",
+      "icon": "🧪",
+      "logoUrl": "/assets/logos/gore.png",
+      "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
+      "displayOrder": 5,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.722Z"
+    }
+  ],
+  "Category": [
+    {
+      "_id": "80f8a373a28951b30452530c",
+      "createdAt": "2026-11-07T14:49:31.824Z",
+      "slug": "peters-synthetic-absorbable-sutures",
+      "name": "Synthetic Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "Synthetic Absorbable Sutures",
+      "description": "High-performance sutures with predictable absorption and superior tensile strength.",
+      "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 1,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.725Z"
+    },
+    {
+      "_id": "dff9a2229cc64b41f551b3ed",
+      "createdAt": "2026-11-07T14:49:31.827Z",
+      "slug": "peters-natural-absorbable-sutures",
+      "name": "Natural Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "Natural Absorbable Sutures",
+      "description": "Time-tested natural sutures with reliable enzymatic absorption.",
+      "heroGradient": "linear-gradient(135deg,#1a4a3c,#2d7a5e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 2,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.727Z"
+    },
+    {
+      "_id": "4244e91bf07bf43850be13d8",
+      "createdAt": "2026-11-07T14:49:31.828Z",
+      "slug": "peters-non-absorbable-sutures",
+      "name": "Non-Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "Non-Absorbable Sutures",
+      "description": "Permanent sutures for long-term tissue approximation and support.",
+      "heroGradient": "linear-gradient(135deg,#1a2a4a,#2d4a7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-non-absorbable-sutures.png",
+        "publicId": ""
+      },
+      "displayOrder": 3,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.730Z"
+    },
+    {
+      "_id": "ade119ad090cfc2f9a5ac32f",
+      "createdAt": "2026-11-07T14:49:31.830Z",
+      "slug": "peters-surgical-mesh",
+      "name": "Surgical Mesh",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "Sterilene Mesh",
+      "description": "Flat knitted polypropylene mesh — the ideal choice for open & laparoscopic hernia repairs.",
+      "heroGradient": "linear-gradient(135deg,#2a1a4a,#4a2d7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-mesh.png",
+        "publicId": ""
+      },
+      "displayOrder": 4,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.732Z"
+    },
+    {
+      "_id": "889a1891a93ad80d926c17e3",
+      "createdAt": "2026-11-07T14:49:31.832Z",
+      "slug": "peters-surgical-kits-obstetrics",
+      "name": "Surgical Kits · Obstetrics",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "C-Section Kit",
+      "description": "Complete pre-assembled kits for Caesarean Section — Polycol™ + Stericryl™.",
+      "heroGradient": "linear-gradient(135deg,#4a1a3c,#7a2d5e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
+        "publicId": ""
+      },
+      "displayOrder": 5,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.735Z"
+    },
+    {
+      "_id": "3df3ab65d5682ec9cd626643",
+      "createdAt": "2026-11-07T14:49:31.835Z",
+      "slug": "peters-haemostasis-titanium-clips",
+      "name": "Haemostasis · Titanium Clips",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "Titanium Hemostatic Clips",
+      "description": "Pure titanium clips — biologically inert, radio-opaque, MRI compatible.",
+      "heroGradient": "linear-gradient(135deg,#1a3a4a,#2d5e7a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
+        "publicId": ""
+      },
+      "displayOrder": 6,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.737Z"
+    },
+    {
+      "_id": "99b356a9fc4fec3a7c02665c",
+      "createdAt": "2026-11-07T14:49:31.837Z",
+      "slug": "peters-surgical-adhesive",
+      "name": "Surgical Adhesive",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "IFABOND®",
+      "description": "A few drops glue a lot — n-hexyl cyanoacrylate surgical adhesive. EU MDR certified.",
+      "heroGradient": "linear-gradient(135deg,#c0392b,#e74c3c)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-surgical-adhesive.png",
+        "publicId": ""
+      },
+      "displayOrder": 7,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.740Z"
+    },
+    {
+      "_id": "f8c3d46e031ac1dbe894463d",
+      "createdAt": "2026-11-07T14:49:31.840Z",
+      "slug": "peters-barbed-sutures-knotless",
+      "name": "Barbed Sutures · Knotless",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "heroTitle": "FILBLOC® Barbed Sutures",
+      "description": "Knotless closure device with Final Lock System — absorbable and non-absorbable.",
+      "heroGradient": "linear-gradient(135deg,#00695c,#00897b)",
+      "heroImage": {
+        "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png",
+        "publicId": ""
+      },
+      "displayOrder": 8,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.742Z"
+    },
+    {
+      "_id": "e93935d6019c0b920303264a",
+      "createdAt": "2026-11-07T14:49:31.843Z",
+      "slug": "liquiband-topical-skin-adhesive",
+      "name": "Topical Skin Adhesive",
+      "brand": "a442964e0705299d0edebdfd",
+      "heroTitle": "LiquiBand® Optima",
+      "description": "Topical skin adhesive — microbial barrier in 10 seconds. Take the sting out of wound closure.",
+      "heroGradient": "linear-gradient(135deg,#0d2d5e,#1a5799)",
+      "heroImage": {
+        "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
+        "publicId": ""
+      },
+      "displayOrder": 9,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.744Z"
+    },
+    {
+      "_id": "eb6de5974e0ec833f8bb2e5f",
+      "createdAt": "2026-11-07T14:49:31.846Z",
+      "slug": "liquiband-hernia-mesh-fixation",
+      "name": "Hernia Mesh Fixation",
+      "brand": "a442964e0705299d0edebdfd",
+      "heroTitle": "LiquiBand® FIX8®",
+      "description": "Laparoscopic hernia mesh fixation device — atraumatic, precise, strong.",
+      "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
+      "heroImage": {
+        "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
+        "publicId": ""
+      },
+      "displayOrder": 10,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.747Z"
+    },
+    {
+      "_id": "f54e7074526254eddae12e54",
+      "createdAt": "2026-11-07T14:49:31.849Z",
+      "slug": "cutimed-wound-care-infection-management",
+      "name": "Wound Care · Infection Management",
+      "brand": "174cfc5a46c3f32f366f01f2",
+      "heroTitle": "Cutimed® Sorbact®",
+      "description": "Clinically proven antibiotic-free wound infection management — purely physical mode of action.",
+      "heroGradient": "linear-gradient(135deg,#006064,#00838f)",
+      "heroImage": {
+        "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png",
+        "publicId": ""
+      },
+      "displayOrder": 11,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.749Z"
+    },
+    {
+      "_id": "1284f1c2c7f8e3b6df857379",
+      "createdAt": "2026-11-07T14:49:31.852Z",
+      "slug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
+      "name": "Haemostasis · Antibiotic Collagen Sponge",
+      "brand": "2748e2cc45786d848ccbcb18",
+      "heroTitle": "Genta-Coll® resorb",
+      "description": "Haemostatic collagen sponge with gentamicin sulphate — effective protection with strong haemostyptic action.",
+      "heroGradient": "linear-gradient(135deg,#3e2723,#6d4c41)",
+      "heroImage": {
+        "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+        "publicId": ""
+      },
+      "displayOrder": 12,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.751Z"
+    },
+    {
+      "_id": "81773e70be835ab40127286f",
+      "createdAt": "2026-11-07T14:49:31.855Z",
+      "slug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "name": "Absorbable Biomaterials & Tissue Reinforcement",
+      "brand": "3f6ee4170b954093815e47a5",
+      "heroTitle": "W.L. Gore & Associates",
+      "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
+      "heroGradient": "linear-gradient(135deg,#2c2c2c,#5c1a1a)",
+      "heroImage": {
+        "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+        "publicId": ""
+      },
+      "displayOrder": 13,
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.754Z"
+    }
+  ],
+  "Product": [
+    {
+      "_id": "35f7e506ecf50cea69f776b0",
+      "createdAt": "2026-11-07T14:49:31.857Z",
+      "slug": "i-col",
+      "legacyId": "icol",
+      "name": "I-Col™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "cardCategory": "Braided · Polyglycolic Acid",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglycolic Acid",
+      "shortSpecification": "PGA · Coated · Absorption 60–75 Days",
+      "description": "I-Col™ is a synthetic absorbable braided suture made from Polyglycolic Acid (PGA), coated with Calcium Stearate and Polycaprolactone. It provides high initial tensile strength with predictable absorption — ideal for procedures requiring extended wound support.",
+      "images": [
+        {
+          "url": "/assets/products/icol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "High initial strength with moderated absorption kinetics",
+        "Excellent knot reliability and security",
+        "High biocompatibility — minimal tissue reaction",
+        "Perfect slide due to homogeneous calcium stearate coating",
+        "Available dyed (violet) and undyed",
+        "27% higher knot pull tensile strength than USP limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyglycolic Acid (PGA) — Braided"
+        },
+        {
+          "name": "Coating",
+          "value": "Calcium Stearate & Polycaprolactone"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "28–35 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "60–75 Days"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Gamma / EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Cholecystectomy",
+        "Mastectomy",
+        "Appendectomy",
+        "Hysterectomy",
+        "General soft tissue approximation and ligation"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.758Z",
+      "lastViewedAt": "2026-11-07T14:50:42.321Z",
+      "viewCount": 2
+    },
+    {
+      "_id": "524ccc78797e0859c8a1adda",
+      "createdAt": "2026-11-07T14:49:31.860Z",
+      "slug": "i-col-fast",
+      "legacyId": "icol_fast",
+      "name": "I-Col™ Fast",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "cardCategory": "Braided · Short Term",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Short Term",
+      "shortSpecification": "Treated PGA · Absorption 40–45 Days",
+      "description": "I-Col™ Fast is a short-term synthetic absorbable braided suture made from treated Polyglycolic Acid. Spontaneous elimination after 10 days saves surgical time and provides excellent wound healing with very soft thread handling.",
+      "images": [
+        {
+          "url": "/assets/products/icol_fast-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Gamma sterilization for superior sterility assurance",
+        "Excellent wound healing results",
+        "Very soft thread — excellent handling",
+        "Spontaneous elimination after 10 days",
+        "Short absorption profile for superficial/fast-healing procedures"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Treated Polyglycolic Acid — Braided"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "10–14 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "40–45 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "3.15 KGF (18% above USP limit)"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Gamma"
+        },
+        {
+          "name": "Available",
+          "value": "Undyed only"
+        }
+      ],
+      "applications": [
+        "Laparotomy",
+        "Colostomy",
+        "Open Hysterectomy",
+        "Appendectomy",
+        "Mastectomy",
+        "Hernia Repair",
+        "Superficial wound closure"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 2,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.760Z"
+    },
+    {
+      "_id": "80893003417bd5cd21d97299",
+      "createdAt": "2026-11-07T14:49:31.863Z",
+      "slug": "polycol",
+      "legacyId": "polycol",
+      "name": "Polycol™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "cardCategory": "Braided · Polyglactin 910",
+      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglactin 910",
+      "shortSpecification": "Polyglactin 910 · Coated · Absorption 60–75 Days",
+      "description": "Polycol™ is a synthetic absorbable braided suture made from Polyglactin 910, coated with Poly-Glycolide-co-Lactide and Calcium Stearate. It offers excellent tensile strength, improved handling and minimal tissue reaction.",
+      "images": [
+        {
+          "url": "/assets/products/polycol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Excellent tensile strength with improved handling",
+        "Minimal tissue reaction with predictable absorption",
+        "Available undyed and violet",
+        "Reliable knot security and smooth passage through tissue",
+        "23% above USP knot pull tensile strength limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyglactin 910 — Braided"
+        },
+        {
+          "name": "Coating",
+          "value": "Poly-Glycolide-co-Lactide & Calcium Stearate"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "28–35 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "60–75 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "62.35 KGF"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Hysterectomy",
+        "Abdominal Surgeries",
+        "Bowel Anastomosis",
+        "Colostomy",
+        "Mastectomy",
+        "Cholecystectomy",
+        "Appendectomy",
+        "Hernia Repair"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 3,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.763Z"
+    },
+    {
+      "_id": "7971eb872a1500f85c7fe99e",
+      "createdAt": "2026-11-07T14:49:31.866Z",
+      "slug": "stericryl",
+      "legacyId": "stericryl",
+      "name": "Stericryl™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "cardCategory": "Monofilament · Poliglecaprone 25",
+      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Poliglecaprone 25",
+      "shortSpecification": "PGA-PCL · Absorption 90–120 Days",
+      "description": "Stericryl™ is a synthetic absorbable monofilament suture made from Poliglecaprone 25 (PGA-PCL). It features smooth atraumatic tissue penetration, mild tissue reactivity, and reduces postoperative adhesion.",
+      "images": [
+        {
+          "url": "/assets/products/stericryl-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Smooth atraumatic tissue penetration",
+        "Mild tissue reactivity — well tolerated",
+        "Reduces postoperative adhesion",
+        "Monofilament — easy passage through tissue",
+        "80% above USP knot pull tensile strength limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Poliglecaprone 25 (PGA-PCL) — Monofilament"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "21–28 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "90–120 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "31.52 KGF (80% above USP)"
+        },
+        {
+          "name": "Available",
+          "value": "Dyed and Undyed"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Colostomy",
+        "Mastectomy",
+        "Appendectomy",
+        "Hysterectomy",
+        "Subcutaneous tissue closure",
+        "Skin and fascia approximation"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 4,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.765Z"
+    },
+    {
+      "_id": "ee9ff4b4ce2c4e45e60efdac",
+      "createdAt": "2026-11-07T14:49:31.869Z",
+      "slug": "monocol",
+      "legacyId": "monocol",
+      "name": "Monocol™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "cardCategory": "Monofilament · Polydioxanone",
+      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Polydioxanone",
+      "shortSpecification": "PDO · Absorption 180–210 Days",
+      "description": "Monocol™ is a long-term synthetic absorbable monofilament suture made from Polydioxanone (PDO). Provides sustained wound support over 60 days with homogeneous absorption kinetics and exceptional resistance in aggressive biological environments.",
+      "images": [
+        {
+          "url": "/assets/products/monocol-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Optimal strength duration over 60 days",
+        "Homogeneous absorption kinetics across the whole range",
+        "Minimal tissue trauma and excellent tolerance",
+        "High strength in aggressive biological fluids",
+        "23% higher knot pull tensile strength than USP limit"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polydioxanone (PDO) — Monofilament"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "Over 60 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "180–210 Days"
+        },
+        {
+          "name": "Knot Pull Tensile Strength",
+          "value": "62.36 KGF"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 4-0 to USP 1"
+        }
+      ],
+      "applications": [
+        "Colostomy",
+        "Laparotomy",
+        "Knee/Hip Replacement",
+        "Open Hysterectomy",
+        "Fascial closure requiring prolonged support",
+        "Orthopaedic and reconstructive procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 5,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.767Z"
+    },
+    {
+      "_id": "36824cfce0e47626658b066f",
+      "createdAt": "2026-11-07T14:49:31.872Z",
+      "slug": "catgut-chromic",
+      "legacyId": "catgut",
+      "name": "Catgut Chromic™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "dff9a2229cc64b41f551b3ed",
+      "cardCategory": "Twisted · Chromic Catgut",
+      "detailCategory": "Natural Absorbable Suture · Chromic Catgut · Twisted",
+      "shortSpecification": "Natural Collagen · Absorption ~90 Days",
+      "description": "Catgut Chromic™ is a natural absorbable suture made from the submucosa of sheep intestines, treated with chromium salts to prolong absorption. Naturally absorbed by enzymatic action of body tissues.",
+      "images": [
+        {
+          "url": "/assets/products/catgut-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Natural collagen-based suture material",
+        "Chromic treatment extends tensile strength retention",
+        "Soft and pliable — excellent handling",
+        "Naturally absorbed by enzymatic action",
+        "Good knot security with natural material"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Chromic Catgut (sheep intestine submucosa)"
+        },
+        {
+          "name": "Type",
+          "value": "Twisted"
+        },
+        {
+          "name": "Optimal Strength Duration",
+          "value": "21–28 Days"
+        },
+        {
+          "name": "Total Absorption Time",
+          "value": "~90 Days"
+        },
+        {
+          "name": "Available",
+          "value": "Natural coloured"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 4-0"
+        }
+      ],
+      "applications": [
+        "Bowel Anastomosis",
+        "Cholecystectomy",
+        "Hysterectomy",
+        "Appendectomy",
+        "Superficial soft tissue approximation",
+        "Ligation of small blood vessels",
+        "Episiotomy and obstetric procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 6,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.770Z"
+    },
+    {
+      "_id": "c29cb307f0c8b20422511a4d",
+      "createdAt": "2026-11-07T14:49:31.874Z",
+      "slug": "sterisil",
+      "legacyId": "sterisil",
+      "name": "Sterisil™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "4244e91bf07bf43850be13d8",
+      "cardCategory": "Braided Silk · Non-Absorbable",
+      "detailCategory": "Non-Absorbable Suture · Braided Silk · Black",
+      "shortSpecification": "Black Braided Silk · Permanent",
+      "description": "Sterisil™ is a non-absorbable surgical suture made from natural black braided silk, coated for smooth tissue passage. Valued for excellent handling characteristics and secure knotting in all surgical environments.",
+      "images": [
+        {
+          "url": "/assets/products/sterisil-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Excellent handling and knotting characteristics",
+        "Smooth tissue passage due to coating",
+        "High visibility with black dye",
+        "Reliable tensile strength throughout",
+        "Soft and pliable — minimal tissue trauma"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Natural Silk — Black Braided"
+        },
+        {
+          "name": "REF",
+          "value": "SFS 5333"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Standard",
+          "value": "USP 2-0 (Metric 3), 76 cm"
+        },
+        {
+          "name": "",
+          "value": "Round Bodied, 30mm, Half Circle"
+        }
+      ],
+      "applications": [
+        "General soft tissue approximation",
+        "Cardiovascular surgery",
+        "Ophthalmic surgery",
+        "Skin and subcutaneous closure",
+        "Tendon repair",
+        "Ligation of vessels"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 7,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.772Z"
+    },
+    {
+      "_id": "0f80d5d4fae6bc2b93e2096d",
+      "createdAt": "2026-11-07T14:49:31.877Z",
+      "slug": "sterilon",
+      "legacyId": "sterilon",
+      "name": "Sterilon™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "4244e91bf07bf43850be13d8",
+      "cardCategory": "Monofilament · Polyamide (Nylon)",
+      "detailCategory": "Non-Absorbable Suture · Monofilament Polyamide (Nylon) · Blue",
+      "shortSpecification": "Monofilament Polyamide · Blue · Permanent",
+      "description": "Sterilon™ is a synthetic non-absorbable monofilament suture made from Polyamide (Nylon). Blue coloured for enhanced visibility with low tissue reactivity and predictable long-term strength.",
+      "images": [
+        {
+          "url": "/assets/products/sterilon-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Monofilament — smooth passage through tissue",
+        "Low tissue reactivity",
+        "Blue colour for excellent visibility",
+        "Predictable long-term tensile strength",
+        "Resists biological degradation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyamide (Nylon) — Monofilament"
+        },
+        {
+          "name": "Colour",
+          "value": "Blue"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 6-0"
+        }
+      ],
+      "applications": [
+        "Skin closure",
+        "Ophthalmic surgery",
+        "Plastic and cosmetic surgery",
+        "Microsurgery",
+        "Nerve repair",
+        "Tendon and fascial repair"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 8,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.775Z"
+    },
+    {
+      "_id": "19ad2af957d7d3d25731791b",
+      "createdAt": "2026-11-07T14:49:31.880Z",
+      "slug": "sterilene-suture",
+      "legacyId": "sterilene_suture",
+      "name": "Sterilene™ Suture",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "4244e91bf07bf43850be13d8",
+      "cardCategory": "Monofilament · Polypropylene",
+      "detailCategory": "Non-Absorbable Suture · Monofilament Polypropylene · Blue",
+      "shortSpecification": "Monofilament PP · Blue · Permanent",
+      "description": "Sterilene™ is a synthetic non-absorbable monofilament suture made from Polypropylene — the most biologically inert suture material. Ideal for use in infected tissue and procedures requiring permanent strength.",
+      "images": [
+        {
+          "url": "/assets/products/sterilene_suture-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Highest biologic inertness of all synthetic sutures",
+        "Maintains tensile strength indefinitely",
+        "Smooth monofilament — excellent tissue passage",
+        "Ideal in infected or contaminated wounds",
+        "Resists degradation by body enzymes"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polypropylene — Monofilament"
+        },
+        {
+          "name": "Colour",
+          "value": "Blue"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 1 to USP 6-0"
+        }
+      ],
+      "applications": [
+        "Cardiovascular surgery",
+        "Hernia repair",
+        "Abdominal wall closure",
+        "Skin closure",
+        "Orthopaedic procedures",
+        "Fascial closure requiring permanent support"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 9,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.778Z"
+    },
+    {
+      "_id": "efed7d6fa93400d8df5b5d8b",
+      "createdAt": "2026-11-07T14:49:31.882Z",
+      "slug": "steribon",
+      "legacyId": "steribon",
+      "name": "Steribon™",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "4244e91bf07bf43850be13d8",
+      "cardCategory": "Braided Polyester · Non-Absorbable",
+      "detailCategory": "Non-Absorbable Suture · Coated Braided Polyester",
+      "shortSpecification": "Coated Braided PET · Permanent",
+      "description": "Steribon™ is a synthetic non-absorbable coated braided polyester suture. It offers superior tensile strength — the highest of all non-absorbable sutures — and is the choice when permanent support is required.",
+      "images": [
+        {
+          "url": "/assets/products/steribon-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Superior tensile strength — highest among non-absorbables",
+        "Coated braiding for smooth tissue passage",
+        "Excellent knot security and handling",
+        "Permanent support indefinitely",
+        "Highly resistant to biological degradation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Polyester (PET) — Coated Braided"
+        },
+        {
+          "name": "Type",
+          "value": "Non-absorbable, Permanent"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "Highest among non-absorbables"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO or Gamma"
+        },
+        {
+          "name": "Sizes",
+          "value": "USP 5 to USP 5-0"
+        }
+      ],
+      "applications": [
+        "Cardiac surgery (valve repair)",
+        "Orthopaedic surgery (tendon/ligament)",
+        "Hernia repair with mesh",
+        "Vascular surgery",
+        "Abdominal wall closure",
+        "Ophthalmic procedures"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 10,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.780Z"
+    },
+    {
+      "_id": "aa587c819ab9cca4cf789de0",
+      "createdAt": "2026-11-07T14:49:31.885Z",
+      "slug": "sterilene-mesh",
+      "legacyId": "sterilene_mesh",
+      "name": "Sterilene™ Mesh",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "ade119ad090cfc2f9a5ac32f",
+      "cardCategory": "Flat Knitted · Polypropylene",
+      "detailCategory": "Surgical Mesh · Flat Knitted Polypropylene",
+      "shortSpecification": "Light / Regular / Heavy variants\nOpen &\nLaparoscopic Hernia",
+      "description": "Sterilene™ Mesh is a flat knitted polypropylene mesh — the ideal mesh for open and laparoscopic hernia repairs. Available in Light, Regular and Heavy variants to suit the specific requirements of each procedure.",
+      "images": [
+        {
+          "url": "/assets/products/sterilene_mesh-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/sterilene_mesh-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Sterilene Light: 56% lighter than regular mesh — better compatibility and fast tissue integration",
+        "Sterilene Regular: Good shape memory and perfect fitment against cavity wall",
+        "Sterilene Heavy: Highest tensile and burst strength — ideal for open hernia repair",
+        "Monofilament polypropylene — excellent biological inertness",
+        "Laser cutting for precise edges",
+        "Hernia Kit and Hernia Kit Plus configurations available"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Monofilament Polypropylene"
+        },
+        {
+          "name": "Cutting Type",
+          "value": "Laser"
+        },
+        {
+          "name": "Sterilization",
+          "value": "Ethylene Oxide (EO)"
+        },
+        {
+          "name": "Colour",
+          "value": "Clear — Undyed"
+        },
+        {
+          "name": "Variants",
+          "value": "Light (SPM611L), Regular (SFN842), Heavy (SFN841)"
+        },
+        {
+          "name": "Hernia Kit",
+          "value": "SPM611L/SPM715L + SFN842 + SFN841 + SFN3336 + SPL2341"
+        }
+      ],
+      "applications": [
+        "Laparoscopic inguinal hernia repair (TAPP/TEP)",
+        "Open hernia repair",
+        "Incisional hernia repair",
+        "Ventral hernia repair",
+        "Umbilical hernia repair",
+        "Hernia Kit — complete repair solution"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 11,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.783Z"
+    },
+    {
+      "_id": "9d46ec39d708d0fa200fc43d",
+      "createdAt": "2026-11-07T14:49:31.887Z",
+      "slug": "peters-c-section-kit",
+      "legacyId": "csection",
+      "name": "Peters C-Section Kit",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "889a1891a93ad80d926c17e3",
+      "cardCategory": "Pre-assembled Sterile Kit",
+      "detailCategory": "Surgical Kit · Obstetrics · Caesarean Section",
+      "shortSpecification": "Polycol™ + Stericryl™\nAll C-Section Layers",
+      "description": "Peters C-Section Kit is a pre-assembled sterile kit specifically designed for Caesarean Section procedures. Contains Polycol™ and Stericryl™ sutures — providing the complete suturing solution for all layers.",
+      "images": [
+        {
+          "url": "/assets/products/csection-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Complete pre-assembled kit for all C-Section layers",
+        "Polycol™ for uterus, peritoneum and fascial closure",
+        "Stericryl™ for subcutaneous and subcuticular skin closure",
+        "Sterile packaging for immediate use",
+        "Reduces surgical preparation time",
+        "Available in multiple configurations"
+      ],
+      "specifications": [
+        {
+          "name": "Polycol (SPL2364)",
+          "value": "Polyglactin 910 · Size 1 · 90cm · 40mm Needle · 1/2C Taper Cut (Heavy) · Uterus"
+        },
+        {
+          "name": "Polycol (SPL2518)",
+          "value": "Polyglactin 910 · Size 1-0 · 90cm · 40mm Needle · 1/2C Taper Cut (Heavy) · Peritoneum/Skin"
+        },
+        {
+          "name": "Stericryl (STR1678)",
+          "value": "Polyglecaprone 25 · Size 3-0 · 70cm · 26mm Needle · 3/8C Reverse Cutting · Subcutaneous/Skin"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO (Ethylene Oxide)"
+        },
+        {
+          "name": "Indication",
+          "value": "Caesarean Section (all layers)"
+        }
+      ],
+      "applications": [
+        "Uterine closure (Polycol SPL2364)",
+        "Peritoneum closure (Polycol SPL2518)",
+        "Fascial layer closure (Polycol SPL2518)",
+        "Subcutaneous tissue closure (Stericryl STR1678)",
+        "Subcuticular skin closure (Stericryl STR1678)",
+        "Complete C-Section wound closure from uterus to skin"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 12,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.786Z"
+    },
+    {
+      "_id": "4d2ddbe1bd9d35ce4c57d63e",
+      "createdAt": "2026-11-07T14:49:31.890Z",
+      "slug": "titanium-hemostatic-clips",
+      "legacyId": "titanium",
+      "name": "Titanium Hemostatic Clips",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "3df3ab65d5682ec9cd626643",
+      "cardCategory": "Pure Titanium · Haemostasis",
+      "detailCategory": "Haemostasis · Pure Titanium Ligation Clips",
+      "shortSpecification": "7 sizes · 7 colour codes\nOpen & Laparoscopic",
+      "description": "Peters Surgical Titanium Hemostatic Clips are pure titanium, chevron-shaped clips for reliable vessel ligation. Biologically inert, radio-opaque, non-magnetic, and annealed to consistent malleability for more reliable tip-to-tip engulfing closure.",
+      "images": [
+        {
+          "url": "/assets/products/titanium-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/titanium-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Pure titanium — biologically inert, chevron shaped",
+        "Annealed to consistent malleability — no shape memory for occlusive closure",
+        "Radio opaque for post-operative verification",
+        "Non-magnetic — MRI compatible",
+        "More reliable tip-to-tip engulfing closure",
+        "6 sizes + 1 exclusive size, 7 colour codes",
+        "Endo appliers available",
+        "Colour codes for all 7 available clip sizes"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Pure Titanium"
+        },
+        {
+          "name": "Shape",
+          "value": "Chevron (V-shape)"
+        },
+        {
+          "name": "Sizes",
+          "value": "Micro, Small, Small, Small/Medium, Medium, Medium/Large, Large"
+        },
+        {
+          "name": "Colour Codes",
+          "value": "7 (for different vessel sizes)"
+        },
+        {
+          "name": "MRI Compatibility",
+          "value": "Non-ferromagnetic (MRI safe)"
+        },
+        {
+          "name": "Application",
+          "value": "Open and Laparoscopic"
+        }
+      ],
+      "applications": [
+        "Colectomy",
+        "Appendectomy",
+        "Cholecystectomy",
+        "Urology",
+        "Liver Surgery",
+        "General haemostasis during any surgical procedure"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 13,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.788Z"
+    },
+    {
+      "_id": "2fcd93b13db663d51e1f49c3",
+      "createdAt": "2026-11-07T14:49:31.893Z",
+      "slug": "ifabond",
+      "legacyId": "ifabond",
+      "name": "IFABOND®",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "99b356a9fc4fec3a7c02665c",
+      "cardCategory": "Surgical Adhesive · n-hexyl cyanoacrylate",
+      "detailCategory": "Surgical Adhesive · n-hexyl cyanoacrylate · Class III Implantable",
+      "shortSpecification": "Class III Implantable · Biodegradable\nFlexible\napplicators: 15/37/45 cm",
+      "description": "IFABOND® is an n-hexyl cyanoacrylate synthetic surgical adhesive. Class III implantable and biodegradable, EU MDR certified. Non-irritant and non-toxic — used by surgeons in France and abroad for over 20 years.",
+      "images": [
+        {
+          "url": "/assets/products/ifabond-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/ifabond-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "n-hexyl cyanoacrylate — Class III implantable & biodegradable",
+        "EU MDR certified medical device",
+        "Non-irritant and non-toxic",
+        "Drop-by-drop flexible applicators — can be bent distally before insertion",
+        "Available in 3 sizes: MB15G (15cm), MB37G (37cm), MB45G (45cm)",
+        "2.5ml syringe with luer lock port + 18G needle",
+        "20 years of use by numerous surgeons in France and abroad"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "n-hexyl cyanoacrylate"
+        },
+        {
+          "name": "Class",
+          "value": "III — Implantable & Biodegradable"
+        },
+        {
+          "name": "Certification",
+          "value": "EU MDR"
+        },
+        {
+          "name": "Applicators",
+          "value": "MB15G (Open), MB37G (Laparoscopic), MB45G (Laparoscopic/Bariatric)"
+        },
+        {
+          "name": "Packaging",
+          "value": "2.5ml syringe + IFABOND vial + 18G needle"
+        }
+      ],
+      "applications": [
+        "Staple line reinforcement sleeve — Gastrectomy",
+        "Fixation of Sacrocolpopexy Meshes",
+        "Closure of mesenteric defects during Bypass Surgery",
+        "Mesh fixation in hernia repair",
+        "Tissue gluing in minimally invasive surgery"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 14,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.791Z"
+    },
+    {
+      "_id": "543337f2703fe4f30ff52eae",
+      "createdAt": "2026-11-07T14:49:31.906Z",
+      "slug": "filbloc-90",
+      "legacyId": "filbloc90",
+      "name": "FILBLOC® 90",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "f8c3d46e031ac1dbe894463d",
+      "cardCategory": "Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PGCL",
+      "shortSpecification": "Poly(glycolide-co-Caprolactone) · PGCL\nComplete\nabsorption within weeks",
+      "description": "FILBLOC® 90 is an absorbable monofilament barbed suture with Final Lock System. The knotless closure device fastens thread quickly and efficiently — eliminating the need to tie a knot at the beginning of suturing.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc90-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/filbloc90-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System fastens thread in seconds",
+        "Unilateral notches for great grip and controlled distance",
+        "Wide range of stainless steel needles suitable for laparoscopic trocar",
+        "Tensile strength: 50% at 7 days, 20% at 14 days",
+        "Complete absorption within weeks"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "poly(glycolide-co-Caprolactone) (PGCL)"
+        },
+        {
+          "name": "Color",
+          "value": "Violet or undyed"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "7 days – 50% / 14 days – 20%"
+        },
+        {
+          "name": "Absorption",
+          "value": "Complete within weeks"
+        },
+        {
+          "name": "Type",
+          "value": "Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery",
+        "Orthopaedics",
+        "Any procedure requiring running suture technique"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 15,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.794Z"
+    },
+    {
+      "_id": "f0f58bc8df4581d3a9807bbc",
+      "createdAt": "2026-11-07T14:49:31.911Z",
+      "slug": "filbloc",
+      "legacyId": "filbloc",
+      "name": "FILBLOC®",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "f8c3d46e031ac1dbe894463d",
+      "cardCategory": "Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PDO",
+      "shortSpecification": "Poly(p-dioxanone) PDO · Violet or Undyed\nAbsorption\n180–210 Days",
+      "description": "FILBLOC® is an absorbable monofilament barbed suture with Final Lock System, made from poly(p-dioxanone) PDO. Provides 28-day strength retention with complete absorption between 180–210 days.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System",
+        "Great grip with unilateral notches",
+        "Wide range of stainless steel needles for laparoscopic use",
+        "28 days – 71.7% tensile strength retention",
+        "56 days – 16.5% retention",
+        "Complete absorption 180–210 days"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "poly(p-dioxanone) (PDO)"
+        },
+        {
+          "name": "Color",
+          "value": "Violet or undyed"
+        },
+        {
+          "name": "Tensile Strength",
+          "value": "28 days – 71.7% / 56 days – 16.5%"
+        },
+        {
+          "name": "Absorption",
+          "value": "Complete within 180–210 days"
+        },
+        {
+          "name": "Type",
+          "value": "Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery",
+        "Orthopaedics",
+        "Open and laparoscopic running suture technique"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 16,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.796Z"
+    },
+    {
+      "_id": "90b84d92e2d6b1123f85cad9",
+      "createdAt": "2026-11-07T14:49:31.914Z",
+      "slug": "filbloc-permanent",
+      "legacyId": "filbloc_perm",
+      "name": "FILBLOC® Permanent",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "f8c3d46e031ac1dbe894463d",
+      "cardCategory": "Non-Absorbable Barbed · Monofilament",
+      "detailCategory": "Barbed Suture · Non-Absorbable · Monofilament · Polypropylene",
+      "shortSpecification": "Polypropylene (PP) · Blue or Undyed\nPermanent",
+      "description": "FILBLOC® Permanent is a non-absorbable monofilament barbed suture with Final Lock System, made from Polypropylene (PP). Provides permanent tissue approximation with the efficiency of knotless technique.",
+      "images": [
+        {
+          "url": "/assets/products/filbloc_perm-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Knotless closure — Final Lock System",
+        "Non-absorbable — permanent tissue support",
+        "Great grip with unilateral notches",
+        "Blue or undyed options",
+        "Wide range of stainless steel needles"
+      ],
+      "specifications": [
+        {
+          "name": "Composition",
+          "value": "Polypropylene (PP)"
+        },
+        {
+          "name": "Color",
+          "value": "Blue or undyed"
+        },
+        {
+          "name": "Absorption",
+          "value": "Non-absorbable (Permanent)"
+        },
+        {
+          "name": "Type",
+          "value": "Non-Absorbable Barbed Monofilament"
+        }
+      ],
+      "applications": [
+        "General & bariatric surgeries",
+        "Gynecology",
+        "Urology",
+        "Plastic surgery — facelift and body contouring",
+        "Orthopaedics",
+        "Robot-assisted surgery"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 17,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.799Z"
+    },
+    {
+      "_id": "bcd136e6e11df855011dd676",
+      "createdAt": "2026-11-07T14:49:31.917Z",
+      "slug": "liquiband-optima",
+      "legacyId": "lb_optima",
+      "name": "LiquiBand® Optima",
+      "brand": "a442964e0705299d0edebdfd",
+      "category": "e93935d6019c0b920303264a",
+      "cardCategory": "Topical Adhesive · Skin Closure",
+      "detailCategory": "Topical Skin Adhesive · LiquiBand® Optima",
+      "shortSpecification": "0.35g × 10 per box · REF OPT002\nMicrobial barrier in\n10 seconds",
+      "description": "LiquiBand® Optima is a topical skin adhesive that forms a microbial barrier in just 10 seconds. It takes the sting out of wound closure by replacing sutures and staples for superficial skin lacerations.",
+      "images": [
+        {
+          "url": "/assets/products/lb_optima-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/lb_optima-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Microbial barrier in 10 seconds",
+        "Replaces sutures and staples for superficial wounds",
+        "Flexible precision applicator",
+        "Strong wound closure without patient discomfort",
+        "Easy to apply — no needles required",
+        "Sterile, single-use applicator"
+      ],
+      "specifications": [
+        {
+          "name": "Size",
+          "value": "0.35g per applicator"
+        },
+        {
+          "name": "Qty per Box",
+          "value": "10 × 0.35g"
+        },
+        {
+          "name": "REF",
+          "value": "OPT002"
+        },
+        {
+          "name": "Type",
+          "value": "Topical Skin Adhesive"
+        }
+      ],
+      "applications": [
+        "Superficial skin lacerations",
+        "Emergency department wound closure",
+        "Paediatric wound closure",
+        "Post-operative wound support",
+        "Laceration closure in place of sutures or staples"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 18,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.801Z"
+    },
+    {
+      "_id": "5facd1682343d412680ea63c",
+      "createdAt": "2026-11-07T14:49:31.921Z",
+      "slug": "liquiband-exceed",
+      "legacyId": "lb_exceed",
+      "name": "LiquiBand® Exceed™",
+      "brand": "a442964e0705299d0edebdfd",
+      "category": "e93935d6019c0b920303264a",
+      "cardCategory": "Topical Adhesive · Precision Delivery",
+      "detailCategory": "Topical Skin Adhesive · LiquiBand® Exceed™",
+      "shortSpecification": "XS (0.4g, 7cm yield) / Standard (0.8g, 30cm)\n99.5%\nantimicrobial barrier over 3 days",
+      "description": "LiquiBand® Exceed™ Range offers improved precision and controlled delivery with innovative tip design. Available in XS (small incisions) and standard (medium to long incisions) — with 99.5% antimicrobial barrier over 3 days and 97.9% over 7 days.",
+      "images": [
+        {
+          "url": "/assets/products/lb_exceed-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/lb_exceed-2.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Improved precision and controlled delivery tip design",
+        "99.5% antimicrobial barrier over 3 days",
+        "97.9% antimicrobial barrier over 7 days",
+        "Wound closure strength 9.41N (vs Dermabond 9.33N)",
+        "Exceed XS: 7cm yield, no clog tip — ideal for small incisions",
+        "Exceed Standard: 30cm yield, 90 min intraoperative reuse"
+      ],
+      "specifications": [
+        {
+          "name": "LiquiBand Exceed XS",
+          "value": "Size 0.4g, Qty 6 per box, Code 72014020"
+        },
+        {
+          "name": "LiquiBand Exceed Standard",
+          "value": "Size 0.8g, Qty 6 per box, Code 72014002"
+        },
+        {
+          "name": "Antimicrobial Barrier",
+          "value": "Protection against Gram positive, Gram negative bacteria and fungi"
+        },
+        {
+          "name": "Standard",
+          "value": "ASTM F2458-05 Wound Closure Strength"
+        }
+      ],
+      "applications": [
+        "Small incisions and laparoscopic port sites (Exceed XS)",
+        "Medium to long surgical incisions (Exceed Standard)",
+        "Post-operative wound protection",
+        "Wound closure in outpatient and OR settings",
+        "Paediatric wound care"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 19,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.804Z"
+    },
+    {
+      "_id": "fc6080670231c297a72b2d4a",
+      "createdAt": "2026-11-07T14:49:31.924Z",
+      "slug": "liquiband-fix8",
+      "legacyId": "fix8",
+      "name": "LiquiBand® FIX8®",
+      "brand": "a442964e0705299d0edebdfd",
+      "category": "eb6de5974e0ec833f8bb2e5f",
+      "cardCategory": "Surgical Device · Laparoscopic",
+      "detailCategory": "Surgical Device · Laparoscopic Hernia Mesh Fixation",
+      "shortSpecification": "Liquid anchor fixation · New atraumatic tip\nVentral\n& Incisional Hernia",
+      "description": "LiquiBand® FIX8® is a laparoscopic hernia mesh fixation device using innovative liquid anchors to deliver strong, atraumatic mesh fixation. Low incidence of post-operative pain compared to mechanical tacks.",
+      "images": [
+        {
+          "url": "/assets/products/fix8-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "New Atraumatic Tip Design — non-sticking, reduces tissue trauma",
+        "Enhanced Anchor Delivery with controlled dispensing trigger",
+        "Peritoneum Closure capability",
+        "Quantity Indicator for confident application",
+        "Ergonomic Design for precise handling",
+        "New Tinted Adhesive for improved visibility",
+        "Higher shear strength vs advanced tacking devices",
+        "Fast Set Time"
+      ],
+      "specifications": [
+        {
+          "name": "Device Type",
+          "value": "Laparoscopic Hernia Mesh Fixation"
+        },
+        {
+          "name": "Anchors",
+          "value": "Liquid n-butyl-2-cyanoacrylate"
+        },
+        {
+          "name": "Incidence of Post-Op Pain",
+          "value": "Low (clinical study n=20)"
+        },
+        {
+          "name": "Applicators",
+          "value": "Non-sticking tip, Quantity indicator, Controlled delivery trigger"
+        },
+        {
+          "name": "Indicated for",
+          "value": "Ventral & Incisional Hernia"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        }
+      ],
+      "applications": [
+        "Ventral hernia mesh fixation (laparoscopic)",
+        "Incisional hernia repair",
+        "Peritoneum closure following hernia repair",
+        "TAPP and TEP hernia repair",
+        "Mesh fixation at multiple angles"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 20,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.806Z"
+    },
+    {
+      "_id": "bd8403983ce6c155e77a213b",
+      "createdAt": "2026-11-07T14:49:31.926Z",
+      "slug": "cutimed-sorbact",
+      "legacyId": "cutimed_sorbact",
+      "name": "Cutimed® Sorbact®",
+      "brand": "174cfc5a46c3f32f366f01f2",
+      "category": "f54e7074526254eddae12e54",
+      "cardCategory": "Wound Dressing · DACC Technology",
+      "detailCategory": "Wound Dressing · Infection Management · DACC Technology",
+      "shortSpecification": "73.1% bacterial reduction in 4 days\nNo antimicrobial\nagents released",
+      "description": "Cutimed® Sorbact® is a clinically proven antibiotic-free wound dressing that uses a purely physical mode of action — DACC technology — to bind and remove bacteria and fungi. Up to 73.1% bacterial reduction in 4 days.",
+      "images": [
+        {
+          "url": "/assets/products/cutimed_sorbact-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Purely physical mode of action — no antimicrobials released",
+        "73.1% bacterial reduction in critically colonised wounds within 4 days",
+        "No known contraindications — safe for all patient groups",
+        "Low risk of allergies",
+        "No known mechanism of antimicrobial resistance",
+        "All-round infection management from superficial to deep wounds"
+      ],
+      "specifications": [
+        {
+          "name": "Technology",
+          "value": "DACC (Dialkylcarbamoyl Chloride)"
+        },
+        {
+          "name": "Action",
+          "value": "Purely Physical — bacteria bind to dressing surface"
+        },
+        {
+          "name": "Bacterial Reduction",
+          "value": "Up to 73.1% in 4 days"
+        },
+        {
+          "name": "Available",
+          "value": "Absorption dressing, Ribbon gauze, Gel dressing, Foam, NPWT"
+        },
+        {
+          "name": "Sterilization",
+          "value": "EO"
+        }
+      ],
+      "applications": [
+        "Critically colonised and infected chronic wounds",
+        "Venous leg ulcers and diabetic foot ulcers",
+        "Pressure ulcers",
+        "Post-operative wound infection prevention",
+        "Cavity wounds (ribbon gauze)",
+        "Dry sloughy wounds (gel dressing)"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 21,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.809Z"
+    },
+    {
+      "_id": "08005d029fabfddb03de796e",
+      "createdAt": "2026-11-07T14:49:31.930Z",
+      "slug": "cutimed-siltec-sorbact",
+      "legacyId": "cutimed_siltec",
+      "name": "Cutimed® Siltec® Sorbact®",
+      "brand": "174cfc5a46c3f32f366f01f2",
+      "category": "f54e7074526254eddae12e54",
+      "cardCategory": "Silicone Foam · DACC Technology",
+      "detailCategory": "Silicone Foam Dressing · Infection Management · DACC Technology",
+      "shortSpecification": "Super-absorbent · Silicone border\nModerate to high\nexudate",
+      "description": "Cutimed® Siltec® Sorbact® combines Siltec® foam technology with Sorbact® antimicrobial action. Super-absorbent particles absorb moderate to high exudate even under compression — with the highest fluid retention of all tested products.",
+      "images": [
+        {
+          "url": "/assets/products/cutimed_siltec-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Dual action: superior absorption AND infection management",
+        "Highest retention under compression (lab test 2011)",
+        "Sorbact® wound contact layer physically removes bacteria",
+        "Gentle silicone fixation border — atraumatic dressing changes",
+        "Dynamic MVTR — moisture balance maintained",
+        "Super-absorbent hot-melt stripes for vertical absorption"
+      ],
+      "specifications": [
+        {
+          "name": "Technology",
+          "value": "Siltec® Foam + Sorbact® DACC"
+        },
+        {
+          "name": "Fluid Retention",
+          "value": "Highest under compression of all tested products"
+        },
+        {
+          "name": "Border",
+          "value": "Gentle silicone adhesive border"
+        },
+        {
+          "name": "Film",
+          "value": "Moisture-balancing breathable PU film"
+        },
+        {
+          "name": "Indication",
+          "value": "Moderate to high exudate, shallow wounds"
+        },
+        {
+          "name": "Sizes",
+          "value": "3×3 in to Sacrum 9×9 in"
+        }
+      ],
+      "applications": [
+        "Venous leg ulcers with moderate to high exudate",
+        "Diabetic foot ulcers",
+        "Pressure ulcers",
+        "Post-operative and trauma wounds",
+        "Colonised, contaminated or infected shallow wounds",
+        "Secondary absorbent dressing for deeper wounds"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 22,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.812Z"
+    },
+    {
+      "_id": "22b11d55a81d4518db5f3445",
+      "createdAt": "2026-11-07T14:49:31.933Z",
+      "slug": "genta-coll-resorb",
+      "legacyId": "gentacoll",
+      "name": "Genta-Coll® resorb",
+      "brand": "2748e2cc45786d848ccbcb18",
+      "category": "1284f1c2c7f8e3b6df857379",
+      "cardCategory": "Resorbable · Collagen + Gentamicin",
+      "detailCategory": "Haemostasis · Resorbable Collagen Sponge · Antibiotic",
+      "shortSpecification": "Equine collagen · Completely absorbable\nSizes:\n2.5×2.5cm to 5×20cm",
+      "description": "Genta-Coll® resorb is a haemostatic collagen sponge containing gentamicin sulphate to protect the implant from infection. Made from equine collagen — completely absorbable with strong haemostyptic action.",
+      "images": [
+        {
+          "url": "/assets/products/gentacoll-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/gentacoll-2.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gentacoll-3.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gentacoll-4.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Haemostatic: platelets aggregate on collagen fibres triggering coagulation",
+        "Completely resorbable — no second operation needed",
+        "Antibiotic protection: gentamicin sulphate (broad spectrum aminoglycoside)",
+        "Malleable — can be rolled, folded or cut to smaller pieces",
+        "Ideal carrier for fibrin glue",
+        "Highly absorbant — stable in moist milieu of wounds",
+        "Reduces risk of bacterial colonisation and haematoma formation"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Equine Collagen Sponge + Gentamicin Sulphate"
+        },
+        {
+          "name": "Absorbability",
+          "value": "Completely absorbable"
+        },
+        {
+          "name": "Sizes",
+          "value": "2.5×2.5cm (GC25), 5×5cm (GC5S/GC1S), 10×10cm (GC510/GC110), 5×20cm (GC1520)"
+        },
+        {
+          "name": "Pack",
+          "value": "5 Sponges (GC25, GC5S, GC510) or 1 Sponge (GC125, GC1S, GC110, GC1520)"
+        },
+        {
+          "name": "Properties",
+          "value": "Haemostatic, Resorbable, Antibiotic, Malleable, Highly absorbant"
+        }
+      ],
+      "applications": [
+        "Clean and contaminated wounds",
+        "Septic surgery and revision procedures",
+        "High infection risk surgical sites",
+        "Cardiac surgery — sternal wound complications",
+        "Caesarean section — SSI prevention",
+        "Orthopaedic surgery",
+        "As carrier for fibrin glue"
+      ],
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 23,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.814Z"
+    },
+    {
+      "_id": "e32f82a7043e8651787d3283",
+      "createdAt": "2026-11-07T14:49:31.936Z",
+      "slug": "gore-bio-a-tissue-reinforcement",
+      "legacyId": "gore_bioa",
+      "name": "GORE® BIO-A® Tissue Reinforcement",
+      "brand": "3f6ee4170b954093815e47a5",
+      "category": "81773e70be835ab40127286f",
+      "cardCategory": "Absorbable · 100% Synthetic Tissue Scaffold",
+      "detailCategory": "Absorbable Biomaterial · 100% Synthetic Tissue Reinforcement",
+      "shortSpecification": "PGA:TMC · Bioabsorbable · 10 Years Clinical\nResults\nMatrix for tissue generation & healing",
+      "description": "GORE® BIO-A® Tissue Reinforcement is a uniquely designed web of biocompatible synthetic polymers (PGA:TMC) that is gradually absorbed by the body. Its 3D matrix of open, highly interconnected pores facilitates cell infiltration and tissue generation — leaving no permanent material behind. Backed by more than 20 years of research and clinical use.",
+      "images": [
+        {
+          "url": "/assets/products/gore_bioa-1.png",
+          "publicId": "",
+          "isPrimary": true
+        }
+      ],
+      "cardBg": "#f5f5f0",
+      "features": [
+        "100% synthetic, bioabsorbable tissue scaffold — no human or animal tissue",
+        "Open, highly porous 3D web structure — similar to collagen fibre network",
+        "Rapid cell population and vascularisation within 1–2 weeks",
+        "Replaced 1:1 with patient's own native type I collagen",
+        "Absorbed by body over approximately 6–7 months (primarily by hydrolysis)",
+        "No soaking, refrigeration, or special tracking required",
+        "Trimmable — available in sizes up to 20 cm × 30 cm",
+        "Three-year shelf life",
+        "10 years of positive clinical results"
+      ],
+      "specifications": [
+        {
+          "name": "Material",
+          "value": "Poly(glycolide:trimethylene carbonate) — PGA:TMC synthetic fibres"
+        },
+        {
+          "name": "Structure",
+          "value": "Open, highly interconnected 3D porous web"
+        },
+        {
+          "name": "Absorption",
+          "value": "Gradual absorption over 6–7 months via hydrolysis"
+        },
+        {
+          "name": "Sizes",
+          "value": "HH0710E (7×10cm*), FS0808E (8×8cm), FS0915E (9×15cm), FS1030E (10×30cm), FS2020E (20×20cm), FS2030E (20×30cm)"
+        },
+        {
+          "name": "",
+          "value": "* HH0710E configured for hiatal hernia repair"
+        },
+        {
+          "name": "Sterilisation",
+          "value": "Sterile, ready to use — no pre-soaking required"
+        },
+        {
+          "name": "Shelf Life",
+          "value": "Three years"
+        },
+        {
+          "name": "Manufacturer",
+          "value": "W.L. Gore & Associates"
+        }
+      ],
+      "applications": [
+        "Paraesophageal / hiatal hernia repair (onlay following primary closure of crura)",
+        "Abdominal wall reconstruction (suture line reinforcement following midline closure)",
+        "Ventral / incisional hernia repair",
+        "Soft tissue reinforcement in: Mouth, Colon, Stomach, Lungs, Liver, Pancreas, Spleen",
+        "Components separation technique for ventral hernia"
+      ],
+      "brochure": {
+        "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
+        "publicId": "",
+        "filename": "GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+      },
+      "isActive": true,
+      "displayOrder": 24,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.817Z",
+      "lastViewedAt": "2026-11-07T14:50:42.316Z",
+      "viewCount": 1
+    },
+    {
+      "_id": "ccfd048dd7096e59f93a02b9",
+      "createdAt": "2026-11-07T14:49:31.939Z",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "legacyId": "gore_synecor_ip",
+      "name": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "brand": "3f6ee4170b954093815e47a5",
+      "category": "81773e70be835ab40127286f",
+      "cardCategory": "Intraperitoneal · Tri-layer Hybrid Biomaterial",
+      "detailCategory": "Intraperitoneal Biomaterial · Tri-layer Hybrid · PTFE + PGA:TMC",
+      "shortSpecification": "PTFE + PGA:TMC · Permanent Strength · VHWG Grade\n2\nMaterial innovation for permanent strength",
+      "description": "GORE® SYNECOR Intraperitoneal Biomaterial is a tri-layer hybrid solution designed for durable repair in complex patients (VHWG Grade 2). It combines a GORE 3D PGA:TMC Web Scaffold for rapid vascularisation, a macroporous PTFE knit for permanent strength, and a non-porous PGA:TMC film to minimise visceral attachment. Burst strength >500 N — designed to provide strength for large defects and higher BMIs.",
+      "images": [
+        {
+          "url": "/assets/products/gore_synecor_ip-1.png",
+          "publicId": "",
+          "isPrimary": true
+        },
+        {
+          "url": "/assets/products/gore_synecor_ip-2.png",
+          "publicId": "",
+          "isPrimary": false
+        },
+        {
+          "url": "/assets/products/gore_synecor_ip-3.png",
+          "publicId": "",
+          "isPrimary": false
+        }
+      ],
+      "cardBg": "#f5f5f0",
+      "features": [
+        "Tri-layer hybrid design: GORE 3D PGA:TMC Web Scaffold + Macroporous PTFE knit + Non-porous PGA:TMC film",
+        "Permanent strength: Burst strength >500 N (nearly 2× the strength requirement for bridging ventral hernia repair)",
+        "PTFE knit — latest generation macroporous fibre designed for permanent strength",
+        "PTFE knit had least bacterial adherence vs competitive polypropylene knits (S. aureus study)",
+        "Rapid vascularisation: vascularity within 7 days, tissue ingrowth at 30 days, tissue generation at 180 days",
+        "Non-porous PGA:TMC film minimises visceral attachment — no adhesion complications at 12 months clinically",
+        "Minimal contraction: -5.1% at 31 days, -6.6% at 180 days (animal studies)",
+        "Flexible and conformable — material memory for easy unrolling and optimal placement",
+        "No pre-soaking needed (may be dipped in sterile saline to facilitate handling)",
+        "MRI and CT compatible — PTFE visible in high-resolution imaging",
+        "100% synthetic — no human, animal or tissue-derived materials"
+      ],
+      "specifications": [
+        {
+          "name": "Structure",
+          "value": "Tri-layer hybrid biomaterial"
+        },
+        {
+          "name": "Layer 1 (Parietal)",
+          "value": "GORE 3D PGA:TMC Web Scaffold — Poly(glycolide:trimethylene carbonate)"
+        },
+        {
+          "name": "Layer 2 (Mid)",
+          "value": "Macroporous PTFE knit — dense monofilament PTFE fibre, pore size 1–3 mm"
+        },
+        {
+          "name": "Layer 3 (Visceral)",
+          "value": "Non-porous PGA:TMC film — absorbs in 6–7 months"
+        },
+        {
+          "name": "Burst Strength",
+          "value": ">500 N (578 N at 1.59 mm min. pore size)"
+        },
+        {
+          "name": "Contraction",
+          "value": "-5.1% at 31 days / -6.6% at 180 days"
+        },
+        {
+          "name": "Sizes",
+          "value": "GKFC12E (12cm circle), GKFV1015E (10×15cm oval), GKFV1520E (15×20cm oval), GKFR2025E (20×25cm rect.), GKFR2030E (20×30cm rect.)"
+        },
+        {
+          "name": "Procedures",
+          "value": "Laparoscopic, Robotic, and Open surgical approaches"
+        },
+        {
+          "name": "Manufacturer",
+          "value": "W.L. Gore & Associates"
+        }
+      ],
+      "applications": [
+        "Ventral hernia repair — complex patients VHWG Grade 2",
+        "Incisional hernia repair — large defects and higher BMIs",
+        "Laparoscopic ventral hernia repair (intraperitoneal placement: 75.6% in clinical study)",
+        "Robotic hernia repair",
+        "Open hernia repair",
+        "Complex abdominal wall reconstruction"
+      ],
+      "brochure": {
+        "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
+        "publicId": "",
+        "filename": "GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+      },
+      "isActive": true,
+      "displayOrder": 25,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.819Z"
+    },
+    {
+      "_id": "0db020af8fe0d1029ad8be82",
+      "legacyId": "test-cloudinary-product",
+      "name": "Temporary Cloudinary Test Product",
+      "slug": "test-cloudinary-product-1794224354197",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "shortSpecification": "Test medical sample item for Cloudinary validation",
+      "description": "Automated test record. Will be cleaned up immediately.",
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png",
+          "publicId": "sriyas/test/file_lko3ih",
+          "format": "png",
+          "width": 1,
+          "height": 1,
+          "bytes": 95,
+          "isPrimary": true
+        }
+      ],
+      "isActive": false,
+      "createdAt": "2026-11-09T11:39:14.198Z",
+      "updatedAt": "2026-11-09T11:39:14.198Z",
+      "deletedAt": null,
+      "viewCount": 0,
+      "displayOrder": 0
+    },
+    {
+      "_id": "f460cd7888063789bc70d7b8",
+      "legacyId": "audit-upload-prod",
+      "name": "Audit Upload Sample Product",
+      "slug": "audit-prod-1794225499391",
+      "brand": "3cdaf38cd6ec21cb2897de48",
+      "category": "80f8a373a28951b30452530c",
+      "shortSpecification": "Temporary item for testing multipart uploads",
+      "description": "Audit test record",
+      "isActive": false,
+      "createdAt": "2026-11-09T11:58:19.393Z",
+      "updatedAt": "2026-11-09T11:58:19.393Z",
+      "deletedAt": null,
+      "viewCount": 0,
+      "displayOrder": 0
+    }
+  ],
+  "Admin": [
+    {
+      "_id": "882a615e46c975912fe014be",
+      "name": "Sriyas Healthcare Admin",
+      "email": "admin@sriyashealthcare.com",
+      "passwordHash": "$2a$12$/lkMhNNHivZyUqfpapqJ2O7U/EG3KPH2DMdXUxLlEIk.lq1INmATC",
+      "role": "superadmin",
+      "isActive": true,
+      "createdAt": "2026-11-07T14:49:31.805Z",
+      "updatedAt": "2026-11-15T10:05:32.787Z",
+      "lastLoginAt": "2026-11-15T10:05:32.785Z"
+    }
+  ],
+  "ProductView": [
+    {
+      "_id": "7a33962701702f7e6371a471",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productSlug": "i-col",
+      "productName": "I-Col™",
+      "brandId": "3cdaf38cd6ec21cb2897de48",
+      "brandName": "Peters Surgical",
+      "categoryId": "80f8a373a28951b30452530c",
+      "categoryName": "Synthetic Absorbable Sutures",
+      "visitorSessionId": "vis_test_session_101",
+      "viewedAt": "2026-11-07T14:50:42.308Z",
+      "source": "brand:peters",
+      "createdAt": "2026-11-07T14:50:42.309Z",
+      "updatedAt": "2026-11-07T14:50:42.309Z"
+    },
+    {
+      "_id": "e748c6b2f764dbfebd80c4e3",
+      "productId": "e32f82a7043e8651787d3283",
+      "productSlug": "gore-bio-a-tissue-reinforcement",
+      "productName": "GORE® BIO-A® Tissue Reinforcement",
+      "brandId": "3f6ee4170b954093815e47a5",
+      "brandName": "W.L. Gore & Associates",
+      "categoryId": "81773e70be835ab40127286f",
+      "categoryName": "Absorbable Biomaterials & Tissue Reinforcement",
+      "visitorSessionId": "vis_test_session_202",
+      "viewedAt": "2026-11-07T14:50:42.316Z",
+      "source": "brand:gore",
+      "createdAt": "2026-11-07T14:50:42.316Z",
+      "updatedAt": "2026-11-07T14:50:42.316Z"
+    },
+    {
+      "_id": "ab0eabbc3c55d6e76a92f95f",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productSlug": "i-col",
+      "productName": "I-Col™",
+      "brandId": "3cdaf38cd6ec21cb2897de48",
+      "brandName": "Peters Surgical",
+      "categoryId": "80f8a373a28951b30452530c",
+      "categoryName": "Synthetic Absorbable Sutures",
+      "visitorSessionId": "vis_test_session_202",
+      "viewedAt": "2026-11-07T14:50:42.321Z",
+      "source": "search",
+      "createdAt": "2026-11-07T14:50:42.322Z",
+      "updatedAt": "2026-11-07T14:50:42.322Z"
+    }
+  ],
+  "CustomerEnquiry": [
+    {
+      "_id": "14357eadd644f8aeb256f3cb",
+      "name": "Dr. Ramesh Kumar",
+      "phone": "+91 98400 12345",
+      "email": "dr.ramesh@apollohospitals.org",
+      "company": "Apollo Hospitals Chennai",
+      "productOfInterest": {
+        "productId": null,
+        "productName": "",
+        "productSlug": ""
+      },
+      "subject": "Inquiry for General Surgery OT Supplies",
+      "message": "Requesting formal quotation for 50 boxes of Filbloc 90.",
+      "sourcePage": "/products/filbloc",
+      "visitorSessionId": "",
+      "status": "new",
+      "priority": "medium",
+      "ipHash": "eff8e7ca506627fe",
+      "createdAt": "2026-11-09T11:57:06.970Z",
+      "updatedAt": "2026-11-09T11:57:06.970Z"
+    },
+    {
+      "_id": "88859b982c2bbb2fee5cdc53",
+      "name": "Dr. Ramesh Kumar",
+      "phone": "+91 98400 12345",
+      "email": "dr.ramesh@apollohospitals.org",
+      "company": "Apollo Hospitals Chennai",
+      "productOfInterest": {
+        "productId": null,
+        "productName": "",
+        "productSlug": ""
+      },
+      "subject": "Inquiry for General Surgery OT Supplies",
+      "message": "Requesting formal quotation for 50 boxes of Filbloc 90.",
+      "sourcePage": "/products/filbloc",
+      "visitorSessionId": "",
+      "status": "new",
+      "priority": "medium",
+      "ipHash": "eff8e7ca506627fe",
+      "createdAt": "2026-11-09T11:58:09.345Z",
+      "updatedAt": "2026-11-09T11:58:09.345Z"
+    },
+    {
+      "_id": "99afe294233073a5d2e6c626",
+      "name": "Dr. Ananya Sharma",
+      "phone": "+91 98888 77777",
+      "email": "ananya.sharma@aims.test",
+      "company": "AIIMS New Delhi",
+      "productOfInterest": {
+        "productId": "35f7e506ecf50cea69f776b0",
+        "productName": "I-Col™",
+        "productSlug": "i-col",
+        "brandName": "Peters Surgical"
+      },
+      "brandOfInterest": {
+        "brandId": "3cdaf38cd6ec21cb2897de48",
+        "brandName": "Peters Surgical",
+        "brandSlug": "peters"
+      },
+      "subject": "Enquiry for I-Col™",
+      "message": "Urgent procurement request for pediatric cardiovascular surgery unit. Need sterile sutures brochure and institutional quote.",
+      "sourcePage": "/products/peters/i-col",
+      "enquirySource": "Floating Product Enquiry Widget",
+      "visitorSessionId": "ses_mwhiaxtj_pddqspy",
+      "status": "new",
+      "priority": "medium",
+      "ipHash": "12ca17b49af22894",
+      "createdAt": "2026-11-15T07:22:07.139Z",
+      "updatedAt": "2026-11-15T07:22:07.139Z"
+    }
+  ],
+  "AdminNote": [],
+  "AnalyticsVisitor": [
+    {
+      "_id": "6d94391e1c7a5b67e7ebdbed",
+      "createdAt": "2026-11-15T06:07:05.979Z",
+      "visitorId": "vis_mwhfmrbb_lx932dy",
+      "lastVisitAt": "2026-11-15T06:07:05.976Z",
+      "sessionCount": 1,
+      "updatedAt": "2026-11-15T06:07:05.979Z"
+    },
+    {
+      "_id": "79f0d4336f4db03ad45a2f8a",
+      "createdAt": "2026-11-15T06:07:15.788Z",
+      "visitorId": "vis_mwhfmywu_40twxgt",
+      "lastVisitAt": "2026-11-15T06:07:15.784Z",
+      "sessionCount": 1,
+      "updatedAt": "2026-11-15T06:07:15.788Z"
+    },
+    {
+      "_id": "ebbfb5371b94a7f47e8647b3",
+      "createdAt": "2026-11-15T06:07:28.668Z",
+      "visitorId": "vis_mwhfn8uu_pa2xsne",
+      "lastVisitAt": "2026-11-15T06:07:28.666Z",
+      "sessionCount": 1,
+      "updatedAt": "2026-11-15T06:07:28.668Z"
+    },
+    {
+      "_id": "0554b02aca9ac914473ccad1",
+      "createdAt": "2026-11-15T06:08:00.485Z",
+      "visitorId": "vis_mwhfnxel_pkgl3j9",
+      "lastVisitAt": "2026-11-15T06:08:00.484Z",
+      "sessionCount": 1,
+      "updatedAt": "2026-11-15T06:08:00.485Z"
+    },
+    {
+      "_id": "819cd55bd8a241aa35406fab",
+      "createdAt": "2026-11-15T06:09:23.000Z",
+      "visitorId": "vis_mwhfpp2r_g8lwann",
+      "lastVisitAt": "2026-11-15T06:09:22.998Z",
+      "sessionCount": 1,
+      "updatedAt": "2026-11-15T06:09:23.000Z"
+    },
+    {
+      "_id": "e33d29dcba74aa99c4e3c1a2",
+      "createdAt": "2026-11-15T06:10:40.580Z",
+      "visitorId": "vis_mwhfrcxo_xe9ddds",
+      "lastVisitAt": "2026-11-15T06:19:15.871Z",
+      "sessionCount": 4,
+      "updatedAt": "2026-11-15T06:19:15.873Z"
+    },
+    {
+      "_id": "081e1aed237d768e18cec39e",
+      "createdAt": "2026-11-15T07:20:41.223Z",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "lastVisitAt": "2026-11-15T10:05:43.804Z",
+      "sessionCount": 5,
+      "updatedAt": "2026-11-15T10:05:43.806Z"
+    }
+  ],
+  "AnalyticsSession": [
+    {
+      "_id": "d8dcdbd223cbd7bc2d055016",
+      "createdAt": "2026-11-15T06:07:05.988Z",
+      "sessionId": "ses_mwhfmrbb_83lol5v",
+      "lastActivityAt": "2026-11-15T06:07:05.976Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:07:05.988Z"
+    },
+    {
+      "_id": "c7e9891faacea8edaf48a3aa",
+      "createdAt": "2026-11-15T06:07:15.804Z",
+      "sessionId": "ses_mwhfmywu_18rvhng",
+      "lastActivityAt": "2026-11-15T06:07:15.784Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:07:15.804Z"
+    },
+    {
+      "_id": "4e4a5fa1499678997904b524",
+      "createdAt": "2026-11-15T06:07:28.672Z",
+      "sessionId": "ses_mwhfn8uu_9znxdu2",
+      "lastActivityAt": "2026-11-15T06:07:28.666Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:07:28.672Z"
+    },
+    {
+      "_id": "f41bccd78fc6ff8b113ffec6",
+      "createdAt": "2026-11-15T06:08:00.489Z",
+      "sessionId": "ses_mwhfnxel_j3ltvs7",
+      "lastActivityAt": "2026-11-15T06:08:00.484Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:08:00.489Z"
+    },
+    {
+      "_id": "bd035faa3c854fdf9778719c",
+      "createdAt": "2026-11-15T06:09:23.004Z",
+      "sessionId": "ses_mwhfpp2r_4zyh5v9",
+      "lastActivityAt": "2026-11-15T06:09:22.998Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:09:23.004Z"
+    },
+    {
+      "_id": "191b82a0d4d2b68fcebb7f1c",
+      "createdAt": "2026-11-15T06:10:40.585Z",
+      "sessionId": "ses_mwhfrcxp_4dphptf",
+      "lastActivityAt": "2026-11-15T06:10:40.576Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:10:40.585Z"
+    },
+    {
+      "_id": "d15cdde2ba79efb6de23dfe9",
+      "createdAt": "2026-11-15T06:13:56.379Z",
+      "sessionId": "ses_mwhfvk0c_iwqkk8m",
+      "lastActivityAt": "2026-11-15T06:13:56.371Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:13:56.379Z"
+    },
+    {
+      "_id": "82841080a36f42a83dbe92af",
+      "createdAt": "2026-11-15T06:16:39.348Z",
+      "sessionId": "ses_mwhfz1r7_dxlkvrl",
+      "lastActivityAt": "2026-11-15T06:16:39.337Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:16:39.348Z"
+    },
+    {
+      "_id": "a5d6b0a26cd057101b48b683",
+      "createdAt": "2026-11-15T06:19:15.880Z",
+      "sessionId": "ses_mwhg2eje_drd15db",
+      "lastActivityAt": "2026-11-15T06:19:15.871Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T06:19:15.880Z"
+    },
+    {
+      "_id": "c0a696cfdaefdd9262040997",
+      "createdAt": "2026-11-15T07:20:41.227Z",
+      "sessionId": "ses_mwhi9e5d_yfr0bmq",
+      "lastActivityAt": "2026-11-15T07:20:41.222Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T07:20:41.227Z"
+    },
+    {
+      "_id": "ab78dba417e78b900bacf2dd",
+      "createdAt": "2026-11-15T07:21:53.356Z",
+      "sessionId": "ses_mwhiaxtj_pddqspy",
+      "lastActivityAt": "2026-11-15T07:21:53.350Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T07:21:53.356Z"
+    },
+    {
+      "_id": "1aacd5862f257f71f598d330",
+      "createdAt": "2026-11-15T07:37:27.315Z",
+      "sessionId": "ses_mwhiuyh6_n7v23qf",
+      "lastActivityAt": "2026-11-15T07:37:27.310Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T07:37:27.315Z"
+    },
+    {
+      "_id": "0f328c221b6545a682bfca02",
+      "createdAt": "2026-11-15T07:40:49.003Z",
+      "sessionId": "ses_mwhiza3r_msfgvj4",
+      "lastActivityAt": "2026-11-15T07:40:48.998Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T07:40:49.003Z"
+    },
+    {
+      "_id": "b57da1e65f8ec1065809ec71",
+      "createdAt": "2026-11-15T10:05:43.810Z",
+      "sessionId": "ses_mwho5n20_5n7vm7u",
+      "lastActivityAt": "2026-11-15T10:05:43.804Z",
+      "exitPage": "/",
+      "updatedAt": "2026-11-15T10:05:43.810Z"
+    }
+  ],
+  "AnalyticsEvent": [
+    {
+      "_id": "8c5e92f9db3be93f6559c059",
+      "eventId": "evt_1794727250923_38e4ba",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwhi9e5d_yfr0bmq",
+      "eventType": "product_view",
+      "pagePath": "/products/peters/i-col",
+      "pageTitle": "I-Col™ | Sriyas Healthcare Pvt Ltd",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productNameSnapshot": "I-Col™",
+      "productSlugSnapshot": "i-col",
+      "brandNameSnapshot": "Peters Surgical",
+      "categoryNameSnapshot": "Synthetic Absorbable Sutures",
+      "metadata": {
+        "source": "brand:peters"
+      },
+      "timestamp": "2026-11-15T07:20:50.923Z",
+      "createdAt": "2026-11-15T07:20:50.926Z",
+      "updatedAt": "2026-11-15T07:20:50.926Z"
+    },
+    {
+      "_id": "9071653744be46da06ca9e25",
+      "eventId": "evt_1794727323193_ed30e4",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwhiaxtj_pddqspy",
+      "eventType": "product_view",
+      "pagePath": "/products/peters/i-col",
+      "pageTitle": "I-Col™ | Sriyas Healthcare Pvt Ltd",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productNameSnapshot": "I-Col™",
+      "productSlugSnapshot": "i-col",
+      "brandNameSnapshot": "Peters Surgical",
+      "categoryNameSnapshot": "Synthetic Absorbable Sutures",
+      "metadata": {
+        "source": "brand:peters"
+      },
+      "timestamp": "2026-11-15T07:22:03.193Z",
+      "createdAt": "2026-11-15T07:22:03.196Z",
+      "updatedAt": "2026-11-15T07:22:03.196Z"
+    },
+    {
+      "_id": "535d889681b85c729e68ef1d",
+      "eventId": "evt_1794727327140_59b9c4f0",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwhiaxtj_pddqspy",
+      "eventType": "enquiry_submit",
+      "pagePath": "/products/peters/i-col",
+      "pageTitle": "Customer Enquiry Submitted",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productNameSnapshot": "I-Col™",
+      "metadata": {
+        "enquiryId": "99afe294233073a5d2e6c626",
+        "enquirySource": "Floating Product Enquiry Widget"
+      },
+      "createdAt": "2026-11-15T07:22:07.143Z",
+      "updatedAt": "2026-11-15T07:22:07.143Z"
+    },
+    {
+      "_id": "21bc3d3940a017776c40302d",
+      "eventId": "evt_1794737148732_078e20",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwho5n20_5n7vm7u",
+      "eventType": "product_view",
+      "pagePath": "/products/peters/i-col",
+      "pageTitle": "Sriyas Healthcare Pvt Ltd | Advanced Surgical & Medical Solutions",
+      "productId": "35f7e506ecf50cea69f776b0",
+      "productNameSnapshot": "I-Col™",
+      "productSlugSnapshot": "i-col",
+      "brandNameSnapshot": "Peters Surgical",
+      "categoryNameSnapshot": "Synthetic Absorbable Sutures",
+      "metadata": {
+        "source": "brand:peters"
+      },
+      "timestamp": "2026-11-15T10:05:48.732Z",
+      "createdAt": "2026-11-15T10:05:48.737Z",
+      "updatedAt": "2026-11-15T10:05:48.737Z"
+    },
+    {
+      "_id": "48b2cccaee51a5ec3b57633f",
+      "eventId": "evt_1794737151627_8881e7",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwho5n20_5n7vm7u",
+      "eventType": "page_view",
+      "pagePath": "/contact",
+      "pageTitle": "Contact Us",
+      "productId": null,
+      "productNameSnapshot": "",
+      "productSlugSnapshot": "",
+      "brandNameSnapshot": "",
+      "categoryNameSnapshot": "",
+      "metadata": {},
+      "timestamp": "2026-11-15T10:05:51.627Z",
+      "createdAt": "2026-11-15T10:05:51.630Z",
+      "updatedAt": "2026-11-15T10:05:51.630Z"
+    },
+    {
+      "_id": "c29e248004a89296d40cf5e7",
+      "eventId": "evt_1794737151642_471636",
+      "visitorId": "vis_mwhi9e5d_u2aba77",
+      "sessionId": "ses_mwho5n20_5n7vm7u",
+      "eventType": "page_view",
+      "pagePath": "/contact",
+      "pageTitle": "Contact Us",
+      "productId": null,
+      "productNameSnapshot": "",
+      "productSlugSnapshot": "",
+      "brandNameSnapshot": "",
+      "categoryNameSnapshot": "",
+      "metadata": {},
+      "timestamp": "2026-11-15T10:05:51.642Z",
+      "createdAt": "2026-11-15T10:05:51.646Z",
+      "updatedAt": "2026-11-15T10:05:51.646Z"
+    }
+  ],
+  "HomepageContent": [
+    {
+      "_id": "bd35bb4955f032bf7272350f",
+      "singletonKey": "main_homepage",
+      "draft": {
+        "hero": {
+          "enabled": true,
+          "companyName": "SRIYAS HEALTHCARE",
+          "companySubtitle": "PVT LTD",
+          "tagline": "Empowering Healthcare with Care and Innovation.",
+          "supportingIntro": "An authorized healthcare distributor headquartered in Chennai, supporting hospitals, surgeons, and clinical teams with trusted surgical and medical technologies.",
+          "valuesText": "CARE · TRUST · INNOVATION",
+          "ctaText": "Explore Sriyas",
+          "ctaLink": "#about-sriyas",
+          "secondaryCtaText": "Explore Products",
+          "secondaryCtaLink": "/products",
+          "showTagline": true,
+          "showValues": true,
+          "showSecondaryCta": true,
+          "logo": {
+            "url": "/assets/logos/sriyas-emblem.png",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Sriyas Healthcare Pvt Ltd Emblem",
+            "focalPoint": "center center",
+            "aspectRatio": "auto"
+          },
+          "backgroundImage": {
+            "url": "",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Sriyas Healthcare architectural background",
+            "focalPoint": "center center",
+            "aspectRatio": "auto"
+          }
+        },
+        "about": {
+          "enabled": true,
+          "eyebrow": "About Sriyas Healthcare",
+          "heading": "Empowering Healthcare Through Care & Partnership",
+          "introduction": "Sriyas Healthcare Private Limited is an authorized surgical and medical device distribution company based in Chennai, Tamil Nadu, dedicated to connecting healthcare institutions and clinicians across India with dependable medical solutions.",
+          "supportingText": "We partner closely with globally respected healthcare manufacturers to coordinate supply across operating rooms, surgical specialties, and acute-care departments.",
+          "hospitalCommitment": "Our focus rests on responsive institutional service, transparent communication, and dependable coordination so hospital procurement teams and clinicians can focus on patient care.",
+          "vision": "To serve as a trusted partner for hospitals and healthcare providers by making advanced surgical and clinical care technologies consistently accessible.",
+          "mission": "To represent respected healthcare manufacturers with integrity, deliver attentive service to medical professionals, and uphold Care, Trust, and Innovation in every interaction.",
+          "layoutPreset": "split-collage",
+          "images": [
+            {
+              "id": "about-office-facade",
+              "url": "/assets/contact/storefront-location.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Sriyas Healthcare Chennai facility storefront",
+              "caption": "Sriyas Healthcare Pvt. Ltd. — Chennai Operations",
+              "focalPoint": "center center",
+              "aspectRatio": "4/3",
+              "size": "primary",
+              "displayOrder": 1
+            },
+            {
+              "id": "about-office-interior-ph",
+              "url": "/assets/placeholders/office-reception-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Corporate healthcare reception concept placeholder",
+              "caption": "Workplace Concept (Placeholder — Replace in Admin)",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "size": "secondary",
+              "displayOrder": 2
+            }
+          ]
+        },
+        "statistics": {
+          "enabled": true,
+          "eyebrow": "Institutional Scale & Reach",
+          "heading": "Delivering Dependability Across Healthcare",
+          "subtitle": "Connecting Indian hospitals, clinics, and surgical specialists with verified clinical sutures, mesh, and medical equipment.",
+          "items": [
+            {
+              "id": "stat-years",
+              "title": "Years of Clinical Excellence",
+              "value": 10,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Dedicated to advancing surgical & patient care since 2014.",
+              "decimals": 0,
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "stat-partners",
+              "title": "Global Partner Brands",
+              "value": 25,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Exclusive distribution of world-class surgical devices.",
+              "decimals": 0,
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "stat-divisions",
+              "title": "Specialised Divisions",
+              "value": 5,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Wound care, biosurgery, minimally invasive & general surgery.",
+              "decimals": 0,
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "id": "stat-fulfillment",
+              "title": "Hospital Fulfillment Rate",
+              "value": 99.8,
+              "prefix": "",
+              "suffix": "%",
+              "description": "Consistent cold chain & on-time institutional delivery.",
+              "decimals": 1,
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728233404-rqbgy",
+              "title": "Healthcare Partners",
+              "value": 25,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Verified partner brands and specialized manufacturer collaborations.",
+              "decimals": 0,
+              "displayOrder": 5,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728234652-rko6o",
+              "title": "Years of Service",
+              "value": 15,
+              "prefix": "",
+              "suffix": "Years",
+              "description": "Dedicated distribution and surgical liaison throughout India.",
+              "decimals": 0,
+              "displayOrder": 6,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728235889-hldtw",
+              "title": "Clinical Satisfaction",
+              "value": 99.8,
+              "prefix": "",
+              "suffix": "%",
+              "description": "Positive institutional feedback from hospital OT staff.",
+              "decimals": 1,
+              "displayOrder": 7,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728427805-y09wc",
+              "title": "Healthcare Partners",
+              "value": 25,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Verified partner brands and specialized manufacturer collaborations.",
+              "decimals": 0,
+              "displayOrder": 8,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728429068-vavk9",
+              "title": "Years of Service",
+              "value": 15,
+              "prefix": "",
+              "suffix": "Years",
+              "description": "Dedicated distribution and surgical liaison throughout India.",
+              "decimals": 0,
+              "displayOrder": 9,
+              "isActive": true
+            },
+            {
+              "id": "stat-1794728430329-s79nh",
+              "title": "Clinical Satisfaction",
+              "value": 99.8,
+              "prefix": "",
+              "suffix": "%",
+              "description": "Positive institutional feedback from hospital OT staff.",
+              "decimals": 1,
+              "displayOrder": 10,
+              "isActive": true
+            }
+          ]
+        },
+        "workplace": {
+          "enabled": true,
+          "eyebrow": "Our Company & Workplace",
+          "heading": "Where Clinical Coordination Takes Shape",
+          "subtitle": "Take a look inside our corporate environment, workspace, and day-to-day operations supporting hospital partners. (Temporary placeholders shown until updated in Admin.)",
+          "layoutStyle": "editorial-collage",
+          "images": [
+            {
+              "id": "wp-reception",
+              "url": "/assets/placeholders/office-reception-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Modern corporate reception placeholder",
+              "title": "Corporate Reception & Welcome Lounge",
+              "caption": "Office & Reception Environment (Placeholder — Editable in Admin)",
+              "category": "Office",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "wp-collab",
+              "url": "/assets/placeholders/workplace-workspace-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Healthcare coordination meeting space placeholder",
+              "title": "Team Coordination & Partner Discussions",
+              "caption": "Collaborative Workspace (Placeholder — Editable in Admin)",
+              "category": "Workplace",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "wp-ops",
+              "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Medical distribution operations placeholder",
+              "title": "Supply Coordination & Logistics Focus",
+              "caption": "Business & Supply Operations (Placeholder — Editable in Admin)",
+              "category": "Business Activity",
+              "focalPoint": "center center",
+              "aspectRatio": "4/3",
+              "displayOrder": 3,
+              "isActive": true
+            }
+          ]
+        },
+        "leadership": {
+          "enabled": true,
+          "eyebrow": "Leadership & Governance",
+          "heading": "Founders & Directors",
+          "subtitle": "Guiding Sriyas Healthcare with principled governance, long-term partner relationships, and commitment to clinical communities. (Update real names, portraits, and bios in Admin.)",
+          "items": [
+            {
+              "id": "leader-founder-ph",
+              "name": "Founder & Managing Director (Profile Pending)",
+              "designation": "Founder & Managing Director",
+              "bio": "Profile details and official executive biography can be added directly from the Admin Homepage Editor.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-leadership-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Founder and Managing Director placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "leader-director-ph",
+              "name": "Director — Operations & Supply (Profile Pending)",
+              "designation": "Director",
+              "bio": "Leadership profile biography and portrait photograph can be uploaded and published via Admin Website Management.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-leadership-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Company Director placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 2,
+              "isActive": true
+            }
+          ]
+        },
+        "team": {
+          "enabled": true,
+          "eyebrow": "Our People",
+          "heading": "Hospital Support & Operations Team",
+          "subtitle": "Dedicated specialists collaborating across hospital liaison, logistics coordination, and clinician assistance. (Placeholder entries ready for customization.)",
+          "items": [
+            {
+              "id": "team-coord-ph",
+              "name": "Clinical Product Coordination (Placeholder)",
+              "designation": "Clinical Liaison Specialist",
+              "bio": "Update this profile with your team member name, portrait, and clinical coordination summary.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "team-hospital-ph",
+              "name": "Hospital & Institutional Support (Placeholder)",
+              "designation": "Customer & Account Relations",
+              "bio": "Replace with actual staff profile photo and biography from the Homepage Editor Team section.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "team-logistics-ph",
+              "name": "Supply & Quality Logistics (Placeholder)",
+              "designation": "Distribution & Compliance Support",
+              "bio": "Editable team profile slot covering operational coordination and institutional supply fulfillment.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 3,
+              "isActive": true
+            }
+          ]
+        },
+        "whatWeDo": {
+          "enabled": true,
+          "eyebrow": "What We Do",
+          "heading": "Focused Capabilities in Medical & Surgical Supply",
+          "subtitle": "We operate as a dedicated bridge between respected medical device manufacturers and institutional healthcare teams.",
+          "items": [
+            {
+              "id": "wwd-distribution",
+              "title": "Specialized Surgical & Medical Distribution",
+              "description": "Streamlined institutional sourcing and reliable fulfillment for operating theatres, surgical wards, and specialized care centers.",
+              "icon": "🏥",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Specialized surgical distribution",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "wwd-partnerships",
+              "title": "Healthcare Manufacturer Partnerships",
+              "description": "Authorized collaboration with specialized global manufacturers to represent authentic product portfolios with integrity.",
+              "icon": "🤝",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "wwd-clinical-supply",
+              "title": "Surgical & Clinical Product Supply",
+              "description": "Consistent institutional availability across surgical closure technologies, wound management dressings, and clinical consumables.",
+              "icon": "🩺",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "id": "wwd-clinician-support",
+              "title": "Hospital & Clinician Support",
+              "description": "Attentive responsiveness to hospital procurement departments, operating room nursing coordinators, and clinical specialists.",
+              "icon": "📋",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "id": "wwd-coordination",
+              "title": "Product Coordination & Customer Assistance",
+              "description": "Clear inquiry turnaround, specification coordination, and helpful institutional support from request to delivery.",
+              "icon": "✦",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 5,
+              "isActive": true
+            }
+          ]
+        },
+        "values": {
+          "enabled": true,
+          "eyebrow": "Our Values · Why Choose Sriyas",
+          "heading": "Why Healthcare Institutions Choose Sriyas",
+          "subtitle": "Every engagement reflects our founding principles of Care, Trust, and Innovation alongside transparent service.",
+          "featureImage": {
+            "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Medical operations coordination placeholder",
+            "focalPoint": "center center",
+            "aspectRatio": "4/3"
+          },
+          "items": [
+            {
+              "id": "val-authorized",
+              "title": "Authorized Manufacturer Relationships",
+              "description": "Direct partnerships with established medical and surgical brands ensuring genuine product provenance.",
+              "icon": "🤝",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "val-authenticity",
+              "title": "Quality & Authenticity",
+              "description": "Strict adherence to authentic, manufacturer-backed medical supplies handled through licensed pharmaceutical distribution practices.",
+              "icon": "✓",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "val-care-trust",
+              "title": "Care & Trust",
+              "description": "Built around respect for patients and clinical teams, honoring commitments with transparency and accountability.",
+              "icon": "💛",
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "id": "val-reliable",
+              "title": "Reliable Institutional Service",
+              "description": "Dependable regional supply coordination supporting planned surgeries and ongoing clinical demand.",
+              "icon": "🚚",
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "id": "val-support",
+              "title": "Professional Healthcare Support",
+              "description": "Helpful assistance on product enquiries, technical documentation, and institutional quotation requests.",
+              "icon": "🩺",
+              "displayOrder": 5,
+              "isActive": true
+            },
+            {
+              "id": "val-relationships",
+              "title": "Long-Term Hospital Partnerships",
+              "description": "Focused on enduring relationships with hospitals, surgical clinics, and healthcare professionals across India.",
+              "icon": "🏛️",
+              "displayOrder": 6,
+              "isActive": true
+            }
+          ]
+        },
+        "callToAction": {
+          "enabled": true,
+          "eyebrow": "Connect With Sriyas Healthcare",
+          "heading": "Partnering for Better Healthcare.",
+          "supportingText": "Connect with our Chennai team to discuss hospital supply requirements, institutional enquiries, or explore our complete surgical partner portfolio.",
+          "primaryButtonText": "Explore Our Products",
+          "primaryButtonLink": "/products",
+          "secondaryButtonText": "Contact Us",
+          "secondaryButtonLink": "/contact",
+          "showContactDetails": true,
+          "contactPhone": "+91 96008 04456 · +91 93677 72801",
+          "contactEmail": "Sriyashealthcare@gmail.com",
+          "contactAddress": "Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077",
+          "backgroundImage": {
+            "url": "/assets/placeholders/cta-backdrop-placeholder.jpg",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Gold and obsidian architectural backdrop placeholder",
+            "focalPoint": "center center",
+            "aspectRatio": "16/9"
+          }
+        },
+        "animationSettings": {
+          "scrollRevealEnabled": true,
+          "galleryParallaxEnabled": true,
+          "imageHoverEnabled": true,
+          "counterAnimationEnabled": true
+        },
+        "sectionOrder": [
+          "hero",
+          "about",
+          "statistics",
+          "workplace",
+          "leadership",
+          "team",
+          "whatWeDo",
+          "values",
+          "callToAction"
+        ]
+      },
+      "published": {
+        "hero": {
+          "enabled": true,
+          "companyName": "SRIYAS HEALTHCARE",
+          "companySubtitle": "PVT LTD",
+          "tagline": "Empowering Healthcare with Care and Innovation.",
+          "supportingIntro": "An authorized healthcare distributor headquartered in Chennai, supporting hospitals, surgeons, and clinical teams with trusted surgical and medical technologies.",
+          "valuesText": "CARE · TRUST · INNOVATION",
+          "ctaText": "Explore Sriyas",
+          "ctaLink": "#about-sriyas",
+          "secondaryCtaText": "Explore Products",
+          "secondaryCtaLink": "/products",
+          "showTagline": true,
+          "showValues": true,
+          "showSecondaryCta": true,
+          "logo": {
+            "url": "/assets/logos/sriyas-emblem.png",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Sriyas Healthcare Pvt Ltd Emblem",
+            "focalPoint": "center center",
+            "aspectRatio": "auto"
+          },
+          "backgroundImage": {
+            "url": "",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Sriyas Healthcare architectural background",
+            "focalPoint": "center center",
+            "aspectRatio": "auto"
+          }
+        },
+        "about": {
+          "enabled": true,
+          "eyebrow": "About Sriyas Healthcare",
+          "heading": "Empowering Healthcare Through Care & Partnership",
+          "introduction": "Sriyas Healthcare Private Limited is an authorized surgical and medical device distribution company based in Chennai, Tamil Nadu, dedicated to connecting healthcare institutions and clinicians across India with dependable medical solutions.",
+          "supportingText": "We partner closely with globally respected healthcare manufacturers to coordinate supply across operating rooms, surgical specialties, and acute-care departments.",
+          "hospitalCommitment": "Our focus rests on responsive institutional service, transparent communication, and dependable coordination so hospital procurement teams and clinicians can focus on patient care.",
+          "vision": "To serve as a trusted partner for hospitals and healthcare providers by making advanced surgical and clinical care technologies consistently accessible.",
+          "mission": "To represent respected healthcare manufacturers with integrity, deliver attentive service to medical professionals, and uphold Care, Trust, and Innovation in every interaction.",
+          "layoutPreset": "split-collage",
+          "images": [
+            {
+              "id": "about-office-facade",
+              "url": "/assets/contact/storefront-location.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Sriyas Healthcare Chennai facility storefront",
+              "caption": "Sriyas Healthcare Pvt. Ltd. — Chennai Operations",
+              "focalPoint": "center center",
+              "aspectRatio": "4/3",
+              "size": "primary",
+              "displayOrder": 1
+            },
+            {
+              "id": "about-office-interior-ph",
+              "url": "/assets/placeholders/office-reception-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Corporate healthcare reception concept placeholder",
+              "caption": "Workplace Concept (Placeholder — Replace in Admin)",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "size": "secondary",
+              "displayOrder": 2
+            }
+          ]
+        },
+        "statistics": {
+          "enabled": true,
+          "eyebrow": "Key Milestones & Healthcare Reach",
+          "heading": "Delivering Dependability at Scale",
+          "subtitle": "Verified operational metrics and partner milestones supporting clinical institutions.",
+          "items": [
+            {
+              "id": "stat-years",
+              "title": "Years of Clinical Excellence",
+              "value": 10,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Dedicated to advancing surgical & patient care since 2014.",
+              "decimals": 0,
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "id": "stat-partners",
+              "title": "Global Partner Brands",
+              "value": 25,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Exclusive distribution of world-class surgical devices.",
+              "decimals": 0,
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "stat-divisions",
+              "title": "Specialised Divisions",
+              "value": 5,
+              "prefix": "",
+              "suffix": "+",
+              "description": "Wound care, biosurgery, minimally invasive & general surgery.",
+              "decimals": 0,
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "stat-fulfillment",
+              "title": "Hospital Fulfillment Rate",
+              "value": 99.8,
+              "prefix": "",
+              "suffix": "%",
+              "description": "Consistent cold chain & on-time institutional delivery.",
+              "decimals": 1,
+              "displayOrder": 3,
+              "isActive": true
+            }
+          ]
+        },
+        "workplace": {
+          "enabled": true,
+          "eyebrow": "Our Company & Workplace",
+          "heading": "Where Clinical Coordination Takes Shape",
+          "subtitle": "Take a look inside our corporate environment, workspace, and day-to-day operations supporting hospital partners. (Temporary placeholders shown until updated in Admin.)",
+          "layoutStyle": "editorial-collage",
+          "images": [
+            {
+              "id": "wp-reception",
+              "url": "/assets/placeholders/office-reception-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Modern corporate reception placeholder",
+              "title": "Corporate Reception & Welcome Lounge",
+              "caption": "Office & Reception Environment (Placeholder — Editable in Admin)",
+              "category": "Office",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "wp-collab",
+              "url": "/assets/placeholders/workplace-workspace-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Healthcare coordination meeting space placeholder",
+              "title": "Team Coordination & Partner Discussions",
+              "caption": "Collaborative Workspace (Placeholder — Editable in Admin)",
+              "category": "Workplace",
+              "focalPoint": "center center",
+              "aspectRatio": "16/9",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "wp-ops",
+              "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+              "publicId": "",
+              "mobileUrl": "",
+              "mobilePublicId": "",
+              "alt": "Medical distribution operations placeholder",
+              "title": "Supply Coordination & Logistics Focus",
+              "caption": "Business & Supply Operations (Placeholder — Editable in Admin)",
+              "category": "Business Activity",
+              "focalPoint": "center center",
+              "aspectRatio": "4/3",
+              "displayOrder": 3,
+              "isActive": true
+            }
+          ]
+        },
+        "leadership": {
+          "enabled": true,
+          "eyebrow": "Leadership & Governance",
+          "heading": "Founders & Directors",
+          "subtitle": "Guiding Sriyas Healthcare with principled governance, long-term partner relationships, and commitment to clinical communities. (Update real names, portraits, and bios in Admin.)",
+          "items": [
+            {
+              "id": "leader-founder-ph",
+              "name": "Founder & Managing Director (Profile Pending)",
+              "designation": "Founder & Managing Director",
+              "bio": "Profile details and official executive biography can be added directly from the Admin Homepage Editor.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-leadership-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Founder and Managing Director placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "leader-director-ph",
+              "name": "Director — Operations & Supply (Profile Pending)",
+              "designation": "Director",
+              "bio": "Leadership profile biography and portrait photograph can be uploaded and published via Admin Website Management.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-leadership-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Company Director placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 2,
+              "isActive": true
+            }
+          ]
+        },
+        "team": {
+          "enabled": true,
+          "eyebrow": "Our People",
+          "heading": "Hospital Support & Operations Team",
+          "subtitle": "Dedicated specialists collaborating across hospital liaison, logistics coordination, and clinician assistance. (Placeholder entries ready for customization.)",
+          "items": [
+            {
+              "id": "team-coord-ph",
+              "name": "Clinical Product Coordination (Placeholder)",
+              "designation": "Clinical Liaison Specialist",
+              "bio": "Update this profile with your team member name, portrait, and clinical coordination summary.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "team-hospital-ph",
+              "name": "Hospital & Institutional Support (Placeholder)",
+              "designation": "Customer & Account Relations",
+              "bio": "Replace with actual staff profile photo and biography from the Homepage Editor Team section.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "team-logistics-ph",
+              "name": "Supply & Quality Logistics (Placeholder)",
+              "designation": "Distribution & Compliance Support",
+              "bio": "Editable team profile slot covering operational coordination and institutional supply fulfillment.",
+              "photo": {
+                "url": "/assets/placeholders/portrait-team-placeholder.svg",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Team member placeholder portrait",
+                "focalPoint": "center top",
+                "aspectRatio": "1/1"
+              },
+              "linkedinUrl": "",
+              "email": "",
+              "displayOrder": 3,
+              "isActive": true
+            }
+          ]
+        },
+        "whatWeDo": {
+          "enabled": true,
+          "eyebrow": "What We Do",
+          "heading": "Focused Capabilities in Medical & Surgical Supply",
+          "subtitle": "We operate as a dedicated bridge between respected medical device manufacturers and institutional healthcare teams.",
+          "items": [
+            {
+              "id": "wwd-distribution",
+              "title": "Specialized Surgical & Medical Distribution",
+              "description": "Streamlined institutional sourcing and reliable fulfillment for operating theatres, surgical wards, and specialized care centers.",
+              "icon": "🏥",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Specialized surgical distribution",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "wwd-partnerships",
+              "title": "Healthcare Manufacturer Partnerships",
+              "description": "Authorized collaboration with specialized global manufacturers to represent authentic product portfolios with integrity.",
+              "icon": "🤝",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "wwd-clinical-supply",
+              "title": "Surgical & Clinical Product Supply",
+              "description": "Consistent institutional availability across surgical closure technologies, wound management dressings, and clinical consumables.",
+              "icon": "🩺",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "id": "wwd-clinician-support",
+              "title": "Hospital & Clinician Support",
+              "description": "Attentive responsiveness to hospital procurement departments, operating room nursing coordinators, and clinical specialists.",
+              "icon": "📋",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "id": "wwd-coordination",
+              "title": "Product Coordination & Customer Assistance",
+              "description": "Clear inquiry turnaround, specification coordination, and helpful institutional support from request to delivery.",
+              "icon": "✦",
+              "image": {
+                "url": "",
+                "publicId": "",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9"
+              },
+              "displayOrder": 5,
+              "isActive": true
+            }
+          ]
+        },
+        "values": {
+          "enabled": true,
+          "eyebrow": "Our Values · Why Choose Sriyas",
+          "heading": "Why Healthcare Institutions Choose Sriyas",
+          "subtitle": "Every engagement reflects our founding principles of Care, Trust, and Innovation alongside transparent service.",
+          "featureImage": {
+            "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Medical operations coordination placeholder",
+            "focalPoint": "center center",
+            "aspectRatio": "4/3"
+          },
+          "items": [
+            {
+              "id": "val-authorized",
+              "title": "Authorized Manufacturer Relationships",
+              "description": "Direct partnerships with established medical and surgical brands ensuring genuine product provenance.",
+              "icon": "🤝",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "id": "val-authenticity",
+              "title": "Quality & Authenticity",
+              "description": "Strict adherence to authentic, manufacturer-backed medical supplies handled through licensed pharmaceutical distribution practices.",
+              "icon": "✓",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "id": "val-care-trust",
+              "title": "Care & Trust",
+              "description": "Built around respect for patients and clinical teams, honoring commitments with transparency and accountability.",
+              "icon": "💛",
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "id": "val-reliable",
+              "title": "Reliable Institutional Service",
+              "description": "Dependable regional supply coordination supporting planned surgeries and ongoing clinical demand.",
+              "icon": "🚚",
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "id": "val-support",
+              "title": "Professional Healthcare Support",
+              "description": "Helpful assistance on product enquiries, technical documentation, and institutional quotation requests.",
+              "icon": "🩺",
+              "displayOrder": 5,
+              "isActive": true
+            },
+            {
+              "id": "val-relationships",
+              "title": "Long-Term Hospital Partnerships",
+              "description": "Focused on enduring relationships with hospitals, surgical clinics, and healthcare professionals across India.",
+              "icon": "🏛️",
+              "displayOrder": 6,
+              "isActive": true
+            }
+          ]
+        },
+        "callToAction": {
+          "enabled": true,
+          "eyebrow": "Connect With Sriyas Healthcare",
+          "heading": "Partnering for Better Healthcare.",
+          "supportingText": "Connect with our Chennai team to discuss hospital supply requirements, institutional enquiries, or explore our complete surgical partner portfolio.",
+          "primaryButtonText": "Explore Our Products",
+          "primaryButtonLink": "/products",
+          "secondaryButtonText": "Contact Us",
+          "secondaryButtonLink": "/contact",
+          "showContactDetails": true,
+          "contactPhone": "+91 96008 04456 · +91 93677 72801",
+          "contactEmail": "Sriyashealthcare@gmail.com",
+          "contactAddress": "Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077",
+          "backgroundImage": {
+            "url": "/assets/placeholders/cta-backdrop-placeholder.jpg",
+            "publicId": "",
+            "mobileUrl": "",
+            "mobilePublicId": "",
+            "alt": "Gold and obsidian architectural backdrop placeholder",
+            "focalPoint": "center center",
+            "aspectRatio": "16/9"
+          }
+        },
+        "animationSettings": {
+          "scrollRevealEnabled": true,
+          "galleryParallaxEnabled": true,
+          "imageHoverEnabled": true,
+          "counterAnimationEnabled": true
+        },
+        "sectionOrder": [
+          "hero",
+          "about",
+          "statistics",
+          "workplace",
+          "leadership",
+          "team",
+          "whatWeDo",
+          "values",
+          "callToAction"
+        ]
+      },
+      "draftVersion": 34,
+      "publishedVersion": 17,
+      "hasUnpublishedChanges": true,
+      "lastPublishedAt": "2026-11-14T18:46:16.412Z",
+      "lastPublishedBy": {
+        "id": "882a615e46c975912fe014be",
+        "name": "Sriyas Healthcare Admin",
+        "email": "admin@sriyashealthcare.com"
+      },
+      "updatedBy": {
+        "id": "882a615e46c975912fe014be",
+        "name": "Sriyas Healthcare Admin",
+        "email": "admin@sriyashealthcare.com"
+      },
+      "createdAt": "2026-11-14T14:50:56.938Z",
+      "updatedAt": "2026-11-15T07:40:33.777Z"
+    }
+  ]
+}

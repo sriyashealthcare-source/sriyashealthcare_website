@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { homepageService } from '../../services/homepageService';
 import HomepageContentRenderer from '../../components/home/HomepageContentRenderer';
 import SeoHead from '../../components/common/SeoHead';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import '../../styles/homepage.css';
 
 const BASELINE_HERO = {
@@ -20,8 +21,8 @@ const BASELINE_HERO = {
   showValues: true,
   showSecondaryCta: true,
   logo: {
-    url: '/assets/logos/sriyas-emblem.png',
-    publicId: '',
+    url: SRIYAS_EMBLEM_URL,
+    publicId: 'sriyas-healthcare/general/sriyas-emblem',
     alt: 'Sriyas Healthcare Pvt Ltd Emblem'
   },
   backgroundImage: {
@@ -115,7 +116,7 @@ export default function Home() {
       name: 'Sriyas Healthcare Private Limited',
       alternateName: 'Sriyas Healthcare',
       url: 'https://sriyashealthcare.com',
-      logo: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      logo: SRIYAS_EMBLEM_URL,
       description:
         'Premier surgical products and medical device distribution company based in Chennai, India, supplying sutures, surgical meshes, tissue adhesives, and advanced wound care solutions.',
       address: {
@@ -150,7 +151,7 @@ export default function Home() {
       '@type': ['LocalBusiness', 'WholesaleStore'],
       '@id': 'https://sriyashealthcare.com/#localbusiness',
       name: 'Sriyas Healthcare Private Limited',
-      image: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      image: SRIYAS_EMBLEM_URL,
       url: 'https://sriyashealthcare.com',
       telephone: '+919600804456',
       priceRange: '$$',
@@ -197,7 +198,7 @@ export default function Home() {
         title={pageTitle}
         description={pageDesc}
         canonicalUrl={canonicalUrl}
-        ogImage={seoData.ogImage || '/assets/logos/sriyas-emblem.png'}
+        ogImage={seoData.ogImage || SRIYAS_EMBLEM_URL}
         ogType="website"
         noindex={seoData.robotsIndex === false}
         schema={homeSchemas}

@@ -28,14 +28,17 @@ const configureCloudinary = () => {
   return false;
 };
 
-// Standardized folder hierarchy
+// Standardized folder hierarchy matching Sriyas Healthcare requirements
 const CLOUDINARY_FOLDERS = {
-  products: 'sriyas/products',
-  brands: 'sriyas-healthcare/brand-logos',
-  categories: 'sriyas/categories',
-  brochures: 'sriyas/brochures',
-  website: 'sriyas/website',
-  test: 'sriyas/test'
+  products: 'sriyas-healthcare/products',
+  brands: 'sriyas-healthcare/brands',
+  categories: 'sriyas-healthcare/categories',
+  brochures: 'sriyas-healthcare/documents',
+  website: 'sriyas-healthcare/general',
+  homepage: 'sriyas-healthcare/homepage',
+  contact: 'sriyas-healthcare/contact',
+  banners: 'sriyas-healthcare/banners',
+  test: 'sriyas-healthcare/test'
 };
 
 const uploadBuffer = async (buffer, originalName = 'upload.png', folder = CLOUDINARY_FOLDERS.products, resourceType = 'image') => {
@@ -198,7 +201,7 @@ const listMediaLibrary = async (maxResults = 60) => {
       }
       const result = await cloudinary.api.resources({
         type: 'upload',
-        prefix: 'sriyas/',
+        prefix: 'sriyas',
         resource_type: 'image',
         max_results: Math.min(100, Math.max(10, Number(maxResults) || 60))
       });

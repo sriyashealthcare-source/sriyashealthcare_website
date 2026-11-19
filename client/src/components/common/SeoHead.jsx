@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 const DOMAIN = 'https://sriyashealthcare.com';
 
@@ -86,7 +87,7 @@ export default function SeoHead({
 
     const effectiveOgImage = ogImage
       ? (ogImage.startsWith('http') ? ogImage : `${DOMAIN}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`)
-      : `${DOMAIN}/assets/logos/sriyas-emblem.png`;
+      : SRIYAS_EMBLEM_URL;
     setMetaTag('meta[property="og:image"]', 'content', effectiveOgImage);
 
     // 6. Twitter Card tags

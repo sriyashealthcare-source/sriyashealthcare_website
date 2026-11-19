@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import { SRIYAS_EMBLEM_URL } from '../utils/cloudinaryAssets';
 
 const DEFAULT_BRAND_MEDIA = {
-  url: '/assets/logos/sriyas-emblem.png',
+  url: SRIYAS_EMBLEM_URL,
   alt: 'Sriyas Healthcare emblem',
   companyName: 'SRIYAS HEALTHCARE',
   companySubtitle: 'PVT LTD'

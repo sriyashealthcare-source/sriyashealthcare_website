@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import SmartActionLink from './SmartActionLink';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 /**
  * Monitors genuine arrival at the bottom of the homepage and deliberate continued
@@ -248,7 +249,7 @@ export default function ContinueToProductsTrigger({ isPreview = false }) {
       {!isPreview && transitioning && (
         <div className="hp-route-curtain" role="status" aria-live="polite">
           <div className="hp-route-curtain-card">
-            <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare" />
+            <img src={SRIYAS_EMBLEM_URL} alt="Sriyas Healthcare" />
             <span>Opening Our Partners &amp; Product Catalogue...</span>
           </div>
         </div>

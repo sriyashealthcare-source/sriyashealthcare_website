@@ -164,10 +164,20 @@ export function shouldRecordProductView(productKey) {
   }
 }
 
-// 8. Resolve Asset URLs (Local or Cloudinary)
+import { getCloudinaryUrl } from './cloudinaryAssets';
+
+// 8. Resolve Asset URLs (Cloudinary CDN first, with fallback to legacy resolution)
 export function resolveAssetUrl(url) {
   if (!url) return '';
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
+  if (url.startsWith('data:') || url.startsWith('blob:')) {
+    return url;
+  }
+  // If it's a local asset path or already a Cloudinary URL, resolve via Cloudinary mapper
+  const cloudinaryUrl = getCloudinaryUrl(url, null);
+  if (cloudinaryUrl) {
+    return cloudinaryUrl;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     return url;
   }
   const apiUrl = import.meta.env.VITE_API_URL || '/api';

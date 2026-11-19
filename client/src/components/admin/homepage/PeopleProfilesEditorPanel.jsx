@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
+import { PLACEHOLDERS } from '../../../utils/cloudinaryAssets';
 
 export default function PeopleProfilesEditorPanel({
   sectionData = {},
@@ -8,7 +9,7 @@ export default function PeopleProfilesEditorPanel({
   panelDescription,
   itemLabel = 'Profile',
   defaultDesignation = '',
-  defaultPlaceholderPhoto = '/assets/placeholders/portrait-leadership-placeholder.svg'
+  defaultPlaceholderPhoto = PLACEHOLDERS.leadership
 }) {
   const updateField = (key, value) => {
     onChange({ ...sectionData, [key]: value });

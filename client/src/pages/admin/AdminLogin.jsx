@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 export default function AdminLogin() {
   const { isAuthenticated, loading, login } = useAuth();
@@ -49,7 +50,7 @@ export default function AdminLogin() {
     <div className="admin-login-page">
       <div className="admin-login-card">
         <div className="admin-login-header">
-          <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare Emblem" />
+          <img src={SRIYAS_EMBLEM_URL} alt="Sriyas Healthcare Emblem" />
           <div>
             <span className="admin-login-badge">ADMINISTRATOR PORTAL</span>
           </div>

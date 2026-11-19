@@ -6,6 +6,7 @@ import ProductCard from '../../components/product/ProductCard';
 import GlobalSearchBar from '../../components/common/GlobalSearchBar';
 import SeoHead from '../../components/common/SeoHead';
 import { resolveAssetUrl } from '../../utils/session';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 function normalizeSearchText(str) {
   if (!str) return '';
@@ -238,7 +239,7 @@ export default function PartnerProducts() {
           '@context': 'https://schema.org',
           '@type': 'Brand',
           name: brand.name,
-          logo: brandLogoUrl || 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+          logo: brandLogoUrl || SRIYAS_EMBLEM_URL,
           url: `https://sriyashealthcare.com/products/${encodeURIComponent(partnerSlug)}`,
           description: brand.description || seoDesc
         }

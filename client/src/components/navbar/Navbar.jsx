@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
+import { resolveAssetUrl } from '../../utils/session';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -71,7 +73,7 @@ export default function Navbar() {
       ? 0
       : Math.min(1, (scrollProgress - 0.65) / 0.35);
 
-  const logoSrc = brandMedia?.url || '/assets/logos/sriyas-emblem.png';
+  const logoSrc = resolveAssetUrl(brandMedia?.url || SRIYAS_EMBLEM_URL);
   const logoAlt = brandMedia?.alt || 'Sriyas Healthcare emblem';
   const brandTitle = brandMedia?.companyName || 'SRIYAS HEALTHCARE';
   const brandSubtitle = brandMedia?.companySubtitle || 'PVT LTD';

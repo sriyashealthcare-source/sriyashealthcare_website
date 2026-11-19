@@ -30,8 +30,7 @@ function createDefaultHomepagePayload() {
       showValues: true,
       showSecondaryCta: true,
       logo: {
-        url: '/assets/logos/sriyas-emblem.png',
-        publicId: '',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048213/sriyas-healthcare/general/sriyas-emblem.png', publicId: 'sriyas-healthcare/general/sriyas-emblem',
         mobileUrl: '',
         mobilePublicId: '',
         alt: 'Sriyas Healthcare Pvt Ltd Emblem',
@@ -66,7 +65,7 @@ function createDefaultHomepagePayload() {
       images: [
         {
           id: 'about-office-facade',
-          url: '/assets/contact/storefront-location.jpg',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048221/sriyas-healthcare/contact/storefront-location.jpg',
           publicId: '',
           mobileUrl: '',
           mobilePublicId: '',
@@ -79,7 +78,7 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'about-office-interior-ph',
-          url: '/assets/placeholders/office-reception-placeholder.jpg',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048224/sriyas-healthcare/homepage/gallery/office-reception.jpg',
           publicId: '',
           mobileUrl: '',
           mobilePublicId: '',
@@ -110,7 +109,7 @@ function createDefaultHomepagePayload() {
       images: [
         {
           id: 'wp-reception',
-          url: '/assets/placeholders/office-reception-placeholder.jpg',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048224/sriyas-healthcare/homepage/gallery/office-reception.jpg',
           publicId: '',
           mobileUrl: '',
           mobilePublicId: '',
@@ -125,7 +124,7 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'wp-collab',
-          url: '/assets/placeholders/workplace-workspace-placeholder.jpg',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048228/sriyas-healthcare/homepage/gallery/workplace-workspace.jpg',
           publicId: '',
           mobileUrl: '',
           mobilePublicId: '',
@@ -140,7 +139,7 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'wp-ops',
-          url: '/assets/placeholders/healthcare-operations-placeholder.jpg',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048231/sriyas-healthcare/homepage/gallery/healthcare-operations.jpg',
           publicId: '',
           mobileUrl: '',
           mobilePublicId: '',
@@ -168,7 +167,7 @@ function createDefaultHomepagePayload() {
           designation: 'Founder & Managing Director',
           bio: 'Profile details and official executive biography can be added directly from the Admin Homepage Editor.',
           photo: {
-            url: '/assets/placeholders/portrait-leadership-placeholder.svg',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048232/sriyas-healthcare/homepage/leadership/portrait-leadership-placeholder.svg',
             publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
@@ -187,7 +186,7 @@ function createDefaultHomepagePayload() {
           designation: 'Director',
           bio: 'Leadership profile biography and portrait photograph can be uploaded and published via Admin Website Management.',
           photo: {
-            url: '/assets/placeholders/portrait-leadership-placeholder.svg',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048232/sriyas-healthcare/homepage/leadership/portrait-leadership-placeholder.svg',
             publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
@@ -215,7 +214,7 @@ function createDefaultHomepagePayload() {
           designation: 'Clinical Liaison Specialist',
           bio: 'Update this profile with your team member name, portrait, and clinical coordination summary.',
           photo: {
-            url: '/assets/placeholders/portrait-team-placeholder.svg',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
             publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
@@ -234,7 +233,7 @@ function createDefaultHomepagePayload() {
           designation: 'Customer & Account Relations',
           bio: 'Replace with actual staff profile photo and biography from the Homepage Editor Team section.',
           photo: {
-            url: '/assets/placeholders/portrait-team-placeholder.svg',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
             publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
@@ -253,7 +252,7 @@ function createDefaultHomepagePayload() {
           designation: 'Distribution & Compliance Support',
           bio: 'Editable team profile slot covering operational coordination and institutional supply fulfillment.',
           photo: {
-            url: '/assets/placeholders/portrait-team-placeholder.svg',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048237/sriyas-healthcare/homepage/team/portrait-team-placeholder.svg',
             publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
@@ -342,7 +341,7 @@ function createDefaultHomepagePayload() {
       subtitle:
         'Every engagement reflects our founding principles of Care, Trust, and Innovation alongside transparent service.',
       featureImage: {
-        url: '/assets/placeholders/healthcare-operations-placeholder.jpg',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048231/sriyas-healthcare/homepage/gallery/healthcare-operations.jpg',
         publicId: '',
         mobileUrl: '',
         mobilePublicId: '',
@@ -423,7 +422,7 @@ function createDefaultHomepagePayload() {
       contactAddress:
         'Plot No.53A, First Floor, East Facing, Oil Mill Road, Maruthi Nagar, Karambakkam, Thundalam, Chennai - 600077',
       backgroundImage: {
-        url: '/assets/placeholders/cta-backdrop-placeholder.jpg',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048243/sriyas-healthcare/banners/cta-backdrop.jpg',
         publicId: '',
         mobileUrl: '',
         mobilePublicId: '',

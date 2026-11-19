@@ -4,6 +4,7 @@ import { productService } from '../../services/productService';
 import ProductCard from '../../components/product/ProductCard';
 import GlobalSearchBar from '../../components/common/GlobalSearchBar';
 import { resolveAssetUrl } from '../../utils/session';
+import { BRAND_LOGOS } from '../../utils/cloudinaryAssets';
 
 function normalizeSearchText(str) {
   if (!str) return '';
@@ -174,7 +175,7 @@ export default function Products() {
           title="View Peters Surgical Products"
         >
           <img
-            src="/assets/logos/peters-surgical.png"
+            src={BRAND_LOGOS.peters}
             alt="Peters Surgical"
             className="partner-logo-img logo-peters"
             loading="lazy"
@@ -187,7 +188,7 @@ export default function Products() {
           title="View LiquiBand® Products"
         >
           <img
-            src="/assets/logos/liquiband.png"
+            src={BRAND_LOGOS.liquiband}
             alt="LiquiBand®"
             className="partner-logo-img logo-liquiband"
             loading="lazy"
@@ -200,7 +201,7 @@ export default function Products() {
           title="Advanced Medical Solutions"
         >
           <img
-            src="/assets/logos/advanced-medical-solutions.png"
+            src={BRAND_LOGOS.ams}
             alt="Advanced Medical Solutions"
             className="partner-logo-img logo-ams"
             loading="lazy"
@@ -213,7 +214,7 @@ export default function Products() {
           title="View W.L. Gore & Associates Products"
         >
           <img
-            src="/assets/logos/gore.png"
+            src={BRAND_LOGOS.gore}
             alt="W. L. Gore & Associates"
             className="partner-logo-img logo-gore"
             loading="lazy"

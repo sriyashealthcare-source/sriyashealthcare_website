@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useEffect, useRef, useState, useCallback } from 'react';
 import { resolveAssetUrl } from '../../utils/session';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
@@ -43,7 +44,7 @@ export default function HeroMorphSection({
   const secondaryCtaText = hero.secondaryCtaText || 'Explore Products';
   const secondaryCtaLink = hero.secondaryCtaLink || '/products';
 
-  const logoUrl = resolveAssetUrl(hero.logo?.url || '/assets/logos/sriyas-emblem.png');
+  const logoUrl = resolveAssetUrl(hero.logo?.url || SRIYAS_EMBLEM_URL);
   const logoAlt = hero.logo?.alt || 'Sriyas Healthcare Pvt Ltd Emblem';
 
   const useFixedMorph = !isPreview && isMorphEnabled;

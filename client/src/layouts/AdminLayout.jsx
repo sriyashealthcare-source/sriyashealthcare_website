@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { SRIYAS_EMBLEM_URL } from '../utils/cloudinaryAssets';
 
 export default function AdminLayout() {
   const { admin, isAuthenticated, loading, logout } = useAuth();
@@ -105,7 +106,7 @@ export default function AdminLayout() {
             onClick={closeSidebar}
             title="Sriyas Healthcare Admin"
           >
-            <img src="/assets/logos/sriyas-emblem.png" alt="Sriyas Healthcare Emblem" />
+            <img src={SRIYAS_EMBLEM_URL} alt="Sriyas Healthcare Emblem" />
             <div className="admin-sidebar-brand-text">
               <span className="admin-sidebar-brand-title">SRIYAS HEALTHCARE</span>
               <span className="admin-sidebar-brand-sub">Admin Console</span>

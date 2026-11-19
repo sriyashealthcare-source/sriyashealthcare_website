@@ -1,0 +1,3153 @@
+{
+  "timestamp": "2026-11-19T00:22:34.588Z",
+  "diskFilesCount": 69,
+  "diskInventory": [
+    {
+      "relativePath": "/assets/categories/cat-cutimed-wound-care-infection-management.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-cutimed-wound-care-infection-management.png",
+      "sizeBytes": 23010,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+      "sizeBytes": 125296,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+      "sizeBytes": 164967,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-liquiband-hernia-mesh-fixation.png",
+      "sizeBytes": 150156,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-liquiband-topical-skin-adhesive.png",
+      "sizeBytes": 319211,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-barbed-sutures-knotless.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-barbed-sutures-knotless.png",
+      "sizeBytes": 219803,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-haemostasis-titanium-clips.png",
+      "sizeBytes": 84287,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-natural-absorbable-sutures.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-natural-absorbable-sutures.png",
+      "sizeBytes": 163109,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-non-absorbable-sutures.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-non-absorbable-sutures.png",
+      "sizeBytes": 201378,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-surgical-adhesive.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-surgical-adhesive.png",
+      "sizeBytes": 116121,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-surgical-kits-obstetrics.png",
+      "sizeBytes": 218343,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-surgical-mesh.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-surgical-mesh.png",
+      "sizeBytes": 175658,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\categories\\cat-peters-synthetic-absorbable-sutures.png",
+      "sizeBytes": 245077,
+      "ext": ".png",
+      "category": "categories"
+    },
+    {
+      "relativePath": "/assets/contact/storefront-location.jpg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\contact\\storefront-location.jpg",
+      "sizeBytes": 206340,
+      "ext": ".jpg",
+      "category": "contact"
+    },
+    {
+      "relativePath": "/assets/logos/advanced-medical-solutions.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\advanced-medical-solutions.png",
+      "sizeBytes": 249056,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/logos/gore.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\gore.png",
+      "sizeBytes": 14752,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/logos/liquiband.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\liquiband.png",
+      "sizeBytes": 34484,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/logos/peters-surgical.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\peters-surgical.png",
+      "sizeBytes": 129870,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/logos/sriyas-emblem.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\sriyas-emblem.png",
+      "sizeBytes": 54405,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/logos/sriyas-hero-logo.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\logos\\sriyas-hero-logo.png",
+      "sizeBytes": 161887,
+      "ext": ".png",
+      "category": "logos"
+    },
+    {
+      "relativePath": "/assets/placeholders/cta-backdrop-placeholder.jpg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\cta-backdrop-placeholder.jpg",
+      "sizeBytes": 628034,
+      "ext": ".jpg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\healthcare-operations-placeholder.jpg",
+      "sizeBytes": 649476,
+      "ext": ".jpg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/placeholders/office-reception-placeholder.jpg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\office-reception-placeholder.jpg",
+      "sizeBytes": 690906,
+      "ext": ".jpg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/placeholders/portrait-leadership-placeholder.svg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\portrait-leadership-placeholder.svg",
+      "sizeBytes": 1137,
+      "ext": ".svg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/placeholders/portrait-team-placeholder.svg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\portrait-team-placeholder.svg",
+      "sizeBytes": 977,
+      "ext": ".svg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/placeholders/workplace-workspace-placeholder.jpg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\placeholders\\workplace-workspace-placeholder.jpg",
+      "sizeBytes": 728678,
+      "ext": ".jpg",
+      "category": "placeholders"
+    },
+    {
+      "relativePath": "/assets/products/catgut-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\catgut-1.png",
+      "sizeBytes": 21494,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/csection-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\csection-1.png",
+      "sizeBytes": 218343,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/cutimed_siltec-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\cutimed_siltec-1.png",
+      "sizeBytes": 22970,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/cutimed_sorbact-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\cutimed_sorbact-1.png",
+      "sizeBytes": 28051,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/filbloc-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\filbloc-1.png",
+      "sizeBytes": 151713,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/filbloc90-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\filbloc90-1.png",
+      "sizeBytes": 219803,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/filbloc90-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\filbloc90-2.png",
+      "sizeBytes": 151713,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/filbloc_perm-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\filbloc_perm-1.png",
+      "sizeBytes": 151713,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/fix8-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\fix8-1.png",
+      "sizeBytes": 150156,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gentacoll-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gentacoll-1.png",
+      "sizeBytes": 125296,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gentacoll-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gentacoll-2.png",
+      "sizeBytes": 273900,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gentacoll-3.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gentacoll-3.png",
+      "sizeBytes": 239607,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gentacoll-4.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gentacoll-4.png",
+      "sizeBytes": 218957,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gore_bioa-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gore_bioa-1.png",
+      "sizeBytes": 133909,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gore_synecor_ip-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gore_synecor_ip-1.png",
+      "sizeBytes": 164967,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gore_synecor_ip-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gore_synecor_ip-2.png",
+      "sizeBytes": 138610,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/gore_synecor_ip-3.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\gore_synecor_ip-3.png",
+      "sizeBytes": 133909,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/icol-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\icol-1.png",
+      "sizeBytes": 23010,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/icol_fast-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\icol_fast-1.png",
+      "sizeBytes": 28051,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/ifabond-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\ifabond-1.png",
+      "sizeBytes": 116121,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/ifabond-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\ifabond-2.png",
+      "sizeBytes": 149873,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/lb_exceed-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\lb_exceed-1.png",
+      "sizeBytes": 67920,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/lb_exceed-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\lb_exceed-2.png",
+      "sizeBytes": 178160,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/lb_optima-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\lb_optima-1.png",
+      "sizeBytes": 183307,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/lb_optima-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\lb_optima-2.png",
+      "sizeBytes": 319211,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/monocol-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\monocol-1.png",
+      "sizeBytes": 17749,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/polycol-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\polycol-1.png",
+      "sizeBytes": 22970,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/steribon-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\steribon-1.png",
+      "sizeBytes": 30481,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/stericryl-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\stericryl-1.png",
+      "sizeBytes": 26168,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/sterilene_mesh-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\sterilene_mesh-1.png",
+      "sizeBytes": 175658,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/sterilene_mesh-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\sterilene_mesh-2.png",
+      "sizeBytes": 176096,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/sterilene_suture-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\sterilene_suture-1.png",
+      "sizeBytes": 25541,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/sterilon-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\sterilon-1.png",
+      "sizeBytes": 27389,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/sterisil-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\sterisil-1.png",
+      "sizeBytes": 68810,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/titanium-1.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\titanium-1.png",
+      "sizeBytes": 161569,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/products/titanium-2.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\products\\titanium-2.png",
+      "sizeBytes": 84287,
+      "ext": ".png",
+      "category": "products"
+    },
+    {
+      "relativePath": "/assets/uploads/gore-1794669238166-0fc332.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\gore-1794669238166-0fc332.png",
+      "sizeBytes": 14752,
+      "ext": ".png",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/assets/uploads/gore-1794671086647-209322.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\gore-1794671086647-209322.png",
+      "sizeBytes": 14752,
+      "ext": ".png",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/assets/uploads/peters-surgical-1794669238142-c5858d.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\peters-surgical-1794669238142-c5858d.png",
+      "sizeBytes": 129870,
+      "ext": ".png",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/assets/uploads/peters-surgical-1794671086617-c4be3c.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\peters-surgical-1794671086617-c4be3c.png",
+      "sizeBytes": 129870,
+      "ext": ".png",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/assets/uploads/safe-logo-1794669238137-cebaf4.svg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\safe-logo-1794669238137-cebaf4.svg",
+      "sizeBytes": 115,
+      "ext": ".svg",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/assets/uploads/safe-logo-1794671086611-b6648f.svg",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\assets\\uploads\\safe-logo-1794671086611-b6648f.svg",
+      "sizeBytes": 115,
+      "ext": ".svg",
+      "category": "uploads"
+    },
+    {
+      "relativePath": "/favicon.png",
+      "fullPath": "F:\\sriyas_healthcare_website\\client\\public\\favicon.png",
+      "sizeBytes": 54405,
+      "ext": ".png",
+      "category": "root"
+    }
+  ],
+  "dbReferencesCount": 71,
+  "dbImageReferences": [
+    {
+      "source": "runtime_db:products",
+      "owner": "I-Col™",
+      "slug": "i-col",
+      "field": "images",
+      "url": "/assets/products/icol-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "I-Col™ Fast",
+      "slug": "i-col-fast",
+      "field": "images",
+      "url": "/assets/products/icol_fast-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Polycol™",
+      "slug": "polycol",
+      "field": "images",
+      "url": "/assets/products/polycol-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Stericryl™",
+      "slug": "stericryl",
+      "field": "images",
+      "url": "/assets/products/stericryl-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Monocol™",
+      "slug": "monocol",
+      "field": "images",
+      "url": "/assets/products/monocol-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Catgut Chromic™",
+      "slug": "catgut-chromic",
+      "field": "images",
+      "url": "/assets/products/catgut-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Sterisil™",
+      "slug": "sterisil",
+      "field": "images",
+      "url": "/assets/products/sterisil-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Sterilon™",
+      "slug": "sterilon",
+      "field": "images",
+      "url": "/assets/products/sterilon-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Sterilene™ Suture",
+      "slug": "sterilene-suture",
+      "field": "images",
+      "url": "/assets/products/sterilene_suture-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Steribon™",
+      "slug": "steribon",
+      "field": "images",
+      "url": "/assets/products/steribon-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Sterilene™ Mesh",
+      "slug": "sterilene-mesh",
+      "field": "images",
+      "url": "/assets/products/sterilene_mesh-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Sterilene™ Mesh",
+      "slug": "sterilene-mesh",
+      "field": "images",
+      "url": "/assets/products/sterilene_mesh-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Peters C-Section Kit",
+      "slug": "peters-c-section-kit",
+      "field": "images",
+      "url": "/assets/products/csection-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Titanium Hemostatic Clips",
+      "slug": "titanium-hemostatic-clips",
+      "field": "images",
+      "url": "/assets/products/titanium-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Titanium Hemostatic Clips",
+      "slug": "titanium-hemostatic-clips",
+      "field": "images",
+      "url": "/assets/products/titanium-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "IFABOND®",
+      "slug": "ifabond",
+      "field": "images",
+      "url": "/assets/products/ifabond-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "IFABOND®",
+      "slug": "ifabond",
+      "field": "images",
+      "url": "/assets/products/ifabond-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "FILBLOC® 90",
+      "slug": "filbloc-90",
+      "field": "images",
+      "url": "/assets/products/filbloc90-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "FILBLOC® 90",
+      "slug": "filbloc-90",
+      "field": "images",
+      "url": "/assets/products/filbloc90-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "FILBLOC®",
+      "slug": "filbloc",
+      "field": "images",
+      "url": "/assets/products/filbloc-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "FILBLOC® Permanent",
+      "slug": "filbloc-permanent",
+      "field": "images",
+      "url": "/assets/products/filbloc_perm-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "LiquiBand® Optima",
+      "slug": "liquiband-optima",
+      "field": "images",
+      "url": "/assets/products/lb_optima-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "LiquiBand® Optima",
+      "slug": "liquiband-optima",
+      "field": "images",
+      "url": "/assets/products/lb_optima-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "LiquiBand® Exceed™",
+      "slug": "liquiband-exceed",
+      "field": "images",
+      "url": "/assets/products/lb_exceed-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "LiquiBand® Exceed™",
+      "slug": "liquiband-exceed",
+      "field": "images",
+      "url": "/assets/products/lb_exceed-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "LiquiBand® FIX8®",
+      "slug": "liquiband-fix8",
+      "field": "images",
+      "url": "/assets/products/fix8-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Cutimed® Sorbact®",
+      "slug": "cutimed-sorbact",
+      "field": "images",
+      "url": "/assets/products/cutimed_sorbact-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Cutimed® Siltec® Sorbact®",
+      "slug": "cutimed-siltec-sorbact",
+      "field": "images",
+      "url": "/assets/products/cutimed_siltec-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Genta-Coll® resorb",
+      "slug": "genta-coll-resorb",
+      "field": "images",
+      "url": "/assets/products/gentacoll-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Genta-Coll® resorb",
+      "slug": "genta-coll-resorb",
+      "field": "images",
+      "url": "/assets/products/gentacoll-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Genta-Coll® resorb",
+      "slug": "genta-coll-resorb",
+      "field": "images",
+      "url": "/assets/products/gentacoll-3.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Genta-Coll® resorb",
+      "slug": "genta-coll-resorb",
+      "field": "images",
+      "url": "/assets/products/gentacoll-4.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® BIO-A® Tissue Reinforcement",
+      "slug": "gore-bio-a-tissue-reinforcement",
+      "field": "images",
+      "url": "/assets/products/gore_bioa-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® BIO-A® Tissue Reinforcement",
+      "slug": "gore-bio-a-tissue-reinforcement",
+      "field": "brochure",
+      "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
+      "publicId": "",
+      "alt": "Brochure PDF"
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "field": "images",
+      "url": "/assets/products/gore_synecor_ip-1.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "field": "images",
+      "url": "/assets/products/gore_synecor_ip-2.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "field": "images",
+      "url": "/assets/products/gore_synecor_ip-3.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "GORE® SYNECOR Intraperitoneal Biomaterial",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
+      "field": "brochure",
+      "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
+      "publicId": "",
+      "alt": "Brochure PDF"
+    },
+    {
+      "source": "runtime_db:products",
+      "owner": "Temporary Cloudinary Test Product",
+      "slug": "test-cloudinary-product-1794224354197",
+      "field": "images",
+      "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png",
+      "publicId": "sriyas/test/file_lko3ih"
+    },
+    {
+      "source": "runtime_db:brands",
+      "owner": "Peters Surgical",
+      "slug": "peters",
+      "field": "logoUrl",
+      "url": "/assets/logos/peters-surgical.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:brands",
+      "owner": "LiquiBand®",
+      "slug": "liquiband",
+      "field": "logoUrl",
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "source": "runtime_db:brands",
+      "owner": "W.L. Gore & Associates",
+      "slug": "gore",
+      "field": "logoUrl",
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Synthetic Absorbable Sutures",
+      "slug": "peters-synthetic-absorbable-sutures",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Natural Absorbable Sutures",
+      "slug": "peters-natural-absorbable-sutures",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Non-Absorbable Sutures",
+      "slug": "peters-non-absorbable-sutures",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-non-absorbable-sutures.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Surgical Mesh",
+      "slug": "peters-surgical-mesh",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-surgical-mesh.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Surgical Kits · Obstetrics",
+      "slug": "peters-surgical-kits-obstetrics",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Haemostasis · Titanium Clips",
+      "slug": "peters-haemostasis-titanium-clips",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Surgical Adhesive",
+      "slug": "peters-surgical-adhesive",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-surgical-adhesive.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Barbed Sutures · Knotless",
+      "slug": "peters-barbed-sutures-knotless",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Topical Skin Adhesive",
+      "slug": "liquiband-topical-skin-adhesive",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Hernia Mesh Fixation",
+      "slug": "liquiband-hernia-mesh-fixation",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Wound Care · Infection Management",
+      "slug": "cutimed-wound-care-infection-management",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Haemostasis · Antibiotic Collagen Sponge",
+      "slug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:categories",
+      "owner": "Absorbable Biomaterials & Tissue Reinforcement",
+      "slug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "field": "heroImage",
+      "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "Hero Section",
+      "field": "hero.logo",
+      "url": "/assets/logos/sriyas-emblem.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "About Section",
+      "field": "about.images",
+      "url": "/assets/contact/storefront-location.jpg",
+      "publicId": "",
+      "caption": "Sriyas Healthcare Pvt. Ltd. — Chennai Operations"
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "About Section",
+      "field": "about.images",
+      "url": "/assets/placeholders/office-reception-placeholder.jpg",
+      "publicId": "",
+      "caption": "Workplace Concept (Placeholder — Replace in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/office-reception-placeholder.jpg",
+      "publicId": "",
+      "caption": "Office & Reception Environment (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg",
+      "publicId": "",
+      "caption": "Collaborative Workspace (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+      "publicId": "",
+      "caption": "Business & Supply Operations (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "Values Section",
+      "field": "values.featureImage",
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:draft",
+      "owner": "CTA Section",
+      "field": "callToAction.backgroundImage",
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "Hero Section",
+      "field": "hero.logo",
+      "url": "/assets/logos/sriyas-emblem.png",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "About Section",
+      "field": "about.images",
+      "url": "/assets/contact/storefront-location.jpg",
+      "publicId": "",
+      "caption": "Sriyas Healthcare Pvt. Ltd. — Chennai Operations"
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "About Section",
+      "field": "about.images",
+      "url": "/assets/placeholders/office-reception-placeholder.jpg",
+      "publicId": "",
+      "caption": "Workplace Concept (Placeholder — Replace in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/office-reception-placeholder.jpg",
+      "publicId": "",
+      "caption": "Office & Reception Environment (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg",
+      "publicId": "",
+      "caption": "Collaborative Workspace (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "Workplace Gallery",
+      "field": "workplace.images",
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+      "publicId": "",
+      "caption": "Business & Supply Operations (Placeholder — Editable in Admin)"
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "Values Section",
+      "field": "values.featureImage",
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg",
+      "publicId": ""
+    },
+    {
+      "source": "runtime_db:homepage:published",
+      "owner": "CTA Section",
+      "field": "callToAction.backgroundImage",
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg",
+      "publicId": ""
+    }
+  ],
+  "codeReferencesCount": 403,
+  "uniqueCodeUrls": [
+    "/assets/logos/sriyas-emblem.png",
+    "/favicon.png",
+    "/assets/placeholders/portrait-leadership-placeholder.svg",
+    "/assets/placeholders/peters-suture.svg",
+    "/assets/placeholders/portrait-team-placeholder.svg",
+    "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png",
+    "/assets/contact/storefront-location.jpg",
+    "/assets/logos/peters-surgical.png",
+    "/assets/logos/liquiband.png",
+    "/assets/logos/advanced-medical-solutions.png",
+    "/assets/logos/gore.png",
+    "/assets/uploads/",
+    "/assets/uploads/${uniqueName}",
+    "/assets/placeholders/",
+    "/assets/contact/",
+    "/assets/logos/",
+    "/assets/placeholders/office-reception-placeholder.jpg",
+    "/assets/placeholders/workplace-workspace-placeholder.jpg",
+    "/assets/placeholders/healthcare-operations-placeholder.jpg",
+    "/assets/placeholders/cta-backdrop-placeholder.jpg",
+    "/assets/categories/cat-cutimed-wound-care-infection-management.png",
+    "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
+    "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
+    "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
+    "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
+    "/assets/categories/cat-peters-barbed-sutures-knotless.png",
+    "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
+    "/assets/categories/cat-peters-natural-absorbable-sutures.png",
+    "/assets/categories/cat-peters-non-absorbable-sutures.png",
+    "/assets/categories/cat-peters-surgical-adhesive.png",
+    "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
+    "/assets/categories/cat-peters-surgical-mesh.png",
+    "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
+    "/assets/logos/sriyas-hero-logo.png",
+    "/assets/products/catgut-1.png",
+    "/assets/products/csection-1.png",
+    "/assets/products/cutimed_siltec-1.png",
+    "/assets/products/cutimed_sorbact-1.png",
+    "/assets/products/filbloc-1.png",
+    "/assets/products/filbloc90-1.png",
+    "/assets/products/filbloc90-2.png",
+    "/assets/products/filbloc_perm-1.png",
+    "/assets/products/fix8-1.png",
+    "/assets/products/gentacoll-1.png",
+    "/assets/products/gentacoll-2.png",
+    "/assets/products/gentacoll-3.png",
+    "/assets/products/gentacoll-4.png",
+    "/assets/products/gore_bioa-1.png",
+    "/assets/products/gore_synecor_ip-1.png",
+    "/assets/products/gore_synecor_ip-2.png",
+    "/assets/products/gore_synecor_ip-3.png",
+    "/assets/products/icol-1.png",
+    "/assets/products/icol_fast-1.png",
+    "/assets/products/ifabond-1.png",
+    "/assets/products/ifabond-2.png",
+    "/assets/products/lb_exceed-1.png",
+    "/assets/products/lb_exceed-2.png",
+    "/assets/products/lb_optima-1.png",
+    "/assets/products/lb_optima-2.png",
+    "/assets/products/monocol-1.png",
+    "/assets/products/polycol-1.png",
+    "/assets/products/steribon-1.png",
+    "/assets/products/stericryl-1.png",
+    "/assets/products/sterilene_mesh-1.png",
+    "/assets/products/sterilene_mesh-2.png",
+    "/assets/products/sterilene_suture-1.png",
+    "/assets/products/sterilon-1.png",
+    "/assets/products/sterisil-1.png",
+    "/assets/products/titanium-1.png",
+    "/assets/products/titanium-2.png",
+    "/assets/uploads/gore-1794669238166-0fc332.png",
+    "/assets/uploads/gore-1794671086647-209322.png",
+    "/assets/uploads/peters-surgical-1794669238142-c5858d.png",
+    "/assets/uploads/peters-surgical-1794671086617-c4be3c.png",
+    "/assets/uploads/safe-logo-1794669238137-cebaf4.svg",
+    "/assets/uploads/safe-logo-1794671086611-b6648f.svg",
+    "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
+    "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
+    "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png"
+  ],
+  "codeImageReferences": [
+    {
+      "file": "client/src/components/admin/homepage/HomepageSeoPanel.jsx",
+      "line": 13,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/components/admin/homepage/HomepageSeoPanel.jsx",
+      "line": 94,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "client/src/components/admin/homepage/HomepageSeoPanel.jsx",
+      "line": 260,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/components/admin/homepage/PeopleProfilesEditorPanel.jsx",
+      "line": 11,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "client/src/components/admin/ProductForm.jsx",
+      "line": 697,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "client/src/components/enquiry/EnquiryDrawer.jsx",
+      "line": 210,
+      "url": "/assets/placeholders/peters-suture.svg"
+    },
+    {
+      "file": "client/src/components/enquiry/EnquiryDrawer.jsx",
+      "line": 319,
+      "url": "/assets/placeholders/peters-suture.svg"
+    },
+    {
+      "file": "client/src/components/footer/Footer.jsx",
+      "line": 15,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/components/home/ContinueToProductsTrigger.jsx",
+      "line": 251,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/components/home/HeroMorphSection.jsx",
+      "line": 46,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/components/navbar/Navbar.jsx",
+      "line": 74,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/context/HomepageScrollContext.jsx",
+      "line": 5,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/layouts/AdminLayout.jsx",
+      "line": 108,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/admin/AdminLogin.jsx",
+      "line": 52,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/admin/BrandCategoryManagement.jsx",
+      "line": 725,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "client/src/pages/admin/HomepageEditor.jsx",
+      "line": 385,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "client/src/pages/admin/HomepageEditor.jsx",
+      "line": 397,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "client/src/pages/customer/Contact.jsx",
+      "line": 77,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/Contact.jsx",
+      "line": 321,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "client/src/pages/customer/Home.jsx",
+      "line": 23,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/Home.jsx",
+      "line": 118,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/Home.jsx",
+      "line": 153,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/Home.jsx",
+      "line": 200,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/PartnerProducts.jsx",
+      "line": 241,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/ProductDetails.jsx",
+      "line": 190,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "client/src/pages/customer/Products.jsx",
+      "line": 177,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "client/src/pages/customer/Products.jsx",
+      "line": 190,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "client/src/pages/customer/Products.jsx",
+      "line": 203,
+      "url": "/assets/logos/advanced-medical-solutions.png"
+    },
+    {
+      "file": "client/src/pages/customer/Products.jsx",
+      "line": 216,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "client/src/utils/session.js",
+      "line": 174,
+      "url": "/assets/uploads/"
+    },
+    {
+      "file": "server/config/cloudinary.js",
+      "line": 84,
+      "url": "/assets/uploads/${uniqueName}"
+    },
+    {
+      "file": "server/config/cloudinary.js",
+      "line": 221,
+      "url": "/assets/uploads/"
+    },
+    {
+      "file": "server/config/cloudinary.js",
+      "line": 222,
+      "url": "/assets/placeholders/"
+    },
+    {
+      "file": "server/config/cloudinary.js",
+      "line": 223,
+      "url": "/assets/contact/"
+    },
+    {
+      "file": "server/config/cloudinary.js",
+      "line": 224,
+      "url": "/assets/logos/"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 33,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 69,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 82,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 113,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 128,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 143,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 171,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 190,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 218,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 237,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 256,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 345,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/config/defaultHomepageContent.js",
+      "line": 426,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 6,
+      "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 13,
+      "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 20,
+      "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 27,
+      "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 34,
+      "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 41,
+      "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 48,
+      "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 55,
+      "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 62,
+      "url": "/assets/categories/cat-peters-non-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 69,
+      "url": "/assets/categories/cat-peters-surgical-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 76,
+      "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 83,
+      "url": "/assets/categories/cat-peters-surgical-mesh.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 90,
+      "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 97,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 104,
+      "url": "/assets/logos/advanced-medical-solutions.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 111,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 118,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 125,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 132,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 139,
+      "url": "/assets/logos/sriyas-hero-logo.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 146,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 153,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 160,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 167,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 174,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 181,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 188,
+      "url": "/assets/products/catgut-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 195,
+      "url": "/assets/products/csection-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 202,
+      "url": "/assets/products/cutimed_siltec-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 209,
+      "url": "/assets/products/cutimed_sorbact-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 216,
+      "url": "/assets/products/filbloc-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 223,
+      "url": "/assets/products/filbloc90-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 230,
+      "url": "/assets/products/filbloc90-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 237,
+      "url": "/assets/products/filbloc_perm-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 244,
+      "url": "/assets/products/fix8-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 251,
+      "url": "/assets/products/gentacoll-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 258,
+      "url": "/assets/products/gentacoll-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 265,
+      "url": "/assets/products/gentacoll-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 272,
+      "url": "/assets/products/gentacoll-4.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 279,
+      "url": "/assets/products/gore_bioa-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 286,
+      "url": "/assets/products/gore_synecor_ip-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 293,
+      "url": "/assets/products/gore_synecor_ip-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 300,
+      "url": "/assets/products/gore_synecor_ip-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 307,
+      "url": "/assets/products/icol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 314,
+      "url": "/assets/products/icol_fast-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 321,
+      "url": "/assets/products/ifabond-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 328,
+      "url": "/assets/products/ifabond-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 335,
+      "url": "/assets/products/lb_exceed-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 342,
+      "url": "/assets/products/lb_exceed-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 349,
+      "url": "/assets/products/lb_optima-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 356,
+      "url": "/assets/products/lb_optima-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 363,
+      "url": "/assets/products/monocol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 370,
+      "url": "/assets/products/polycol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 377,
+      "url": "/assets/products/steribon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 384,
+      "url": "/assets/products/stericryl-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 391,
+      "url": "/assets/products/sterilene_mesh-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 398,
+      "url": "/assets/products/sterilene_mesh-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 405,
+      "url": "/assets/products/sterilene_suture-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 412,
+      "url": "/assets/products/sterilon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 419,
+      "url": "/assets/products/sterisil-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 426,
+      "url": "/assets/products/titanium-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 433,
+      "url": "/assets/products/titanium-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 440,
+      "url": "/assets/uploads/gore-1794669238166-0fc332.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 447,
+      "url": "/assets/uploads/gore-1794671086647-209322.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 454,
+      "url": "/assets/uploads/peters-surgical-1794669238142-c5858d.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 461,
+      "url": "/assets/uploads/peters-surgical-1794671086617-c4be3c.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 468,
+      "url": "/assets/uploads/safe-logo-1794669238137-cebaf4.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 475,
+      "url": "/assets/uploads/safe-logo-1794671086611-b6648f.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 482,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 493,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 494,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 495,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 496,
+      "url": "/assets/placeholders/peters-suture.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 497,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 498,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 499,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 500,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 501,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 502,
+      "url": "/assets/logos/advanced-medical-solutions.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 503,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 504,
+      "url": "/assets/uploads/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 505,
+      "url": "/assets/uploads/${uniqueName}"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 506,
+      "url": "/assets/placeholders/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 507,
+      "url": "/assets/contact/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 508,
+      "url": "/assets/logos/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 509,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 510,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 511,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 512,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 513,
+      "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 514,
+      "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 515,
+      "url": "/assets/categories/cat-peters-non-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 516,
+      "url": "/assets/categories/cat-peters-surgical-mesh.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 517,
+      "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 518,
+      "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 519,
+      "url": "/assets/categories/cat-peters-surgical-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 520,
+      "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 521,
+      "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 522,
+      "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 523,
+      "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 524,
+      "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 525,
+      "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 526,
+      "url": "/assets/products/icol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 527,
+      "url": "/assets/products/icol_fast-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 528,
+      "url": "/assets/products/polycol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 529,
+      "url": "/assets/products/stericryl-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 530,
+      "url": "/assets/products/monocol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 531,
+      "url": "/assets/products/catgut-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 532,
+      "url": "/assets/products/sterisil-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 533,
+      "url": "/assets/products/sterilon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 534,
+      "url": "/assets/products/sterilene_suture-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 535,
+      "url": "/assets/products/steribon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 536,
+      "url": "/assets/products/sterilene_mesh-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 537,
+      "url": "/assets/products/sterilene_mesh-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 538,
+      "url": "/assets/products/csection-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 539,
+      "url": "/assets/products/titanium-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 540,
+      "url": "/assets/products/titanium-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 541,
+      "url": "/assets/products/ifabond-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 542,
+      "url": "/assets/products/ifabond-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 543,
+      "url": "/assets/products/filbloc90-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 544,
+      "url": "/assets/products/filbloc90-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 545,
+      "url": "/assets/products/filbloc-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 546,
+      "url": "/assets/products/filbloc_perm-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 547,
+      "url": "/assets/products/lb_optima-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 548,
+      "url": "/assets/products/lb_optima-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 549,
+      "url": "/assets/products/lb_exceed-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 550,
+      "url": "/assets/products/lb_exceed-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 551,
+      "url": "/assets/products/fix8-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 552,
+      "url": "/assets/products/cutimed_sorbact-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 553,
+      "url": "/assets/products/cutimed_siltec-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 554,
+      "url": "/assets/products/gentacoll-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 555,
+      "url": "/assets/products/gentacoll-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 556,
+      "url": "/assets/products/gentacoll-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 557,
+      "url": "/assets/products/gentacoll-4.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 558,
+      "url": "/assets/products/gore_bioa-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 559,
+      "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 560,
+      "url": "/assets/products/gore_synecor_ip-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 561,
+      "url": "/assets/products/gore_synecor_ip-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 562,
+      "url": "/assets/products/gore_synecor_ip-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 563,
+      "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 564,
+      "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 570,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 575,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 580,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 585,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 590,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 595,
+      "url": "/assets/placeholders/peters-suture.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 600,
+      "url": "/assets/placeholders/peters-suture.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 605,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 610,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 615,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 620,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 625,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 630,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 635,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 640,
+      "url": "/favicon.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 645,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 650,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 655,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 660,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 665,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 670,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 675,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 680,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 685,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 690,
+      "url": "https://sriyashealthcare.com/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 695,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 700,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 705,
+      "url": "/assets/logos/advanced-medical-solutions.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 710,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 715,
+      "url": "/assets/uploads/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 720,
+      "url": "/assets/uploads/${uniqueName}"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 725,
+      "url": "/assets/uploads/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 730,
+      "url": "/assets/placeholders/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 735,
+      "url": "/assets/contact/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 740,
+      "url": "/assets/logos/"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 745,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 750,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 755,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 760,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 765,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 770,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 775,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 780,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 785,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 790,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 795,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 800,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 805,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 810,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 815,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 820,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 825,
+      "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 830,
+      "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 835,
+      "url": "/assets/categories/cat-peters-non-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 840,
+      "url": "/assets/categories/cat-peters-surgical-mesh.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 845,
+      "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 850,
+      "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 855,
+      "url": "/assets/categories/cat-peters-surgical-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 860,
+      "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 865,
+      "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 870,
+      "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 875,
+      "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 880,
+      "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 885,
+      "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 890,
+      "url": "/assets/products/icol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 895,
+      "url": "/assets/products/icol_fast-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 900,
+      "url": "/assets/products/polycol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 905,
+      "url": "/assets/products/stericryl-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 910,
+      "url": "/assets/products/monocol-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 915,
+      "url": "/assets/products/catgut-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 920,
+      "url": "/assets/products/sterisil-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 925,
+      "url": "/assets/products/sterilon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 930,
+      "url": "/assets/products/sterilene_suture-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 935,
+      "url": "/assets/products/steribon-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 940,
+      "url": "/assets/products/sterilene_mesh-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 945,
+      "url": "/assets/products/sterilene_mesh-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 950,
+      "url": "/assets/products/csection-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 955,
+      "url": "/assets/products/titanium-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 960,
+      "url": "/assets/products/titanium-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 965,
+      "url": "/assets/products/ifabond-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 970,
+      "url": "/assets/products/ifabond-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 975,
+      "url": "/assets/products/filbloc90-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 980,
+      "url": "/assets/products/filbloc90-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 985,
+      "url": "/assets/products/filbloc-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 990,
+      "url": "/assets/products/filbloc_perm-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 995,
+      "url": "/assets/products/lb_optima-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1000,
+      "url": "/assets/products/lb_optima-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1005,
+      "url": "/assets/products/lb_exceed-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1010,
+      "url": "/assets/products/lb_exceed-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1015,
+      "url": "/assets/products/fix8-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1020,
+      "url": "/assets/products/cutimed_sorbact-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1025,
+      "url": "/assets/products/cutimed_siltec-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1030,
+      "url": "/assets/products/gentacoll-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1035,
+      "url": "/assets/products/gentacoll-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1040,
+      "url": "/assets/products/gentacoll-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1045,
+      "url": "/assets/products/gentacoll-4.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1050,
+      "url": "/assets/products/gore_bioa-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1055,
+      "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1060,
+      "url": "/assets/products/gore_synecor_ip-1.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1065,
+      "url": "/assets/products/gore_synecor_ip-2.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1070,
+      "url": "/assets/products/gore_synecor_ip-3.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1075,
+      "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1080,
+      "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1085,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1090,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1095,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1100,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1105,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1110,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1115,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1120,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1125,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1130,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1135,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1140,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1145,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1150,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1155,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1160,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1165,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1170,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1175,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1180,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1185,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1190,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1195,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1200,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1205,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1210,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1215,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/image_audit_inventory.json",
+      "line": 1220,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 10,
+      "url": "/assets/logos/peters-surgical.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 24,
+      "url": "/assets/logos/liquiband.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 63,
+      "url": "/assets/logos/gore.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 81,
+      "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 98,
+      "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 115,
+      "url": "/assets/categories/cat-peters-non-absorbable-sutures.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 132,
+      "url": "/assets/categories/cat-peters-surgical-mesh.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 149,
+      "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 166,
+      "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 183,
+      "url": "/assets/categories/cat-peters-surgical-adhesive.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 200,
+      "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 217,
+      "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 234,
+      "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 251,
+      "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 268,
+      "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 285,
+      "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 308,
+      "url": "/assets/products/icol-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 382,
+      "url": "/assets/products/icol_fast-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 454,
+      "url": "/assets/products/polycol-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 527,
+      "url": "/assets/products/stericryl-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 599,
+      "url": "/assets/products/monocol-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 670,
+      "url": "/assets/products/catgut-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 742,
+      "url": "/assets/products/sterisil-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 809,
+      "url": "/assets/products/sterilon-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 876,
+      "url": "/assets/products/sterilene_suture-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 943,
+      "url": "/assets/products/steribon-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1010,
+      "url": "/assets/products/sterilene_mesh-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1015,
+      "url": "/assets/products/sterilene_mesh-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1087,
+      "url": "/assets/products/csection-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1155,
+      "url": "/assets/products/titanium-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1160,
+      "url": "/assets/products/titanium-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1234,
+      "url": "/assets/products/ifabond-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1239,
+      "url": "/assets/products/ifabond-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1307,
+      "url": "/assets/products/filbloc90-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1312,
+      "url": "/assets/products/filbloc90-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1379,
+      "url": "/assets/products/filbloc-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1447,
+      "url": "/assets/products/filbloc_perm-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1510,
+      "url": "/assets/products/lb_optima-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1515,
+      "url": "/assets/products/lb_optima-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1578,
+      "url": "/assets/products/lb_exceed-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1583,
+      "url": "/assets/products/lb_exceed-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1646,
+      "url": "/assets/products/fix8-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1719,
+      "url": "/assets/products/cutimed_sorbact-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1787,
+      "url": "/assets/products/cutimed_siltec-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1859,
+      "url": "/assets/products/gentacoll-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1864,
+      "url": "/assets/products/gentacoll-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1869,
+      "url": "/assets/products/gentacoll-3.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1874,
+      "url": "/assets/products/gentacoll-4.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 1944,
+      "url": "/assets/products/gore_bioa-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2003,
+      "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2028,
+      "url": "/assets/products/gore_synecor_ip-1.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2033,
+      "url": "/assets/products/gore_synecor_ip-2.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2038,
+      "url": "/assets/products/gore_synecor_ip-3.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2104,
+      "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2124,
+      "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1794224353/sriyas/test/file_lko3ih.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2597,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2628,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2641,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2781,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2796,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2811,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2838,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2857,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2884,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2903,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 2922,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3036,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3109,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3152,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3183,
+      "url": "/assets/contact/storefront-location.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3196,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3270,
+      "url": "/assets/placeholders/office-reception-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3285,
+      "url": "/assets/placeholders/workplace-workspace-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3300,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3327,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3346,
+      "url": "/assets/placeholders/portrait-leadership-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3373,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3392,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3411,
+      "url": "/assets/placeholders/portrait-team-placeholder.svg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3525,
+      "url": "/assets/placeholders/healthcare-operations-placeholder.jpg"
+    },
+    {
+      "file": "server/data/sriyas_db.runtime.json",
+      "line": 3598,
+      "url": "/assets/placeholders/cta-backdrop-placeholder.jpg"
+    },
+    {
+      "file": "server/models/HomepageContent.js",
+      "line": 158,
+      "url": "/assets/logos/sriyas-emblem.png"
+    },
+    {
+      "file": "server/models/HomepageContent.js",
+      "line": 195,
+      "url": "/assets/logos/sriyas-emblem.png"
+    }
+  ]
+}

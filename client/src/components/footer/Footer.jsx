@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,7 +13,7 @@ export default function Footer() {
           <div className="footer-col footer-col--brand">
             <div className="footer-brand-lockup">
               <img
-                src="/assets/logos/sriyas-emblem.png"
+                src={SRIYAS_EMBLEM_URL}
                 alt="Sriyas Healthcare Emblem"
                 className="footer-emblem-img"
                 width="40"

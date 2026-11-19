@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { enquiryService } from '../../services/enquiryService';
 import { trackAnalyticsEvent } from '../../utils/session';
 import SeoHead from '../../components/common/SeoHead';
+import { SRIYAS_EMBLEM_URL, STOREFRONT_LOCATION_URL } from '../../utils/cloudinaryAssets';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ export default function Contact() {
       '@type': ['LocalBusiness', 'WholesaleStore'],
       '@id': 'https://sriyashealthcare.com/#localbusiness',
       name: 'Sriyas Healthcare Private Limited',
-      image: 'https://sriyashealthcare.com/assets/logos/sriyas-emblem.png',
+      image: SRIYAS_EMBLEM_URL,
       url: 'https://sriyashealthcare.com/contact',
       telephone: '+919600804456',
       priceRange: '$$',
@@ -318,7 +319,7 @@ export default function Contact() {
       >
         <img
           className="map-photo"
-          src="/assets/contact/storefront-location.jpg"
+          src={STOREFRONT_LOCATION_URL}
           alt="Sriyas Healthcare storefront location"
           loading="lazy"
         />

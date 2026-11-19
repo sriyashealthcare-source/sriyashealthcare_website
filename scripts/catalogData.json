@@ -5,18 +5,20 @@
       "name": "Peters Surgical",
       "tabLabel": "Peters Surgical",
       "icon": "🔬",
-      "logoUrl": "/assets/logos/peters-surgical.png",
+      "logoUrl": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048215/sriyas-healthcare/brands/peters-surgical-logo.jpg",
       "description": "High-performance surgical sutures, meshes, clips, surgical adhesives, and Caesarean section kits.",
-      "displayOrder": 1
+      "displayOrder": 1,
+      "logoPublicId": "sriyas-healthcare/brands/peters-surgical-logo"
     },
     {
       "slug": "liquiband",
       "name": "LiquiBand®",
       "tabLabel": "LiquiBand®",
       "icon": "💉",
-      "logoUrl": "/assets/logos/liquiband.png",
+      "logoUrl": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048216/sriyas-healthcare/brands/liquiband-logo.jpg",
       "description": "Advanced topical skin adhesives and laparoscopic hernia mesh fixation devices by Advanced Medical Solutions.",
-      "displayOrder": 2
+      "displayOrder": 2,
+      "logoPublicId": "sriyas-healthcare/brands/liquiband-logo"
     },
     {
       "slug": "cutimed",
@@ -41,9 +43,10 @@
       "name": "W.L. Gore & Associates",
       "tabLabel": "W.L. Gore & Associates",
       "icon": "🧪",
-      "logoUrl": "/assets/logos/gore.png",
+      "logoUrl": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048219/sriyas-healthcare/brands/gore-logo.png",
       "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
-      "displayOrder": 5
+      "displayOrder": 5,
+      "logoPublicId": "sriyas-healthcare/brands/gore-logo"
     }
   ],
   "categories": [
@@ -55,8 +58,8 @@
       "description": "High-performance sutures with predictable absorption and superior tensile strength.",
       "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-synthetic-absorbable-sutures.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048270/sriyas-healthcare/categories/cat-peters-synthetic-sutures.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-synthetic-sutures"
       },
       "displayOrder": 1,
       "isActive": true
@@ -69,8 +72,8 @@
       "description": "Time-tested natural sutures with reliable enzymatic absorption.",
       "heroGradient": "linear-gradient(135deg,#1a4a3c,#2d7a5e)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-natural-absorbable-sutures.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048259/sriyas-healthcare/categories/cat-peters-natural-sutures.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-natural-sutures"
       },
       "displayOrder": 2,
       "isActive": true
@@ -83,8 +86,8 @@
       "description": "Permanent sutures for long-term tissue approximation and support.",
       "heroGradient": "linear-gradient(135deg,#1a2a4a,#2d4a7a)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-non-absorbable-sutures.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048261/sriyas-healthcare/categories/cat-peters-non-absorbable.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-non-absorbable"
       },
       "displayOrder": 3,
       "isActive": true
@@ -97,8 +100,8 @@
       "description": "Flat knitted polypropylene mesh — the ideal choice for open & laparoscopic hernia repairs.",
       "heroGradient": "linear-gradient(135deg,#2a1a4a,#4a2d7a)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-surgical-mesh.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048267/sriyas-healthcare/categories/cat-peters-surgical-mesh.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-mesh"
       },
       "displayOrder": 4,
       "isActive": true
@@ -111,8 +114,8 @@
       "description": "Complete pre-assembled kits for Caesarean Section — Polycol™ + Stericryl™.",
       "heroGradient": "linear-gradient(135deg,#4a1a3c,#7a2d5e)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-surgical-kits-obstetrics.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048265/sriyas-healthcare/categories/cat-peters-obstetrics-kits.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-obstetrics-kits"
       },
       "displayOrder": 5,
       "isActive": true
@@ -125,8 +128,8 @@
       "description": "Pure titanium clips — biologically inert, radio-opaque, MRI compatible.",
       "heroGradient": "linear-gradient(135deg,#1a3a4a,#2d5e7a)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-haemostasis-titanium-clips.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048256/sriyas-healthcare/categories/cat-peters-titanium-clips.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-titanium-clips"
       },
       "displayOrder": 6,
       "isActive": true
@@ -139,8 +142,8 @@
       "description": "A few drops glue a lot — n-hexyl cyanoacrylate surgical adhesive. EU MDR certified.",
       "heroGradient": "linear-gradient(135deg,#c0392b,#e74c3c)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-surgical-adhesive.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048262/sriyas-healthcare/categories/cat-peters-surgical-adhesive.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-adhesive"
       },
       "displayOrder": 7,
       "isActive": true
@@ -153,8 +156,8 @@
       "description": "Knotless closure device with Final Lock System — absorbable and non-absorbable.",
       "heroGradient": "linear-gradient(135deg,#00695c,#00897b)",
       "heroImage": {
-        "url": "/assets/categories/cat-peters-barbed-sutures-knotless.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048255/sriyas-healthcare/categories/cat-peters-barbed-sutures.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-peters-barbed-sutures"
       },
       "displayOrder": 8,
       "isActive": true
@@ -167,8 +170,8 @@
       "description": "Topical skin adhesive — microbial barrier in 10 seconds. Take the sting out of wound closure.",
       "heroGradient": "linear-gradient(135deg,#0d2d5e,#1a5799)",
       "heroImage": {
-        "url": "/assets/categories/cat-liquiband-topical-skin-adhesive.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048253/sriyas-healthcare/categories/cat-liquiband-skin-adhesive.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-liquiband-skin-adhesive"
       },
       "displayOrder": 9,
       "isActive": true
@@ -181,8 +184,8 @@
       "description": "Laparoscopic hernia mesh fixation device — atraumatic, precise, strong.",
       "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
       "heroImage": {
-        "url": "/assets/categories/cat-liquiband-hernia-mesh-fixation.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048251/sriyas-healthcare/categories/cat-liquiband-mesh-fixation.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-liquiband-mesh-fixation"
       },
       "displayOrder": 10,
       "isActive": true
@@ -195,8 +198,8 @@
       "description": "Clinically proven antibiotic-free wound infection management — purely physical mode of action.",
       "heroGradient": "linear-gradient(135deg,#006064,#00838f)",
       "heroImage": {
-        "url": "/assets/categories/cat-cutimed-wound-care-infection-management.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048245/sriyas-healthcare/categories/cat-cutimed-wound-care.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-cutimed-wound-care"
       },
       "displayOrder": 11,
       "isActive": true
@@ -209,8 +212,8 @@
       "description": "Haemostatic collagen sponge with gentamicin sulphate — effective protection with strong haemostyptic action.",
       "heroGradient": "linear-gradient(135deg,#3e2723,#6d4c41)",
       "heroImage": {
-        "url": "/assets/categories/cat-gentacoll-haemostasis-antibiotic-collagen-sponge.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048248/sriyas-healthcare/categories/cat-gentacoll-haemostasis.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-gentacoll-haemostasis"
       },
       "displayOrder": 12,
       "isActive": true
@@ -223,8 +226,8 @@
       "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
       "heroGradient": "linear-gradient(135deg,#2c2c2c,#5c1a1a)",
       "heroImage": {
-        "url": "/assets/categories/cat-gore-absorbable-biomaterials-tissue-reinforcement.png",
-        "publicId": ""
+        "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048249/sriyas-healthcare/categories/cat-gore-biomaterials.jpg",
+        "publicId": "sriyas-healthcare/categories/cat-gore-biomaterials"
       },
       "displayOrder": 13,
       "isActive": true
@@ -243,8 +246,8 @@
       "description": "I-Col™ is a synthetic absorbable braided suture made from Polyglycolic Acid (PGA), coated with Calcium Stearate and Polycaprolactone. It provides high initial tensile strength with predictable absorption — ideal for procedures requiring extended wound support.",
       "images": [
         {
-          "url": "/assets/products/icol-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048286/sriyas-healthcare/products/peters-surgical/icol-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/icol-1",
           "isPrimary": true
         }
       ],
@@ -311,8 +314,8 @@
       "description": "I-Col™ Fast is a short-term synthetic absorbable braided suture made from treated Polyglycolic Acid. Spontaneous elimination after 10 days saves surgical time and provides excellent wound healing with very soft thread handling.",
       "images": [
         {
-          "url": "/assets/products/icol_fast-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048287/sriyas-healthcare/products/peters-surgical/icol_fast-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/icol_fast-1",
           "isPrimary": true
         }
       ],
@@ -379,8 +382,8 @@
       "description": "Polycol™ is a synthetic absorbable braided suture made from Polyglactin 910, coated with Poly-Glycolide-co-Lactide and Calcium Stearate. It offers excellent tensile strength, improved handling and minimal tissue reaction.",
       "images": [
         {
-          "url": "/assets/products/polycol-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048297/sriyas-healthcare/products/peters-surgical/polycol-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/polycol-1",
           "isPrimary": true
         }
       ],
@@ -448,8 +451,8 @@
       "description": "Stericryl™ is a synthetic absorbable monofilament suture made from Poliglecaprone 25 (PGA-PCL). It features smooth atraumatic tissue penetration, mild tissue reactivity, and reduces postoperative adhesion.",
       "images": [
         {
-          "url": "/assets/products/stericryl-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048299/sriyas-healthcare/products/peters-surgical/stericryl-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/stericryl-1",
           "isPrimary": true
         }
       ],
@@ -516,8 +519,8 @@
       "description": "Monocol™ is a long-term synthetic absorbable monofilament suture made from Polydioxanone (PDO). Provides sustained wound support over 60 days with homogeneous absorption kinetics and exceptional resistance in aggressive biological environments.",
       "images": [
         {
-          "url": "/assets/products/monocol-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048295/sriyas-healthcare/products/peters-surgical/monocol-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/monocol-1",
           "isPrimary": true
         }
       ],
@@ -583,8 +586,8 @@
       "description": "Catgut Chromic™ is a natural absorbable suture made from the submucosa of sheep intestines, treated with chromium salts to prolong absorption. Naturally absorbed by enzymatic action of body tissues.",
       "images": [
         {
-          "url": "/assets/products/catgut-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048271/sriyas-healthcare/products/peters-surgical/catgut-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/catgut-1",
           "isPrimary": true
         }
       ],
@@ -651,8 +654,8 @@
       "description": "Sterisil™ is a non-absorbable surgical suture made from natural black braided silk, coated for smooth tissue passage. Valued for excellent handling characteristics and secure knotting in all surgical environments.",
       "images": [
         {
-          "url": "/assets/products/sterisil-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048310/sriyas-healthcare/products/peters-surgical/sterisil-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/sterisil-1",
           "isPrimary": true
         }
       ],
@@ -714,8 +717,8 @@
       "description": "Sterilon™ is a synthetic non-absorbable monofilament suture made from Polyamide (Nylon). Blue coloured for enhanced visibility with low tissue reactivity and predictable long-term strength.",
       "images": [
         {
-          "url": "/assets/products/sterilon-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048309/sriyas-healthcare/products/peters-surgical/sterilon-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/sterilon-1",
           "isPrimary": true
         }
       ],
@@ -777,8 +780,8 @@
       "description": "Sterilene™ is a synthetic non-absorbable monofilament suture made from Polypropylene — the most biologically inert suture material. Ideal for use in infected tissue and procedures requiring permanent strength.",
       "images": [
         {
-          "url": "/assets/products/sterilene_suture-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048308/sriyas-healthcare/products/peters-surgical/sterilene_suture-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_suture-1",
           "isPrimary": true
         }
       ],
@@ -840,8 +843,8 @@
       "description": "Steribon™ is a synthetic non-absorbable coated braided polyester suture. It offers superior tensile strength — the highest of all non-absorbable sutures — and is the choice when permanent support is required.",
       "images": [
         {
-          "url": "/assets/products/steribon-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048298/sriyas-healthcare/products/peters-surgical/steribon-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/steribon-1",
           "isPrimary": true
         }
       ],
@@ -903,13 +906,13 @@
       "description": "Sterilene™ Mesh is a flat knitted polypropylene mesh — the ideal mesh for open and laparoscopic hernia repairs. Available in Light, Regular and Heavy variants to suit the specific requirements of each procedure.",
       "images": [
         {
-          "url": "/assets/products/sterilene_mesh-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048303/sriyas-healthcare/products/peters-surgical/sterilene_mesh-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_mesh-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/sterilene_mesh-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048307/sriyas-healthcare/products/peters-surgical/sterilene_mesh-2.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_mesh-2",
           "isPrimary": false
         }
       ],
@@ -976,8 +979,8 @@
       "description": "Peters C-Section Kit is a pre-assembled sterile kit specifically designed for Caesarean Section procedures. Contains Polycol™ and Stericryl™ sutures — providing the complete suturing solution for all layers.",
       "images": [
         {
-          "url": "/assets/products/csection-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048273/sriyas-healthcare/products/peters-surgical/csection-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/csection-1",
           "isPrimary": true
         }
       ],
@@ -1040,13 +1043,13 @@
       "description": "Peters Surgical Titanium Hemostatic Clips are pure titanium, chevron-shaped clips for reliable vessel ligation. Biologically inert, radio-opaque, non-magnetic, and annealed to consistent malleability for more reliable tip-to-tip engulfing closure.",
       "images": [
         {
-          "url": "/assets/products/titanium-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048312/sriyas-healthcare/products/peters-surgical/titanium-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/titanium-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/titanium-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048315/sriyas-healthcare/products/peters-surgical/titanium-2.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/titanium-2",
           "isPrimary": false
         }
       ],
@@ -1115,13 +1118,13 @@
       "description": "IFABOND® is an n-hexyl cyanoacrylate synthetic surgical adhesive. Class III implantable and biodegradable, EU MDR certified. Non-irritant and non-toxic — used by surgeons in France and abroad for over 20 years.",
       "images": [
         {
-          "url": "/assets/products/ifabond-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048289/sriyas-healthcare/products/peters-surgical/ifabond-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/ifabond-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/ifabond-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048293/sriyas-healthcare/products/peters-surgical/ifabond-2.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/ifabond-2",
           "isPrimary": false
         }
       ],
@@ -1184,13 +1187,13 @@
       "description": "FILBLOC® 90 is an absorbable monofilament barbed suture with Final Lock System. The knotless closure device fastens thread quickly and efficiently — eliminating the need to tie a knot at the beginning of suturing.",
       "images": [
         {
-          "url": "/assets/products/filbloc90-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048279/sriyas-healthcare/products/peters-surgical/filbloc90-1.jpg",
+          "publicId": "sriyas-healthcare/products/peters-surgical/filbloc90-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/filbloc90-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048282/sriyas-healthcare/products/peters-surgical/filbloc90-2.png",
+          "publicId": "sriyas-healthcare/products/peters-surgical/filbloc90-2",
           "isPrimary": false
         }
       ],
@@ -1252,8 +1255,8 @@
       "description": "FILBLOC® is an absorbable monofilament barbed suture with Final Lock System, made from poly(p-dioxanone) PDO. Provides 28-day strength retention with complete absorption between 180–210 days.",
       "images": [
         {
-          "url": "/assets/products/filbloc-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048275/sriyas-healthcare/products/peters-surgical/filbloc-1.png",
+          "publicId": "sriyas-healthcare/products/peters-surgical/filbloc-1",
           "isPrimary": true
         }
       ],
@@ -1316,8 +1319,8 @@
       "description": "FILBLOC® Permanent is a non-absorbable monofilament barbed suture with Final Lock System, made from Polypropylene (PP). Provides permanent tissue approximation with the efficiency of knotless technique.",
       "images": [
         {
-          "url": "/assets/products/filbloc_perm-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048285/sriyas-healthcare/products/peters-surgical/filbloc_perm-1.png",
+          "publicId": "sriyas-healthcare/products/peters-surgical/filbloc_perm-1",
           "isPrimary": true
         }
       ],
@@ -1375,13 +1378,13 @@
       "description": "LiquiBand® Optima is a topical skin adhesive that forms a microbial barrier in just 10 seconds. It takes the sting out of wound closure by replacing sutures and staples for superficial skin lacerations.",
       "images": [
         {
-          "url": "/assets/products/lb_optima-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048319/sriyas-healthcare/products/liquiband/lb_optima-1.jpg",
+          "publicId": "sriyas-healthcare/products/liquiband/lb_optima-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/lb_optima-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048325/sriyas-healthcare/products/liquiband/lb_optima-2.jpg",
+          "publicId": "sriyas-healthcare/products/liquiband/lb_optima-2",
           "isPrimary": false
         }
       ],
@@ -1439,13 +1442,13 @@
       "description": "LiquiBand® Exceed™ Range offers improved precision and controlled delivery with innovative tip design. Available in XS (small incisions) and standard (medium to long incisions) — with 99.5% antimicrobial barrier over 3 days and 97.9% over 7 days.",
       "images": [
         {
-          "url": "/assets/products/lb_exceed-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048327/sriyas-healthcare/products/liquiband/lb_exceed-1.jpg",
+          "publicId": "sriyas-healthcare/products/liquiband/lb_exceed-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/lb_exceed-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048329/sriyas-healthcare/products/liquiband/lb_exceed-2.jpg",
+          "publicId": "sriyas-healthcare/products/liquiband/lb_exceed-2",
           "isPrimary": false
         }
       ],
@@ -1503,8 +1506,8 @@
       "description": "LiquiBand® FIX8® is a laparoscopic hernia mesh fixation device using innovative liquid anchors to deliver strong, atraumatic mesh fixation. Low incidence of post-operative pain compared to mechanical tacks.",
       "images": [
         {
-          "url": "/assets/products/fix8-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048331/sriyas-healthcare/products/liquiband/fix8-1.jpg",
+          "publicId": "sriyas-healthcare/products/liquiband/fix8-1",
           "isPrimary": true
         }
       ],
@@ -1572,8 +1575,8 @@
       "description": "Cutimed® Sorbact® is a clinically proven antibiotic-free wound dressing that uses a purely physical mode of action — DACC technology — to bind and remove bacteria and fungi. Up to 73.1% bacterial reduction in 4 days.",
       "images": [
         {
-          "url": "/assets/products/cutimed_sorbact-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048332/sriyas-healthcare/products/cutimed-sorbact/cutimed_sorbact-1.jpg",
+          "publicId": "sriyas-healthcare/products/cutimed-sorbact/cutimed_sorbact-1",
           "isPrimary": true
         }
       ],
@@ -1636,8 +1639,8 @@
       "description": "Cutimed® Siltec® Sorbact® combines Siltec® foam technology with Sorbact® antimicrobial action. Super-absorbent particles absorb moderate to high exudate even under compression — with the highest fluid retention of all tested products.",
       "images": [
         {
-          "url": "/assets/products/cutimed_siltec-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048333/sriyas-healthcare/products/cutimed-sorbact/cutimed_siltec-1.jpg",
+          "publicId": "sriyas-healthcare/products/cutimed-sorbact/cutimed_siltec-1",
           "isPrimary": true
         }
       ],
@@ -1704,23 +1707,23 @@
       "description": "Genta-Coll® resorb is a haemostatic collagen sponge containing gentamicin sulphate to protect the implant from infection. Made from equine collagen — completely absorbable with strong haemostyptic action.",
       "images": [
         {
-          "url": "/assets/products/gentacoll-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048335/sriyas-healthcare/products/genta-coll/gentacoll-1.jpg",
+          "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/gentacoll-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048337/sriyas-healthcare/products/genta-coll/gentacoll-2.jpg",
+          "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-2",
           "isPrimary": false
         },
         {
-          "url": "/assets/products/gentacoll-3.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048339/sriyas-healthcare/products/genta-coll/gentacoll-3.jpg",
+          "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-3",
           "isPrimary": false
         },
         {
-          "url": "/assets/products/gentacoll-4.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048341/sriyas-healthcare/products/genta-coll/gentacoll-4.jpg",
+          "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-4",
           "isPrimary": false
         }
       ],
@@ -1785,8 +1788,8 @@
       "description": "GORE® BIO-A® Tissue Reinforcement is a uniquely designed web of biocompatible synthetic polymers (PGA:TMC) that is gradually absorbed by the body. Its 3D matrix of open, highly interconnected pores facilitates cell infiltration and tissue generation — leaving no permanent material behind. Backed by more than 20 years of research and clinical use.",
       "images": [
         {
-          "url": "/assets/products/gore_bioa-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048342/sriyas-healthcare/products/gore/gore_bioa-1.jpg",
+          "publicId": "sriyas-healthcare/products/gore/gore_bioa-1",
           "isPrimary": true
         }
       ],
@@ -1844,8 +1847,8 @@
         "Components separation technique for ventral hernia"
       ],
       "brochure": {
-        "url": "/assets/documents/GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
-        "publicId": "",
+        "url": "https://res.cloudinary.com/pgjzw0zu/raw/upload/v1795048353/sriyas-healthcare/documents/gore-bio-a-brochure.pdf",
+        "publicId": "sriyas-healthcare/documents/gore-bio-a-brochure.pdf",
         "filename": "GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
       },
       "isActive": true,
@@ -1863,18 +1866,18 @@
       "description": "GORE® SYNECOR Intraperitoneal Biomaterial is a tri-layer hybrid solution designed for durable repair in complex patients (VHWG Grade 2). It combines a GORE 3D PGA:TMC Web Scaffold for rapid vascularisation, a macroporous PTFE knit for permanent strength, and a non-porous PGA:TMC film to minimise visceral attachment. Burst strength >500 N — designed to provide strength for large defects and higher BMIs.",
       "images": [
         {
-          "url": "/assets/products/gore_synecor_ip-1.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048343/sriyas-healthcare/products/gore/gore_synecor_ip-1.jpg",
+          "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-1",
           "isPrimary": true
         },
         {
-          "url": "/assets/products/gore_synecor_ip-2.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048344/sriyas-healthcare/products/gore/gore_synecor_ip-2.jpg",
+          "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-2",
           "isPrimary": false
         },
         {
-          "url": "/assets/products/gore_synecor_ip-3.png",
-          "publicId": "",
+          "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048345/sriyas-healthcare/products/gore/gore_synecor_ip-3.jpg",
+          "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-3",
           "isPrimary": false
         }
       ],
@@ -1939,8 +1942,8 @@
         "Complex abdominal wall reconstruction"
       ],
       "brochure": {
-        "url": "/assets/documents/GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
-        "publicId": "",
+        "url": "https://res.cloudinary.com/pgjzw0zu/raw/upload/v1795048367/sriyas-healthcare/documents/gore-synecor-ip-brochure.pdf",
+        "publicId": "sriyas-healthcare/documents/gore-synecor-ip-brochure.pdf",
         "filename": "GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
       },
       "isActive": true,

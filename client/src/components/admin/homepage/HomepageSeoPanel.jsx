@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageUploadField from './ImageUploadField';
+import { SRIYAS_EMBLEM_URL } from '../../../utils/cloudinaryAssets';
 
 const DEFAULT_SEO = {
   title: 'Sriyas Healthcare | Surgical Products & Medical Device Distributor in Chennai, India',
@@ -10,7 +11,7 @@ const DEFAULT_SEO = {
   canonicalUrl: 'https://sriyashealthcare.com',
   ogTitle: '',
   ogDescription: '',
-  ogImage: '/assets/logos/sriyas-emblem.png',
+  ogImage: SRIYAS_EMBLEM_URL,
   robotsIndex: true,
   robotsFollow: true
 };
@@ -257,7 +258,7 @@ export default function HomepageSeoPanel({
               className="hp-stats-input"
               value={seo.ogImage}
               onChange={(e) => commit({ ogImage: e.target.value })}
-              placeholder="/assets/logos/sriyas-emblem.png"
+              placeholder="https://res.cloudinary.com/.../sriyas-emblem.png"
             />
           </div>
         </div>
