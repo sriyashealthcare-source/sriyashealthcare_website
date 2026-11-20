@@ -125,6 +125,36 @@ const FALLBACK_HOMEPAGE = {
         category: 'Hospital Training',
         displayOrder: 5,
         isActive: true
+      },
+      {
+        id: 'wp-surgical-liaison',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
+        publicId: 'sriyas-healthcare/general/file_cwsk2o',
+        title: 'Operating Room Clinical Liaison & Surgical Device Support',
+        caption: 'Direct on-site clinical liaison providing emergency surgical stock availability and procedural device support outside the operating suite.',
+        category: 'OR Support',
+        displayOrder: 6,
+        isActive: true
+      },
+      {
+        id: 'wp-hospital-corridor',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107356/sriyas-healthcare/general/file_vncy1o.jpg',
+        publicId: 'sriyas-healthcare/general/file_vncy1o',
+        title: 'Hospital Clinical Presence & Surgical Support',
+        caption: 'Continuous sterile suite coordination and surgical consumable fulfillment across leading specialty hospital surgical departments.',
+        category: 'Clinical Support',
+        displayOrder: 7,
+        isActive: true
+      },
+      {
+        id: 'wp-clinical-training',
+        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106936/sriyas-healthcare/general/file_zgmlxn.jpg',
+        publicId: 'sriyas-healthcare/general/file_zgmlxn',
+        title: 'Clinical Education & Surgical Solutions Training',
+        caption: 'Interactive procedural workshops and biosurgical product familiarization for surgical teams, resident faculties, and clinical specialists.',
+        category: 'Surgical Training',
+        displayOrder: 8,
+        isActive: true
       }
     ]
   },
@@ -218,7 +248,7 @@ const FALLBACK_HOMEPAGE = {
     eyebrow: 'What We Do',
     heading: 'Focused Capabilities in Surgical & Medical Supply',
     subtitle:
-      'Serving as an authorized, dependable bridge between global healthcare manufacturers and hospital operating rooms across India.',
+      'Connecting healthcare institutions with specialised surgical products, clinical support and dependable distribution.',
     items: [
       {
         id: 'wwd-distribution',

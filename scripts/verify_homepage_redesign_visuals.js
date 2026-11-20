@@ -1,16 +1,15 @@
 /**
- * Sriyas Healthcare -- Master Pure White 3D Redesign & Visual Verification Suite
+ * Sriyas Healthcare -- Master Gen-Z Editorial Redesign & Visual Verification Suite
  * Executes real headless Chrome browser tests with CDP to observe:
- * 1. Pure white theme across all homepage sections (#FFFFFF, #FAFAFA, #F7F7F7)
- * 2. Restored Hero CTA buttons: "Explore Sriyas" and "View Products"
- * 3. Dynamic Company in Action Carousel: single-image focus, auto-rotation, infinite loop, prev/next, dots
- * 4. Leadership sequential alternating editorial layout: Row 1 Text-L/Photo-R, Row 2 Photo-L/Text-R
- * 5. About Us section with authentic clinical photos (unsuitable storefront removed)
- * 6. What We Do cards on #F7F7F7 with subtle 3D perspective hover tilt
- * 7. Values section with pure white cards and gold numerals 01-06
- * 8. Final CTA with corporate navy card on white section, clickable phone & email
- * 9. Mobile responsiveness (390px iPhone viewport) and zero horizontal overflow
- * 10. High-resolution screenshots saved to the artifacts directory
+ * 1. Company in Action: Exactly 8 images, 4s auto-advance, 8 pagination dots, active in gold, NO arrows.
+ * 2. Mobile Carousel visibility: verify bounding rect, full width, visible caption, zero overflow.
+ * 3. About Sriyas Healthcare: Opposite-direction convergence, sequential reveals.
+ * 4. What We Do: Interactive capability showcase (5 capabilities), slim progress bar, large photo, no orphaned cards.
+ * 5. Leadership & Governance: Alternating sequential editorial layout (M. Ravikumar & Corporate Operations).
+ * 6. Our Values & Commitment: 6 values in an elegant editorial sequence with prominent gold numerals 01-06.
+ * 7. Hero section: "Explore Sriyas" and "View Products" CTA buttons, pure white & gold branding.
+ * 8. Zero horizontal overflow across desktop (1440px) and mobile (390px).
+ * 9. Captures high-resolution artifacts screenshots.
  */
 
 const fs = require('fs');
@@ -199,7 +198,7 @@ class CdpClient {
 
 async function runVisualVerification() {
   console.log('═══════════════════════════════════════════════════════════════');
-  console.log('  SRIYAS HEALTHCARE -- PURE WHITE 3D HOMEPAGE VERIFICATION');
+  console.log('  SRIYAS HEALTHCARE -- MASTER REDESIGN VERIFICATION SUITE');
   console.log('═══════════════════════════════════════════════════════════════');
 
   await startServers();
@@ -242,9 +241,9 @@ async function runVisualVerification() {
       })()
     `);
     console.log('[Hero Verification]', heroInfo);
-    await cdp.captureScreenshot('58_homepage_hero_white_desktop.png');
+    await cdp.captureScreenshot('69_homepage_hero_desktop.png');
 
-    // Verify About Sriyas Healthcare
+    // Verify About Sriyas Healthcare & Opposite-Direction Convergence
     console.log('\n[Test 2] Scrolling to About Sriyas Healthcare (#about-sriyas)...');
     await cdp.eval(`
       (() => {
@@ -252,7 +251,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
+    await sleep(1000);
 
     const aboutInfo = await cdp.eval(`
       (() => {
@@ -260,70 +259,58 @@ async function runVisualVerification() {
         if (!el) return null;
         const isRevealed = el.classList.contains('is-revealed');
         const heading = el.querySelector('.hp-heading')?.textContent?.trim();
+        const hasConvergeLeft = Boolean(el.querySelector('.hp-converge-left'));
+        const hasConvergeRight = Boolean(el.querySelector('.hp-converge-right'));
         const images = Array.from(el.querySelectorAll('.hp-collage-media img')).map(img => ({
           alt: img.alt,
           src: img.src
         }));
-        const hasStorefront = images.some(i => i.src.includes('storefront-location'));
-        const bg = window.getComputedStyle(el).backgroundColor;
-        return { isRevealed, heading, imagesCount: images.length, hasStorefront, bg };
+        return { isRevealed, heading, hasConvergeLeft, hasConvergeRight, imagesCount: images.length };
       })()
     `);
     console.log('[About Section Verification]', aboutInfo);
-    await cdp.captureScreenshot('59_homepage_about_white_desktop.png');
+    await cdp.captureScreenshot('70_homepage_about_convergence_desktop.png');
 
-    // Verify Dynamic Company in Action Carousel (#our-workplace)
-    console.log('\n[Test 3] Scrolling to Company in Action Carousel (#our-workplace)...');
+    // Verify Dynamic 8-Image Automatic Carousel (#our-workplace)
+    console.log('\n[Test 3] Scrolling to Company in Action 8-Image Carousel (#our-workplace)...');
     await cdp.eval(`
       (() => {
         const el = document.getElementById('our-workplace');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
+    await sleep(1000);
 
-    const carouselInfo = await cdp.eval(`
+    const carouselInitial = await cdp.eval(`
       (() => {
         const el = document.getElementById('our-workplace');
         if (!el) return null;
-        const eyebrow = el.querySelector('.hp-eyebrow')?.textContent?.trim();
-        const heading = el.querySelector('.hp-heading')?.textContent?.trim();
         const slides = Array.from(el.querySelectorAll('.hp-carousel-slide'));
         const activeSlide = el.querySelector('.hp-carousel-slide.is-active');
         const activeTitle = activeSlide?.querySelector('.hp-carousel-title')?.textContent?.trim();
-        const activeTag = activeSlide?.querySelector('.hp-carousel-tag-badge')?.textContent?.trim();
         const counter = el.querySelector('.hp-carousel-counter')?.textContent?.trim();
         const dotsCount = el.querySelectorAll('.hp-carousel-dot').length;
-        const hasPrev = Boolean(el.querySelector('.hp-carousel-btn--prev'));
-        const hasNext = Boolean(el.querySelector('.hp-carousel-btn--next'));
-        const bg = window.getComputedStyle(el).backgroundColor;
+        const activeDot = el.querySelector('.hp-carousel-dot.is-active');
+        const hasArrows = Boolean(el.querySelector('.hp-carousel-btn'));
+        const isVisible = el.getBoundingClientRect().height > 200;
         return {
-          eyebrow,
-          heading,
           slidesCount: slides.length,
           activeTitle,
-          activeTag,
           counter,
           dotsCount,
-          hasPrev,
-          hasNext,
-          bg
+          hasActiveDot: Boolean(activeDot),
+          hasArrows,
+          isVisible
         };
       })()
     `);
-    console.log('[Carousel Initial State]', carouselInfo);
+    console.log('[Carousel Initial State - 8 Images, No Arrows, Active Dot]:', carouselInitial);
 
-    // Test clicking Next button on Carousel
-    console.log('  Testing Carousel Next button click...');
-    await cdp.eval(`
-      (() => {
-        const nextBtn = document.querySelector('.hp-carousel-btn--next');
-        if (nextBtn) nextBtn.click();
-      })()
-    `);
-    await sleep(750);
+    // Test automatic rotation: wait ~4.2 seconds to observe automatic advancement without click
+    console.log('  Waiting 4.2 seconds to verify automatic slide rotation without user interaction...');
+    await sleep(4200);
 
-    const carouselAfterNext = await cdp.eval(`
+    const carouselAfterAuto = await cdp.eval(`
       (() => {
         const el = document.getElementById('our-workplace');
         const activeSlide = el.querySelector('.hp-carousel-slide.is-active');
@@ -332,10 +319,10 @@ async function runVisualVerification() {
         return { activeTitle, counter };
       })()
     `);
-    console.log('[Carousel After Next Click]', carouselAfterNext);
-    await cdp.captureScreenshot('60_homepage_carousel_action_desktop.png');
+    console.log('[Carousel After 4.2s Automatic Advance]:', carouselAfterAuto);
+    await cdp.captureScreenshot('71_homepage_carousel_8images_desktop.png');
 
-    // Verify Leadership & Governance Sequential Editorial Presentation (#leadership)
+    // Verify Leadership & Governance Sequential Alternating Editorial Layout
     console.log('\n[Test 4] Scrolling to Leadership & Governance (#leadership)...');
     await cdp.eval(`
       (() => {
@@ -343,137 +330,125 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
+    await sleep(1000);
 
     const leadershipInfo = await cdp.eval(`
       (() => {
         const el = document.getElementById('leadership');
         if (!el) return null;
-        const eyebrow = el.querySelector('.hp-eyebrow')?.textContent?.trim();
-        const heading = el.querySelector('.hp-heading')?.textContent?.trim();
         const rows = Array.from(el.querySelectorAll('.hp-leadership-row')).map((row, idx) => {
           const name = row.querySelector('.hp-leadership-name')?.textContent?.trim();
           const role = row.querySelector('.hp-leadership-role')?.textContent?.trim();
           const isReversed = row.classList.contains('hp-leadership-row--reversed');
           const hasLeft = Boolean(row.querySelector('.hp-converge-left'));
           const hasRight = Boolean(row.querySelector('.hp-converge-right'));
-          const emailLink = row.querySelector('.hp-leadership-email-btn')?.getAttribute('href');
-          return { name, role, isReversed, hasLeft, hasRight, emailLink };
+          const email = row.querySelector('.hp-leadership-email-btn')?.getAttribute('href');
+          return { name, role, isReversed, hasLeft, hasRight, email };
         });
-        const bg = window.getComputedStyle(el).backgroundColor;
-        return { eyebrow, heading, rowsCount: rows.length, rows, bg };
+        return { rowsCount: rows.length, rows };
       })()
     `);
-    console.log('[Leadership Editorial Verification]', leadershipInfo);
-    await cdp.captureScreenshot('61_homepage_leadership_editorial_desktop.png');
+    console.log('[Leadership Editorial Alternating Layout]:', leadershipInfo);
+    await cdp.captureScreenshot('72_homepage_leadership_alternating_desktop.png');
 
-    // Verify Team Section (#team)
-    console.log('\n[Test 5] Scrolling to Team Section (#team)...');
-    await cdp.eval(`
-      (() => {
-        const el = document.getElementById('team');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      })()
-    `);
-    await sleep(900);
-
-    const teamInfo = await cdp.eval(`
-      (() => {
-        const el = document.getElementById('team');
-        if (!el) return null;
-        const cards = Array.from(el.querySelectorAll('.hp-team-card')).map(card => {
-          const name = card.querySelector('.hp-team-name')?.textContent?.trim();
-          const role = card.querySelector('.hp-team-role')?.textContent?.trim();
-          return { name, role };
-        });
-        return { cardsCount: cards.length, cards };
-      })()
-    `);
-    console.log('[Team Section Verification]', teamInfo);
-    await cdp.captureScreenshot('62_homepage_team_desktop.png');
-
-    // Verify What We Do Section (#what-we-do)
-    console.log('\n[Test 6] Scrolling to What We Do Section (#what-we-do)...');
+    // Verify What We Do Interactive Capability Showcase (#what-we-do)
+    console.log('\n[Test 5] Scrolling to What We Do Interactive Showcase (#what-we-do)...');
     await cdp.eval(`
       (() => {
         const el = document.getElementById('what-we-do');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
+    await sleep(1000);
 
     const wwdInfo = await cdp.eval(`
       (() => {
         const el = document.getElementById('what-we-do');
         if (!el) return null;
-        const cards = Array.from(el.querySelectorAll('.hp-wwd-card')).map(card => {
-          const title = card.querySelector('.hp-card-title')?.textContent?.trim();
-          const bg = window.getComputedStyle(card).backgroundColor;
-          return { title, bg };
-        });
-        const secBg = window.getComputedStyle(el).backgroundColor;
-        return { secBg, cardsCount: cards.length, cards };
+        const heading = el.querySelector('#wwd-heading')?.textContent?.trim();
+        const subtitle = el.querySelector('.hp-section-subtitle')?.textContent?.trim();
+        const tabs = Array.from(el.querySelectorAll('.hp-wwd-tab')).map(t => t.textContent.trim());
+        const activeTitle = el.querySelector('.hp-wwd-active-title')?.textContent?.trim();
+        const activeDesc = el.querySelector('.hp-wwd-active-desc')?.textContent?.trim();
+        const numeral = el.querySelector('.hp-wwd-numeral')?.textContent?.trim();
+        const photoActive = el.querySelector('.hp-wwd-photo-frame.is-active img')?.getAttribute('src');
+        const hasStepNav = Boolean(el.querySelector('.hp-wwd-step-nav'));
+        return {
+          heading,
+          subtitle,
+          tabsCount: tabs.length,
+          tabs,
+          numeral,
+          activeTitle,
+          hasPhoto: Boolean(photoActive),
+          hasStepNav
+        };
       })()
     `);
-    console.log('[What We Do Verification]', wwdInfo);
-    await cdp.captureScreenshot('63_homepage_what_we_do_desktop.png');
+    console.log('[What We Do Interactive Capability Showcase]:', wwdInfo);
+
+    // Test clicking Tab 2 (Global Alliances) in What We Do
+    console.log('  Testing What We Do Tab Click (switching to Tab 2)...');
+    await cdp.eval(`
+      (() => {
+        const tabs = document.querySelectorAll('.hp-wwd-tab');
+        if (tabs[1]) tabs[1].click();
+      })()
+    `);
+    await sleep(700);
+
+    const wwdAfterClick = await cdp.eval(`
+      (() => {
+        const el = document.getElementById('what-we-do');
+        const numeral = el.querySelector('.hp-wwd-numeral')?.textContent?.trim();
+        const activeTitle = el.querySelector('.hp-wwd-active-title')?.textContent?.trim();
+        return { numeral, activeTitle };
+      })()
+    `);
+    console.log('[What We Do After Selecting Tab 2]:', wwdAfterClick);
+    await cdp.captureScreenshot('73_homepage_what_we_do_showcase_desktop.png');
 
     // Verify Values Section (#why-choose-sriyas)
-    console.log('\n[Test 7] Scrolling to Values Section (#why-choose-sriyas)...');
+    console.log('\n[Test 6] Scrolling to Values Editorial Sequence (#why-choose-sriyas)...');
     await cdp.eval(`
       (() => {
         const el = document.getElementById('why-choose-sriyas');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
+    await sleep(1000);
 
     const valuesInfo = await cdp.eval(`
       (() => {
         const el = document.getElementById('why-choose-sriyas');
         if (!el) return null;
-        const cards = Array.from(el.querySelectorAll('.hp-wcu-card')).map(card => {
-          const num = card.querySelector('.hp-wcu-numeral')?.textContent?.trim();
-          const title = card.querySelector('.hp-wcu-title')?.textContent?.trim();
+        const items = Array.from(el.querySelectorAll('.hp-value-item')).map(item => {
+          const num = item.querySelector('.hp-value-numeral')?.textContent?.trim();
+          const title = item.querySelector('.hp-value-title')?.textContent?.trim();
           return { num, title };
         });
-        const secBg = window.getComputedStyle(el).backgroundColor;
-        return { secBg, cardsCount: cards.length, cards };
+        const hasFeatureImg = Boolean(el.querySelector('.hp-values-feature-frame img'));
+        return { itemsCount: items.length, items, hasFeatureImg };
       })()
     `);
-    console.log('[Values Verification]', valuesInfo);
-    await cdp.captureScreenshot('64_homepage_values_desktop.png');
+    console.log('[Values Editorial Sequence (6 values)]:', valuesInfo);
+    await cdp.captureScreenshot('74_homepage_values_sequence_desktop.png');
 
-    // Verify Final CTA Section (#cta-connect)
-    console.log('\n[Test 8] Scrolling to Final CTA Section (#cta-connect)...');
+    // Verify Final CTA
+    console.log('\n[Test 7] Scrolling to Final CTA (#cta-connect)...');
     await cdp.eval(`
       (() => {
         const el = document.getElementById('cta-connect');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(900);
-
-    const ctaInfo = await cdp.eval(`
-      (() => {
-        const el = document.getElementById('cta-connect');
-        if (!el) return null;
-        const card = el.querySelector('.hp-cta-card');
-        const heading = el.querySelector('#cta-heading')?.textContent?.trim();
-        const phone = el.querySelector('.hp-cta-contact-item a[href^="tel:"]')?.textContent?.trim();
-        const email = el.querySelector('.hp-cta-contact-item a[href^="mailto:"]')?.textContent?.trim();
-        const secBg = window.getComputedStyle(el).backgroundColor;
-        const cardBg = window.getComputedStyle(card).backgroundColor;
-        return { heading, phone, email, secBg, cardBg };
-      })()
-    `);
-    console.log('[CTA Verification]', ctaInfo);
-    await cdp.captureScreenshot('65_homepage_final_cta_desktop.png');
+    await sleep(800);
+    await cdp.captureScreenshot('75_homepage_final_cta_desktop.png');
 
     // ═══════════════════════════════════════════════════════════════
     // 2. MOBILE VIEWPORT TEST (390 x 844 -- iPhone 14)
     // ═══════════════════════════════════════════════════════════════
-    console.log('\n[Test 9] Setting Mobile Viewport (390x844, deviceScaleFactor: 3)...');
+    console.log('\n[Test 8] Setting Mobile Viewport (390x844, deviceScaleFactor: 3)...');
     await cdp.setViewport(390, 844, true, 3);
     await cdp.send('Page.navigate', { url: TARGET_URL });
     await sleep(2000);
@@ -488,11 +463,11 @@ async function runVisualVerification() {
         return { overflow, scrollWidth, innerWidth, cta1, cta2 };
       })()
     `);
-    console.log('[Mobile Hero Verification]', mobileHero);
-    await cdp.captureScreenshot('66_homepage_hero_mobile_390.png');
+    console.log('[Mobile Hero Verification - Zero Overflow]:', mobileHero);
+    await cdp.captureScreenshot('76_homepage_hero_mobile_390.png');
 
-    // Scroll mobile to Carousel & Leadership
-    console.log('\n[Test 10] Scrolling mobile to Carousel and Leadership...');
+    // Mobile Company in Action Carousel Visibility
+    console.log('\n[Test 9] Checking Mobile Carousel Visibility (#our-workplace)...');
     await cdp.eval(`
       (() => {
         const el = document.getElementById('our-workplace');
@@ -504,37 +479,80 @@ async function runVisualVerification() {
     const mobileCarousel = await cdp.eval(`
       (() => {
         const el = document.getElementById('our-workplace');
-        const activeSlide = el?.querySelector('.hp-carousel-slide.is-active');
+        if (!el) return null;
+        const rect = el.getBoundingClientRect();
+        const activeSlide = el.querySelector('.hp-carousel-slide.is-active');
         const title = activeSlide?.querySelector('.hp-carousel-title')?.textContent?.trim();
+        const caption = activeSlide?.querySelector('.hp-carousel-caption')?.textContent?.trim();
+        const dotsCount = el.querySelectorAll('.hp-carousel-dot').length;
         const overflow = document.documentElement.scrollWidth > window.innerWidth;
-        return { title, overflow };
+        const computedDisplay = window.getComputedStyle(el).display;
+        const computedVisibility = window.getComputedStyle(el).visibility;
+        const computedOpacity = window.getComputedStyle(el).opacity;
+        return {
+          height: rect.height,
+          width: rect.width,
+          computedDisplay,
+          computedVisibility,
+          computedOpacity,
+          title,
+          captionLength: caption ? caption.length : 0,
+          dotsCount,
+          overflow
+        };
       })()
     `);
-    console.log('[Mobile Carousel Verification]', mobileCarousel);
-    await cdp.captureScreenshot('67_homepage_carousel_leadership_mobile_390.png');
+    console.log('[Mobile Carousel Verification - Visible & Responsive]:', mobileCarousel);
+    await cdp.captureScreenshot('77_homepage_carousel_mobile_390.png');
 
-    // Scroll mobile to Values and CTA
-    console.log('\n[Test 11] Scrolling mobile to Values and CTA...');
+    // Mobile What We Do Showcase
+    console.log('\n[Test 10] Checking Mobile What We Do Showcase...');
     await cdp.eval(`
       (() => {
-        const el = document.getElementById('cta-connect');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const el = document.getElementById('what-we-do');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })()
     `);
     await sleep(1000);
 
-    const mobileCta = await cdp.eval(`
+    const mobileWwd = await cdp.eval(`
       (() => {
+        const el = document.getElementById('what-we-do');
+        if (!el) return null;
+        const rect = el.getBoundingClientRect();
+        const title = el.querySelector('.hp-wwd-active-title')?.textContent?.trim();
+        const tabsCount = el.querySelectorAll('.hp-wwd-tab').length;
         const overflow = document.documentElement.scrollWidth > window.innerWidth;
-        const heading = document.getElementById('cta-heading')?.textContent?.trim();
-        return { overflow, heading };
+        return { height: rect.height, title, tabsCount, overflow };
       })()
     `);
-    console.log('[Mobile CTA Verification]', mobileCta);
-    await cdp.captureScreenshot('68_homepage_values_cta_mobile_390.png');
+    console.log('[Mobile What We Do Showcase]:', mobileWwd);
+    await cdp.captureScreenshot('78_homepage_what_we_do_mobile_390.png');
+
+    // Mobile Values & Contact
+    console.log('\n[Test 11] Checking Mobile Values & Contact...');
+    await cdp.eval(`
+      (() => {
+        const el = document.getElementById('why-choose-sriyas');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })()
+    `);
+    await sleep(1000);
+
+    const mobileValues = await cdp.eval(`
+      (() => {
+        const el = document.getElementById('why-choose-sriyas');
+        if (!el) return null;
+        const itemsCount = el.querySelectorAll('.hp-value-item').length;
+        const overflow = document.documentElement.scrollWidth > window.innerWidth;
+        return { itemsCount, overflow };
+      })()
+    `);
+    console.log('[Mobile Values Verification]:', mobileValues);
+    await cdp.captureScreenshot('79_homepage_values_mobile_390.png');
 
     console.log('\n═══════════════════════════════════════════════════════════════');
-    console.log('  ALL REAL BROWSER VISUAL VERIFICATION TESTS PASSED!');
+    console.log('  ALL MASTER REDESIGN VERIFICATION TESTS COMPLETED SUCCESSFULLY!');
     console.log('═══════════════════════════════════════════════════════════════');
 
   } finally {

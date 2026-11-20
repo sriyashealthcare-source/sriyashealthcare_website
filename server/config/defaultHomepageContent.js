@@ -182,6 +182,51 @@ function createDefaultHomepagePayload() {
           aspectRatio: '16/9',
           displayOrder: 5,
           isActive: true
+        },
+        {
+          id: 'wp-surgical-liaison',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
+          publicId: 'sriyas-healthcare/general/file_cwsk2o',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Operating room clinical liaison and surgical device delivery',
+          title: 'Operating Room Clinical Liaison & Surgical Device Support',
+          caption: 'Direct on-site clinical liaison providing emergency surgical stock availability and procedural device support outside the operating suite.',
+          category: 'OR Support',
+          focalPoint: 'center center',
+          aspectRatio: '16/9',
+          displayOrder: 6,
+          isActive: true
+        },
+        {
+          id: 'wp-hospital-corridor',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107356/sriyas-healthcare/general/file_vncy1o.jpg',
+          publicId: 'sriyas-healthcare/general/file_vncy1o',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Hospital sterile scrub suite coordination and surgical support',
+          title: 'Hospital Clinical Presence & Surgical Support',
+          caption: 'Continuous sterile suite coordination and surgical consumable fulfillment across leading specialty hospital surgical departments.',
+          category: 'Clinical Support',
+          focalPoint: 'center center',
+          aspectRatio: '16/9',
+          displayOrder: 7,
+          isActive: true
+        },
+        {
+          id: 'wp-clinical-training',
+          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106936/sriyas-healthcare/general/file_zgmlxn.jpg',
+          publicId: 'sriyas-healthcare/general/file_zgmlxn',
+          mobileUrl: '',
+          mobilePublicId: '',
+          alt: 'Clinical education and surgical solutions training',
+          title: 'Clinical Education & Surgical Solutions Training',
+          caption: 'Interactive procedural workshops and biosurgical product familiarization for surgical teams, resident faculties, and clinical specialists.',
+          category: 'Surgical Training',
+          focalPoint: 'center center',
+          aspectRatio: '16/9',
+          displayOrder: 8,
+          isActive: true
         }
       ]
     },

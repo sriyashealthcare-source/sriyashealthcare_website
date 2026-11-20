@@ -26,6 +26,12 @@ export default function ValuesSection({
 
   const hasFeatureImage = Boolean(values.featureImage?.url || values.featureImage?.mobileUrl);
 
+  const eyebrowText = values.eyebrow || 'OUR VALUES & COMMITMENT';
+  const headingText = values.heading || 'Why Healthcare Institutions Choose Sriyas';
+  const subtitleText =
+    values.subtitle ||
+    'Every institutional interaction is rooted in our founding pillars of Care, Trust, and Innovation, supported by disciplined healthcare logistics.';
+
   return (
     <section
       ref={sectionRef}
@@ -41,46 +47,57 @@ export default function ValuesSection({
         >
           {/* Values Intro & Feature Image — Signature Left Entrance */}
           <div className="hp-values-intro hp-converge-left" style={{ '--reveal-delay': '0ms' }}>
-            {values.eyebrow && <span className="hp-eyebrow">{values.eyebrow}</span>}
-            {values.heading && (
+            {eyebrowText && <span className="hp-eyebrow">{eyebrowText}</span>}
+            {headingText && (
               <h2 id="values-heading" className="hp-heading hp-reveal-heading">
-                {values.heading}
+                {headingText}
               </h2>
             )}
             <div className="hp-gold-rule" aria-hidden="true" />
-            {values.subtitle && (
+            {subtitleText && (
               <p className="hp-section-subtitle hp-section-subtitle--left hp-reveal-text">
-                {values.subtitle}
+                {subtitleText}
               </p>
             )}
 
             {hasFeatureImage && (
-              <div className="hp-values-feature-frame hp-reveal-media">
+              <figure className="hp-values-feature-frame hp-reveal-media">
                 <ResponsiveMediaImage
                   media={values.featureImage}
-                  alt={values.featureImage?.alt || 'Sriyas Healthcare values and operations'}
+                  alt={values.featureImage?.alt || 'Sriyas Healthcare clinical education and values in practice'}
                   forceMobile={forceMobile}
+                  className="hp-values-feature-img"
                 />
-              </div>
+                <figcaption className="hp-values-feature-caption">
+                  Clinical Training & Professional Practice
+                </figcaption>
+              </figure>
             )}
           </div>
 
-          {/* Values Grid Cards — Signature Right Entrance */}
-          <div className="hp-wcu-grid hp-converge-right">
+          {/* Values Interactive Editorial Sequence — Signature Right Entrance */}
+          <div className="hp-values-sequence hp-converge-right" style={{ '--reveal-delay': '80ms' }}>
             {items.map((item, idx) => (
               <article
                 key={item.id || idx}
-                className="hp-wcu-card hp-reveal-child"
-                style={{ '--reveal-delay': `${70 + idx * 60}ms` }}
+                className="hp-value-item hp-reveal-child"
+                style={{ '--reveal-delay': `${80 + idx * 70}ms` }}
               >
-                <div className="hp-wcu-top">
-                  <span className="hp-wcu-numeral">0{idx + 1}</span>
-                  <span className="hp-wcu-icon" aria-hidden="true">
-                    {item.icon || '✦'}
-                  </span>
+                <div className="hp-value-numeral-col">
+                  <span className="hp-value-numeral">0{idx + 1}</span>
+                  <div className="hp-value-line" aria-hidden="true" />
                 </div>
-                <h3 className="hp-wcu-title">{item.title}</h3>
-                {item.description && <p className="hp-wcu-desc">{item.description}</p>}
+                <div className="hp-value-content-col">
+                  <div className="hp-value-header">
+                    <h3 className="hp-value-title">{item.title}</h3>
+                    <span className="hp-value-icon" aria-hidden="true">
+                      {item.icon || '✦'}
+                    </span>
+                  </div>
+                  {item.description && (
+                    <p className="hp-value-description">{item.description}</p>
+                  )}
+                </div>
               </article>
             ))}
           </div>

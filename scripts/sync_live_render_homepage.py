@@ -113,6 +113,133 @@ def sync_live_homepage():
         draft_payload['workplace']['heading'] = 'Building Relationships Across the Healthcare Community'
         draft_payload['workplace']['subtitle'] = 'Explore moments from our professional engagements, clinical interactions, manufacturer collaborations and healthcare initiatives.'
         draft_payload['workplace']['layoutStyle'] = 'editorial-carousel'
+        draft_payload['workplace']['images'] = [
+            {
+                "id": "wp-global-delegation",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106414/sriyas-healthcare/general/file_dmyw9r.jpg",
+                "publicId": "sriyas-healthcare/general/file_dmyw9r",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Sriyas Healthcare leadership and global manufacturer partners delegation",
+                "title": "Global Manufacturer Alliances & Corporate Delegation",
+                "caption": "Sriyas Healthcare leadership and team alongside international medical technology partners and clinical delegates.",
+                "category": "Partnerships",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 1,
+                "isActive": True
+            },
+            {
+                "id": "wp-live-surgery-cme",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107290/sriyas-healthcare/general/file_lbhsyb.jpg",
+                "publicId": "sriyas-healthcare/general/file_lbhsyb",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Live surgical demonstration at FALS Hernia Chennai",
+                "title": "Live Surgical Demonstrations & Clinical Workshops",
+                "caption": "Supporting faculty demonstrations at prestigious clinical forums including FALS Hernia Chennai, MGM Healthcare, and IAGES.",
+                "category": "Surgical Education",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 2,
+                "isActive": True
+            },
+            {
+                "id": "wp-medical-expo-booth",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107307/sriyas-healthcare/general/file_a7kn4f.jpg",
+                "publicId": "sriyas-healthcare/general/file_a7kn4f",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Sriyas Healthcare executive team at healthcare industry exhibition",
+                "title": "National Healthcare Expos & Manufacturer Alliances",
+                "caption": "Sriyas Healthcare executive team representing partner portfolios (Advanced Medical Solutions, Karl Storz Endoskope) at national medical congresses.",
+                "category": "Industry Expos",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 3,
+                "isActive": True
+            },
+            {
+                "id": "wp-hernia-symposium",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107405/sriyas-healthcare/general/file_i8s4ch.jpg",
+                "publicId": "sriyas-healthcare/general/file_i8s4ch",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Surgeon CME presentation on IPOM mesh solutions",
+                "title": "Surgeon CME & Hernia Solutions Symposium",
+                "caption": "Conducting procedure perspectives and clinical CME sessions on IPOM mesh solutions and tissue reinforcement technologies.",
+                "category": "Clinical CME",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 4,
+                "isActive": True
+            },
+            {
+                "id": "wp-hospital-presentation",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107100/sriyas-healthcare/general/file_xpe7i6.jpg",
+                "publicId": "sriyas-healthcare/general/file_xpe7i6",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Clinical training presentation at KMCH Department of General Surgery",
+                "title": "Hospital Clinical Presentations & Surgeon Engagement",
+                "caption": "Presenting surgical skin adhesives and wound closure solutions to surgical residents and faculty at leading hospitals including KMCH Department of General Surgery.",
+                "category": "Hospital Training",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 5,
+                "isActive": True
+            },
+            {
+                "id": "wp-surgical-liaison",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg",
+                "publicId": "sriyas-healthcare/general/file_cwsk2o",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Operating room clinical liaison and surgical device delivery",
+                "title": "Operating Room Clinical Liaison & Surgical Device Support",
+                "caption": "Direct on-site clinical liaison providing emergency surgical stock availability and procedural device support outside the operating suite.",
+                "category": "OR Support",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 6,
+                "isActive": True
+            },
+            {
+                "id": "wp-hospital-corridor",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107356/sriyas-healthcare/general/file_vncy1o.jpg",
+                "publicId": "sriyas-healthcare/general/file_vncy1o",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Hospital sterile scrub suite coordination and surgical support",
+                "title": "Hospital Clinical Presence & Surgical Support",
+                "caption": "Continuous sterile suite coordination and surgical consumable fulfillment across leading specialty hospital surgical departments.",
+                "category": "Clinical Support",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 7,
+                "isActive": True
+            },
+            {
+                "id": "wp-clinical-training",
+                "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106936/sriyas-healthcare/general/file_zgmlxn.jpg",
+                "publicId": "sriyas-healthcare/general/file_zgmlxn",
+                "mobileUrl": "",
+                "mobilePublicId": "",
+                "alt": "Clinical education and surgical solutions training",
+                "title": "Clinical Education & Surgical Solutions Training",
+                "caption": "Interactive procedural workshops and biosurgical product familiarization for surgical teams, resident faculties, and clinical specialists.",
+                "category": "Surgical Training",
+                "focalPoint": "center center",
+                "aspectRatio": "16/9",
+                "displayOrder": 8,
+                "isActive": True
+            }
+        ]
+
+    # 3b. What We Do
+    if 'whatWeDo' in draft_payload:
+        draft_payload['whatWeDo']['heading'] = 'Focused Capabilities in Surgical & Medical Supply'
+        draft_payload['whatWeDo']['subtitle'] = 'Connecting healthcare institutions with specialised surgical products, clinical support and dependable distribution.'
         
     # 4. Leadership
     if 'leadership' in draft_payload:
