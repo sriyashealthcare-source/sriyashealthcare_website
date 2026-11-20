@@ -18,7 +18,18 @@ export default function AboutSection({
 
   const images = Array.isArray(about.images)
     ? [...about.images]
-        .filter((img) => Boolean(img?.url || img?.mobileUrl))
+        .filter((img) => {
+          if (!img?.url && !img?.mobileUrl) return false;
+          // Exclude unsuitable third-party storefront photograph per Prompt Section 7
+          if (
+            img.publicId === 'sriyas-healthcare/contact/storefront-location' ||
+            (img.url && img.url.includes('storefront-location')) ||
+            img.id === 'about-storefront-facility'
+          ) {
+            return false;
+          }
+          return true;
+        })
         .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 

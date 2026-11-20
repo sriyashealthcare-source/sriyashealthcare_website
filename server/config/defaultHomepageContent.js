@@ -22,10 +22,10 @@ function createDefaultHomepagePayload() {
       supportingIntro:
         'An authorized healthcare distribution partner headquartered in Chennai, supplying hospitals, surgeons, and clinical teams across India with specialized surgical devices, wound closure technologies, and institutional healthcare solutions.',
       valuesText: 'CARE · TRUST · INNOVATION',
-      ctaText: 'Explore Our Portfolio',
+      ctaText: 'Explore Sriyas',
       ctaLink: '#about-sriyas',
-      secondaryCtaText: 'Institutional Enquiry',
-      secondaryCtaLink: '/contact',
+      secondaryCtaText: 'View Products',
+      secondaryCtaLink: '/products',
       showTagline: true,
       showValues: true,
       showSecondaryCta: true,
@@ -65,19 +65,6 @@ function createDefaultHomepagePayload() {
       layoutPreset: 'split-collage',
       images: [
         {
-          id: 'about-storefront-facility',
-          url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048221/sriyas-healthcare/contact/storefront-location.jpg',
-          publicId: 'sriyas-healthcare/contact/storefront-location',
-          mobileUrl: '',
-          mobilePublicId: '',
-          alt: 'Sriyas Healthcare Chennai operational headquarters storefront',
-          caption: 'Sriyas Healthcare Pvt. Ltd. — Chennai Headquarters & Distribution Center',
-          focalPoint: 'center center',
-          aspectRatio: '4/3',
-          size: 'primary',
-          displayOrder: 1
-        },
-        {
           id: 'about-surgical-liaison',
           url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
           publicId: 'sriyas-healthcare/general/file_cwsk2o',
@@ -86,9 +73,9 @@ function createDefaultHomepagePayload() {
           alt: 'Clinical coordination and surgical device delivery outside operating theatre',
           caption: 'Operating Room Clinical Liaison & Surgical Device Support',
           focalPoint: 'center center',
-          aspectRatio: '3/4',
-          size: 'secondary',
-          displayOrder: 2
+          aspectRatio: '4/3',
+          size: 'primary',
+          displayOrder: 1
         },
         {
           id: 'about-hospital-corridor',
@@ -99,9 +86,9 @@ function createDefaultHomepagePayload() {
           alt: 'Hospital sterile surgical scrub suite coordination',
           caption: 'Hospital Clinical Presence & Surgical Support',
           focalPoint: 'center center',
-          aspectRatio: '3/4',
-          size: 'accent',
-          displayOrder: 3
+          aspectRatio: '16/9',
+          size: 'secondary',
+          displayOrder: 2
         }
       ]
     },
@@ -115,11 +102,11 @@ function createDefaultHomepagePayload() {
     },
     workplace: {
       enabled: true,
-      eyebrow: 'Our Company in Action',
-      heading: 'Where Clinical Coordination Meets Professional Partnership',
+      eyebrow: 'OUR COMPANY IN ACTION',
+      heading: 'Building Relationships Across the Healthcare Community',
       subtitle:
-        'A genuine look inside our operational engagements—from national surgical symposiums and live faculty demonstrations to corporate manufacturer alliances.',
-      layoutStyle: 'editorial-collage',
+        'Explore moments from our professional engagements, clinical interactions, manufacturer collaborations and healthcare initiatives.',
+      layoutStyle: 'editorial-carousel',
       images: [
         {
           id: 'wp-global-delegation',
@@ -200,10 +187,10 @@ function createDefaultHomepagePayload() {
     },
     leadership: {
       enabled: true,
-      eyebrow: 'Leadership & Governance',
+      eyebrow: 'LEADERSHIP & GOVERNANCE',
       heading: 'Principled Leadership Committed to Healthcare Integrity',
       subtitle:
-        'Our directors bring deep operational experience in healthcare distribution, institutional procurement, and long-standing clinician relationships.',
+        'Our leadership brings together experience and commitment to building trusted relationships across the healthcare community.',
       items: [
         {
           id: 'leader-founder-md',

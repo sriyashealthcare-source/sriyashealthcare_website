@@ -41,7 +41,7 @@ export default function HeroMorphSection({
   const valuesText = hero.valuesText || 'CARE · TRUST · INNOVATION';
   const ctaText = hero.ctaText || 'Explore Sriyas';
   const ctaLink = hero.ctaLink || '#about-sriyas';
-  const secondaryCtaText = hero.secondaryCtaText || 'Explore Products';
+  const secondaryCtaText = hero.secondaryCtaText || 'View Products';
   const secondaryCtaLink = hero.secondaryCtaLink || '/products';
 
   const logoUrl = resolveAssetUrl(hero.logo?.url || SRIYAS_EMBLEM_URL);

@@ -16,10 +16,10 @@ const FALLBACK_HOMEPAGE = {
     supportingIntro:
       'An authorized healthcare distribution partner headquartered in Chennai, supplying hospitals, surgeons, and clinical teams across India with specialized surgical devices, wound closure technologies, and institutional healthcare solutions.',
     valuesText: 'CARE · TRUST · INNOVATION',
-    ctaText: 'Explore Our Portfolio',
+    ctaText: 'Explore Sriyas',
     ctaLink: '#about-sriyas',
-    secondaryCtaText: 'Institutional Enquiry',
-    secondaryCtaLink: '/contact',
+    secondaryCtaText: 'View Products',
+    secondaryCtaLink: '/products',
     showTagline: true,
     showValues: true,
     showSecondaryCta: true,
@@ -51,20 +51,12 @@ const FALLBACK_HOMEPAGE = {
     layoutPreset: 'split-collage',
     images: [
       {
-        id: 'about-storefront-facility',
-        url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048221/sriyas-healthcare/contact/storefront-location.jpg',
-        publicId: 'sriyas-healthcare/contact/storefront-location',
-        alt: 'Sriyas Healthcare Chennai operational headquarters storefront',
-        caption: 'Sriyas Healthcare Pvt. Ltd. — Chennai Headquarters & Distribution Center',
-        displayOrder: 1
-      },
-      {
         id: 'about-surgical-liaison',
         url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106727/sriyas-healthcare/general/file_cwsk2o.jpg',
         publicId: 'sriyas-healthcare/general/file_cwsk2o',
         alt: 'Clinical coordination and surgical device delivery outside operating theatre',
         caption: 'Operating Room Clinical Liaison & Surgical Device Support',
-        displayOrder: 2
+        displayOrder: 1
       },
       {
         id: 'about-hospital-corridor',
@@ -72,17 +64,17 @@ const FALLBACK_HOMEPAGE = {
         publicId: 'sriyas-healthcare/general/file_vncy1o',
         alt: 'Hospital sterile surgical scrub suite coordination',
         caption: 'Hospital Clinical Presence & Surgical Support',
-        displayOrder: 3
+        displayOrder: 2
       }
     ]
   },
   workplace: {
     enabled: true,
-    eyebrow: 'Our Company in Action',
-    heading: 'Where Clinical Coordination Meets Professional Partnership',
+    eyebrow: 'OUR COMPANY IN ACTION',
+    heading: 'Building Relationships Across the Healthcare Community',
     subtitle:
-      'A genuine look inside our operational engagements—from national surgical symposiums and live faculty demonstrations to corporate manufacturer alliances.',
-    layoutStyle: 'editorial-collage',
+      'Explore moments from our professional engagements, clinical interactions, manufacturer collaborations and healthcare initiatives.',
+    layoutStyle: 'editorial-carousel',
     images: [
       {
         id: 'wp-global-delegation',
@@ -138,16 +130,17 @@ const FALLBACK_HOMEPAGE = {
   },
   leadership: {
     enabled: true,
-    eyebrow: 'Leadership & Governance',
+    eyebrow: 'LEADERSHIP & GOVERNANCE',
     heading: 'Principled Leadership Committed to Healthcare Integrity',
     subtitle:
-      'Our directors bring deep operational experience in healthcare distribution, institutional procurement, and long-standing clinician relationships.',
+      'Our leadership brings together experience and commitment to building trusted relationships across the healthcare community.',
     items: [
       {
         id: 'leader-founder-md',
         name: 'M. Ravikumar',
         designation: 'Founder & Managing Director',
         bio: 'Guiding Sriyas Healthcare with a dedicated commitment to hospital supply excellence, institutional transparency, and trusted partnerships with global surgical pioneers.',
+        email: 'sriyashealthcare@gmail.com',
         photo: {
           url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795110797/sriyas-healthcare/general/file_rqtbl6.jpg',
           publicId: 'sriyas-healthcare/general/file_rqtbl6',
@@ -161,6 +154,7 @@ const FALLBACK_HOMEPAGE = {
         name: 'Corporate & Clinical Operations',
         designation: 'Directorate of Institutional Partnerships',
         bio: 'Directing strategic brand relationships, hospital supply contracts, regulatory standards, and cold-chain logistics across institutional healthcare networks.',
+        email: 'sriyashealthcare@gmail.com',
         photo: {
           url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795107209/sriyas-healthcare/general/file_tzsxap.jpg',
           publicId: 'sriyas-healthcare/general/file_tzsxap',
@@ -452,11 +446,11 @@ export default function Home() {
   const pageTitle = isAboutRoute
     ? 'About Sriyas Healthcare | Advanced Surgical Solutions Chennai'
     : seoData.title ||
-      'Sriyas Healthcare | Surgical Products & Medical Device Distributor in Chennai, India';
+    'Sriyas Healthcare | Surgical Products & Medical Device Distributor in Chennai, India';
   const pageDesc = isAboutRoute
     ? 'Learn about Sriyas Healthcare Private Limited — our mission, leadership, values, and dedication to supplying hospitals with world-class surgical devices.'
     : seoData.description ||
-      'Sriyas Healthcare Private Limited is a Chennai-based healthcare distributor supplying surgical sutures, medical devices, tissue adhesives, surgical meshes and wound care solutions across India.';
+    'Sriyas Healthcare Private Limited is a Chennai-based healthcare distributor supplying surgical sutures, medical devices, tissue adhesives, surgical meshes and wound care solutions across India.';
   const canonicalUrl = isAboutRoute
     ? 'https://sriyashealthcare.com/about'
     : seoData.canonicalUrl || 'https://sriyashealthcare.com';
