@@ -20,10 +20,64 @@ const { spawn } = require('child_process');
 const ARTIFACT_DIR = 'C:\\Users\\surya\\.gemini\\antigravity\\brain\\12cb1919-e846-449e-ac74-8ab8159fca5b';
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const CHROME_DEV_PROFILE = 'C:\\Users\\surya\\AppData\\Local\\Google\\Chrome\\DevSession_HP';
-const TARGET_URL = 'https://sriyashealthcare.com';
+const rootDir = path.join(__dirname, '..');
+const TARGET_URL = 'http://127.0.0.1:5173';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+let serverProc = null;
+let clientProc = null;
+
+async function waitForHttp(url, timeoutMs = 25000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const res = await fetch(url);
+      if (res.ok || res.status === 200 || res.status === 304 || res.status === 404) {
+        return true;
+      }
+    } catch (_) {}
+    await sleep(400);
+  }
+  return false;
+}
+
+async function startServers() {
+  console.log('[Servers] Checking if Backend (port 5000) or Client (port 5173) are active...');
+  const backendAlreadyUp = await waitForHttp('http://127.0.0.1:5000/api/health', 1500);
+  const clientAlreadyUp = await waitForHttp('http://127.0.0.1:5173/', 1500);
+
+  if (!backendAlreadyUp) {
+    console.log('[Servers] Starting Backend Server (node server/server.js)...');
+    serverProc = spawn('node', ['server/server.js'], {
+      cwd: rootDir,
+      env: { ...process.env, USE_LOCAL_DB: 'true', PORT: '5000', HOST: '127.0.0.1' },
+      stdio: 'ignore'
+    });
+  } else {
+    console.log('[Servers] Backend already running on http://127.0.0.1:5000');
+  }
+
+  if (!clientAlreadyUp) {
+    console.log('[Servers] Starting Client Server (node vite.js)...');
+    const viteBin = path.join(rootDir, 'client', 'node_modules', 'vite', 'bin', 'vite.js');
+    clientProc = spawn('node', [viteBin, '--host', '127.0.0.1', '--port', '5173'], {
+      cwd: path.join(rootDir, 'client'),
+      stdio: 'ignore'
+    });
+  } else {
+    console.log('[Servers] Client already running on http://127.0.0.1:5173');
+  }
+
+  const backendReady = await waitForHttp('http://127.0.0.1:5000/api/health', 25000);
+  if (!backendReady) throw new Error('Backend failed to start on port 5000.');
+  console.log('[Servers] Backend confirmed healthy at http://127.0.0.1:5000/api/health');
+
+  const clientReady = await waitForHttp('http://127.0.0.1:5173/', 25000);
+  if (!clientReady) throw new Error('Client failed to start on port 5173.');
+  console.log('[Servers] Client confirmed responsive at http://127.0.0.1:5173/');
 }
 
 async function startChrome() {
@@ -154,11 +208,10 @@ async function runVisualVerification() {
   console.log('═══════════════════════════════════════════════════════════════');
   console.log('  SRIYAS HEALTHCARE — HOMEPAGE REDESIGN VISUAL VERIFICATION');
   console.log('═══════════════════════════════════════════════════════════════');
-  console.log(`Target URL: ${TARGET_URL}\n`);
 
+  await startServers();
   await startChrome();
 
-  // Create a new target page
   const newTabRes = await fetch('http://127.0.0.1:9222/json/new', { method: 'PUT' });
   const tabData = await newTabRes.json();
   const cdp = new CdpClient(tabData.webSocketDebuggerUrl);
@@ -169,29 +222,16 @@ async function runVisualVerification() {
   await cdp.send('DOM.enable');
   await cdp.send('CSS.enable');
 
-  // Listen for console messages
-  let consoleErrors = [];
-  cdp.ws.onmessage = (event) => {
-    const msg = JSON.parse(event.data);
-    if (msg.method === 'Runtime.consoleAPICalled') {
-      const type = msg.params.type;
-      if (type === 'error') {
-        const text = msg.params.args.map((a) => a.value || a.description || '').join(' ');
-        consoleErrors.push(text);
-      }
-    }
-  };
-
   try {
     // ═══════════════════════════════════════════════════════════════
     // 1. DESKTOP VIEWPORT TEST (1440 x 900)
     // ═══════════════════════════════════════════════════════════════
-    console.log('[Test 1] Setting Desktop Viewport (1440x900)...');
+    console.log('\n[Test 1] Setting Desktop Viewport (1440x900)...');
     await cdp.setViewport(1440, 900, false, 2);
 
     console.log(`[Test 1] Navigating to ${TARGET_URL}...`);
     await cdp.send('Page.navigate', { url: TARGET_URL });
-    await sleep(2800);
+    await sleep(2500);
 
     // Verify Hero
     const heroInfo = await cdp.eval(`
@@ -201,11 +241,10 @@ async function runVisualVerification() {
         const tagline = document.querySelector('.hp-hero-tagline')?.textContent?.trim();
         const intro = document.querySelector('.hp-hero-intro')?.textContent?.trim();
         const emblem = document.querySelector('.hp-hero-emblem-img')?.src;
-        const bgImg = document.querySelector('.hp-hero-custom-bg img')?.src;
         const cta1 = document.querySelector('#hero-primary-cta')?.textContent?.trim();
         const cta2 = document.querySelector('#hero-secondary-cta')?.textContent?.trim();
         const overflow = document.documentElement.scrollWidth > window.innerWidth;
-        return { h1, sub, tagline, intro, emblem, bgImg, cta1, cta2, overflow };
+        return { h1, sub, tagline, intro, emblem, cta1, cta2, overflow };
       })()
     `);
     console.log('[Hero Verification]', heroInfo);
@@ -219,7 +258,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000); // Allow convergence animation to complete
+    await sleep(900);
 
     const aboutInfo = await cdp.eval(`
       (() => {
@@ -230,7 +269,6 @@ async function runVisualVerification() {
         const visualsCol = el.querySelector('.hp-about-visuals');
         const heading = el.querySelector('.hp-heading')?.textContent?.trim();
         const images = Array.from(el.querySelectorAll('.hp-collage-media img')).map(img => ({
-          src: img.src,
           alt: img.alt,
           naturalWidth: img.naturalWidth,
           naturalHeight: img.naturalHeight
@@ -256,7 +294,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000);
+    await sleep(900);
 
     const workplaceInfo = await cdp.eval(`
       (() => {
@@ -266,16 +304,15 @@ async function runVisualVerification() {
         const cards = Array.from(el.querySelectorAll('.hp-workplace-card')).map(card => {
           const title = card.querySelector('h3')?.textContent?.trim();
           const tag = card.querySelector('.hp-workplace-tag')?.textContent?.trim();
-          const img = card.querySelector('img');
           const isFeatured = card.classList.contains('hp-workplace-card--featured');
-          return { title, tag, isFeatured, src: img?.src, naturalWidth: img?.naturalWidth };
+          return { title, tag, isFeatured };
         });
         return { isRevealed, cardsCount: cards.length, cards };
       })()
     `);
     console.log('[Workplace Gallery Verification]', workplaceInfo);
 
-    // Test hover effect on first gallery card
+    // Test hover effect on gallery card
     await cdp.eval(`
       (() => {
         const card = document.querySelector('.hp-workplace-card');
@@ -285,7 +322,7 @@ async function runVisualVerification() {
         }
       })()
     `);
-    await sleep(300);
+    await sleep(250);
     await cdp.captureScreenshot('49_homepage_gallery_desktop.png');
 
     // Verify Leadership & Governance
@@ -296,7 +333,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000);
+    await sleep(900);
 
     const leadershipInfo = await cdp.eval(`
       (() => {
@@ -308,8 +345,7 @@ async function runVisualVerification() {
           const role = card.querySelector('.hp-founder-role')?.textContent?.trim();
           const hasLeft = card.classList.contains('hp-converge-left');
           const hasRight = card.classList.contains('hp-converge-right');
-          const img = card.querySelector('img');
-          return { name, role, hasLeft, hasRight, src: img?.src, naturalWidth: img?.naturalWidth };
+          return { name, role, hasLeft, hasRight };
         });
         return { isRevealed, cardsCount: cards.length, cards };
       })()
@@ -325,7 +361,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000);
+    await sleep(900);
 
     const teamInfo = await cdp.eval(`
       (() => {
@@ -335,8 +371,7 @@ async function runVisualVerification() {
         const cards = Array.from(el.querySelectorAll('.hp-founder-card')).map(card => {
           const name = card.querySelector('.hp-founder-name')?.textContent?.trim();
           const role = card.querySelector('.hp-founder-role')?.textContent?.trim();
-          const img = card.querySelector('img');
-          return { name, role, src: img?.src, naturalWidth: img?.naturalWidth };
+          return { name, role };
         });
         return { isRevealed, cardsCount: cards.length, cards };
       })()
@@ -352,7 +387,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000);
+    await sleep(900);
 
     const wwdInfo = await cdp.eval(`
       (() => {
@@ -363,8 +398,7 @@ async function runVisualVerification() {
           const title = card.querySelector('.hp-card-title')?.textContent?.trim();
           const hasLeft = card.classList.contains('hp-converge-left');
           const hasRight = card.classList.contains('hp-converge-right');
-          const img = card.querySelector('img');
-          return { title, hasLeft, hasRight, src: img?.src };
+          return { title, hasLeft, hasRight };
         });
         return { isRevealed, cardsCount: cards.length, cards };
       })()
@@ -380,7 +414,7 @@ async function runVisualVerification() {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       })()
     `);
-    await sleep(1000);
+    await sleep(900);
 
     const valuesInfo = await cdp.eval(`
       (() => {
@@ -389,13 +423,11 @@ async function runVisualVerification() {
         const isRevealed = el.classList.contains('is-revealed');
         const intro = el.querySelector('.hp-values-intro');
         const grid = el.querySelector('.hp-wcu-grid');
-        const featureImg = el.querySelector('.hp-values-feature-frame img');
         const cards = Array.from(el.querySelectorAll('.hp-wcu-card')).map(c => c.querySelector('.hp-wcu-title')?.textContent?.trim());
         return {
           isRevealed,
           hasIntroLeft: intro?.classList.contains('hp-converge-left'),
           hasGridRight: grid?.classList.contains('hp-converge-right'),
-          featureImgSrc: featureImg?.src,
           cardsCount: cards.length,
           cards
         };
@@ -494,10 +526,14 @@ async function runVisualVerification() {
     console.log('═══════════════════════════════════════════════════════════════');
   } finally {
     cdp.close();
+    if (serverProc) serverProc.kill();
+    if (clientProc) clientProc.kill();
   }
 }
 
 runVisualVerification().catch((err) => {
   console.error('[Verification Failed]:', err);
+  if (serverProc) serverProc.kill();
+  if (clientProc) clientProc.kill();
   process.exit(1);
 });

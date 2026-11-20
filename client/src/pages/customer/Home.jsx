@@ -405,8 +405,8 @@ const FALLBACK_HOMEPAGE = {
 };
 
 export default function Home() {
-  const [homepage, setHomepage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [homepage, setHomepage] = useState(FALLBACK_HOMEPAGE);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const isAboutRoute = location.pathname === '/about';
 
@@ -418,8 +418,6 @@ export default function Home() {
         const res = await homepageService.getPublicHomepage();
         if (active && res?.homepage) {
           setHomepage(res.homepage);
-        } else if (active) {
-          setHomepage(FALLBACK_HOMEPAGE);
         }
       } catch (_) {
         if (active) {
@@ -552,7 +550,7 @@ export default function Home() {
         schema={homeSchemas}
       />
       <HomepageContentRenderer
-        homepage={homepage || { hero: BASELINE_HERO, sectionOrder: [] }}
+        homepage={homepage || FALLBACK_HOMEPAGE}
       />
     </>
   );
