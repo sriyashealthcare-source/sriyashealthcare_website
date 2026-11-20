@@ -125,15 +125,7 @@ export default function WhatWeDoSection({
 
   // Automatic Progression every ~5.5s, paused on hover/touch or when tab hidden
   useEffect(() => {
-    if (isPreview || total <= 1 || isPaused) return;
-
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return;
-    }
+    if (isPreview || total <= 1 || isPaused) return undefined;
 
     const timer = setInterval(() => {
       handleNext();

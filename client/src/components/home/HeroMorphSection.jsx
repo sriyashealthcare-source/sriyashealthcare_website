@@ -196,8 +196,9 @@ export default function HeroMorphSection({
     const sEmblem = startRects.emblem;
     const tEmblem = navTargetRects.img;
 
-    const startLeft = sEmblem.pageLeft;
-    const startTop = sEmblem.pageTop;
+    // Viewport-relative coordinates for position: fixed morphing element
+    const startLeft = sEmblem.pageLeft - currentScrollX;
+    const startTop = sEmblem.pageTop - currentScrollY;
     const startWidth = sEmblem.width;
     const startHeight = sEmblem.height;
 

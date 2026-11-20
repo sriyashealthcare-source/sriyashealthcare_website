@@ -163,6 +163,22 @@
 .hp-section.is-revealed .hp-converge-left,
 .hp-section.is-revealed .hp-converge-right,
 .hp-section.is-revealed .hp-reveal-scale,
+.hp-section.is-revealed .hp-reveal-child,
+.hp-section.is-revealed .hp-reveal-heading,
+.hp-section.is-revealed .hp-reveal-text,
+.hp-section.is-revealed .hp-value-item,
+.hp-section.is-revealed .hp-purpose-card,
+.hp-section.is-revealed .hp-stat-card,
+.hp-section.is-revealed .hp-founder-card,
+.hp-section.is-revealed .hp-wwd-card,
+.hp-section.is-revealed .hp-wcu-card,
+.hp-section.is-revealed .hp-workplace-card,
+.is-revealed .hp-converge-left,
+.is-revealed .hp-converge-right,
+.is-revealed .hp-reveal-scale,
+.is-revealed .hp-reveal-child,
+.is-revealed .hp-reveal-heading,
+.is-revealed .hp-reveal-text,
 .hp-leadership-row.is-revealed .hp-converge-left,
 .hp-leadership-row.is-revealed .hp-converge-right,
 .hp-carousel-section.is-revealed .hp-carousel,
@@ -194,11 +210,28 @@
 }
 
 .hp-reveal-media.is-revealed,
+.hp-section.is-revealed .hp-reveal-media,
+.is-revealed .hp-reveal-media,
 .hp-root--preview .hp-reveal-media,
 .hp-scroll-reveal-off .hp-reveal-media {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   clip-path: inset(0% 0% 0% 0% round 16px);
+}
+
+/* Free GPU memory layer allocations after elements have completed their entrance */
+.hp-converge-left.is-revealed,
+.hp-converge-right.is-revealed,
+.hp-reveal-scale.is-revealed,
+.hp-reveal-child.is-revealed,
+.hp-reveal-heading.is-revealed,
+.hp-reveal-text.is-revealed,
+.hp-reveal-media.is-revealed,
+.hp-section.is-revealed .hp-reveal-child,
+.hp-section.is-revealed .hp-reveal-heading,
+.hp-section.is-revealed .hp-reveal-text,
+.hp-section.is-revealed .hp-reveal-media {
+  will-change: auto;
 }
 
 /* ── Shared Typography & Buttons ── */
@@ -2845,12 +2878,42 @@
   .hp-hero-tagline,
   .hp-hero-intro,
   .hp-hero-values,
-  .hp-hero-actions {
+  .hp-hero-actions,
+  .hp-value-item,
+  .hp-purpose-card,
+  .hp-stat-card,
+  .hp-founder-card,
+  .hp-wwd-card,
+  .hp-wcu-card,
+  .hp-workplace-card {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
     animation: none !important;
-    transition: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Workplace carousel slides: gentle crossfade without sliding movement */
+  .hp-carousel-slide {
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .hp-carousel-slide.is-leaving {
+    transform: none !important;
+    opacity: 0 !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  /* What We Do capability photos: gentle crossfade without zoom */
+  .hp-wwd-photo-frame {
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .hp-wwd-tab-progress.is-animating {
+    animation: none !important;
+    width: 100% !important;
   }
 
   .hp-workplace-media img {

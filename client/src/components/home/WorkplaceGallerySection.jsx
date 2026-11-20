@@ -184,15 +184,7 @@ export default function WorkplaceGallerySection({
 
   // Automatic Rotation every 4000ms with Visibility API & Hover/Touch Pause
   useEffect(() => {
-    if (isPreview || total <= 1 || isPaused) return;
-
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return;
-    }
+    if (isPreview || total <= 1 || isPaused) return undefined;
 
     const timer = setInterval(() => {
       handleNext();
