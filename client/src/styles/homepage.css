@@ -1756,28 +1756,28 @@
   opacity: 0;
   will-change: transform, opacity;
   transition:
-    opacity 1050ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
-    transform 1050ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
+    opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
     border-color 0.35s ease,
     box-shadow 0.35s var(--ease);
 }
 
-/* Card 1 – ANUSREE R: Enters from LEFT to RIGHT */
+/* Card 1 – ANUSREE R: Enters prominently from LEFT to RIGHT */
 .hp-team-card--from-left {
   --team-delay: 0ms;
-  transform: translate3d(-100px, 0, 0);
+  transform: translate3d(clamp(-220px, -18vw, -140px), 0, 0);
 }
 
-/* Card 2 – SWETHA G: Enters from BOTTOM to TOP */
+/* Card 2 – SWETHA G: Enters prominently from BOTTOM to TOP */
 .hp-team-card--from-bottom {
   --team-delay: 180ms;
-  transform: translate3d(0, 90px, 0);
+  transform: translate3d(0, 120px, 0);
 }
 
-/* Card 3 – RAHUL S: Enters from RIGHT to LEFT */
+/* Card 3 – RAHUL S: Enters prominently from RIGHT to LEFT */
 .hp-team-card--from-right {
   --team-delay: 360ms;
-  transform: translate3d(100px, 0, 0);
+  transform: translate3d(clamp(140px, 18vw, 220px), 0, 0);
 }
 
 /* Final settled position */
@@ -2738,15 +2738,15 @@
 
   /* Adapted specialist entrance for tablet to prevent horizontal scrolling */
   .hp-team-card--from-left {
-    transform: translate3d(-36px, 24px, 0);
+    transform: translate3d(-50px, 28px, 0);
   }
 
   .hp-team-card--from-bottom {
-    transform: translate3d(0, 48px, 0);
+    transform: translate3d(0, 60px, 0);
   }
 
   .hp-team-card--from-right {
-    transform: translate3d(36px, 24px, 0);
+    transform: translate3d(50px, 28px, 0);
   }
 
   .hp-hero-section {
@@ -2806,15 +2806,15 @@
 
   /* Adapted specialist entrance for mobile: subtle upward motion with slight lateral entrance */
   .hp-team-card--from-left {
-    transform: translate3d(-24px, 20px, 0);
+    transform: translate3d(-32px, 24px, 0);
   }
 
   .hp-team-card--from-bottom {
-    transform: translate3d(0, 40px, 0);
+    transform: translate3d(0, 48px, 0);
   }
 
   .hp-team-card--from-right {
-    transform: translate3d(24px, 20px, 0);
+    transform: translate3d(32px, 24px, 0);
   }
 
   .hp-section {
@@ -3152,13 +3152,6 @@
   .hp-collage-frame--primary,
   .hp-collage-frame--secondary {
     animation: none !important;
-  }
-
-  .hp-team-card {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: opacity 0.3s ease !important;
-    will-change: auto !important;
   }
 }
 
