@@ -1480,25 +1480,27 @@
 }
 
 /* ===================================================================
-   4. LEADERSHIP & GOVERNANCE -- SEQUENTIAL EDITORIAL PRESENTATION
+   4. LEADERSHIP & GOVERNANCE -- TWO-SIDED CONVERGENCE & BALANCED EDITORIAL
    =================================================================== */
 .hp-leadership-container {
   display: flex;
   flex-direction: column;
-  gap: 72px;
-  max-width: 1060px;
+  gap: 48px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
 .hp-leadership-row {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 56px;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 40px;
   align-items: center;
+  position: relative;
+  width: 100%;
 }
 
 .hp-leadership-row--reversed {
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: 0.88fr 1.12fr;
 }
 
 .hp-leadership-content {
@@ -1509,98 +1511,105 @@
   transform-origin: center center;
 }
 
-/* Coordinated Staggered Reveal for Leadership Text Elements */
-.hp-leadership-name,
-.hp-leadership-role,
-.hp-leadership-rule,
-.hp-leadership-bio,
-.hp-leadership-email-btn {
-  opacity: 0;
-  transform: translate3d(0, 14px, 0);
-  transition:
-    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
+/* ── DESKTOP & TABLET LANDSCAPE: TWO-SIDED CONVERGENCE ── */
+@media (min-width: 769px) {
+  /* ROW 1 / ODD PROFILES: Text on LEFT, Photo on RIGHT */
+  .hp-leadership-row--even .hp-leadership-content {
+    opacity: 0;
+    transform: translate3d(-100px, 0, 0);
+    transition:
+      opacity 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.hp-leadership-row.is-revealed .hp-leadership-name {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 40ms;
-}
+  .hp-leadership-row--even .hp-leadership-photo-wrap {
+    opacity: 0;
+    transform: translate3d(100px, 0, 0);
+    transition:
+      opacity 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.hp-leadership-row.is-revealed .hp-leadership-role {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 130ms;
-}
+  /* Triggered revealed state: Text travels LEFT -> RIGHT, Photo travels RIGHT -> LEFT */
+  .hp-leadership-row--even.is-revealed .hp-leadership-content {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
 
-.hp-leadership-row.is-revealed .hp-leadership-rule {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 220ms;
-}
+  .hp-leadership-row--even.is-revealed .hp-leadership-photo-wrap {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
 
-.hp-leadership-row.is-revealed .hp-leadership-bio {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 310ms;
-}
+  /* ROW 2 / EVEN PROFILES: Photo on LEFT, Text on RIGHT */
+  .hp-leadership-row--odd .hp-leadership-photo-wrap {
+    opacity: 0;
+    transform: translate3d(-100px, 0, 0);
+    transition:
+      opacity 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.hp-leadership-row.is-revealed .hp-leadership-email-btn {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 400ms;
-}
+  .hp-leadership-row--odd .hp-leadership-content {
+    opacity: 0;
+    transform: translate3d(100px, 0, 0);
+    transition:
+      opacity 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.hp-leadership-row.is-settled .hp-leadership-name,
-.hp-leadership-row.is-settled .hp-leadership-role,
-.hp-leadership-row.is-settled .hp-leadership-rule,
-.hp-leadership-row.is-settled .hp-leadership-bio,
-.hp-leadership-row.is-settled .hp-leadership-email-btn {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important;
+  /* Triggered revealed state: Photo travels LEFT -> RIGHT, Text travels RIGHT -> LEFT */
+  .hp-leadership-row--odd.is-revealed .hp-leadership-photo-wrap {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .hp-leadership-row--odd.is-revealed .hp-leadership-content {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
 }
 
 .hp-leadership-name {
   font-family: var(--font-heading);
-  font-size: clamp(2.0rem, 3.2vw, 2.6rem);
+  font-size: clamp(1.85rem, 2.6vw, 2.35rem);
   font-weight: 600;
-  line-height: 1.16;
+  line-height: 1.18;
   color: var(--ink, #242424);
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .hp-leadership-role {
   font-family: var(--font-brand);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold-dark, #A9822C);
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
 
 .hp-leadership-rule {
-  width: 56px;
+  width: 52px;
   height: 2px;
   background: linear-gradient(90deg, var(--gold, #D4AF37), var(--gold-dark, #A9822C));
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hp-leadership-bio {
   font-family: var(--font-body);
-  font-size: 1.02rem;
-  line-height: 1.8;
+  font-size: 0.98rem;
+  line-height: 1.72;
   color: #555555;
-  margin: 0 0 28px;
+  margin: 0 0 22px;
+  max-width: 530px;
 }
 
 .hp-leadership-email-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 22px;
+  padding: 10px 22px;
   border-radius: 999px;
   background: #FAFAFA;
   border: 1.5px solid #EAEAEA;
@@ -1635,7 +1644,7 @@
 .hp-leadership-photo-wrap {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 350px;
   margin: 0 auto;
   border-radius: 20px;
   background: #FFFFFF;
@@ -3028,68 +3037,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hp-reveal-child,
-  .hp-reveal-heading,
-  .hp-reveal-text,
-  .hp-reveal-media,
-  .hp-converge-left,
-  .hp-converge-right,
-  .hp-reveal-scale,
-  .hp-hero-brand-name,
-  .hp-hero-brand-sub,
-  .hp-hero-tagline,
-  .hp-hero-intro,
-  .hp-hero-values,
-  .hp-hero-actions,
-  .hp-value-item,
-  .hp-purpose-card,
-  .hp-stat-card,
-  .hp-founder-card,
-  .hp-wwd-card,
-  .hp-wcu-card,
-  .hp-workplace-card,
-  .hp-leadership-content,
-  .hp-leadership-photo-wrap,
-  .hp-leadership-name,
-  .hp-leadership-role,
-  .hp-leadership-rule,
-  .hp-leadership-bio,
-  .hp-leadership-email-btn {
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
-    animation: none !important;
-    transition: opacity 0.3s ease !important;
-  }
-
-  /* Workplace carousel slides: gentle crossfade without sliding movement */
-  .hp-carousel-slide {
-    transform: none !important;
-    transition: opacity 0.35s ease !important;
-  }
-
-  .hp-carousel-slide.is-leaving {
-    transform: none !important;
-    opacity: 0 !important;
-    transition: opacity 0.35s ease !important;
-  }
-
-  /* What We Do capability photos: gentle crossfade without zoom */
-  .hp-wwd-photo-frame {
-    transform: none !important;
-    transition: opacity 0.35s ease !important;
-  }
-
-  .hp-wwd-tab-progress.is-animating {
-    animation: none !important;
-    width: 100% !important;
-  }
-
-  .hp-workplace-media img {
-    --parallax-y: 0px !important;
-    transform: none !important;
-  }
-
+  /* Continuous looping ambient elements pause for reduced motion */
   .hp-hero-orbit--outer,
   .hp-hero-orbit--inner,
   .hp-scroll-cue-line,
@@ -3263,7 +3211,40 @@
     line-height: 1.55;
   }
 
+  /* Leadership Mobile Layout & Subtle Upward Entrance */
   .hp-leadership-container {
-    gap: 48px;
+    gap: 36px;
+  }
+
+  .hp-leadership-row,
+  .hp-leadership-row--reversed {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .hp-leadership-content {
+    align-items: center;
+  }
+
+  .hp-leadership-photo-wrap {
+    max-width: 290px;
+    margin: 0 auto;
+  }
+
+  /* Subtle upward entrance animation without horizontal translation (prevents overflow) */
+  .hp-leadership-row .hp-leadership-content,
+  .hp-leadership-row .hp-leadership-photo-wrap {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+      opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hp-leadership-row.is-revealed .hp-leadership-content,
+  .hp-leadership-row.is-revealed .hp-leadership-photo-wrap {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 }

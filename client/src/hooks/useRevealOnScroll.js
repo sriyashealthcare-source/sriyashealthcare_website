@@ -47,16 +47,7 @@ export function useRevealOnScroll({
       return undefined;
     }
 
-    // Case 2: Accessibility / Battery Saver (prefers-reduced-motion)
-    const mediaQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-    if (mediaQuery && mediaQuery.matches) {
-      setIsSectionVisible(true);
-      section.classList.add('is-revealed');
-      revealAllChildren(section);
-      return undefined;
-    }
-
-    // Case 3: No IntersectionObserver support in older browser
+    // Case 2: No IntersectionObserver support in older browser
     if (typeof IntersectionObserver === 'undefined') {
       setIsSectionVisible(true);
       section.classList.add('is-revealed');

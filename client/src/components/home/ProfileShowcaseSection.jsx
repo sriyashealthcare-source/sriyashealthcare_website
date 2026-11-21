@@ -16,158 +16,100 @@ function getInitials(name = '') {
 function LeadershipEditorialRow({
   person,
   index,
-  scrollRevealEnabled,
-  isPreview,
-  forceMobile
+  scrollRevealEnabled = true,
+  isPreview = false,
+  forceMobile = false
 }) {
   const rowRef = useRef(null);
-  const textColRef = useRef(null);
-  const photoColRef = useRef(null);
+  const [isRevealed, setIsRevealed] = useState(() => isPreview || !scrollRevealEnabled);
 
   // Even index = Row 1 (Text on LEFT, Photo on RIGHT)
   // Odd index = Row 2 (Photo on LEFT, Text on RIGHT)
   const isEven = index % 2 === 0;
-  const textIsLeft = isEven;
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
 
-    // In preview or disabled animations: display in fully settled state immediately
-    if (isPreview || scrollRevealEnabled === false) {
-      if (textColRef.current) {
-        textColRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
-        textColRef.current.style.opacity = '1';
-      }
-      if (photoColRef.current) {
-        photoColRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
-        photoColRef.current.style.opacity = '1';
-      }
-      if (rowRef.current) {
-        rowRef.current.classList.add('is-revealed', 'is-settled');
-      }
+    // In preview or disabled animations: reveal immediately
+    if (isPreview || !scrollRevealEnabled) {
+      setIsRevealed(true);
       return undefined;
     }
 
-    let rafId = null;
+    const row = rowRef.current;
+    if (!row) return undefined;
 
-    const updateConvergence = () => {
-      rafId = null;
-      const row = rowRef.current;
-      const textEl = textColRef.current;
-      const photoEl = photoColRef.current;
-      if (!row || !textEl || !photoEl) return;
-
-      const rect = row.getBoundingClientRect();
+    // If user loaded or refreshed page already scrolled down to this section, reveal immediately
+    const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    if (currentScrollY > 150) {
       const vh = window.innerHeight || 800;
-      const isMobile = window.innerWidth <= 768;
-
-      // Start convergence when approximately 15-20% of the profile enters the viewport
-      const rowHeight = rect.height || 420;
-      const startThreshold = vh - Math.min(110, Math.round(rowHeight * 0.18));
-
-      // Complete when profile reaches its natural reading position (~36-40% from top of viewport)
-      const endThreshold = Math.round(vh * 0.38);
-
-      let rawProgress = (startThreshold - rect.top) / (startThreshold - endThreshold);
-      let progress = Math.min(1, Math.max(0, rawProgress));
-
-      // Smooth cubic easing for natural motion and gentle spring-like settling
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      // Snap to exact settled dock once within 4% of completion or at/above natural reading position
-      const isSettled = progress >= 0.96 || rect.top <= endThreshold;
-
-      const maxDisp = isMobile ? 42 : 115;
-      const currentDisp = isSettled ? 0 : maxDisp * (1 - eased);
-      const scale = isSettled ? 1 : 0.96 + 0.04 * eased;
-      const opacity = isSettled ? 1 : Math.min(1, progress * 1.35);
-
-      // Symmetrical convergence:
-      // Left element travels from -currentDisp to 0 (LEFT to RIGHT towards center)
-      // Right element travels from +currentDisp to 0 (RIGHT to LEFT towards center)
-      const leftX = -currentDisp;
-      const rightX = currentDisp;
-
-      const textX = textIsLeft ? leftX : rightX;
-      const photoX = textIsLeft ? rightX : leftX;
-
-      textEl.style.transform = `translate3d(${textX.toFixed(2)}px, 0, 0) scale(${scale.toFixed(4)})`;
-      textEl.style.opacity = opacity.toFixed(3);
-
-      photoEl.style.transform = `translate3d(${photoX.toFixed(2)}px, 0, 0) scale(${scale.toFixed(4)})`;
-      photoEl.style.opacity = opacity.toFixed(3);
-
-      // Trigger coordinated group stagger on child text elements (name -> role -> rule -> bio -> email)
-      if (progress > 0.04) {
-        if (!row.classList.contains('is-revealed')) {
-          row.classList.add('is-revealed');
-        }
-      } else if (progress <= 0 && rect.top > vh) {
-        // If user scrolled completely back up above the section
-        if (row.classList.contains('is-revealed')) {
-          row.classList.remove('is-revealed');
-        }
+      const initialRect = row.getBoundingClientRect();
+      const initialHeight = initialRect.height || 400;
+      if (initialRect.top <= vh - initialHeight * 0.20 && initialRect.bottom >= 0) {
+        setIsRevealed(true);
+        return undefined;
       }
+    }
 
-      if (isSettled) {
-        row.classList.add('is-settled');
-      } else {
-        row.classList.remove('is-settled');
+    let observer = null;
+    let fallbackScrollListener = null;
+
+    const triggerReveal = () => {
+      setIsRevealed(true);
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      if (fallbackScrollListener) {
+        window.removeEventListener('scroll', fallbackScrollListener);
+        fallbackScrollListener = null;
       }
     };
 
-    const onScroll = () => {
-      if (rafId == null) {
-        rafId = window.requestAnimationFrame(updateConvergence);
+    // Independent IntersectionObserver for each leadership row:
+    // Triggers when approximately 20-25% of the profile enters the viewport
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const rect = entry.boundingClientRect;
+            const currentVh = window.innerHeight || 800;
+            const enteredPx = currentVh - rect.top;
+            const h = rect.height || 400;
+            if (entry.isIntersecting && (entry.intersectionRatio >= 0.20 || enteredPx >= h * 0.20)) {
+              triggerReveal();
+              break;
+            }
+          }
+        },
+        {
+          threshold: [0.1, 0.15, 0.2, 0.25],
+          rootMargin: '0px 0px -4% 0px'
+        }
+      );
+      observer.observe(row);
+    }
+
+    // Scroll listener backup to guarantee trigger across varying scroll speeds
+    fallbackScrollListener = () => {
+      if (!row) return;
+      const rect = row.getBoundingClientRect();
+      const currentVh = window.innerHeight || 800;
+      const h = rect.height || 400;
+      if (rect.top <= currentVh - h * 0.20 && rect.bottom >= 0) {
+        triggerReveal();
       }
     };
-
-    // Initial measurement
-    updateConvergence();
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    // Failsafe guarantee: ensure content never remains permanently invisible if user already scrolled past
-    const safetyTimeout = setTimeout(() => {
-      if (rowRef.current) {
-        updateConvergence();
-      }
-    }, 1000);
-
-    const absoluteTimeout = setTimeout(() => {
-      if (rowRef.current && !rowRef.current.classList.contains('is-settled')) {
-        const rect = rowRef.current.getBoundingClientRect();
-        const vh = window.innerHeight || 800;
-        const endThreshold = Math.round(vh * 0.38);
-        if (rect.top <= endThreshold) {
-          if (textColRef.current) {
-            textColRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            textColRef.current.style.opacity = '1';
-          }
-          if (photoColRef.current) {
-            photoColRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            photoColRef.current.style.opacity = '1';
-          }
-          rowRef.current.classList.add('is-revealed', 'is-settled');
-        }
-      }
-    }, 2000);
+    window.addEventListener('scroll', fallbackScrollListener, { passive: true });
 
     return () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
-      clearTimeout(safetyTimeout);
-      clearTimeout(absoluteTimeout);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      if (observer) observer.disconnect();
+      if (fallbackScrollListener) window.removeEventListener('scroll', fallbackScrollListener);
     };
-  }, [isEven, textIsLeft, isPreview, scrollRevealEnabled]);
+  }, [isPreview, scrollRevealEnabled]);
 
   const textContent = (
-    <div
-      ref={textColRef}
-      className={`hp-leadership-content ${textIsLeft ? 'hp-leadership-content--left' : 'hp-leadership-content--right'}`}
-    >
+    <div className="hp-leadership-content">
       <h3 className="hp-leadership-name">{person.name}</h3>
       {person.designation && (
         <p className="hp-leadership-role">{person.designation}</p>
@@ -204,10 +146,7 @@ function LeadershipEditorialRow({
   );
 
   const photoContent = (
-    <div
-      ref={photoColRef}
-      className={`hp-leadership-photo-wrap ${textIsLeft ? 'hp-leadership-photo--right' : 'hp-leadership-photo--left'}`}
-    >
+    <div className="hp-leadership-photo-wrap">
       <div className="hp-leadership-photo-inner">
         <ResponsiveMediaImage
           media={person.photo}
@@ -227,7 +166,7 @@ function LeadershipEditorialRow({
   return (
     <article
       ref={rowRef}
-      className={`hp-leadership-row ${!isEven ? 'hp-leadership-row--reversed hp-leadership-row--odd' : 'hp-leadership-row--even'}`}
+      className={`hp-leadership-row ${isEven ? 'hp-leadership-row--even' : 'hp-leadership-row--odd hp-leadership-row--reversed'} ${isRevealed ? 'is-revealed' : ''}`}
     >
       {isEven ? (
         <>
