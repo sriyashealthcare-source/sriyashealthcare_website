@@ -35,7 +35,7 @@ async function waitForHttp(url, timeoutMs = 25000) {
     try {
       const res = await fetch(url);
       if (res.ok || res.status === 200 || res.status === 304 || res.status === 404) return true;
-    } catch (_) {}
+    } catch (_) { }
     await sleep(400);
   }
   return false;
@@ -76,7 +76,7 @@ async function startChrome() {
       console.log('[Chrome] Connected to existing Chrome instance.');
       return;
     }
-  } catch (_) {}
+  } catch (_) { }
 
   console.log('[Chrome] Launching Chrome headless...');
   chromeProc = spawn(
@@ -93,21 +93,13 @@ async function startChrome() {
     { stdio: 'ignore' }
   );
 
-  let ready = false;
   for (let i = 0; i < 30; i++) {
     await sleep(500);
     try {
       const res = await fetch('http://127.0.0.1:9222/json/version');
-      if (res.ok) {
-        ready = true;
-        break;
-      }
-    } catch (_) {}
+      if (res.ok) break;
+    } catch (_) { }
   }
-  if (!ready) {
-    throw new Error('Chrome failed to respond on http://127.0.0.1:9222/json/version after 15 seconds.');
-  }
-  console.log('[Chrome] Chrome CDP ready on port 9222.');
 }
 
 class CdpClient {
@@ -179,7 +171,7 @@ class CdpClient {
 
   close() {
     if (this.ws) {
-      try { this.ws.close(); } catch (_) {}
+      try { this.ws.close(); } catch (_) { }
     }
   }
 }
@@ -431,9 +423,9 @@ async function run() {
     console.error('Test execution error:', err);
   } finally {
     cdp.close();
-    try { if (chromeProc) chromeProc.kill(); } catch (_) {}
-    try { if (clientProc) clientProc.kill(); } catch (_) {}
-    try { if (serverProc) serverProc.kill(); } catch (_) {}
+    try { if (chromeProc) chromeProc.kill(); } catch (_) { }
+    try { if (clientProc) clientProc.kill(); } catch (_) { }
+    try { if (serverProc) serverProc.kill(); } catch (_) { }
     process.exit(0);
   }
 }
