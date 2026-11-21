@@ -286,15 +286,15 @@ function createDefaultHomepagePayload() {
       items: [
         {
           id: 'team-ot-support',
-          name: 'OT Clinical Liaison & Surgical Product Support',
-          designation: 'Operating Room Coordination Specialist',
+          name: 'ANUSREE R',
+          designation: 'Administrative Secretary',
           bio: 'Facilitating on-site surgical product briefing, emergency theater stock availability, and procedural device readiness.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106845/sriyas-healthcare/general/file_vr73ht.jpg',
-            publicId: 'sriyas-healthcare/general/file_vr73ht',
+            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795262392/sriyas-healthcare/general/file_ayn1ew.jpg',
+            publicId: 'sriyas-healthcare/general/file_ayn1ew',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Sriyas Healthcare Operating Room Coordination Specialist',
+            alt: 'ANUSREE R - Administrative Secretary at Sriyas Healthcare',
             focalPoint: 'center top',
             aspectRatio: '3/4'
           },
@@ -305,15 +305,15 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'team-biomed-eng',
-          name: 'Biomedical Engineering & Technical Support',
-          designation: 'Technical Specialist & Device Architecture',
-          bio: 'Overseeing technical evaluations, clinical product specifications, institutional compliance documentation, and surgical equipment integration.',
+          name: 'SWETHA G',
+          designation: 'Clinical Specialist',
+          bio: 'Clinical Specialist who supports medical professionals, assists with clinical activities, and helps ensure quality patient care and smooth healthcare services.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106555/sriyas-healthcare/general/file_miszky.jpg',
-            publicId: 'sriyas-healthcare/general/file_miszky',
+            url: '',
+            publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Sriyas Healthcare Biomedical Engineering & Technical Support',
+            alt: 'SWETHA G - Clinical Specialist at Sriyas Healthcare',
             focalPoint: 'center top',
             aspectRatio: '3/4'
           },
@@ -324,15 +324,15 @@ function createDefaultHomepagePayload() {
         },
         {
           id: 'team-surgical-systems',
-          name: 'Surgical Systems & Equipment Coordination',
-          designation: 'Surgical Equipment Specialist',
-          bio: 'Supporting clinical departments with procedural devices, radiofrequency and electrosurgical systems, and specialized surgical consumable distribution.',
+          name: 'RAHUL S',
+          designation: 'Clinical Specialist',
+          bio: 'Clinical Specialist with experience in supporting healthcare activities, assisting medical professionals, and ensuring smooth patient care and daily clinical operations.',
           photo: {
-            url: 'https://res.cloudinary.com/pgjzw0zu/image/upload/v1795106596/sriyas-healthcare/general/file_lyxuzp.jpg',
-            publicId: 'sriyas-healthcare/general/file_lyxuzp',
+            url: '',
+            publicId: '',
             mobileUrl: '',
             mobilePublicId: '',
-            alt: 'Sriyas Healthcare Surgical Systems & Equipment Specialist',
+            alt: 'RAHUL S - Clinical Specialist at Sriyas Healthcare',
             focalPoint: 'center top',
             aspectRatio: '3/4'
           },

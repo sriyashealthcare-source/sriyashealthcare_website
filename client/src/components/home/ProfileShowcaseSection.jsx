@@ -176,6 +176,166 @@ function LeadershipEditorialRow({
   );
 }
 
+function SpecialistTeamGrid({
+  items,
+  scrollRevealEnabled = true,
+  isPreview = false,
+  forceMobile = false
+}) {
+  const gridRef = useRef(null);
+  const [isRevealed, setIsRevealed] = useState(() => isPreview || !scrollRevealEnabled);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    // Preview mode or disabled animations: reveal immediately
+    if (isPreview || !scrollRevealEnabled) {
+      setIsRevealed(true);
+      return undefined;
+    }
+
+    // Direct anchor landing (#our-team)
+    if (window.location.hash === '#our-team') {
+      setIsRevealed(true);
+      return undefined;
+    }
+
+    const grid = gridRef.current;
+    if (!grid) return undefined;
+    const targetSection = grid.closest('section') || grid;
+
+    let observer = null;
+    let fallbackScrollListener = null;
+
+    const cleanup = () => {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      if (fallbackScrollListener) {
+        window.removeEventListener('scroll', fallbackScrollListener);
+        window.removeEventListener('resize', fallbackScrollListener);
+        fallbackScrollListener = null;
+      }
+    };
+
+    const checkVisibility = () => {
+      if (!grid || !targetSection) return;
+      const secRect = targetSection.getBoundingClientRect();
+      const gridRect = grid.getBoundingClientRect();
+      const currentVh = window.innerHeight || 800;
+      const h = secRect.height || 400;
+      const enteredPx = currentVh - secRect.top;
+
+      // Trigger animation when ~20% of the specialist section enters viewport
+      if ((enteredPx >= h * 0.18 && secRect.bottom >= 40) || gridRect.top < currentVh * 0.88) {
+        setIsRevealed(true);
+        // Requirement 3: Animate only once per page load, do not reset on scroll up
+        cleanup();
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const secRect = targetSection.getBoundingClientRect();
+            const gridRect = grid.getBoundingClientRect();
+            const currentVh = window.innerHeight || 800;
+            const h = secRect.height || 400;
+            const enteredPx = currentVh - secRect.top;
+
+            if (entry.isIntersecting && ((enteredPx >= h * 0.18 && secRect.bottom >= 40) || gridRect.top < currentVh * 0.88)) {
+              setIsRevealed(true);
+              cleanup();
+              break;
+            }
+          }
+        },
+        {
+          threshold: [0, 0.05, 0.1, 0.18, 0.2, 0.25],
+          rootMargin: '0px 0px -4% 0px'
+        }
+      );
+      observer.observe(targetSection);
+    }
+
+    fallbackScrollListener = () => {
+      window.requestAnimationFrame(checkVisibility);
+    };
+    window.addEventListener('scroll', fallbackScrollListener, { passive: true });
+    window.addEventListener('resize', fallbackScrollListener, { passive: true });
+
+    // Initial check on mount
+    checkVisibility();
+
+    // Listen to hash change if navigated directly
+    const handleHash = () => {
+      if (window.location.hash === '#our-team') {
+        setIsRevealed(true);
+        cleanup();
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+
+    return () => {
+      cleanup();
+      window.removeEventListener('hashchange', handleHash);
+    };
+  }, [isPreview, scrollRevealEnabled]);
+
+  const getDirectionClass = (idx) => {
+    // Card 1 (idx 0): From LEFT to RIGHT
+    // Card 2 (idx 1): From BOTTOM to TOP
+    // Card 3 (idx 2): From RIGHT to LEFT
+    const mod = idx % 3;
+    if (mod === 0) return 'hp-team-card--from-left';
+    if (mod === 1) return 'hp-team-card--from-bottom';
+    return 'hp-team-card--from-right';
+  };
+
+  const getStaggerDelay = (idx) => {
+    // Stagger: 0ms, 180ms, 360ms (~150-200ms stagger)
+    const mod = idx % 3;
+    return `${mod * 180}ms`;
+  };
+
+  return (
+    <div
+      ref={gridRef}
+      className={`hp-team-grid ${isRevealed ? 'is-revealed' : ''}`}
+    >
+      {items.map((person, idx) => (
+        <article
+          key={person.id || idx}
+          className={`hp-team-card ${getDirectionClass(idx)} ${isRevealed ? 'is-revealed' : ''}`}
+          style={{ '--team-delay': getStaggerDelay(idx) }}
+        >
+          <div className="hp-team-portrait-wrap">
+            <ResponsiveMediaImage
+              media={person.photo}
+              alt={person.photo?.alt || person.name}
+              className="hp-team-portrait"
+              forceMobile={forceMobile}
+              fallback={
+                <div className="hp-leadership-monogram" aria-hidden="true">
+                  <span>{getInitials(person.name)}</span>
+                </div>
+              }
+            />
+          </div>
+
+          <h3 className="hp-team-name">{person.name}</h3>
+          {person.designation && (
+            <p className="hp-team-role">{person.designation}</p>
+          )}
+          {person.bio && <p className="hp-team-bio">{person.bio}</p>}
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export default function ProfileShowcaseSection({
   id = 'leadership',
   section = {},
@@ -251,35 +411,12 @@ export default function ProfileShowcaseSection({
             ))}
           </div>
         ) : (
-          <div className="hp-team-grid">
-            {items.map((person, idx) => (
-              <article
-                key={person.id || idx}
-                className="hp-team-card hp-reveal-child"
-                style={{ '--reveal-delay': `${80 + idx * 80}ms` }}
-              >
-                <div className="hp-team-portrait-wrap">
-                  <ResponsiveMediaImage
-                    media={person.photo}
-                    alt={person.photo?.alt || person.name}
-                    className="hp-team-portrait"
-                    forceMobile={forceMobile}
-                    fallback={
-                      <div className="hp-leadership-monogram" aria-hidden="true">
-                        <span>{getInitials(person.name)}</span>
-                      </div>
-                    }
-                  />
-                </div>
-
-                <h3 className="hp-team-name">{person.name}</h3>
-                {person.designation && (
-                  <p className="hp-team-role">{person.designation}</p>
-                )}
-                {person.bio && <p className="hp-team-bio">{person.bio}</p>}
-              </article>
-            ))}
-          </div>
+          <SpecialistTeamGrid
+            items={items}
+            scrollRevealEnabled={scrollRevealEnabled}
+            isPreview={isPreview}
+            forceMobile={forceMobile}
+          />
         )}
       </div>
     </section>

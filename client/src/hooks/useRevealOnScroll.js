@@ -31,8 +31,11 @@ export function useRevealOnScroll({
         '.hp-wwd-card, .hp-wcu-card, .hp-workplace-card, .hp-value-item, .hp-purpose-card'
       );
       revealTargets.forEach((el) => {
-        // Do not prematurely trigger nested independently observed containers like leadership rows
+        // Do not prematurely trigger nested independently observed containers like leadership rows and team specialist cards
         if (el.closest('.hp-leadership-row') && !el.closest('.hp-leadership-row.is-revealed')) {
+          return;
+        }
+        if (el.closest('.hp-team-grid') && !el.closest('.hp-team-grid.is-revealed')) {
           return;
         }
         el.classList.add('is-revealed');
