@@ -50,7 +50,15 @@ export default function AdminLogin() {
     <div className="admin-login-page">
       <div className="admin-login-card">
         <div className="admin-login-header">
-          <img src={SRIYAS_EMBLEM_URL} alt="Sriyas Healthcare Emblem" />
+          <img
+            src={SRIYAS_EMBLEM_URL}
+            alt="Sriyas Healthcare Emblem"
+            onError={(e) => {
+              if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
+                e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
+              }
+            }}
+          />
           <div>
             <span className="admin-login-badge">ADMINISTRATOR PORTAL</span>
           </div>

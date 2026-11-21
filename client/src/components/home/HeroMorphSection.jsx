@@ -262,26 +262,35 @@ export default function HeroMorphSection({
       {/* Subtle Silk Ivory & Gold Atmosphere */}
       <div className="hp-hero-backdrop" aria-hidden="true" style={{ opacity: auraOpacity }}>
         <div className="hp-hero-halo" />
-        <div className="hp-hero-orbit hp-hero-orbit--outer" />
-        <div className="hp-hero-orbit hp-hero-orbit--inner" />
         <div className="hp-hero-grid-texture" />
       </div>
 
       <div className="hp-hero-inner">
-        {/* Centered Resting Anchor Slot */}
+        {/* Centered Resting Anchor Slot with Concentric Golden Orb Orbit */}
         <div className="hp-hero-lockup-flow">
-          <div
-            ref={emblemPlaceholderRef}
-            className="hp-hero-emblem-slot"
-          >
-            <img
-              src={logoUrl}
-              alt={logoAlt}
-              className="hp-hero-emblem-img"
-              style={{ opacity: canAnimateMorph ? 0 : 1 }}
-              onLoad={measureStartAnchors}
-              fetchPriority="high"
-            />
+          <div className="hp-hero-emblem-wrap">
+            {/* The Golden Orb Animation centered on the logo */}
+            <div className="hp-hero-orbit hp-hero-orbit--outer" aria-hidden="true" />
+            <div className="hp-hero-orbit hp-hero-orbit--inner" aria-hidden="true" />
+
+            <div
+              ref={emblemPlaceholderRef}
+              className="hp-hero-emblem-slot"
+            >
+              <img
+                src={logoUrl}
+                alt={logoAlt}
+                className="hp-hero-emblem-img"
+                style={{ opacity: canAnimateMorph && rawProgress > 0.05 ? 0 : 1 }}
+                onLoad={measureStartAnchors}
+                onError={(e) => {
+                  if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
+                    e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
+                  }
+                }}
+                fetchPriority="high"
+              />
+            </div>
           </div>
 
           <div className="hp-hero-title-slot">
@@ -343,8 +352,8 @@ export default function HeroMorphSection({
         </div>
       </div>
 
-      {/* Continuous Fixed GPU-Composited Travelling Emblem */}
-      {canAnimateMorph && (
+      {/* Continuous Fixed GPU-Composited Travelling Emblem (active only during scroll transition) */}
+      {canAnimateMorph && rawProgress > 0.02 && (
         <div
           className="hp-hero-morph-traveler"
           style={emblemStyle}
@@ -354,6 +363,11 @@ export default function HeroMorphSection({
             src={logoUrl}
             alt={logoAlt}
             className="hp-hero-emblem-img"
+            onError={(e) => {
+              if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
+                e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
+              }
+            }}
             fetchPriority="high"
           />
         </div>

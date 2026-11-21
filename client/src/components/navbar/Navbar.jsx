@@ -104,7 +104,15 @@ export default function Navbar() {
               ref={registerNavImgRef}
               src={logoSrc}
               alt={logoAlt}
+              className="nav-logo-emblem"
+              width="46"
+              height="51"
               onLoad={measureNavTargets}
+              onError={(e) => {
+                if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
+                  e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
+                }
+              }}
               style={{ opacity: isEmblemDocked ? 1 : 0 }}
             />
             <span

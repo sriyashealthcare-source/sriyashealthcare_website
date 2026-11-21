@@ -20,6 +20,11 @@ export default function Footer() {
                 width="40"
                 height="40"
                 loading="lazy"
+                onError={(e) => {
+                  if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
+                    e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
+                  }
+                }}
               />
               <div className="footer-brand-text">
                 <span className="footer-brand-name">SRIYAS HEALTHCARE</span>
