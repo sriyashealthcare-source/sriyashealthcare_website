@@ -39,72 +39,65 @@ function LeadershipEditorialRow({
     const row = rowRef.current;
     if (!row) return undefined;
 
-    // If user loaded or refreshed page already scrolled down to this section, reveal immediately
-    const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    if (currentScrollY > 150) {
-      const vh = window.innerHeight || 800;
-      const initialRect = row.getBoundingClientRect();
-      const initialHeight = initialRect.height || 400;
-      if (initialRect.top <= vh - initialHeight * 0.20 && initialRect.bottom >= 0) {
-        setIsRevealed(true);
-        return undefined;
-      }
-    }
-
     let observer = null;
     let fallbackScrollListener = null;
 
-    const triggerReveal = () => {
-      setIsRevealed(true);
-      if (observer) {
-        observer.disconnect();
-        observer = null;
-      }
-      if (fallbackScrollListener) {
-        window.removeEventListener('scroll', fallbackScrollListener);
-        fallbackScrollListener = null;
+    const checkVisibility = () => {
+      if (!row) return;
+      const rect = row.getBoundingClientRect();
+      const currentVh = window.innerHeight || 800;
+      const h = rect.height || 400;
+      const enteredPx = currentVh - rect.top;
+
+      // Trigger when ~20-25% of profile enters viewport
+      if (enteredPx >= h * 0.22 && rect.bottom >= 60) {
+        setIsRevealed(true);
+      } else if (rect.top > currentVh * 0.95) {
+        // Reset when user scrolls back up above this profile
+        setIsRevealed(false);
       }
     };
 
-    // Independent IntersectionObserver for each leadership row:
-    // Triggers when approximately 20-25% of the profile enters the viewport
     if (typeof IntersectionObserver !== 'undefined') {
       observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             const rect = entry.boundingClientRect;
             const currentVh = window.innerHeight || 800;
-            const enteredPx = currentVh - rect.top;
             const h = rect.height || 400;
-            if (entry.isIntersecting && (entry.intersectionRatio >= 0.20 || enteredPx >= h * 0.20)) {
-              triggerReveal();
-              break;
+            const enteredPx = currentVh - rect.top;
+
+            if (entry.isIntersecting && enteredPx >= h * 0.22 && rect.bottom >= 60) {
+              setIsRevealed(true);
+            } else if (rect.top > currentVh * 0.95) {
+              setIsRevealed(false);
             }
           }
         },
         {
-          threshold: [0.1, 0.15, 0.2, 0.25],
+          threshold: [0, 0.1, 0.2, 0.25, 0.4],
           rootMargin: '0px 0px -4% 0px'
         }
       );
       observer.observe(row);
     }
 
-    // Scroll listener backup to guarantee trigger across varying scroll speeds
+    // Scroll listener backup to guarantee trigger and bidirectional reset across varying scroll speeds
     fallbackScrollListener = () => {
-      if (!row) return;
-      const rect = row.getBoundingClientRect();
-      const currentVh = window.innerHeight || 800;
-      const h = rect.height || 400;
-      if (rect.top <= currentVh - h * 0.20 && rect.bottom >= 0) {
-        triggerReveal();
-      }
+      window.requestAnimationFrame(checkVisibility);
     };
     window.addEventListener('scroll', fallbackScrollListener, { passive: true });
+    window.addEventListener('resize', fallbackScrollListener, { passive: true });
+
+    // Initial check on mount
+    checkVisibility();
 
     return () => {
       if (observer) observer.disconnect();
-      if (fallbackScrollListener) window.removeEventListener('scroll', fallbackScrollListener);
+      if (fallbackScrollListener) {
+        window.removeEventListener('scroll', fallbackScrollListener);
+        window.removeEventListener('resize', fallbackScrollListener);
+      }
     };
   }, [isPreview, scrollRevealEnabled]);
 

@@ -359,6 +359,37 @@ async function run() {
     await cdp.captureScreenshot('84_leadership_settled_row2.png');
 
     // ─────────────────────────────────────────────────────────────
+    // Phase 2.5: Reverse Scroll Up & Re-trigger Verification
+    // ─────────────────────────────────────────────────────────────
+    console.log('\n[Phase 2.5] Reverse Scroll Up & Repeatable Trigger Verification');
+    await cdp.eval(`window.scrollTo(0, ${aboveRow1ScrollY})`);
+    await sleep(500);
+
+    const scrollUpCheck = await cdp.eval(`(() => {
+      const r1 = document.querySelectorAll('.hp-leadership-row')[0];
+      const tStyle = window.getComputedStyle(r1.querySelector('.hp-leadership-content'));
+      const pStyle = window.getComputedStyle(r1.querySelector('.hp-leadership-photo-wrap'));
+      return {
+        rowRevealed: r1.classList.contains('is-revealed'),
+        textTransform: tStyle.transform,
+        photoTransform: pStyle.transform,
+        opacity: tStyle.opacity
+      };
+    })()`);
+
+    console.log('Row 1 after scrolling back up: is-revealed =', scrollUpCheck.rowRevealed, `text: ${scrollUpCheck.textTransform}`);
+    await cdp.captureScreenshot('85_leadership_scroll_back_up.png');
+
+    // Scroll back down to Row 1 to verify it re-triggers cleanly
+    await cdp.eval(`window.scrollTo(0, ${triggerRow1ScrollY})`);
+    await sleep(400);
+    const retriggerCheck = await cdp.eval(`(() => {
+      const r1 = document.querySelectorAll('.hp-leadership-row')[0];
+      return { rowRevealed: r1.classList.contains('is-revealed') };
+    })()`);
+    console.log('Row 1 re-triggered on scrolling down: is-revealed =', retriggerCheck.rowRevealed);
+
+    // ─────────────────────────────────────────────────────────────
     // Phase 3: Mobile Viewport 390x844 (iPhone)
     // ─────────────────────────────────────────────────────────────
     console.log('\n[Phase 3] Mobile Viewport 390x844 Verification');
