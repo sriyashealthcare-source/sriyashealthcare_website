@@ -193,6 +193,17 @@ export default function WorkplaceGallerySection({
     return () => clearInterval(timer);
   }, [isPreview, total, isPaused, handleNext]);
 
+  // Preload next image to ensure instantaneous, flicker-free crossfades
+  useEffect(() => {
+    if (typeof window === 'undefined' || !images || images.length <= 1) return;
+    const nextItem = images[(currentIndex + 1) % images.length];
+    const url = nextItem?.url || nextItem?.mobileUrl;
+    if (url) {
+      const preloadImg = new Image();
+      preloadImg.src = url;
+    }
+  }, [currentIndex, images]);
+
   // Page Visibility API Pause: pauses when browser tab is inactive, resumes when active
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -362,10 +373,6 @@ export default function WorkplaceGallerySection({
                     onClick={() => goToSlide(idx)}
                   />
                 ))}
-              </div>
-
-              <div className="hp-carousel-caption-hint" aria-hidden="true">
-                <span className="hp-carousel-hint-text">Auto-rotating showcase</span>
               </div>
             </div>
           </div>

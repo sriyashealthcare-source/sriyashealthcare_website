@@ -5,7 +5,7 @@ import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 const CAPABILITY_INTERVAL = 5500;
 
-const DEFAULT_CAPABILITIES = [
+export const DEFAULT_CAPABILITIES = [
   {
     id: 'wwd-distribution',
     title: 'Specialized Surgical & Medical Distribution',
@@ -123,6 +123,17 @@ export default function WhatWeDoSection({
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
+  // Preload next capability image to prevent blank frames during auto-advance
+  useEffect(() => {
+    if (typeof window === 'undefined' || !items || items.length <= 1) return;
+    const nextItem = items[(activeIndex + 1) % items.length];
+    const url = nextItem?.image?.url || nextItem?.image?.mobileUrl;
+    if (url) {
+      const preloadImg = new Image();
+      preloadImg.src = url;
+    }
+  }, [activeIndex, items]);
+
   // Automatic Progression every ~5.5s, paused on hover/touch or when tab hidden
   useEffect(() => {
     if (isPreview || total <= 1 || isPaused) return undefined;
@@ -176,7 +187,7 @@ export default function WhatWeDoSection({
   const activeNumeral = String(activeIndex + 1).padStart(2, '0');
   const totalNumeral = String(total).padStart(2, '0');
 
-  const eyebrowText = whatWeDo.eyebrow || 'What We Do';
+  const eyebrowText = whatWeDo.eyebrow || 'WHAT WE DO';
   const headingText =
     whatWeDo.heading || 'Focused Capabilities in Surgical & Medical Supply';
   const subtitleText =
@@ -191,6 +202,7 @@ export default function WhatWeDoSection({
       aria-labelledby="wwd-heading"
     >
       <div className="hp-container">
+        {/* Section Header with Staggered Editorial Reveal */}
         <header className="hp-section-header hp-reveal-child" style={{ '--reveal-delay': '0ms' }}>
           {eyebrowText && <span className="hp-eyebrow">{eyebrowText}</span>}
           {headingText && (
@@ -203,151 +215,21 @@ export default function WhatWeDoSection({
           )}
         </header>
 
-        {/* Interactive Capability Showcase */}
+        {/* Asymmetrical Editorial Capabilities Showcase */}
         <div
-          className="hp-wwd-showcase hp-reveal-scale"
-          style={{ '--reveal-delay': '90ms' }}
+          className="hp-wwd-showcase hp-wwd-showcase--asymmetric hp-reveal-scale"
+          style={{ '--reveal-delay': '80ms' }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {/* Capability Selector Tabs / Progress Indicators */}
-          <nav
-            className="hp-wwd-tabs"
-            role="tablist"
-            aria-label="Sriyas Healthcare Core Capabilities"
-          >
-            {items.map((item, idx) => {
-              const isActive = idx === activeIndex;
-              const itemNum = String(idx + 1).padStart(2, '0');
-              const shortTitle =
-                item.shortTitle ||
-                DEFAULT_CAPABILITIES[idx]?.shortTitle ||
-                item.title.split(' ')[0];
-
-              return (
-                <button
-                  key={item.id || idx}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`capability-panel-${idx}`}
-                  id={`capability-tab-${idx}`}
-                  className={`hp-wwd-tab ${isActive ? 'is-active' : ''}`}
-                  onClick={() => setActiveIndex(idx)}
-                >
-                  <div className="hp-wwd-tab-top">
-                    <span className="hp-wwd-tab-num">{itemNum}</span>
-                    <span className="hp-wwd-tab-title">{shortTitle}</span>
-                  </div>
-                  <div className="hp-wwd-tab-bar">
-                    <div
-                      className={`hp-wwd-tab-progress ${isActive && !isPaused ? 'is-animating' : ''}`}
-                      style={{
-                        animationDuration: `${CAPABILITY_INTERVAL}ms`
-                      }}
-                    />
-                  </div>
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Featured Capability Editorial Stage */}
-          <div
-            id={`capability-panel-${activeIndex}`}
-            role="tabpanel"
-            aria-labelledby={`capability-tab-${activeIndex}`}
-            className="hp-wwd-stage"
-          >
-            {/* Left Column: Narrative & Key Clinical Focus */}
-            <div className="hp-wwd-narrative hp-converge-left" style={{ '--reveal-delay': '60ms' }}>
-              <div className="hp-wwd-badge-row">
-                <span className="hp-wwd-numeral">{activeNumeral}</span>
-                <span className="hp-wwd-slash">/</span>
-                <span className="hp-wwd-total">{totalNumeral}</span>
-                <span className="hp-wwd-tag">
-                  {currentItem.tag || DEFAULT_CAPABILITIES[activeIndex]?.tag || 'Clinical Service'}
-                </span>
-              </div>
-
-              <h3 className="hp-wwd-active-title">{currentItem.title}</h3>
-
-              <div className="hp-gold-rule hp-wwd-rule" aria-hidden="true" />
-
-              <p className="hp-wwd-active-desc">{currentItem.description}</p>
-
-              <div className="hp-wwd-actions">
-                <Link
-                  to="/products"
-                  className="hp-wwd-cta-link"
-                  aria-label={`Explore products related to ${currentItem.title}`}
-                >
-                  <span>Explore Related Products</span>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </Link>
-
-                <div className="hp-wwd-step-nav" aria-label="Capability navigation">
-                  <button
-                    type="button"
-                    className="hp-wwd-nav-arrow"
-                    onClick={handlePrev}
-                    aria-label="Previous capability"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    className="hp-wwd-nav-arrow"
-                    onClick={handleNext}
-                    aria-label="Next capability"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Large Editorial Photography */}
-            <div className="hp-wwd-visual hp-converge-right" style={{ '--reveal-delay': '120ms' }}>
-              <div className="hp-wwd-photo-container">
+          <div className="hp-wwd-grid-layout">
+            {/* Left Dominant Column: Featured Capability Spotlight Stage */}
+            <div className="hp-wwd-featured-stage hp-converge-left" style={{ '--reveal-delay': '60ms' }}>
+              {/* Large Integrated Cinematic Photograph */}
+              <div className="hp-wwd-photo-container hp-reveal-media">
                 {items.map((item, idx) => {
                   const isActive = idx === activeIndex;
                   return (
@@ -364,14 +246,160 @@ export default function WhatWeDoSection({
                           className="hp-wwd-img"
                         />
                       </div>
-                      <div className="hp-wwd-photo-overlay">
-                        <span className="hp-wwd-photo-caption">{item.title}</span>
+                      <div className="hp-wwd-photo-badge">
+                        <span>{item.tag || DEFAULT_CAPABILITIES[idx]?.tag || 'Clinical Service'}</span>
                       </div>
                     </figure>
                   );
                 })}
               </div>
+
+              {/* Narrative Content Card Below Photo */}
+              <div className="hp-wwd-featured-body">
+                <div className="hp-wwd-badge-row">
+                  <span className="hp-wwd-numeral">{activeNumeral}</span>
+                  <span className="hp-wwd-slash">/</span>
+                  <span className="hp-wwd-total">{totalNumeral}</span>
+                  <span className="hp-wwd-tag">
+                    {currentItem.tag || DEFAULT_CAPABILITIES[activeIndex]?.tag || 'Clinical Service'}
+                  </span>
+                </div>
+
+                <h3 className="hp-wwd-active-title">{currentItem.title}</h3>
+
+                <div className="hp-gold-rule hp-wwd-rule" aria-hidden="true" />
+
+                <p className="hp-wwd-active-desc">{currentItem.description}</p>
+
+                <div className="hp-wwd-actions">
+                  <Link
+                    to="/products"
+                    className="hp-wwd-cta-link"
+                    aria-label={`Explore products related to ${currentItem.title}`}
+                  >
+                    <span>Explore Related Products</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </Link>
+
+                  <div className="hp-wwd-step-nav" aria-label="Capability navigation">
+                    <button
+                      type="button"
+                      className="hp-wwd-nav-arrow"
+                      onClick={handlePrev}
+                      aria-label="Previous capability"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="15 18 9 12 15 6" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="hp-wwd-nav-arrow"
+                      onClick={handleNext}
+                      aria-label="Next capability"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Integrated Progress Indicator Bar at Base */}
+                <div className="hp-wwd-stage-progress-track" aria-hidden="true">
+                  <div
+                    className={`hp-wwd-stage-progress-fill hp-wwd-tab-progress ${!isPaused ? 'is-animating' : ''}`}
+                    style={{ animationDuration: `${CAPABILITY_INTERVAL}ms` }}
+                    key={activeIndex}
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Right Column: Asymmetric Interactive Capability Index Rail */}
+            <nav
+              className="hp-wwd-rail hp-converge-right"
+              style={{ '--reveal-delay': '120ms' }}
+              role="tablist"
+              aria-label="Sriyas Healthcare Core Capabilities"
+            >
+              {items.map((item, idx) => {
+                const isActive = idx === activeIndex;
+                const itemNum = String(idx + 1).padStart(2, '0');
+                const tag = item.tag || DEFAULT_CAPABILITIES[idx]?.tag || 'Clinical Service';
+
+                return (
+                  <button
+                    key={item.id || idx}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`capability-panel-${idx}`}
+                    id={`capability-tab-${idx}`}
+                    className={`hp-wwd-rail-item hp-wwd-tab ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setActiveIndex(idx)}
+                    style={{ '--item-stagger': `${idx * 60}ms` }}
+                  >
+                    <div className="hp-wwd-rail-num-wrap">
+                      <span className="hp-wwd-rail-num hp-wwd-tab-num">{itemNum}</span>
+                      <div className="hp-wwd-rail-accent-bar" aria-hidden="true" />
+                    </div>
+
+                    <div className="hp-wwd-rail-content">
+                      <span className="hp-wwd-rail-tag">{tag}</span>
+                      <h4 className="hp-wwd-rail-title hp-wwd-tab-title">{item.title}</h4>
+                      <p className="hp-wwd-rail-desc">{item.description}</p>
+                    </div>
+
+                    <div className="hp-wwd-rail-arrow" aria-hidden="true">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </button>
+                );
+              })}
+            </nav>
           </div>
         </div>
       </div>

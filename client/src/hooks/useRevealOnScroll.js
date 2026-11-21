@@ -31,6 +31,10 @@ export function useRevealOnScroll({
         '.hp-wwd-card, .hp-wcu-card, .hp-workplace-card, .hp-value-item, .hp-purpose-card'
       );
       revealTargets.forEach((el) => {
+        // Do not prematurely trigger nested independently observed containers like leadership rows
+        if (el.closest('.hp-leadership-row') && !el.closest('.hp-leadership-row.is-revealed')) {
+          return;
+        }
         el.classList.add('is-revealed');
       });
     };
@@ -118,6 +122,10 @@ export function useRevealOnScroll({
         '.hp-wwd-card, .hp-wcu-card, .hp-workplace-card, .hp-value-item, .hp-purpose-card'
       );
       childTargets.forEach((child) => {
+        // If child belongs to an unrevealed nested component, let that component manage it
+        if (child.closest('.hp-leadership-row') && section !== child.closest('.hp-leadership-row')) {
+          return;
+        }
         if (!observedChildren.has(child)) {
           observedChildren.add(child);
           if (isSectionRevealed) {

@@ -40,6 +40,7 @@ desktop.ini
 *.tmp
 *.temp
 .cache/
+.chrome_dev_profile/
 
 # Coverage
 coverage/
