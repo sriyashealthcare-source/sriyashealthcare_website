@@ -1985,11 +1985,11 @@ export default function AdminContactManagement() {
                     flexDirection: 'column'
                   }}
                 >
-                  <div style={{ height: '160px', background: '#f5f5f5', position: 'relative' }}>
+                  <div style={{ height: '240px', background: '#FAF7F0', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px' }}>
                     <img
                       src={img.url}
                       alt={img.alt || 'Office photograph'}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '4px' }}
                     />
                     {img.isPrimary && (
                       <span

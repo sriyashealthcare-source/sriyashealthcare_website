@@ -1511,17 +1511,206 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   }
 }
 
+/* ═══ OFFICE PORTRAIT LOCATION CARD ═══ */
+.contact-office-section {
+  padding: 24px 16px 44px;
+  background: transparent;
+}
+
+.contact-office-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.office-portrait-card {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.office-portrait-frame {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #FAF7F0;
+  border: 1px solid rgba(169, 130, 44, 0.28);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(169, 130, 44, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  box-sizing: border-box;
+}
+
+.office-portrait-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(169, 130, 44, 0.16);
+  border-color: var(--gold-dark);
+}
+
+.office-portrait-img,
+.map-photo {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  border-radius: calc(var(--radius-md) - 6px);
+  filter: brightness(0.98);
+  transition: transform 0.45s var(--ease), filter 0.45s ease;
+}
+
+.office-portrait-frame:hover .office-portrait-img,
+.office-portrait-frame:hover .map-photo {
+  transform: scale(1.015);
+  filter: brightness(1.02);
+}
+
+.office-portrait-caption {
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-mute);
+  text-align: center;
+  font-style: italic;
+}
+
+.office-maps-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.office-maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.office-maps-btn-primary {
+  background: linear-gradient(135deg, #A9822C 0%, #C49E3E 100%);
+  color: #FFFFFF !important;
+  border: 1px solid #8E6B1D;
+  box-shadow: 0 4px 14px rgba(169, 130, 44, 0.25);
+}
+
+.office-maps-btn-primary:hover {
+  background: linear-gradient(135deg, #967222 0%, #B58F31 100%);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(169, 130, 44, 0.35);
+}
+
+.office-maps-btn-secondary {
+  background: #FFFFFF;
+  color: var(--gold-deep) !important;
+  border: 1px solid rgba(169, 130, 44, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.office-maps-btn-secondary:hover {
+  background: var(--ivory-deep);
+  color: var(--ink) !important;
+  border-color: var(--gold-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Secondary Office Gallery */
+.office-gallery-secondary {
+  margin-top: 36px;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.office-gallery-title {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.office-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.office-gallery-card {
+  border-radius: var(--radius-md);
+  background: #FFFFFF;
+  border: 1px solid rgba(169, 130, 44, 0.2);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.office-gallery-thumb {
+  height: 220px;
+  background: #FAF7F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.office-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.office-gallery-caption {
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  color: var(--text-mute);
+  text-align: center;
+  background: #fff;
+  border-top: 1px solid #f0ede6;
+}
+
+/* Legacy .map-wrap fallback */
 .map-wrap {
   display: block;
-  max-width: 1120px;
+  max-width: 480px;
+  aspect-ratio: 4 / 5;
   margin: 0 auto 20px;
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(169, 130, 44, 0.2);
+  background: #FAF7F0;
+  border: 1px solid rgba(169, 130, 44, 0.25);
   box-shadow: var(--shadow-card);
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
   text-decoration: none;
+  padding: 10px;
 }
 
 .map-wrap:hover {
@@ -1529,34 +1718,8 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   box-shadow: var(--shadow-hover);
 }
 
-.map-photo {
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-  display: block;
-  filter: brightness(0.95);
-  transition: transform 0.5s var(--ease), filter 0.5s ease;
-}
-
-.map-wrap:hover .map-photo {
-  transform: scale(1.02);
-  filter: brightness(1);
-}
-
 .map-overlay {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  background: rgba(15, 18, 16, 0.85);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: var(--radius-full);
-  font-family: var(--font-brand);
-  font-size: 0.84rem;
-  font-weight: 600;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  display: none !important;
 }
 
 .map-link-wrap {
@@ -1937,8 +2100,8 @@ body.mobile-nav-open .hp-hero-morph-traveler {
     font-size: 1.5rem;
   }
 
-  .map-photo {
-    height: 280px;
+  .office-portrait-card {
+    max-width: 440px;
   }
 }
 
@@ -2017,13 +2180,6 @@ body.mobile-nav-open .hp-hero-morph-traveler {
     padding: 14px 20px;
   }
 
-  .map-overlay {
-    bottom: 12px;
-    right: 12px;
-    padding: 8px 14px;
-    font-size: 0.78rem;
-  }
-
   .hero {
     padding: 95px 4% 60px;
   }
@@ -2072,8 +2228,25 @@ body.mobile-nav-open .hp-hero-morph-traveler {
     grid-template-columns: 1fr;
   }
 
-  .map-photo {
-    height: 220px;
+  .office-portrait-card {
+    max-width: 100%;
+    padding: 0 4px;
+  }
+
+  .office-portrait-frame {
+    aspect-ratio: 4 / 5;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .office-maps-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .office-maps-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

@@ -514,54 +514,82 @@ export default function Contact() {
         </div>
 
         {/* Office Location & Photographs */}
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 16px' }}>
-          {officeImages && officeImages.length > 1 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-              {officeImages.map((img) => (
-                <div key={img.id} style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid rgba(169, 130, 44, 0.25)', boxShadow: 'var(--shadow-card)' }}>
-                  <img
-                    src={img.url}
-                    alt={img.alt || 'Sriyas Healthcare Office Facility'}
-                    style={{ width: '100%', height: '220px', objectFit: 'cover' }}
-                    loading="lazy"
-                  />
-                  {img.caption && (
-                    <div style={{ padding: '8px 12px', background: '#fff', fontSize: '0.82rem', color: 'var(--text-mute)', textAlign: 'center' }}>
-                      {img.caption}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <a
-              className="map-wrap"
-              href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Sriyas Healthcare corporate office location in Google Maps"
-            >
-              <img
-                className="map-photo"
-                src={primaryOfficeImage?.url || STOREFRONT_LOCATION_URL}
-                alt={primaryOfficeImage?.alt || 'Sriyas Healthcare storefront location in Chennai'}
-                loading="lazy"
-              />
-              <span className="map-overlay">📍 View Location on Google Maps</span>
-            </a>
-          )}
+        <section className="contact-office-section" aria-label="Corporate Office Location">
+          <div className="contact-office-container">
+            <div className="office-portrait-card">
+              <a
+                className="office-portrait-frame"
+                href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Click to view Sriyas Healthcare on Google Maps"
+                aria-label="Open Sriyas Healthcare corporate office location in Google Maps"
+              >
+                <img
+                  className="office-portrait-img map-photo"
+                  src={primaryOfficeImage?.url || STOREFRONT_LOCATION_URL}
+                  alt={primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
+                  loading="lazy"
+                />
+              </a>
 
-          <div className="map-link-wrap">
-            <a
-              className="map-link"
-              href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              📍 Open Registered Office in Google Maps ↗
-            </a>
+              {primaryOfficeImage?.caption && (
+                <div className="office-portrait-caption">
+                  {primaryOfficeImage.caption}
+                </div>
+              )}
+
+              <div className="office-maps-actions">
+                <a
+                  className="office-maps-btn office-maps-btn-primary"
+                  href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Sriyas Healthcare Location on Google Maps"
+                >
+                  <span className="office-maps-btn-icon">📍</span>
+                  <span>View Location on Google Maps ↗</span>
+                </a>
+                <a
+                  className="office-maps-btn office-maps-btn-secondary"
+                  href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Registered Office in Google Maps"
+                >
+                  <span className="office-maps-btn-icon">🗺️</span>
+                  <span>Open Registered Office in Google Maps ↗</span>
+                </a>
+              </div>
+            </div>
+
+            {officeImages && officeImages.length > 1 && (
+              <div className="office-gallery-secondary">
+                <h4 className="office-gallery-title">Additional Facility Photographs</h4>
+                <div className="office-gallery-grid">
+                  {officeImages
+                    .filter((img) => img.id !== primaryOfficeImage?.id && img.url !== primaryOfficeImage?.url)
+                    .map((img) => (
+                      <div key={img.id} className="office-gallery-card">
+                        <div className="office-gallery-thumb">
+                          <img
+                            src={img.url}
+                            alt={img.alt || 'Sriyas Healthcare Office Facility'}
+                            loading="lazy"
+                          />
+                        </div>
+                        {img.caption && (
+                          <div className="office-gallery-caption">
+                            {img.caption}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+        </section>
       </section>
     </>
   );
