@@ -200,6 +200,138 @@ export default function AdminContactManagement() {
     else if (category === 'image') setOfficeImages(updater);
   };
 
+  // Statutory resolution helpers
+  const gstinValue = useMemo(() => {
+    const reg = registrations.find(r => r.label?.toUpperCase().includes('GST') || r.id === 'reg-gstin');
+    return reg?.value || '33ABQCS4744P1ZJ';
+  }, [registrations]);
+
+  const dl1Value = useMemo(() => {
+    const r1 = registrations.find(r => r.id === 'reg-dl-1' || r.label?.includes('20B') || r.label?.includes('DL 1'));
+    if (r1?.value) return r1.value;
+    const rComb = registrations.find(r => r.id === 'reg-dl' || r.label?.toUpperCase().includes('DRUG'));
+    if (rComb?.value) {
+      return rComb.value.split('&')[0]?.trim() || 'TN/Z04/20B/01443';
+    }
+    return 'TN/Z04/20B/01443';
+  }, [registrations]);
+
+  const dl2Value = useMemo(() => {
+    const r2 = registrations.find(r => r.id === 'reg-dl-2' || r.label?.includes('21B') || r.label?.includes('DL 2'));
+    if (r2?.value) return r2.value;
+    const rComb = registrations.find(r => r.id === 'reg-dl' || r.label?.toUpperCase().includes('DRUG'));
+    if (rComb?.value) {
+      return rComb.value.split('&')[1]?.trim() || 'TN/Z04/21B/01443';
+    }
+    return 'TN/Z04/21B/01443';
+  }, [registrations]);
+
+  const updateMainOfficePhone = (index, field, value) => {
+    markChanged();
+    setPhones(prev => {
+      const list = [...prev];
+      while (list.length < 2) {
+        list.push({
+          id: generateLocalId('phone'),
+          label: 'Main Office',
+          countryCode: '+91',
+          number: list.length === 0 ? '9600804456' : '9367772801',
+          purpose: list.length === 0 ? 'General & Institutional Enquiries' : 'General Enquiries',
+          displayOrder: list.length + 1,
+          isActive: true,
+          isPrimary: list.length === 0,
+          showOnContactPage: true,
+          showInFooter: true,
+          enableClickToCall: true
+        });
+      }
+      list[index] = {
+        ...list[index],
+        [field]: value
+      };
+      return list;
+    });
+  };
+
+  const updateStatutoryRegistration = (type, val) => {
+    markChanged();
+    setRegistrations(prev => {
+      let copy = [...prev];
+      if (type === 'gstin') {
+        const idx = copy.findIndex(r => r.label?.toUpperCase().includes('GST') || r.id === 'reg-gstin');
+        if (idx >= 0) {
+          copy[idx] = { ...copy[idx], value: val.trim() };
+        } else {
+          copy.push({
+            id: 'reg-gstin',
+            label: 'GSTIN',
+            value: val.trim(),
+            displayLocation: 'both',
+            isActive: true,
+            displayOrder: 1
+          });
+        }
+      } else if (type === 'dl1' || type === 'dl2') {
+        const dl1Idx = copy.findIndex(r => r.id === 'reg-dl-1' || r.label?.includes('20B') || r.label?.includes('DL 1'));
+        const dl2Idx = copy.findIndex(r => r.id === 'reg-dl-2' || r.label?.includes('21B') || r.label?.includes('DL 2'));
+        const dlCombinedIdx = copy.findIndex(r => r.id === 'reg-dl' || r.label?.toUpperCase().includes('DRUG'));
+
+        let currentDl1 = dl1Idx >= 0 ? copy[dl1Idx].value : 'TN/Z04/20B/01443';
+        let currentDl2 = dl2Idx >= 0 ? copy[dl2Idx].value : 'TN/Z04/21B/01443';
+
+        if (dlCombinedIdx >= 0 && dl1Idx < 0 && dl2Idx < 0) {
+          const parts = copy[dlCombinedIdx].value.split('&').map(s => s.trim());
+          currentDl1 = parts[0] || currentDl1;
+          currentDl2 = parts[1] || currentDl2;
+        }
+
+        const newDl1 = type === 'dl1' ? val.trim() : currentDl1;
+        const newDl2 = type === 'dl2' ? val.trim() : currentDl2;
+
+        if (dl1Idx >= 0) {
+          copy[dl1Idx] = { ...copy[dl1Idx], value: newDl1 };
+        } else {
+          copy.push({
+            id: 'reg-dl-1',
+            label: 'Drug Licence 1',
+            value: newDl1,
+            displayLocation: 'contact_page',
+            isActive: true,
+            displayOrder: 2
+          });
+        }
+
+        if (dl2Idx >= 0) {
+          copy[dl2Idx] = { ...copy[dl2Idx], value: newDl2 };
+        } else {
+          copy.push({
+            id: 'reg-dl-2',
+            label: 'Drug Licence 2',
+            value: newDl2,
+            displayLocation: 'contact_page',
+            isActive: true,
+            displayOrder: 3
+          });
+        }
+
+        const combinedVal = `${newDl1} & ${newDl2}`;
+        if (dlCombinedIdx >= 0) {
+          copy[dlCombinedIdx] = { ...copy[dlCombinedIdx], value: combinedVal };
+        } else {
+          copy.push({
+            id: 'reg-dl',
+            label: 'Drug Licence (DL) No',
+            value: combinedVal,
+            displayLocation: 'contact_page',
+            isActive: true,
+            displayOrder: 4
+          });
+        }
+      }
+      return copy;
+    });
+  };
+
   // ═══════════════════════════════════════════════════════════
   // MODAL HANDLERS
   // ═══════════════════════════════════════════════════════════
@@ -239,7 +371,7 @@ export default function AdminContactManagement() {
         department: 'Healthcare Enquiries',
         isPrimary: emails.length === 0,
         isActive: true,
-        showOnContactPage: true,
+        showOnContactPage: false,
         showInFooter: true,
         enableMailto: true
       });
@@ -711,14 +843,13 @@ export default function AdminContactManagement() {
         }}
       >
         {[
-          { key: 'phones', label: '📞 Phone Numbers', count: phones.length },
+          { key: 'phones', label: '📞 Main Office Phones', count: phones.length },
           { key: 'whatsapps', label: '💬 WhatsApp Support', count: whatsapps.length },
-          { key: 'emails', label: '✉️ Email Addresses', count: emails.length },
-          { key: 'addresses', label: '📍 Office Addresses', count: addresses.length },
-          { key: 'hours', label: '🕒 Working Hours', count: null },
-          { key: 'registrations', label: '📑 Registrations & Licences', count: registrations.length },
-          { key: 'social', label: '🌐 Social Profiles', count: socialLinks.length },
-          { key: 'images', label: '🏢 Photos & Map', count: officeImages.length }
+          { key: 'addresses', label: '📍 Corporate Office Address', count: addresses.length },
+          { key: 'registrations', label: '📑 GSTIN & Drug Licences', count: registrations.length },
+          { key: 'emails', label: '✉️ System & Footer Email', count: emails.length },
+          { key: 'images', label: '🏢 Photos & Map', count: officeImages.length },
+          { key: 'social', label: '🌐 Social Profiles', count: socialLinks.length }
         ].map((tab) => (
           <button
             key={tab.key}
@@ -747,11 +878,11 @@ export default function AdminContactManagement() {
       ═══════════════════════════════════════════════════════════ */}
       {activeTab === 'phones' && (
         <div className="admin-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '10px' }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Corporate Phone Numbers</h2>
+              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Main Office &ndash; Contact Numbers</h2>
               <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-mute)' }}>
-                Manage public telephone lines, click-to-call links, and department designations. Exactly one number is marked as Primary.
+                Configure the two primary telephone lines displayed in the combined &ldquo;Main Office &ndash; Contact Numbers&rdquo; tile on the Contact page. Both numbers can be independently edited.
               </p>
             </div>
             <button
@@ -759,9 +890,161 @@ export default function AdminContactManagement() {
               className="adm-btn adm-btn-primary adm-btn-sm"
               onClick={() => openAddModal('phone')}
             >
-              + Add Phone Number
+              + Add Additional Phone Line
             </button>
           </div>
+
+          {/* Dedicated Main Office Group: Phone 1 & Phone 2 */}
+          <div style={{ background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(169, 130, 44, 0.25)', borderRadius: 'var(--radius-sm)', padding: '20px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.2rem' }}>🏢</span>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>Main Office Contact Group (Public Contact Page Tile 2)</h3>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+              {/* Phone 1 Card */}
+              <div style={{ background: '#fff', border: '1px solid #e0d8c8', borderRadius: '8px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)' }}>Phone 1</span>
+                    <span style={{ fontSize: '0.7rem', padding: '1px 6px', background: 'rgba(212, 175, 55, 0.2)', color: 'var(--gold-deep)', borderRadius: '4px', fontWeight: 700 }}>
+                      ★ Primary
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="adm-btn adm-btn-sm"
+                    style={{
+                      padding: '2px 8px',
+                      fontSize: '0.72rem',
+                      background: phones[0]?.isActive !== false ? 'rgba(39, 174, 96, 0.15)' : 'rgba(128, 128, 128, 0.15)',
+                      color: phones[0]?.isActive !== false ? 'var(--status-success)' : '#777'
+                    }}
+                    onClick={() => toggleItemActive('phone', phones[0]?.id)}
+                  >
+                    {phones[0]?.isActive !== false ? '● Active' : '○ Disabled'}
+                  </button>
+                </div>
+
+                <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Phone Number (Phone 1)
+                  </label>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <input
+                      type="text"
+                      style={{ width: '60px', padding: '8px 6px', border: '1px solid #dcd3c3', borderRadius: '4px', textAlign: 'center', fontSize: '0.85rem' }}
+                      value={phones[0]?.countryCode || '+91'}
+                      onChange={(e) => updateMainOfficePhone(0, 'countryCode', e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      style={{ flex: 1, padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.9rem' }}
+                      value={phones[0]?.number || ''}
+                      onChange={(e) => updateMainOfficePhone(0, 'number', e.target.value.replace(/[^0-9+]/g, ''))}
+                      placeholder="e.g. 9600804456"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Description / Purpose (Phone 1)
+                  </label>
+                  <input
+                    type="text"
+                    style={{ width: '100%', padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontSize: '0.85rem' }}
+                    value={phones[0]?.purpose || ''}
+                    onChange={(e) => updateMainOfficePhone(0, 'purpose', e.target.value)}
+                    placeholder="e.g. General & Institutional Enquiries"
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'var(--text-mute)', marginTop: '8px' }}>
+                  <span>Display Order: <strong>{phones[0]?.displayOrder || 1}</strong></span>
+                  <button
+                    type="button"
+                    className="adm-btn adm-btn-secondary adm-btn-sm"
+                    onClick={() => openEditModal('phone', phones[0])}
+                  >
+                    Advanced Settings
+                  </button>
+                </div>
+              </div>
+
+              {/* Phone 2 Card */}
+              <div style={{ background: '#fff', border: '1px solid #e0d8c8', borderRadius: '8px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)' }}>Phone 2</span>
+                    <span style={{ fontSize: '0.7rem', padding: '1px 6px', background: 'rgba(0,0,0,0.05)', color: 'var(--text-mute)', borderRadius: '4px' }}>
+                      Secondary Line
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="adm-btn adm-btn-sm"
+                    style={{
+                      padding: '2px 8px',
+                      fontSize: '0.72rem',
+                      background: phones[1]?.isActive !== false ? 'rgba(39, 174, 96, 0.15)' : 'rgba(128, 128, 128, 0.15)',
+                      color: phones[1]?.isActive !== false ? 'var(--status-success)' : '#777'
+                    }}
+                    onClick={() => toggleItemActive('phone', phones[1]?.id)}
+                  >
+                    {phones[1]?.isActive !== false ? '● Active' : '○ Disabled'}
+                  </button>
+                </div>
+
+                <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Phone Number (Phone 2)
+                  </label>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <input
+                      type="text"
+                      style={{ width: '60px', padding: '8px 6px', border: '1px solid #dcd3c3', borderRadius: '4px', textAlign: 'center', fontSize: '0.85rem' }}
+                      value={phones[1]?.countryCode || '+91'}
+                      onChange={(e) => updateMainOfficePhone(1, 'countryCode', e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      style={{ flex: 1, padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.9rem' }}
+                      value={phones[1]?.number || ''}
+                      onChange={(e) => updateMainOfficePhone(1, 'number', e.target.value.replace(/[^0-9+]/g, ''))}
+                      placeholder="e.g. 9367772801"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Description / Purpose (Phone 2)
+                  </label>
+                  <input
+                    type="text"
+                    style={{ width: '100%', padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontSize: '0.85rem' }}
+                    value={phones[1]?.purpose || ''}
+                    onChange={(e) => updateMainOfficePhone(1, 'purpose', e.target.value)}
+                    placeholder="e.g. General Enquiries"
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'var(--text-mute)', marginTop: '8px' }}>
+                  <span>Display Order: <strong>{phones[1]?.displayOrder || 2}</strong></span>
+                  <button
+                    type="button"
+                    className="adm-btn adm-btn-secondary adm-btn-sm"
+                    onClick={() => openEditModal('phone', phones[1])}
+                  >
+                    Advanced Settings
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style={{ fontSize: '1rem', color: 'var(--ink)', marginBottom: '12px' }}>All Configured Phone Numbers</h3>
 
           <div className="admin-table-wrap">
             <table className="admin-table">
@@ -1049,15 +1332,15 @@ export default function AdminContactManagement() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════
-          TAB 3: EMAILS
+          TAB 3: SYSTEM & FOOTER EMAIL
       ═══════════════════════════════════════════════════════════ */}
       {activeTab === 'emails' && (
         <div className="admin-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Corporate Email Addresses</h2>
+              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>System &amp; Footer Email Addresses</h2>
               <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-mute)' }}>
-                Configure company email addresses for general enquiries, hospital sales, and customer assistance.
+                Official email addresses used for the website footer, customer enquiry alerts, and backend correspondence. (Standalone email tile removed from Contact page).
               </p>
             </div>
             <button
@@ -1078,7 +1361,7 @@ export default function AdminContactManagement() {
                   <th>Department</th>
                   <th>Primary</th>
                   <th>Status</th>
-                  <th>Display Options</th>
+                  <th>Footer &amp; Mailto</th>
                   <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
@@ -1148,11 +1431,6 @@ export default function AdminContactManagement() {
                       </td>
                       <td>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                          {email.showOnContactPage && (
-                            <span style={{ fontSize: '0.7rem', padding: '1px 5px', background: '#f0f0f0', borderRadius: '3px' }}>
-                              Contact
-                            </span>
-                          )}
                           {email.showInFooter && (
                             <span style={{ fontSize: '0.7rem', padding: '1px 5px', background: '#f0f0f0', borderRadius: '3px' }}>
                               Footer
@@ -1329,133 +1607,15 @@ export default function AdminContactManagement() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════
-          TAB 5: WORKING HOURS
-      ═══════════════════════════════════════════════════════════ */}
-      {activeTab === 'hours' && (
-        <div className="admin-card">
-          <div style={{ marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Corporate Working &amp; Dispatch Hours</h2>
-            <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-mute)' }}>
-              Operating schedules displayed in website footer, contact section, and institutional dispatch notices.
-            </p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
-            <div className="admin-form-group">
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Working Days
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.workingDays}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, workingDays: e.target.value }));
-                }}
-                placeholder="e.g. Monday – Saturday"
-              />
-            </div>
-
-            <div className="admin-form-group">
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Opening Time
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.openingTime}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, openingTime: e.target.value }));
-                }}
-                placeholder="e.g. 9:00 AM"
-              />
-            </div>
-
-            <div className="admin-form-group">
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Closing Time
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.closingTime}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, closingTime: e.target.value }));
-                }}
-                placeholder="e.g. 6:30 PM"
-              />
-            </div>
-
-            <div className="admin-form-group">
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Sunday / Weekend Policy
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.specialDays}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, specialDays: e.target.value }));
-                }}
-                placeholder="e.g. Sunday: Closed / Emergency Hospital Dispatch"
-              />
-            </div>
-
-            <div className="admin-form-group" style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Public Holidays Policy
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.holidays}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, holidays: e.target.value }));
-                }}
-                placeholder="e.g. Closed on Public & National Holidays"
-              />
-            </div>
-
-            <div className="admin-form-group" style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
-                Temporary Notice / Urgent Closure Notice (Optional)
-              </label>
-              <input
-                type="text"
-                className="admin-field-input"
-                style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px' }}
-                value={workingHours.temporaryClosureMessage}
-                onChange={(e) => {
-                  markChanged();
-                  setWorkingHours(prev => ({ ...prev, temporaryClosureMessage: e.target.value }));
-                }}
-                placeholder="Leave empty unless there is a temporary holiday notice or scheduled maintenance."
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ═══════════════════════════════════════════════════════════
-          TAB 6: REGISTRATIONS
+          TAB 4: STATUTORY REGISTRATIONS (GSTIN & DRUG LICENCES)
       ═══════════════════════════════════════════════════════════ */}
       {activeTab === 'registrations' && (
         <div className="admin-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '10px' }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Company Registrations &amp; Statutory Details</h2>
+              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>GSTIN &amp; Drug Licences</h2>
               <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-mute)' }}>
-                Official corporate identifiers including GSTIN, Drug Licence numbers, CIN, and IEC for hospital procurement compliance.
+                Official corporate statutory identifiers displayed on the Contact page (Tiles 4 &amp; 5) and footer.
               </p>
             </div>
             <button
@@ -1463,9 +1623,76 @@ export default function AdminContactManagement() {
               className="adm-btn adm-btn-primary adm-btn-sm"
               onClick={() => openAddModal('registration')}
             >
-              + Add Registration
+              + Add Custom Registration
             </button>
           </div>
+
+          {/* Quick Edit for GSTIN & Both Drug Licences */}
+          <div style={{ background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(169, 130, 44, 0.25)', borderRadius: 'var(--radius-sm)', padding: '20px', marginBottom: '24px' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: '1.05rem', color: 'var(--ink)' }}>
+              📑 Official Identifiers (Public Contact Page Tiles 4 &amp; 5)
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              {/* GSTIN */}
+              <div className="admin-form-group">
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
+                  GSTIN (Goods and Services Tax Identification Number) *
+                </label>
+                <input
+                  type="text"
+                  className="admin-field-input"
+                  style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700, fontSize: '0.95rem' }}
+                  value={gstinValue}
+                  onChange={(e) => updateStatutoryRegistration('gstin', e.target.value)}
+                  placeholder="33ABQCS4744P1ZJ"
+                  required
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-mute)', marginTop: '4px', display: 'block' }}>
+                  Publicly displayed on Contact Page Tile 4 and Website Footer.
+                </span>
+              </div>
+
+              {/* Drug Licence 1 */}
+              <div className="admin-form-group">
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
+                  Drug Licence Number 1 (Form 20B) *
+                </label>
+                <input
+                  type="text"
+                  className="admin-field-input"
+                  style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700, fontSize: '0.95rem' }}
+                  value={dl1Value}
+                  onChange={(e) => updateStatutoryRegistration('dl1', e.target.value)}
+                  placeholder="TN/Z04/20B/01443"
+                  required
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-mute)', marginTop: '4px', display: 'block' }}>
+                  Publicly displayed on Contact Page Tile 5.
+                </span>
+              </div>
+
+              {/* Drug Licence 2 */}
+              <div className="admin-form-group">
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>
+                  Drug Licence Number 2 (Form 21B) *
+                </label>
+                <input
+                  type="text"
+                  className="admin-field-input"
+                  style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd3c3', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700, fontSize: '0.95rem' }}
+                  value={dl2Value}
+                  onChange={(e) => updateStatutoryRegistration('dl2', e.target.value)}
+                  placeholder="TN/Z04/21B/01443"
+                  required
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-mute)', marginTop: '4px', display: 'block' }}>
+                  Publicly displayed on Contact Page Tile 5.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <h3 style={{ fontSize: '1rem', color: 'var(--ink)', marginBottom: '12px' }}>All Configured Registrations</h3>
 
           <div className="admin-table-wrap">
             <table className="admin-table">
@@ -2055,14 +2282,6 @@ export default function AdminContactManagement() {
                         onChange={(e) => setModalForm(prev => ({ ...prev, isPrimary: e.target.checked }))}
                       />
                       Primary Email
-                    </label>
-                    <label style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <input
-                        type="checkbox"
-                        checked={modalForm.showOnContactPage !== false}
-                        onChange={(e) => setModalForm(prev => ({ ...prev, showOnContactPage: e.target.checked }))}
-                      />
-                      Show on Contact Page
                     </label>
                     <label style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <input

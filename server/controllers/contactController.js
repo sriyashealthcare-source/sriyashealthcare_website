@@ -49,6 +49,19 @@ function createDefaultContactPayload() {
         showInFooter: true,
         enableClickToCall: true,
         displayOrder: 1
+      },
+      {
+        id: 'phone-secondary',
+        label: 'Main Office',
+        countryCode: '+91',
+        number: '9367772801',
+        purpose: 'General Enquiries',
+        isPrimary: false,
+        isActive: true,
+        showOnContactPage: true,
+        showInFooter: true,
+        enableClickToCall: true,
+        displayOrder: 2
       }
     ],
     whatsapps: [
@@ -123,12 +136,28 @@ function createDefaultContactPayload() {
         displayOrder: 1
       },
       {
+        id: 'reg-dl-1',
+        label: 'Drug Licence 1',
+        value: 'TN/Z04/20B/01443',
+        displayLocation: 'contact_page',
+        isActive: true,
+        displayOrder: 2
+      },
+      {
+        id: 'reg-dl-2',
+        label: 'Drug Licence 2',
+        value: 'TN/Z04/21B/01443',
+        displayLocation: 'contact_page',
+        isActive: true,
+        displayOrder: 3
+      },
+      {
         id: 'reg-dl',
         label: 'Drug Licence (DL) No',
         value: 'TN/Z04/20B/01443 & TN/Z04/21B/01443',
         displayLocation: 'contact_page',
         isActive: true,
-        displayOrder: 2
+        displayOrder: 4
       }
     ],
     socialLinks: [

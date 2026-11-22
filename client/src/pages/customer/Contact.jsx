@@ -101,15 +101,93 @@ export default function Contact() {
     [addresses]
   );
 
-  const visibleRegistrations = useMemo(
+  // Memoized Statutory Registrations
+  const gstinRecord = useMemo(
     () =>
-      registrations.filter(
-        (r) =>
-          r.isActive !== false &&
-          (r.displayLocation === 'both' || r.displayLocation === 'contact_page')
-      ),
+      registrations.find((r) => r.isActive !== false && r.label?.toUpperCase().includes('GST')) || {
+        label: 'GSTIN',
+        value: '33ABQCS4744P1ZJ'
+      },
     [registrations]
   );
+
+  const dlRecords = useMemo(() => {
+    const dl1 = registrations.find(
+      (r) =>
+        r.isActive !== false &&
+        (r.id === 'reg-dl-1' || r.label?.includes('20B') || r.label?.includes('DL 1') || r.label?.includes('Licence 1'))
+    );
+    const dl2 = registrations.find(
+      (r) =>
+        r.isActive !== false &&
+        (r.id === 'reg-dl-2' || r.label?.includes('21B') || r.label?.includes('DL 2') || r.label?.includes('Licence 2'))
+    );
+    const dlCombined = registrations.find(
+      (r) => r.isActive !== false && (r.id === 'reg-dl' || r.label?.toUpperCase().includes('DRUG'))
+    );
+
+    let val1 = dl1?.value;
+    let val2 = dl2?.value;
+
+    if (!val1 && dlCombined?.value) {
+      val1 = dlCombined.value.split('&')[0]?.trim();
+    }
+    if (!val2 && dlCombined?.value) {
+      val2 = dlCombined.value.split('&')[1]?.trim();
+    }
+
+    return {
+      dl1: val1 || 'TN/Z04/20B/01443',
+      dl2: val2 || 'TN/Z04/21B/01443'
+    };
+  }, [registrations]);
+
+  // Active Main Office Phones for the combined Phone Tile
+  const mainOfficePhones = useMemo(() => {
+    const active = phones.filter((p) => p.isActive !== false);
+    if (active.length >= 2) return active.slice(0, 2);
+    if (active.length === 1) {
+      return [
+        active[0],
+        {
+          id: 'phone-secondary-fallback',
+          label: 'Main Office',
+          countryCode: '+91',
+          number: '9367772801',
+          purpose: 'General Enquiries',
+          enableClickToCall: true
+        }
+      ];
+    }
+    return [
+      {
+        id: 'phone-1-default',
+        label: 'Main Office',
+        countryCode: '+91',
+        number: '9600804456',
+        purpose: 'General & Institutional Enquiries',
+        enableClickToCall: true
+      },
+      {
+        id: 'phone-2-default',
+        label: 'Main Office',
+        countryCode: '+91',
+        number: '9367772801',
+        purpose: 'General Enquiries',
+        enableClickToCall: true
+      }
+    ];
+  }, [phones]);
+
+  const activeWhatsApp = useMemo(() => {
+    return (
+      whatsapps.find((w) => w.isActive !== false) || {
+        label: 'Official WhatsApp Support',
+        number: '919600804456',
+        department: 'Healthcare Solutions & Product Assistance'
+      }
+    );
+  }, [whatsapps]);
 
   // Schema generation
   const contactSchemas = useMemo(() => [
@@ -308,204 +386,131 @@ export default function Contact() {
           </form>
         </div>
 
-        {/* Central Dynamic Contact Information Grid */}
-        <div className="contact-grid">
-          {/* Company Profile Card */}
-          <div className="contact-card">
-            <div className="contact-icon" aria-hidden="true">🏢</div>
-            <h3>Company</h3>
-            <p style={{ fontWeight: 600, color: 'var(--ink)' }}>
-              {contactInfo.companyName || 'Sriyas Healthcare Private Limited'}
-            </p>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-mute)', marginTop: '4px' }}>
-              {contactInfo.tagline || 'Empowering Healthcare with Care and Innovation.'}
-            </p>
+        {/* Exactly 5 Tiles in One Horizontal Row on Desktop */}
+        <div className="contact-grid" aria-label="Official Corporate Contact Channels">
+          {/* Tile 1: Corporate Office & Distribution Centre */}
+          <div className="contact-card contact-card-address">
+            <div className="contact-icon" aria-hidden="true">📍</div>
+            <h3>{primaryAddress?.officeName || 'Corporate Office & Distribution Centre'}</h3>
+            <div className="contact-card-body">
+              <p className="contact-address-text">
+                {primaryAddress?.line1 || 'Plot No.53A, First Floor, East Facing, Oil Mill Road'}
+                {primaryAddress?.line2 && <><br />{primaryAddress.line2}</>}
+                {primaryAddress?.area && <><br />{primaryAddress.area}</>}
+                <br />
+                {primaryAddress?.city || 'Chennai'} &ndash; {primaryAddress?.pincode || '600077'}, {primaryAddress?.state || 'Tamil Nadu'}, {primaryAddress?.country || 'India'}
+              </p>
+            </div>
+            <div className="contact-card-footer">
+              <a
+                href={primaryAddress?.googleMapsUrl || googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-card-action-link"
+                aria-label="View Sriyas Healthcare corporate office on Google Maps"
+              >
+                📍 View on Google Maps ↗
+              </a>
+            </div>
           </div>
 
-          {/* Dynamic Office Address Cards */}
-          {visibleAddresses.map((addr) => (
-            <div className="contact-card" key={addr.id || addr.line1}>
-              <div className="contact-icon" aria-hidden="true">📍</div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px' }}>
-                <h3 style={{ margin: 0 }}>{addr.officeName}</h3>
-                {addr.officeType && (
-                  <span style={{ fontSize: '0.68rem', padding: '2px 6px', background: 'rgba(212, 175, 55, 0.15)', color: 'var(--gold-deep)', borderRadius: '3px', fontWeight: 700 }}>
-                    {addr.officeType}
-                  </span>
-                )}
-              </div>
-              <p>
-                {addr.line1}
-                {addr.line2 && <><br />{addr.line2}</>}
-                {addr.area && <><br />{addr.area}</>}
-                <br />
-                {addr.city} &ndash; {addr.pincode}, {addr.state}, {addr.country}
-              </p>
-              {addr.googleMapsUrl && (
-                <div style={{ marginTop: '10px' }}>
-                  <a
-                    href={addr.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ fontSize: '0.82rem', color: 'var(--gold-dark)', fontWeight: 600 }}
-                  >
-                    📍 View on Google Maps ↗
-                  </a>
-                </div>
-              )}
+          {/* Tile 2: Main Office – Contact Numbers (Combined) */}
+          <div className="contact-card contact-card-phones">
+            <div className="contact-icon" aria-hidden="true">📞</div>
+            <h3>Main Office &ndash; Contact Numbers</h3>
+            <div className="contact-card-body contact-phones-stack">
+              {mainOfficePhones.map((phone, idx) => {
+                const cleanNum = (phone.number || '').replace(/[^0-9]/g, '');
+                const code = phone.countryCode || '+91';
+                const disp = phone.displayPhone || `${code} ${cleanNum}`;
+                const tel = phone.clickUrl || `tel:${code}${cleanNum}`;
+                return (
+                  <div key={phone.id || idx} className={`contact-phone-block ${idx > 0 ? 'contact-phone-divider' : ''}`}>
+                    {phone.enableClickToCall !== false ? (
+                      <a
+                        href={tel}
+                        className="contact-phone-link"
+                        aria-label={`Call Sriyas Healthcare ${phone.purpose || 'Main Office'} at ${disp}`}
+                      >
+                        {disp}
+                      </a>
+                    ) : (
+                      <span className="contact-phone-link">{disp}</span>
+                    )}
+                    <span className="contact-phone-desc">
+                      {phone.purpose || (idx === 0 ? 'General & Institutional Enquiries' : 'General Enquiries')}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
 
-          {/* Dynamic Phone Numbers */}
-          {visiblePhones.map((phone) => {
-            const cleanNum = (phone.number || '').replace(/[^0-9]/g, '');
-            const code = phone.countryCode || '+91';
-            const disp = phone.displayPhone || `${code} ${cleanNum}`;
-            const tel = phone.clickUrl || `tel:${code}${cleanNum}`;
-            return (
-              <div className="contact-card" key={phone.id || phone.number}>
-                <div className="contact-icon" aria-hidden="true">📞</div>
-                <h3>{phone.label}</h3>
-                <div>
-                  {phone.enableClickToCall !== false ? (
+          {/* Tile 3: Official WhatsApp Support */}
+          <div className="contact-card contact-card-whatsapp">
+            <div className="contact-icon" aria-hidden="true">💬</div>
+            <h3>{activeWhatsApp.label || 'Official WhatsApp Support'}</h3>
+            <div className="contact-card-body">
+              {(() => {
+                const waNum = (activeWhatsApp.number || '919600804456').replace(/[^0-9]/g, '');
+                const waDisplay = waNum.startsWith('91') && waNum.length === 12
+                  ? `+91 ${waNum.slice(2)}`
+                  : `+${waNum}`;
+                const waLink = buildWhatsAppLink(activeWhatsApp.prefilledMessage);
+                return (
+                  <div className="contact-wa-block">
                     <a
-                      href={tel}
-                      aria-label={`Call Sriyas Healthcare at ${disp}`}
-                      style={{ fontSize: '1.05rem', fontWeight: 600 }}
+                      href={waLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-wa-link"
+                      aria-label={`Chat with Sriyas Healthcare on WhatsApp at ${waDisplay}`}
                     >
-                      {disp}
+                      💬 WhatsApp: {waDisplay} ↗
                     </a>
-                  ) : (
-                    <span style={{ fontSize: '1.05rem', fontWeight: 600 }}>{disp}</span>
-                  )}
-                </div>
-                {phone.purpose && (
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-mute)', marginTop: '4px' }}>
-                    {phone.purpose}
-                  </p>
-                )}
-              </div>
-            );
-          })}
-
-          {/* Dynamic WhatsApp Channels */}
-          {visibleWhatsapps.map((wa) => {
-            const waClean = (wa.number || '').replace(/[^0-9]/g, '');
-            const chatUrl = buildWhatsAppLink(wa.prefilledMessage);
-            return (
-              <div className="contact-card" key={wa.id || wa.number}>
-                <div className="contact-icon" aria-hidden="true">💬</div>
-                <h3>{wa.label}</h3>
-                <div>
-                  <a
-                    href={chatUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Chat with Sriyas Healthcare on WhatsApp at ${wa.number}`}
-                    style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--gold-dark)' }}
-                  >
-                    💬 WhatsApp: +{waClean} ↗
-                  </a>
-                </div>
-                {wa.department && (
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-mute)', marginTop: '4px' }}>
-                    {wa.department}
-                  </p>
-                )}
-              </div>
-            );
-          })}
-
-          {/* Dynamic Email Addresses */}
-          {visibleEmails.map((email) => {
-            const mailto = email.mailtoUrl || `mailto:${email.email}`;
-            return (
-              <div className="contact-card" key={email.id || email.email}>
-                <div className="contact-icon" aria-hidden="true">✉</div>
-                <h3>{email.label}</h3>
-                <div>
-                  {email.enableMailto !== false ? (
-                    <a
-                      href={mailto}
-                      aria-label={`Email Sriyas Healthcare at ${email.email}`}
-                      style={{ fontWeight: 600 }}
-                    >
-                      {email.email}
-                    </a>
-                  ) : (
-                    <span style={{ fontWeight: 600 }}>{email.email}</span>
-                  )}
-                </div>
-                {email.department && (
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-mute)', marginTop: '4px' }}>
-                    {email.department}
-                  </p>
-                )}
-              </div>
-            );
-          })}
-
-          {/* Operating Hours Card */}
-          {workingHours && workingHours.isActive !== false && (
-            <div className="contact-card">
-              <div className="contact-icon" aria-hidden="true">🕒</div>
-              <h3>Working Hours</h3>
-              <p style={{ fontWeight: 600, color: 'var(--ink)' }}>
-                {workingHours.workingDays || 'Monday – Saturday'}
-                <br />
-                {workingHours.openingTime} &ndash; {workingHours.closingTime}
-              </p>
-              {workingHours.specialDays && (
-                <p style={{ fontSize: '0.82rem', color: 'var(--text-mute)', marginTop: '4px' }}>
-                  {workingHours.specialDays}
-                </p>
-              )}
-              {workingHours.holidays && (
-                <p style={{ fontSize: '0.78rem', color: '#888', marginTop: '2px' }}>
-                  {workingHours.holidays}
-                </p>
-              )}
-              {workingHours.temporaryClosureMessage && (
-                <div style={{ marginTop: '8px', padding: '6px', background: 'rgba(212, 175, 55, 0.15)', borderRadius: '4px', fontSize: '0.8rem', color: 'var(--gold-deep)', fontWeight: 600 }}>
-                  ⚠️ {workingHours.temporaryClosureMessage}
-                </div>
-              )}
+                    <span className="contact-wa-desc">
+                      {activeWhatsApp.department || 'Healthcare Solutions & Product Assistance'}
+                    </span>
+                  </div>
+                );
+              })()}
             </div>
-          )}
+          </div>
 
-          {/* Company Registration Cards (GSTIN, DL No, etc.) */}
-          {visibleRegistrations.map((reg) => (
-            <div className="contact-card" key={reg.id || reg.label}>
-              <div className="contact-icon" aria-hidden="true">
-                {reg.label.toUpperCase().includes('GST') ? '🧾' : '📄'}
+          {/* Tile 4: GSTIN */}
+          <div className="contact-card contact-card-gstin">
+            <div className="contact-icon" aria-hidden="true">🧾</div>
+            <h3>GSTIN</h3>
+            <div className="contact-card-body">
+              <div className="contact-mono-badge">
+                {gstinRecord.value || '33ABQCS4744P1ZJ'}
               </div>
-              <h3>{reg.label}</h3>
-              <p style={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '0.92rem', color: 'var(--ink)' }}>
-                {reg.value}
-              </p>
+              <span className="contact-reg-desc">
+                Goods &amp; Services Tax Identification Number
+              </span>
             </div>
-          ))}
+          </div>
 
-          {/* Social Profiles Card */}
-          {socialLinks && socialLinks.length > 0 && (
-            <div className="contact-card">
-              <div className="contact-icon" aria-hidden="true">🌐</div>
-              <h3>Connect Online</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px' }}>
-                {socialLinks.map((s) => (
-                  <a
-                    key={s.id}
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ fontSize: '0.88rem', color: 'var(--gold-dark)', fontWeight: 600, textTransform: 'capitalize' }}
-                  >
-                    ↗ {s.label || s.platform}
-                  </a>
-                ))}
+          {/* Tile 5: Drug Licence (DL) No. */}
+          <div className="contact-card contact-card-dl">
+            <div className="contact-icon" aria-hidden="true">📄</div>
+            <h3>Drug Licence (DL) No.</h3>
+            <div className="contact-card-body">
+              <div className="contact-dl-stack">
+                <div className="contact-dl-row">
+                  <span className="dl-badge">Form 20B:</span>
+                  <span className="dl-code">{dlRecords.dl1}</span>
+                </div>
+                <div className="contact-dl-row">
+                  <span className="dl-badge">Form 21B:</span>
+                  <span className="dl-code">{dlRecords.dl2}</span>
+                </div>
               </div>
+              <span className="contact-reg-desc">
+                Government of Tamil Nadu Drugs Control Dept.
+              </span>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Office Location & Photographs */}

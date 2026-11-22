@@ -7,6 +7,8 @@
 export const COMPANY_CONTACT = {
   phone: '+919600804456',
   displayPhone: '+91 9600804456',
+  phoneSecondary: '+919367772801',
+  displayPhoneSecondary: '+91 9367772801',
   email: 'sriyashealthcare@gmail.com',
   whatsapp: '919600804456',
   companyName: 'Sriyas Healthcare Private Limited',
@@ -20,7 +22,9 @@ export const COMPANY_CONTACT = {
   },
   operatingHours: 'Mon – Sat: 9:00 AM – 6:30 PM',
   gstin: '33ABQCS4744P1ZJ',
-  dlNo: 'TN/Z04/20B/01443 & TN/Z04/21B/01443'
+  dlNo: 'TN/Z04/20B/01443 & TN/Z04/21B/01443',
+  dlNo1: 'TN/Z04/20B/01443',
+  dlNo2: 'TN/Z04/21B/01443'
 };
 
 /**

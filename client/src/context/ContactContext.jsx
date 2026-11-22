@@ -21,6 +21,19 @@ const DEFAULT_INITIAL_STATE = {
       showInFooter: true,
       enableClickToCall: true,
       displayOrder: 1
+    },
+    {
+      id: 'phone-secondary',
+      label: 'Main Office',
+      countryCode: '+91',
+      number: '9367772801',
+      purpose: 'General Enquiries',
+      isPrimary: false,
+      isActive: true,
+      showOnContactPage: true,
+      showInFooter: true,
+      enableClickToCall: true,
+      displayOrder: 2
     }
   ],
   whatsapps: [
@@ -94,12 +107,28 @@ const DEFAULT_INITIAL_STATE = {
       displayOrder: 1
     },
     {
+      id: 'reg-dl-1',
+      label: 'Drug Licence 1',
+      value: COMPANY_CONTACT.dlNo1 || 'TN/Z04/20B/01443',
+      displayLocation: 'contact_page',
+      isActive: true,
+      displayOrder: 2
+    },
+    {
+      id: 'reg-dl-2',
+      label: 'Drug Licence 2',
+      value: COMPANY_CONTACT.dlNo2 || 'TN/Z04/21B/01443',
+      displayLocation: 'contact_page',
+      isActive: true,
+      displayOrder: 3
+    },
+    {
       id: 'reg-dl',
       label: 'Drug Licence (DL) No',
       value: COMPANY_CONTACT.dlNo,
       displayLocation: 'contact_page',
       isActive: true,
-      displayOrder: 2
+      displayOrder: 4
     }
   ],
   socialLinks: [],

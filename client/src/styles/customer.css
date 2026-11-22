@@ -1097,59 +1097,269 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   animation: fadeInUp 0.45s var(--ease) both;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   5-TILE HORIZONTAL ROW CONTACT GRID (DESKTOP) & RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-  max-width: 1120px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1320px;
   margin: 0 auto 54px;
+  padding: 0 16px;
+  align-items: stretch;
 }
 
 .contact-card {
-  background: #fff;
-  border: 1px solid rgba(169, 130, 44, 0.18);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid rgba(169, 130, 44, 0.2);
   border-radius: var(--radius-md);
-  padding: 30px 24px;
+  padding: 24px 16px;
   text-align: center;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .contact-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: 0 8px 28px rgba(169, 130, 44, 0.14);
   border-color: var(--gold);
 }
 
-.contact-icon {
-  font-size: 2rem;
-  margin-bottom: 14px;
+.contact-card:hover::before {
+  opacity: 1;
+}
+
+.contact-card .contact-icon {
+  font-size: 1.85rem;
+  line-height: 1;
+  margin-bottom: 12px;
   display: inline-block;
 }
 
 .contact-card h3 {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 10px;
-  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  min-height: 2.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.contact-card p,
-.contact-card a {
-  font-size: 0.9rem;
+.contact-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.contact-address-text {
+  font-size: 0.85rem;
+  line-height: 1.55;
   color: var(--text-mute);
-  line-height: 1.6;
+  margin: 0;
+}
+
+.contact-card-footer {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(169, 130, 44, 0.15);
+  width: 100%;
+}
+
+.contact-card-action-link {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-dark);
   text-decoration: none;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-card-action-link:hover {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+/* Phone Stacking */
+.contact-phones-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-phone-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.contact-phone-divider {
+  padding-top: 10px;
+  border-top: 1px dashed rgba(169, 130, 44, 0.25);
+}
+
+.contact-phone-link {
+  font-family: monospace, var(--font-body);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  text-decoration: none;
+  letter-spacing: 0.02em;
   transition: color 0.2s ease;
 }
 
-.contact-card a:hover {
-  color: var(--gold-deep);
+.contact-phone-link:hover {
+  color: var(--gold);
   text-decoration: underline;
+}
+
+.contact-phone-desc {
+  font-size: 0.78rem;
+  color: var(--text-mute);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+/* WhatsApp Link */
+.contact-wa-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.contact-wa-link {
+  display: inline-block;
+  font-family: monospace, var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e7e34;
+  text-decoration: none;
+  background: rgba(39, 174, 96, 0.08);
+  border: 1px solid rgba(39, 174, 96, 0.25);
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.contact-wa-link:hover {
+  background: rgba(39, 174, 96, 0.16);
+  color: #155724;
+  border-color: #28a745;
+}
+
+.contact-wa-desc {
+  font-size: 0.78rem;
+  color: var(--text-mute);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* GSTIN Badge */
+.contact-mono-badge {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(169, 130, 44, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  display: inline-block;
+}
+
+.contact-reg-desc {
+  font-size: 0.78rem;
+  color: var(--text-mute);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* Drug Licence List */
+.contact-dl-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.contact-dl-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.dl-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  background: rgba(169, 130, 44, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.dl-code {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+/* Responsive Grid Breakpoints */
+@media (max-width: 1180px) {
+  .contact-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .contact-card h3 {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 /* ═══ CUSTOMER ENQUIRY FORM ═══ */
