@@ -469,11 +469,16 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SRIYAS HEALTHCARE TWO-STAGE ORBITAL LOGO ANIMATION
-   Phase 1: Inner Orbit (Around ONLY Central S Emblem) -> 1 Rev -> Fade Out
-   Gap 1: Clean Logo
-   Phase 2: Outer Orbit (Around Complete Logo Lockup) -> 1 Rev -> Fade Out
-   Gap 2: Clean Logo -> Repeat Indefinitely
+   SRIYAS HEALTHCARE TWO-STAGE GOLD ORBITAL LOGO ANIMATION
+   Strictly Metallic Gold (#D4AF37, #C49A2C, #A9822C) and Champagne (#E9D9A6, #F4EBD2)
+   100% Mutually Exclusive, Deterministic 7-Stage Sequence:
+   Stage 1: Clean Logo (400ms)
+   Stage 2: Inner Orbit Appears (Scale 96% -> 100%, Opacity 0 -> 1) (600ms)
+   Stage 3: Inner 3D Sphere 1 Full 360° Revolution at Constant Angular Velocity (3200ms)
+   Stage 4: Inner Orbit Disappears (500ms) -> Clean Logo Pause (400ms)
+   Stage 5: Outer Orbit Appears (Scale 96% -> 100%, Opacity 0 -> 1) (600ms)
+   Stage 6: Outer 3D Sphere 1 Full 360° Revolution at Constant Angular Velocity (4600ms)
+   Stage 7: Outer Orbit Disappears (500ms) -> Clean Logo Pause (400ms) -> Repeat
    ═══════════════════════════════════════════════════════════ */
 
 .hp-hero-brand-lockup-wrapper {
@@ -487,45 +492,29 @@
   z-index: 2;
 }
 
-/* ── Common Orbit Path Styles ── */
+/* ── Common Orbit Path Styles (Strictly Gold & Champagne) ── */
 .sriyas-orbit-path {
   fill: none;
   pointer-events: none;
   vector-effect: non-scaling-stroke;
 }
 
-.sriyas-orbit-path--inner-dark {
-  stroke: #3D321A;
-  stroke-width: 1.5px;
+.sriyas-orbit-path--prominent {
   stroke-linecap: round;
-  filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.25));
 }
 
-.sriyas-orbit-path--inner-light {
-  stroke: rgba(212, 175, 55, 0.32);
-  stroke-width: 1px;
-}
-
-.sriyas-orbit-path--outer-dark {
-  stroke: #3D321A;
-  stroke-width: 1.5px;
+.sriyas-orbit-path--secondary {
   stroke-linecap: round;
-  filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.22));
 }
 
-.sriyas-orbit-path--outer-light {
-  stroke: rgba(212, 175, 55, 0.28);
-  stroke-width: 1px;
-}
-
-/* ── Stage 1: Inner Orbital System (Around ONLY Central S Emblem) ── */
+/* ── Stage 2-4: Inner Orbital System (Around ONLY Central S Emblem) ── */
 .sriyas-orbital-inner-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: 136px;
-  height: 136px;
+  transform: translate(-50%, -50%) scale(0.96);
+  width: clamp(114px, 11vw, 134px);
+  height: clamp(114px, 11vw, 134px);
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -533,18 +522,24 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
   will-change: opacity, transform;
 }
 
-.sriyas-orbital-inner-wrap.is-visible {
+/* Stage 2 & 3: Inner orbit visible and scaled */
+.sriyas-orbital-inner-wrap.is-entering,
+.sriyas-orbital-inner-wrap.is-rotating {
   opacity: 1;
   visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.sriyas-orbital-inner-wrap.is-fading {
+/* Stage 4: Inner orbit fading out smoothly */
+.sriyas-orbital-inner-wrap.is-exiting {
   opacity: 0;
-  transition: opacity 0.4s ease;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .sriyas-orbital-inner-svg {
@@ -555,23 +550,24 @@
 
 .sriyas-inner-ball-rotator {
   transform-origin: 80px 80px;
-  transform: rotate(-60deg);
+  transform: rotate(0deg);
 }
 
-.sriyas-orbital-inner-wrap.is-visible .sriyas-inner-ball-rotator {
-  animation: sriyasInnerRev 3.0s cubic-bezier(0.35, 0.0, 0.25, 1) forwards;
+/* Constant angular velocity (linear) for 1 full 360° revolution */
+.sriyas-inner-ball-rotator.is-spinning {
+  animation: sriyasInnerRev 3.2s linear forwards;
   will-change: transform;
 }
 
-/* ── Stage 2: Outer Orbital System (Around Complete Logo Lockup) ── */
+/* ── Stage 5-7: Outer Orbital System (Around Complete Logo Composition) ── */
 .sriyas-orbital-outer-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(480px, 62vw, 860px);
-  height: clamp(480px, 62vw, 860px);
-  max-width: 96vw;
+  transform: translate(-50%, -50%) scale(0.96);
+  width: clamp(340px, 48vw, 640px);
+  height: clamp(340px, 48vw, 640px);
+  max-width: 92vw;
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -579,18 +575,24 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
   will-change: opacity, transform;
 }
 
-.sriyas-orbital-outer-wrap.is-visible {
+/* Stage 5 & 6: Outer orbit visible and scaled */
+.sriyas-orbital-outer-wrap.is-entering,
+.sriyas-orbital-outer-wrap.is-rotating {
   opacity: 1;
   visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.sriyas-orbital-outer-wrap.is-fading {
+/* Stage 7: Outer orbit fading out smoothly */
+.sriyas-orbital-outer-wrap.is-exiting {
   opacity: 0;
-  transition: opacity 0.4s ease;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .sriyas-orbital-outer-svg {
@@ -600,36 +602,45 @@
 }
 
 .sriyas-outer-ball-rotator {
-  transform-origin: 440px 440px;
-  transform: rotate(-45deg);
+  transform-origin: 350px 350px;
+  transform: rotate(0deg);
 }
 
-.sriyas-orbital-outer-wrap.is-visible .sriyas-outer-ball-rotator {
-  animation: sriyasOuterRev 4.0s cubic-bezier(0.35, 0.0, 0.25, 1) forwards;
+/* Constant angular velocity (linear) for 1 full 360° revolution */
+.sriyas-outer-ball-rotator.is-spinning {
+  animation: sriyasOuterRev 4.6s linear forwards;
   will-change: transform;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ROTATION KEYFRAMES (EXACTLY ONE 360-DEGREE REVOLUTION)
+   ROTATION KEYFRAMES (EXACTLY ONE 360-DEGREE REVOLUTION, LINEAR)
    ═══════════════════════════════════════════════════════════ */
 
-/* Inner Ball 1-Revolution Rotation (-60deg to 300deg = 360deg) */
+/* Inner Sphere 1-Revolution Rotation (0deg to 360deg = 360deg) */
 @keyframes sriyasInnerRev {
   from {
-    transform: rotate(-60deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: rotate(300deg);
+    transform: rotate(360deg);
   }
 }
 
-/* Outer Ball 1-Revolution Rotation (-45deg to 315deg = 360deg) */
+/* Outer Sphere 1-Revolution Rotation (0deg to 360deg = 360deg) */
 @keyframes sriyasOuterRev {
   from {
-    transform: rotate(-45deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: rotate(315deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion accessibility preference: clean static logo */
+@media (prefers-reduced-motion: reduce) {
+  .sriyas-orbital-inner-wrap,
+  .sriyas-orbital-outer-wrap {
+    display: none !important;
   }
 }
 
@@ -2888,13 +2899,14 @@
   }
 
   .sriyas-orbital-inner-wrap {
-    width: clamp(150px, 20vw, 180px);
-    height: clamp(150px, 20vw, 180px);
+    width: clamp(108px, 12vw, 124px);
+    height: clamp(108px, 12vw, 124px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(380px, 78vw, 520px);
-    height: clamp(380px, 78vw, 520px);
+    width: clamp(360px, 68vw, 480px);
+    height: clamp(360px, 68vw, 480px);
+    max-width: 92vw;
   }
 
   .hp-hero-emblem-slot {
@@ -2960,13 +2972,14 @@
   }
 
   .sriyas-orbital-inner-wrap {
-    width: 135px;
-    height: 135px;
+    width: clamp(98px, 14vw, 114px);
+    height: clamp(98px, 14vw, 114px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(320px, 94vw, 360px);
-    height: clamp(320px, 94vw, 360px);
+    width: clamp(300px, 88vw, 360px);
+    height: clamp(300px, 88vw, 360px);
+    max-width: 92vw;
   }
 
   .hp-hero-emblem-slot {
@@ -3268,22 +3281,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sriyas-orbital-inner-wrap {
-    animation: none !important;
-    opacity: 0.35 !important;
-    visibility: visible !important;
-  }
-
+  .sriyas-orbital-inner-wrap,
   .sriyas-orbital-outer-wrap {
-    animation: none !important;
-    opacity: 0.25 !important;
-    visibility: visible !important;
-  }
-
-  .sriyas-inner-ball-rotator,
-  .sriyas-outer-ball-rotator {
-    animation: none !important;
-    transform: rotate(0deg) !important;
+    display: none !important;
   }
 
   .hp-scroll-cue-line,

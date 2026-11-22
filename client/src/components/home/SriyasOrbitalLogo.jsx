@@ -3,39 +3,43 @@ import React, { useState, useEffect } from 'react';
 /**
  * SriyasOrbitalLogo
  *
- * Implements the Sriyas Healthcare Two-Stage Orbital Logo Animation:
- * 1. Inner Orbital System:
- *    - Surrounds ONLY the central golden S emblem.
- *    - One prominent dark circular path (r = 64).
- *    - One smaller, lighter circular path (r = 50).
- *    - One small polished golden ball with radial glow travelling around the dark circular path.
- *    - Golden ball completes EXACTLY ONE 360-degree revolution (3.0s), then fades out smoothly (0.4s).
- *    - Confined strictly to the emblem; never touches or covers 'SRIYAS HEALTHCARE' or 'PVT LTD'.
+ * Implements the Premium Sriyas Healthcare Two-Stage Gold Orbital Logo Animation:
+ * 
+ * 1. Colour Direction (Strictly Gold & Champagne — NO Black / Charcoal):
+ *    - Primary metallic gold: #D4AF37
+ *    - Rich gold: #C49A2C
+ *    - Deep warm gold: #A9822C
+ *    - Champagne gold: #E9D9A6
+ *    - Very light champagne: #F4EBD2
+ *    - Soft ivory reference: #FBF9F4
  *
- * 2. Outer Orbital System:
- *    - Surrounds the COMPLETE logo lockup (S emblem, 'SRIYAS HEALTHCARE', 'PVT LTD', and Tagline).
- *    - One prominent dark circular path (r = 380).
- *    - One larger, lighter circular path (r = 408).
- *    - One small polished golden ball with radial glow travelling around the dark circular path.
- *    - Golden ball completes EXACTLY ONE 360-degree revolution (4.0s), then fades out smoothly (0.4s).
- *    - Large enough to encompass the entire logo with generous clearance; never overlaps lettering.
+ * 2. Stage Sequence (Deterministic 7-Stage State Machine):
+ *    - Stage 1: Clean logo (400ms)
+ *    - Stage 2: Inner gold orbit appears with subtle scale 96% -> 100% (600ms)
+ *    - Stage 3: Inner 3D gold sphere completes exactly 1 full 360° revolution at constant angular velocity (3200ms)
+ *    - Stage 4: Inner orbit fades out smoothly (500ms) -> Clean pause (400ms)
+ *    - Stage 5: Outer gold orbit appears with subtle scale 96% -> 100% (600ms)
+ *    - Stage 6: Outer 3D gold sphere completes exactly 1 full 360° revolution at constant angular velocity (4600ms)
+ *    - Stage 7: Outer orbit fades out smoothly (500ms) -> Clean pause (400ms) -> Repeat
  *
- * 3. Exact Repeating Two-Stage Sequence:
- *    STAGE 1 (Inner 1 Rev) -> FADE OUT -> GAP -> STAGE 2 (Outer 1 Rev) -> FADE OUT -> GAP -> REPEAT
- *    Only ONE orbital system is visible at a time.
- *    Zero rotation or distortion applied to the original logo.
- *    Fully GPU-composited for buttery smooth 60/120fps performance.
+ * 3. Geometry & Independence:
+ *    - Inner orbit centered precisely on the S emblem.
+ *    - Outer orbit centered precisely on the complete logo composition.
+ *    - 100% mutually exclusive — both systems never appear or animate together.
+ *    - Logo typography and emblem remain completely unrotated, unscaled, and undistorted.
  */
 
-export function SriyasInnerOrbit({ isVisible, isFading }) {
+export function SriyasInnerOrbit({ stage, isVisible, isEntering, isRotating, isExiting }) {
   const classes = [
     'sriyas-orbital-inner-wrap',
     isVisible ? 'is-visible' : '',
-    isFading ? 'is-fading' : ''
+    isEntering ? 'is-entering' : '',
+    isRotating ? 'is-rotating' : '',
+    isExiting ? 'is-exiting' : ''
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes} aria-hidden="true" data-orbit-system="inner">
+    <div className={classes} aria-hidden="true" data-orbit-system="inner" data-stage={stage}>
       <svg
         className="sriyas-orbital-inner-svg"
         viewBox="0 0 160 160"
@@ -43,53 +47,78 @@ export function SriyasInnerOrbit({ isVisible, isFading }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <radialGradient id="sriyas-inner-gold-ball" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#FFF9E6" />
-            <stop offset="35%" stopColor="#F5CE58" />
-            <stop offset="75%" stopColor="#D4AF37" />
-            <stop offset="100%" stopColor="#946C18" />
+          {/* Prominent metallic-gold gradient */}
+          <linearGradient id="sriyas-gold-inner-prominent" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#C49A2C" />
+            <stop offset="30%" stopColor="#D4AF37" />
+            <stop offset="68%" stopColor="#A9822C" />
+            <stop offset="100%" stopColor="#C49A2C" />
+          </linearGradient>
+
+          {/* Secondary delicate champagne-gold gradient */}
+          <linearGradient id="sriyas-gold-inner-champagne" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#E9D9A6" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#F4EBD2" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#E9D9A6" stopOpacity="0.6" />
+          </linearGradient>
+
+          {/* 3D Metallic-Gold Sphere with bright highlight, rich gold center and deep warm gold edge */}
+          <radialGradient id="sriyas-gold-inner-sphere" cx="30%" cy="26%" r="72%">
+            <stop offset="0%" stopColor="#FFFDF5" />
+            <stop offset="22%" stopColor="#FDEAA8" />
+            <stop offset="52%" stopColor="#D4AF37" />
+            <stop offset="80%" stopColor="#C49A2C" />
+            <stop offset="100%" stopColor="#8C6212" />
           </radialGradient>
 
-          <filter id="sriyas-inner-ball-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          {/* Restrained warm-gold shadow */}
+          <filter id="sriyas-inner-sphere-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="2.0" floodColor="#A9822C" floodOpacity="0.5" />
+          </filter>
+
+          {/* Subtle gold radiance on the prominent orbit */}
+          <filter id="sriyas-inner-path-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="0" stdDeviation="1.0" floodColor="#D4AF37" floodOpacity="0.3" />
           </filter>
         </defs>
 
-        {/* 1. Smaller, lighter circular path (Subtle & Stationary) */}
+        {/* 1. Secondary delicate champagne circular path (Stationary, r = 48) */}
         <circle
           cx="80"
           cy="80"
-          r="50"
-          className="sriyas-orbit-path sriyas-orbit-path--inner-light"
+          r="48"
+          className="sriyas-orbit-path sriyas-orbit-path--secondary"
+          stroke="url(#sriyas-gold-inner-champagne)"
+          strokeWidth="1"
         />
 
-        {/* 2. Prominent dark circular path (Primary orbit path for the golden ball) */}
+        {/* 2. Prominent metallic-gold circular path (Primary orbit path, r = 60) */}
         <circle
           cx="80"
           cy="80"
-          r="64"
-          className="sriyas-orbit-path sriyas-orbit-path--inner-dark"
+          r="60"
+          className="sriyas-orbit-path sriyas-orbit-path--prominent"
+          stroke="url(#sriyas-gold-inner-prominent)"
+          strokeWidth="1.8"
+          filter="url(#sriyas-inner-path-glow)"
         />
 
-        {/* 3. Golden ball travelling along the prominent dark circular path (r = 64) */}
-        <g className="sriyas-inner-ball-rotator">
+        {/* 3. 3D Metallic-gold sphere travelling along the prominent path (r = 60) */}
+        <g className={`sriyas-inner-ball-rotator ${isRotating ? 'is-spinning' : ''}`}>
           <circle
             cx="80"
-            cy={80 - 64}
-            r="5"
-            fill="url(#sriyas-inner-gold-ball)"
-            filter="url(#sriyas-inner-ball-glow)"
+            cy="20"
+            r="5.2"
+            fill="url(#sriyas-gold-inner-sphere)"
+            filter="url(#sriyas-inner-sphere-shadow)"
           />
+          {/* Specular highlight */}
           <circle
-            cx={80 - 1.5}
-            cy={80 - 64 - 1.5}
-            r="1.6"
+            cx="78.3"
+            cy="18.3"
+            r="1.5"
             fill="#FFFFFF"
-            opacity="0.85"
+            opacity="0.88"
           />
         </g>
       </svg>
@@ -97,69 +126,96 @@ export function SriyasInnerOrbit({ isVisible, isFading }) {
   );
 }
 
-export function SriyasOuterOrbit({ isVisible, isFading }) {
+export function SriyasOuterOrbit({ stage, isVisible, isEntering, isRotating, isExiting }) {
   const classes = [
     'sriyas-orbital-outer-wrap',
     isVisible ? 'is-visible' : '',
-    isFading ? 'is-fading' : ''
+    isEntering ? 'is-entering' : '',
+    isRotating ? 'is-rotating' : '',
+    isExiting ? 'is-exiting' : ''
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes} aria-hidden="true" data-orbit-system="outer">
+    <div className={classes} aria-hidden="true" data-orbit-system="outer" data-stage={stage}>
       <svg
         className="sriyas-orbital-outer-svg"
-        viewBox="0 0 880 880"
+        viewBox="0 0 700 700"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <radialGradient id="sriyas-outer-gold-ball" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#FFF9E6" />
-            <stop offset="35%" stopColor="#F5CE58" />
-            <stop offset="75%" stopColor="#D4AF37" />
-            <stop offset="100%" stopColor="#946C18" />
+          {/* Prominent metallic-gold gradient */}
+          <linearGradient id="sriyas-gold-outer-prominent" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#C49A2C" />
+            <stop offset="30%" stopColor="#D4AF37" />
+            <stop offset="68%" stopColor="#A9822C" />
+            <stop offset="100%" stopColor="#C49A2C" />
+          </linearGradient>
+
+          {/* Secondary delicate champagne-gold gradient */}
+          <linearGradient id="sriyas-gold-outer-champagne" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#E9D9A6" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#F4EBD2" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#E9D9A6" stopOpacity="0.6" />
+          </linearGradient>
+
+          {/* 3D Metallic-Gold Sphere with bright highlight, rich gold center and deep warm gold edge */}
+          <radialGradient id="sriyas-gold-outer-sphere" cx="30%" cy="26%" r="72%">
+            <stop offset="0%" stopColor="#FFFDF5" />
+            <stop offset="22%" stopColor="#FDEAA8" />
+            <stop offset="52%" stopColor="#D4AF37" />
+            <stop offset="80%" stopColor="#C49A2C" />
+            <stop offset="100%" stopColor="#8C6212" />
           </radialGradient>
 
-          <filter id="sriyas-outer-ball-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          {/* Restrained warm-gold shadow */}
+          <filter id="sriyas-outer-sphere-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="2.0" stdDeviation="2.5" floodColor="#A9822C" floodOpacity="0.5" />
+          </filter>
+
+          {/* Subtle gold radiance on the prominent orbit */}
+          <filter id="sriyas-outer-path-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="0" stdDeviation="1.5" floodColor="#D4AF37" floodOpacity="0.3" />
           </filter>
         </defs>
 
-        {/* 1. Prominent dark circular path (Primary orbit path for the golden ball) */}
+        {/* 1. Prominent metallic-gold circular path (Primary orbit path, r = 305) */}
         <circle
-          cx="440"
-          cy="440"
-          r="380"
-          className="sriyas-orbit-path sriyas-orbit-path--outer-dark"
+          cx="350"
+          cy="350"
+          r="305"
+          className="sriyas-orbit-path sriyas-orbit-path--prominent"
+          stroke="url(#sriyas-gold-outer-prominent)"
+          strokeWidth="1.8"
+          filter="url(#sriyas-outer-path-glow)"
         />
 
-        {/* 2. Larger, lighter circular path (Subtle & Stationary) */}
+        {/* 2. Secondary delicate champagne circular path (Stationary, r = 328) */}
         <circle
-          cx="440"
-          cy="440"
-          r="408"
-          className="sriyas-orbit-path sriyas-orbit-path--outer-light"
+          cx="350"
+          cy="350"
+          r="328"
+          className="sriyas-orbit-path sriyas-orbit-path--secondary"
+          stroke="url(#sriyas-gold-outer-champagne)"
+          strokeWidth="1"
         />
 
-        {/* 3. Golden ball travelling along the prominent dark circular path (r = 380) */}
-        <g className="sriyas-outer-ball-rotator">
+        {/* 3. Separate 3D Metallic-gold sphere travelling along the prominent path (r = 305) */}
+        <g className={`sriyas-outer-ball-rotator ${isRotating ? 'is-spinning' : ''}`}>
           <circle
-            cx="440"
-            cy={440 - 380}
-            r="6.8"
-            fill="url(#sriyas-outer-gold-ball)"
-            filter="url(#sriyas-outer-ball-glow)"
+            cx="350"
+            cy="45"
+            r="7.2"
+            fill="url(#sriyas-gold-outer-sphere)"
+            filter="url(#sriyas-outer-sphere-shadow)"
           />
+          {/* Specular highlight */}
           <circle
-            cx={440 - 2}
-            cy={440 - 380 - 2}
-            r="2"
+            cx="347.7"
+            cy="42.7"
+            r="2.1"
             fill="#FFFFFF"
-            opacity="0.9"
+            opacity="0.88"
           />
         </g>
       </svg>
@@ -179,42 +235,69 @@ export default function SriyasOrbitalLogo({
   rawProgress,
   measureStartAnchors
 }) {
-  // Master Sequence Controller: 'inner' -> 'inner-fade' -> 'gap1' -> 'outer' -> 'outer-fade' -> 'gap2' -> repeat
-  const [stage, setStage] = useState('inner');
+  // Deterministic 7-Stage Animation State Machine:
+  // 1: 'stage1-clean' (400ms)
+  // 2: 'stage2-inner-appear' (600ms)
+  // 3: 'stage3-inner-rev' (3200ms)
+  // 4: 'stage4-inner-disappear' (500ms)
+  //    'stage4-pause' (400ms)
+  // 5: 'stage5-outer-appear' (600ms)
+  // 6: 'stage6-outer-rev' (4600ms)
+  // 7: 'stage7-outer-disappear' (500ms)
+  //    'stage7-pause' (400ms) -> repeat
+  const [stage, setStage] = useState('stage1-clean');
 
   useEffect(() => {
     let timer = null;
 
-    if (stage === 'inner') {
-      // Inner golden ball completes 1 full revolution in 3.0s
-      timer = setTimeout(() => {
-        setStage('inner-fade');
-      }, 3000);
-    } else if (stage === 'inner-fade') {
-      // Inner orbit fades out over 0.4s
-      timer = setTimeout(() => {
-        setStage('gap1');
-      }, 400);
-    } else if (stage === 'gap1') {
-      // Clean logo state for 0.2s before Stage 2
-      timer = setTimeout(() => {
-        setStage('outer');
-      }, 200);
-    } else if (stage === 'outer') {
-      // Outer golden ball completes 1 full revolution in 4.0s
-      timer = setTimeout(() => {
-        setStage('outer-fade');
-      }, 4000);
-    } else if (stage === 'outer-fade') {
-      // Outer orbit fades out over 0.4s
-      timer = setTimeout(() => {
-        setStage('gap2');
-      }, 400);
-    } else if (stage === 'gap2') {
-      // Clean logo state for 0.2s before repeating Stage 1
-      timer = setTimeout(() => {
-        setStage('inner');
-      }, 200);
+    switch (stage) {
+      case 'stage1-clean':
+        // Stage 1: Clean logo initial state
+        timer = setTimeout(() => setStage('stage2-inner-appear'), 400);
+        break;
+
+      case 'stage2-inner-appear':
+        // Stage 2: Inner gold orbit appears with subtle scale 96% -> 100%
+        timer = setTimeout(() => setStage('stage3-inner-rev'), 600);
+        break;
+
+      case 'stage3-inner-rev':
+        // Stage 3: Inner sphere completes exactly 1 full 360° revolution (3.2s)
+        timer = setTimeout(() => setStage('stage4-inner-disappear'), 3200);
+        break;
+
+      case 'stage4-inner-disappear':
+        // Stage 4: Inner orbit fades out smoothly
+        timer = setTimeout(() => setStage('stage4-pause'), 500);
+        break;
+
+      case 'stage4-pause':
+        // Clean logo pause between inner and outer stages
+        timer = setTimeout(() => setStage('stage5-outer-appear'), 400);
+        break;
+
+      case 'stage5-outer-appear':
+        // Stage 5: Outer gold orbit appears with subtle scale 96% -> 100%
+        timer = setTimeout(() => setStage('stage6-outer-rev'), 600);
+        break;
+
+      case 'stage6-outer-rev':
+        // Stage 6: Outer sphere completes exactly 1 full 360° revolution (4.6s)
+        timer = setTimeout(() => setStage('stage7-outer-disappear'), 4600);
+        break;
+
+      case 'stage7-outer-disappear':
+        // Stage 7: Outer orbit fades out smoothly
+        timer = setTimeout(() => setStage('stage7-pause'), 500);
+        break;
+
+      case 'stage7-pause':
+        // Clean logo pause before repeating sequence
+        timer = setTimeout(() => setStage('stage2-inner-appear'), 400);
+        break;
+
+      default:
+        timer = setTimeout(() => setStage('stage1-clean'), 400);
     }
 
     return () => {
@@ -222,24 +305,50 @@ export default function SriyasOrbitalLogo({
     };
   }, [stage]);
 
-  const isInnerVisible = stage === 'inner' || stage === 'inner-fade';
-  const isInnerFading = stage === 'inner-fade';
-  const isOuterVisible = stage === 'outer' || stage === 'outer-fade';
-  const isOuterFading = stage === 'outer-fade';
+  // Mutual Exclusivity: Inner and Outer are NEVER visible or active simultaneously
+  const isInnerVisible =
+    stage === 'stage2-inner-appear' ||
+    stage === 'stage3-inner-rev' ||
+    stage === 'stage4-inner-disappear';
+
+  const isInnerEntering = stage === 'stage2-inner-appear';
+  const isInnerRotating = stage === 'stage3-inner-rev';
+  const isInnerExiting = stage === 'stage4-inner-disappear';
+
+  const isOuterVisible =
+    stage === 'stage5-outer-appear' ||
+    stage === 'stage6-outer-rev' ||
+    stage === 'stage7-outer-disappear';
+
+  const isOuterEntering = stage === 'stage5-outer-appear';
+  const isOuterRotating = stage === 'stage6-outer-rev';
+  const isOuterExiting = stage === 'stage7-outer-disappear';
 
   return (
     <div
       className="hp-hero-brand-lockup-wrapper"
       data-testid="sriyas-orbital-logo"
-      data-active-stage={stage}
+      data-stage={stage}
     >
-      {/* Outer Orbital System (Stage 2) - Surrounds the complete logo lockup */}
-      <SriyasOuterOrbit isVisible={isOuterVisible} isFading={isOuterFading} />
-
       <div className="hp-hero-lockup-flow">
+        {/* Outer Orbital System (Stages 5-7) — Centered precisely on the complete logo composition */}
+        <SriyasOuterOrbit
+          stage={stage}
+          isVisible={isOuterVisible}
+          isEntering={isOuterEntering}
+          isRotating={isOuterRotating}
+          isExiting={isOuterExiting}
+        />
+
         <div className="hp-hero-emblem-wrap">
-          {/* Inner Orbital System (Stage 1) - Surrounds ONLY the central S emblem */}
-          <SriyasInnerOrbit isVisible={isInnerVisible} isFading={isInnerFading} />
+          {/* Inner Orbital System (Stages 2-4) — Centered precisely on the central S emblem */}
+          <SriyasInnerOrbit
+            stage={stage}
+            isVisible={isInnerVisible}
+            isEntering={isInnerEntering}
+            isRotating={isInnerRotating}
+            isExiting={isInnerExiting}
+          />
 
           <div
             ref={emblemPlaceholderRef}
@@ -269,7 +378,7 @@ export default function SriyasOrbitalLogo({
         </div>
       </div>
 
-      {/* Tagline inside the lockup wrapper so the outer orbit encompasses it with generous clearance */}
+      {/* Tagline gracefully positioned below the logo composition */}
       {showTagline && tagline && (
         <p className="hp-hero-tagline">{tagline}</p>
       )}
