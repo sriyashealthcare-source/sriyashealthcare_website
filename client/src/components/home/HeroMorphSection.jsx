@@ -4,6 +4,7 @@ import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
+import SriyasOrbitalLogo from './SriyasOrbitalLogo';
 
 function easeOutQuad(t) {
   return t * (2 - t);
@@ -266,42 +267,21 @@ export default function HeroMorphSection({
       </div>
 
       <div className="hp-hero-inner">
-        {/* Centered Resting Anchor Slot with Concentric Golden Orb Orbit */}
-        <div className="hp-hero-lockup-flow">
-          <div className="hp-hero-emblem-wrap">
-            {/* The Golden Orb Animation centered on the logo */}
-            <div className="hp-hero-orbit hp-hero-orbit--outer" aria-hidden="true" />
-            <div className="hp-hero-orbit hp-hero-orbit--inner" aria-hidden="true" />
+        {/* Sriyas Healthcare Two-Stage Orbital Logo System */}
+        <SriyasOrbitalLogo
+          logoUrl={logoUrl}
+          logoAlt={logoAlt}
+          companyName={companyName}
+          companySubtitle={companySubtitle}
+          tagline={tagline}
+          showTagline={hero.showTagline !== false && Boolean(tagline)}
+          emblemPlaceholderRef={emblemPlaceholderRef}
+          canAnimateMorph={canAnimateMorph}
+          rawProgress={rawProgress}
+          measureStartAnchors={measureStartAnchors}
+        />
 
-            <div
-              ref={emblemPlaceholderRef}
-              className="hp-hero-emblem-slot"
-            >
-              <img
-                src={logoUrl}
-                alt={logoAlt}
-                className="hp-hero-emblem-img"
-                style={{ opacity: canAnimateMorph && rawProgress > 0.05 ? 0 : 1 }}
-                onLoad={measureStartAnchors}
-                onError={(e) => {
-                  if (e.currentTarget.src !== '/assets/logos/sriyas-emblem.png') {
-                    e.currentTarget.src = '/assets/logos/sriyas-emblem.png';
-                  }
-                }}
-                fetchPriority="high"
-              />
-            </div>
-          </div>
-
-          <div className="hp-hero-title-slot">
-            <div className="hp-hero-title-stack">
-              <h1 className="hp-hero-brand-name">{companyName}</h1>
-              {companySubtitle && <p className="hp-hero-brand-sub">{companySubtitle}</p>}
-            </div>
-          </div>
-        </div>
-
-        {/* Tagline, Supporting Company Introduction & Action Buttons */}
+        {/* Supporting Company Introduction & Action Buttons */}
         <div
           className="hp-hero-copy"
           style={{
@@ -310,10 +290,6 @@ export default function HeroMorphSection({
             pointerEvents: copyOpacity < 0.12 ? 'none' : 'auto'
           }}
         >
-          {hero.showTagline !== false && tagline && (
-            <p className="hp-hero-tagline">{tagline}</p>
-          )}
-
           {supportingIntro && (
             <p className="hp-hero-intro">{supportingIntro}</p>
           )}
