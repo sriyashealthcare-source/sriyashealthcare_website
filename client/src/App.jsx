@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ContactProvider } from './context/ContactContext';
 
 import CustomerLayout from './layouts/CustomerLayout';
 import AdminLayout from './layouts/AdminLayout';
@@ -28,6 +29,7 @@ import EditProduct from './pages/admin/EditProduct';
 import BrandCategoryManagement from './pages/admin/BrandCategoryManagement';
 import AdminSettings from './pages/admin/AdminSettings';
 import HomepageEditor from './pages/admin/HomepageEditor';
+import AdminContactManagement from './pages/admin/AdminContactManagement';
 
 function NotFoundPage() {
   return (
@@ -49,8 +51,9 @@ function NotFoundPage() {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+      <ContactProvider>
+        <BrowserRouter>
+          <Routes>
           {/* Public Customer Interface */}
           <Route element={<CustomerLayout />}>
             <Route path="/" element={<Home />} />
@@ -80,10 +83,12 @@ export default function App() {
             <Route path="products/edit/:id" element={<EditProduct />} />
             <Route path="brands-categories" element={<BrandCategoryManagement />} />
             <Route path="homepage-editor" element={<HomepageEditor />} />
+            <Route path="contact-information" element={<AdminContactManagement />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </ContactProvider>
+  </AuthProvider>
   );
 }

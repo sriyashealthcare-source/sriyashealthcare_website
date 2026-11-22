@@ -1,10 +1,50 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
-import { COMPANY_CONTACT } from '../../constants/contact';
+import { useContactInfo } from '../../context/ContactContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const {
+    contactInfo,
+    primaryPhone,
+    primaryEmail,
+    primaryAddress,
+    phones,
+    emails,
+    workingHours,
+    registrations,
+    socialLinks
+  } = useContactInfo();
+
+  // Active footer phone numbers
+  const footerPhones = useMemo(() => {
+    const list = phones.filter((p) => p.showInFooter && p.isActive !== false);
+    return list.length > 0 ? list : [primaryPhone];
+  }, [phones, primaryPhone]);
+
+  // Active footer email addresses
+  const footerEmails = useMemo(() => {
+    const list = emails.filter((e) => e.showInFooter && e.isActive !== false);
+    return list.length > 0 ? list : [primaryEmail];
+  }, [emails, primaryEmail]);
+
+  // GSTIN identifier
+  const gstinRecord = useMemo(() => {
+    return (
+      registrations.find((r) => r.isActive !== false && r.label.toUpperCase().includes('GST')) ||
+      registrations[0] || { label: 'GSTIN', value: '33ABQCS4744P1ZJ' }
+    );
+  }, [registrations]);
+
+  // Formatted hours string
+  const hoursDisplay = useMemo(() => {
+    if (!workingHours || workingHours.isActive === false) return null;
+    if (workingHours.workingDays && workingHours.openingTime && workingHours.closingTime) {
+      return `${workingHours.workingDays}: ${workingHours.openingTime} – ${workingHours.closingTime}`;
+    }
+    return 'Mon – Sat: 9:00 AM – 6:30 PM';
+  }, [workingHours]);
 
   return (
     <footer className="footer" id="site-footer" role="contentinfo" aria-label="Sriyas Healthcare Corporate Footer">
@@ -32,14 +72,32 @@ export default function Footer() {
               </div>
             </div>
             <p className="footer-tagline">
-              Empowering Healthcare with Care and Innovation.
+              {contactInfo.tagline || 'Empowering Healthcare with Care and Innovation.'}
             </p>
             <p className="footer-desc">
               Authorized surgical and medical distribution company in Chennai, Tamil Nadu, supplying Indian hospitals, surgeons, and healthcare institutions with verified sutures, meshes, and wound care technologies.
             </p>
-            <div className="footer-meta-pill">
-              <span>GSTIN:</span> <strong>33ABQCS4744P1ZJ</strong>
-            </div>
+            {gstinRecord && gstinRecord.value && (
+              <div className="footer-meta-pill">
+                <span>{gstinRecord.label}:</span> <strong>{gstinRecord.value}</strong>
+              </div>
+            )}
+            {socialLinks && socialLinks.length > 0 && (
+              <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+                {socialLinks.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-nav-link"
+                    style={{ fontSize: '0.78rem', textTransform: 'capitalize' }}
+                  >
+                    ↗ {s.label || s.platform}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Column 2: Partner Portfolios & Manufacturer Links */}
@@ -108,40 +166,67 @@ export default function Footer() {
 
           {/* Column 4: Local Contact & Chennai Office */}
           <div className="footer-col footer-col--contact">
-            <h3 className="footer-heading">Chennai Office</h3>
+            <h3 className="footer-heading">{primaryAddress?.officeName || 'Chennai Office'}</h3>
             <address className="footer-address">
-              Plot No.53A, First Floor, East Facing,<br />
-              Oil Mill Road, Maruthi Nagar, Karambakkam,<br />
-              Thundalam, Chennai – 600077,<br />
-              Tamil Nadu, India
+              {primaryAddress?.line1 || 'Plot No.53A, First Floor, East Facing'}<br />
+              {primaryAddress?.line2 && <>{primaryAddress.line2}<br /></>}
+              {primaryAddress?.city || 'Chennai'} – {primaryAddress?.pincode || '600077'},<br />
+              {primaryAddress?.state || 'Tamil Nadu'}, {primaryAddress?.country || 'India'}
             </address>
             <div className="footer-contact-items">
-              <div className="footer-contact-row">
-                <span className="footer-contact-icon" aria-hidden="true">📞</span>
-                <div>
-                  <a
-                    href={`tel:${COMPANY_CONTACT.phone}`}
-                    className="footer-contact-link"
-                    aria-label={`Call Sriyas Healthcare at ${COMPANY_CONTACT.displayPhone}`}
-                  >
-                    {COMPANY_CONTACT.displayPhone}
-                  </a>
+              {footerPhones.map((phone) => {
+                const cleanNum = (phone.number || '').replace(/[^0-9]/g, '');
+                const code = phone.countryCode || '+91';
+                const disp = phone.displayPhone || `${code} ${cleanNum}`;
+                const tel = phone.clickUrl || `tel:${code}${cleanNum}`;
+                return (
+                  <div className="footer-contact-row" key={phone.id || phone.number}>
+                    <span className="footer-contact-icon" aria-hidden="true">📞</span>
+                    <div>
+                      {phone.enableClickToCall !== false ? (
+                        <a
+                          href={tel}
+                          className="footer-contact-link"
+                          aria-label={`Call Sriyas Healthcare at ${disp}`}
+                        >
+                          {disp}
+                        </a>
+                      ) : (
+                        <span className="footer-contact-link">{disp}</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {footerEmails.map((email) => {
+                const mailto = email.mailtoUrl || `mailto:${email.email}`;
+                return (
+                  <div className="footer-contact-row" key={email.id || email.email}>
+                    <span className="footer-contact-icon" aria-hidden="true">✉</span>
+                    <div>
+                      {email.enableMailto !== false ? (
+                        <a
+                          href={mailto}
+                          className="footer-contact-link"
+                          aria-label={`Email Sriyas Healthcare at ${email.email}`}
+                        >
+                          {email.email}
+                        </a>
+                      ) : (
+                        <span className="footer-contact-link">{email.email}</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {hoursDisplay && (
+                <div className="footer-contact-row">
+                  <span className="footer-contact-icon" aria-hidden="true">🕒</span>
+                  <span className="footer-hours">{hoursDisplay}</span>
                 </div>
-              </div>
-              <div className="footer-contact-row">
-                <span className="footer-contact-icon" aria-hidden="true">✉</span>
-                <a
-                  href={`mailto:${COMPANY_CONTACT.email}`}
-                  className="footer-contact-link"
-                  aria-label={`Email Sriyas Healthcare at ${COMPANY_CONTACT.email}`}
-                >
-                  {COMPANY_CONTACT.email}
-                </a>
-              </div>
-              <div className="footer-contact-row">
-                <span className="footer-contact-icon" aria-hidden="true">🕒</span>
-                <span className="footer-hours">Mon – Sat: 9:00 AM – 6:30 PM</span>
-              </div>
+              )}
             </div>
           </div>
         </div>

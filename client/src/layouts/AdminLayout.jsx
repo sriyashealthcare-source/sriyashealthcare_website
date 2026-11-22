@@ -70,6 +70,7 @@ export default function AdminLayout() {
     if (p.includes('/admin/products')) return 'Product Catalogue Management';
     if (p.includes('/admin/brands-categories')) return 'Brands & Categories';
     if (p.includes('/admin/homepage-editor')) return 'Homepage Editor';
+    if (p.includes('/admin/contact-information')) return 'Contact Information Management';
     if (p.includes('/admin/analytics')) return 'Product-Specific Analytics';
     if (p.includes('/admin/settings')) return 'Administrator Settings';
     return 'Administrator Portal';
@@ -246,6 +247,15 @@ export default function AdminLayout() {
           >
             <span className="admin-nav-icon">🖥️</span>
             <span>Homepage Editor</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/contact-information"
+            onClick={closeSidebar}
+            className={({ isActive }) => `admin-nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">📞</span>
+            <span>Contact Information</span>
           </NavLink>
 
           <div className="admin-nav-section-label">System</div>

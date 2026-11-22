@@ -17,6 +17,7 @@ const Category = require('../server/models/Category');
 const Product = require('../server/models/Product');
 const Admin = require('../server/models/Admin');
 const { ensureHomepageInitialized } = require('../server/config/defaultHomepageContent');
+const { ensureContactInfoInitialized } = require('../server/controllers/contactController');
 
 const catalogPath = path.join(__dirname, 'catalogData.json');
 const publicDir = path.join(__dirname, '..', 'client', 'public');
@@ -226,6 +227,7 @@ async function ensureSeededOnStartup() {
       await runSeed({ silent: false });
     }
     await ensureHomepageInitialized();
+    await ensureContactInfoInitialized();
   } catch (err) {
     console.error('[Startup] Auto-seed check error:', err.message);
   }

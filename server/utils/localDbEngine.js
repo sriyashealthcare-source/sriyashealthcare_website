@@ -32,7 +32,8 @@ function loadStore() {
     AnalyticsVisitor: [],
     AnalyticsSession: [],
     AnalyticsEvent: [],
-    HomepageContent: []
+    HomepageContent: [],
+    ContactInformation: []
   };
 }
 
@@ -48,7 +49,7 @@ function reloadStore() {
   const models = [
     'Brand', 'Category', 'Product', 'Admin', 'ProductView',
     'CustomerEnquiry', 'AdminNote', 'AnalyticsVisitor', 'AnalyticsSession', 'AnalyticsEvent',
-    'HomepageContent'
+    'HomepageContent', 'ContactInformation'
   ];
   for (const m of models) {
     if (!store[m]) store[m] = [];
@@ -482,6 +483,7 @@ function activateLocalDbAdapter() {
   const AnalyticsSession = require('../models/AnalyticsSession');
   const AnalyticsEvent = require('../models/AnalyticsEvent');
   const HomepageContent = require('../models/HomepageContent');
+  const ContactInformation = require('../models/ContactInformation');
 
   [
     Brand,
@@ -494,7 +496,8 @@ function activateLocalDbAdapter() {
     AnalyticsVisitor,
     AnalyticsSession,
     AnalyticsEvent,
-    HomepageContent
+    HomepageContent,
+    ContactInformation
   ].forEach(attachLocalAdapterToModel);
 }
 

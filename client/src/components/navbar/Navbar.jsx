@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
+import { useContactInfo } from '../../context/ContactContext';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { resolveAssetUrl } from '../../utils/session';
 import { COMPANY_CONTACT } from '../../constants/contact';
 
 export default function Navbar() {
+  const { primaryPhone, primaryEmail } = useContactInfo();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -268,16 +270,16 @@ export default function Navbar() {
 
           <div className="mobile-nav-contact-quick">
             <a
-              href={`tel:${COMPANY_CONTACT.phone}`}
-              aria-label={`Call Sriyas Healthcare at ${COMPANY_CONTACT.displayPhone}`}
+              href={primaryPhone.clickUrl}
+              aria-label={`Call Sriyas Healthcare at ${primaryPhone.displayPhone}`}
             >
-              📞 {COMPANY_CONTACT.displayPhone}
+              📞 {primaryPhone.displayPhone}
             </a>
             <a
-              href={`mailto:${COMPANY_CONTACT.email}`}
-              aria-label={`Email Sriyas Healthcare at ${COMPANY_CONTACT.email}`}
+              href={primaryEmail.mailtoUrl}
+              aria-label={`Email Sriyas Healthcare at ${primaryEmail.email}`}
             >
-              ✉ {COMPANY_CONTACT.email}
+              ✉ {primaryEmail.email}
             </a>
           </div>
         </div>

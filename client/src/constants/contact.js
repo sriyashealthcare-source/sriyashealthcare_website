@@ -25,14 +25,19 @@ export const COMPANY_CONTACT = {
 
 /**
  * Builds the official WhatsApp click-to-chat URL with properly encoded message.
- * @param {string} customMessage
+ * Supports optional dynamic phone number with fallback to default corporate WhatsApp.
+ * @param {string} [customMessage]
+ * @param {string} [customPhone]
  * @returns {string}
  */
-export function buildWhatsAppUrl(customMessage) {
+export function buildWhatsAppUrl(customMessage, customPhone) {
+  const phone = (customPhone && typeof customPhone === 'string' && customPhone.replace(/[^0-9]/g, ''))
+    ? customPhone.replace(/[^0-9]/g, '')
+    : COMPANY_CONTACT.whatsapp;
   const defaultMsg =
     'Hello Sriyas Healthcare Team, I visited your website and would like to know more about your products and services. Please assist me.';
   const msg = customMessage && typeof customMessage === 'string' && customMessage.trim()
     ? customMessage.trim()
     : defaultMsg;
-  return `https://wa.me/${COMPANY_CONTACT.whatsapp}?text=${encodeURIComponent(msg)}`;
+  return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }

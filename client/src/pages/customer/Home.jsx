@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { homepageService } from '../../services/homepageService';
+import { useContactInfo } from '../../context/ContactContext';
 import HomepageContentRenderer from '../../components/home/HomepageContentRenderer';
 import SeoHead from '../../components/common/SeoHead';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
@@ -429,6 +430,7 @@ const FALLBACK_HOMEPAGE = {
 };
 
 export default function Home() {
+  const { primaryPhone, primaryEmail, registrations } = useContactInfo();
   const [homepage, setHomepage] = useState(FALLBACK_HOMEPAGE);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -507,14 +509,14 @@ export default function Home() {
       contactPoint: [
         {
           '@type': 'ContactPoint',
-          telephone: COMPANY_CONTACT.phone,
+          telephone: primaryPhone?.number ? `+91${primaryPhone.number.replace(/[^0-9]/g, '')}` : '+919600804456',
           contactType: 'sales & customer support',
           areaServed: 'IN',
           availableLanguage: ['en', 'ta']
         }
       ],
-      email: COMPANY_CONTACT.email,
-      taxID: '33ABQCS4744P1ZJ'
+      email: primaryEmail?.email || 'sriyashealthcare@gmail.com',
+      taxID: (registrations.find((r) => r.label.toUpperCase().includes('GST'))?.value) || '33ABQCS4744P1ZJ'
     },
     {
       '@context': 'https://schema.org',
@@ -523,7 +525,7 @@ export default function Home() {
       name: 'Sriyas Healthcare Private Limited',
       image: SRIYAS_EMBLEM_URL,
       url: 'https://sriyashealthcare.com',
-      telephone: '+919600804456',
+      telephone: primaryPhone?.number ? `+91${primaryPhone.number.replace(/[^0-9]/g, '')}` : '+919600804456',
       priceRange: '$$',
       description:
         'Authorized distributor of world-class surgical sutures, tissue adhesives, hernia meshes, and wound care devices in Chennai, Tamil Nadu, India.',
