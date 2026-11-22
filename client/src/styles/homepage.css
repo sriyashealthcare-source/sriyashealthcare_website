@@ -470,15 +470,12 @@
 
 /* ═══════════════════════════════════════════════════════════
    SRIYAS HEALTHCARE TWO-STAGE GOLD ORBITAL LOGO ANIMATION
-   Strictly Metallic Gold (#D4AF37, #C49A2C, #A9822C) and Champagne (#E9D9A6, #F4EBD2)
-   100% Mutually Exclusive, Deterministic 7-Stage Sequence:
-   Stage 1: Clean Logo (400ms)
-   Stage 2: Inner Orbit Appears (Scale 96% -> 100%, Opacity 0 -> 1) (600ms)
-   Stage 3: Inner 3D Sphere 1 Full 360° Revolution at Constant Angular Velocity (3200ms)
-   Stage 4: Inner Orbit Disappears (500ms) -> Clean Logo Pause (400ms)
-   Stage 5: Outer Orbit Appears (Scale 96% -> 100%, Opacity 0 -> 1) (600ms)
-   Stage 6: Outer 3D Sphere 1 Full 360° Revolution at Constant Angular Velocity (4600ms)
-   Stage 7: Outer Orbit Disappears (500ms) -> Clean Logo Pause (400ms) -> Repeat
+   Subtle, Refined, Slow & Graceful Corporate Brand Signature
+   - Prominent orbit: 35–45% opacity, thin 1.1px stroke (#D4AF37 / #C8A64B)
+   - Secondary orbit: 18–22% opacity, delicate 0.8px stroke (#E9D9A6 / #F4EBD2)
+   - 3D Metallic Spheres with restrained warm-gold shadow (#A9822C)
+   - Constant angular velocity (linear): 7.0s inner revolution, 9.0s outer revolution
+   - Bounding Box Protection: Orbit strictly contained within logo area, zero overlap with tagline, description, or CTA buttons
    ═══════════════════════════════════════════════════════════ */
 
 .hp-hero-brand-lockup-wrapper {
@@ -492,7 +489,7 @@
   z-index: 2;
 }
 
-/* ── Common Orbit Path Styles (Strictly Gold & Champagne) ── */
+/* ── Common Orbit Path Styles (Ultra-Light Gold & Champagne) ── */
 .sriyas-orbit-path {
   fill: none;
   pointer-events: none;
@@ -501,10 +498,12 @@
 
 .sriyas-orbit-path--prominent {
   stroke-linecap: round;
+  opacity: 0.42;
 }
 
 .sriyas-orbit-path--secondary {
   stroke-linecap: round;
+  opacity: 0.18;
 }
 
 /* ── Stage 2-4: Inner Orbital System (Around ONLY Central S Emblem) ── */
@@ -512,9 +511,9 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  width: clamp(114px, 11vw, 134px);
-  height: clamp(114px, 11vw, 134px);
+  transform: translate(-50%, -50%) scale(0.97);
+  width: clamp(108px, 11vw, 120px);
+  height: clamp(108px, 11vw, 120px);
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -522,7 +521,7 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  transition: opacity 0.8s ease, transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
   will-change: opacity, transform;
 }
 
@@ -539,7 +538,7 @@
   opacity: 0;
   visibility: hidden;
   transform: translate(-50%, -50%) scale(1);
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 .sriyas-orbital-inner-svg {
@@ -549,13 +548,13 @@
 }
 
 .sriyas-inner-ball-rotator {
-  transform-origin: 80px 80px;
+  transform-origin: 70px 70px;
   transform: rotate(0deg);
 }
 
-/* Constant angular velocity (linear) for 1 full 360° revolution */
+/* Slow, graceful constant angular velocity (linear, 7.0s revolution) */
 .sriyas-inner-ball-rotator.is-spinning {
-  animation: sriyasInnerRev 3.2s linear forwards;
+  animation: sriyasInnerRev 7.0s linear forwards;
   will-change: transform;
 }
 
@@ -564,10 +563,10 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  width: clamp(340px, 48vw, 640px);
-  height: clamp(340px, 48vw, 640px);
-  max-width: 92vw;
+  transform: translate(-50%, -50%) scale(0.97);
+  width: clamp(280px, 36vw, 380px);
+  height: clamp(280px, 36vw, 380px);
+  max-width: 90vw;
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -575,7 +574,7 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  transition: opacity 0.8s ease, transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
   will-change: opacity, transform;
 }
 
@@ -592,7 +591,7 @@
   opacity: 0;
   visibility: hidden;
   transform: translate(-50%, -50%) scale(1);
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 .sriyas-orbital-outer-svg {
@@ -602,13 +601,13 @@
 }
 
 .sriyas-outer-ball-rotator {
-  transform-origin: 350px 350px;
+  transform-origin: 220px 220px;
   transform: rotate(0deg);
 }
 
-/* Constant angular velocity (linear) for 1 full 360° revolution */
+/* Slow, stately constant angular velocity (linear, 9.0s revolution) */
 .sriyas-outer-ball-rotator.is-spinning {
-  animation: sriyasOuterRev 4.6s linear forwards;
+  animation: sriyasOuterRev 9.0s linear forwards;
   will-change: transform;
 }
 
@@ -681,11 +680,12 @@
 }
 
 .hp-hero-lockup-flow {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(12px, 1.8vh, 18px);
-  margin-bottom: clamp(18px, 2.6vh, 26px);
+  margin-bottom: clamp(118px, 13vh, 138px);
 }
 
 .hp-hero-emblem-slot {
@@ -2899,14 +2899,14 @@
   }
 
   .sriyas-orbital-inner-wrap {
-    width: clamp(108px, 12vw, 124px);
-    height: clamp(108px, 12vw, 124px);
+    width: clamp(100px, 12vw, 116px);
+    height: clamp(100px, 12vw, 116px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(360px, 68vw, 480px);
-    height: clamp(360px, 68vw, 480px);
-    max-width: 92vw;
+    width: clamp(300px, 46vw, 360px);
+    height: clamp(300px, 46vw, 360px);
+    max-width: 90vw;
   }
 
   .hp-hero-emblem-slot {
@@ -2971,15 +2971,19 @@
     height: clamp(240px, 70vw, 290px);
   }
 
+  .hp-hero-lockup-flow {
+    margin-bottom: clamp(82px, 11vh, 98px);
+  }
+
   .sriyas-orbital-inner-wrap {
-    width: clamp(98px, 14vw, 114px);
-    height: clamp(98px, 14vw, 114px);
+    width: clamp(90px, 13vw, 102px);
+    height: clamp(90px, 13vw, 102px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(300px, 88vw, 360px);
-    height: clamp(300px, 88vw, 360px);
-    max-width: 92vw;
+    width: clamp(270px, 84vw, 310px);
+    height: clamp(270px, 84vw, 310px);
+    max-width: 90vw;
   }
 
   .hp-hero-emblem-slot {

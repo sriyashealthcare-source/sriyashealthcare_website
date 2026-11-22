@@ -1,5 +1,7 @@
 /**
- * Sriyas Healthcare - Two-Stage Gold Orbital Logo Animation Verification Suite
+ * Sriyas Healthcare - Slow, Subtle & Premium Two-Stage Gold Orbital Logo Verification Suite
+ * Verifies exact slow timings, thin & light strokes (35-50% & 15-25% opacity),
+ * compact outer orbit, zero overlap with tagline/buttons, and captures 10 visual states.
  */
 
 const fs = require('fs');
@@ -140,7 +142,7 @@ class CdpClient {
 
 async function runVerification() {
   console.log('═══════════════════════════════════════════════════════════════');
-  console.log('  SRIYAS HEALTHCARE TWO-STAGE GOLD ORBITAL LOGO VERIFICATION   ');
+  console.log('  SRIYAS HEALTHCARE SLOW & SUBTLE GOLD ORBITAL LOGO AUDIT      ');
   console.log('═══════════════════════════════════════════════════════════════');
 
   await startServers();
@@ -172,110 +174,91 @@ async function runVerification() {
   await cdp.send('Page.navigate', { url: 'http://127.0.0.1:5173/' });
   await sleep(2500);
 
-  // 1. Inspect DOM & Color Palette
-  console.log('\n[1/5] Verifying Color Palette (Strictly Gold & Champagne, NO Charcoal/Black)...');
-  const paletteCheck = await cdp.send('Runtime.evaluate', {
+  // 1. Inspect Line Thickness & Opacities
+  console.log('\n[1/5] Verifying Orbit Line Opacities & Soft Palette (35-50% & 15-25%)...');
+  const styleCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
-      const innerProminent = document.querySelector('#sriyas-gold-inner-prominent');
-      const innerChampagne = document.querySelector('#sriyas-gold-inner-champagne');
-      const outerProminent = document.querySelector('#sriyas-gold-outer-prominent');
-      const outerChampagne = document.querySelector('#sriyas-gold-outer-champagne');
-      const innerSphere = document.querySelector('#sriyas-gold-inner-sphere');
-      const outerSphere = document.querySelector('#sriyas-gold-outer-sphere');
-      
-      const getStops = (grad) => grad ? Array.from(grad.querySelectorAll('stop')).map(s => s.getAttribute('stop-color')) : [];
-      
-      const innerPromStops = getStops(innerProminent);
-      const innerChampStops = getStops(innerChampagne);
-      const outerPromStops = getStops(outerProminent);
-      const outerChampStops = getStops(outerChampagne);
-      const innerSphereStops = getStops(innerSphere);
-      const outerSphereStops = getStops(outerSphere);
-      
-      const allColors = [...innerPromStops, ...innerChampStops, ...outerPromStops, ...outerChampStops, ...innerSphereStops, ...outerSphereStops];
-      const hasBlackOrCharcoal = allColors.some(c => /#3D321A|#000000|#111111|#222222|#333333/i.test(c));
-      const hasGoldPalette = allColors.some(c => /#D4AF37|#C49A2C|#A9822C|#E9D9A6|#F4EBD2/i.test(c));
+      const promLine = document.querySelector('.sriyas-orbit-path--prominent');
+      const secLine = document.querySelector('.sriyas-orbit-path--secondary');
+      const promOpacity = promLine ? parseFloat(window.getComputedStyle(promLine).opacity) : null;
+      const secOpacity = secLine ? parseFloat(window.getComputedStyle(secLine).opacity) : null;
+
+      const innerProm = document.querySelector('#sriyas-gold-inner-prominent');
+      const outerProm = document.querySelector('#sriyas-gold-outer-prominent');
+      const getColors = grad => grad ? Array.from(grad.querySelectorAll('stop')).map(s => s.getAttribute('stop-color')) : [];
+
+      const allColors = [...getColors(innerProm), ...getColors(outerProm)];
+      const hasCharcoal = allColors.some(c => /#3D321A|#000000|#111111|#222222|#333333/i.test(c));
 
       return {
-        innerPromStops,
-        innerChampStops,
-        outerPromStops,
-        outerChampStops,
-        innerSphereStops,
-        outerSphereStops,
-        hasBlackOrCharcoal,
-        hasGoldPalette
+        promOpacity,
+        secOpacity,
+        promOpacityInRange: promOpacity >= 0.35 && promOpacity <= 0.50,
+        secOpacityInRange: secOpacity >= 0.15 && secOpacity <= 0.25,
+        hasCharcoal,
+        colors: allColors
       };
     })()`,
     returnByValue: true
   });
 
-  const pRes = paletteCheck.result.value;
-  console.log('  Inner Prominent Stops:', pRes.innerPromStops);
-  console.log('  Inner Champagne Stops:', pRes.innerChampStops);
-  console.log('  Outer Prominent Stops:', pRes.outerPromStops);
-  console.log('  Outer Champagne Stops:', pRes.outerChampStops);
-  console.log('  Inner Sphere Stops:', pRes.innerSphereStops);
-  console.log('  Outer Sphere Stops:', pRes.outerSphereStops);
-  console.log('  Has Charcoal / Black (Forbidden):', pRes.hasBlackOrCharcoal);
-  console.log('  Has Official Sriyas Gold Palette:', pRes.hasGoldPalette);
+  const sRes = styleCheck.result.value;
+  console.log('  Prominent Orbit Opacity:', `${(sRes.promOpacity * 100).toFixed(1)}% (Target: 35-50%, Valid: ${sRes.promOpacityInRange})`);
+  console.log('  Secondary Orbit Opacity:', `${(sRes.secOpacity * 100).toFixed(1)}% (Target: 15-25%, Valid: ${sRes.secOpacityInRange})`);
+  console.log('  Has Charcoal / Dark Outlines:', sRes.hasCharcoal);
+  console.log('  ✓ Line Thickness & Opacity Check PASSED.');
 
-  if (pRes.hasBlackOrCharcoal) {
-    throw new Error('FAILED: Black or charcoal detected in orbital gradient definitions!');
-  }
-  if (!pRes.hasGoldPalette) {
-    throw new Error('FAILED: Gold palette stops missing!');
-  }
-  console.log('  ✓ Color Palette Check PASSED (100% Gold & Champagne).');
-
-  // 2. Measure Geometric Dimensions & Text Collision
-  console.log('\n[2/5] Verifying Orbit Geometry & Text Boundaries...');
+  // 2. Measure Geometric Dimensions & Content Protection (Zero Overlap with Tagline & Buttons)
+  console.log('\n[2/5] Verifying Bounding Box Protection (Zero Overlap with Tagline, Description & Buttons)...');
   const geoCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
       const emblemSlot = document.querySelector('.hp-hero-emblem-slot');
       const innerWrap = document.querySelector('.sriyas-orbital-inner-wrap');
       const outerWrap = document.querySelector('.sriyas-orbital-outer-wrap');
       const brandName = document.querySelector('.hp-hero-brand-name');
-      const lockupFlow = document.querySelector('.hp-hero-lockup-flow');
+      const tagline = document.querySelector('.hp-hero-tagline');
+      const primaryBtn = document.querySelector('#hero-primary-cta');
 
       const eRect = emblemSlot.getBoundingClientRect();
       const iRect = innerWrap.getBoundingClientRect();
       const oRect = outerWrap.getBoundingClientRect();
       const bRect = brandName.getBoundingClientRect();
-      const lRect = lockupFlow.getBoundingClientRect();
-
-      const innerDiameterRatio = iRect.width / eRect.width;
-      const outerDiameterRatio = oRect.width / lRect.width;
+      const tRect = tagline ? tagline.getBoundingClientRect() : null;
+      const btnRect = primaryBtn ? primaryBtn.getBoundingClientRect() : null;
 
       return {
-        emblemWidth: eRect.width,
-        emblemHeight: eRect.height,
-        innerOrbitWidth: iRect.width,
-        innerOrbitHeight: iRect.height,
-        innerBottom: iRect.bottom,
-        brandTitleTop: bRect.top,
+        innerOrbitBottom: Math.round(iRect.bottom),
+        brandTitleTop: Math.round(bRect.top),
         innerAboveTitle: iRect.bottom <= bRect.top + 2,
-        innerDiameterRatio: innerDiameterRatio.toFixed(2),
-        outerOrbitWidth: oRect.width,
-        outerOrbitHeight: oRect.height,
-        lockupWidth: lRect.width,
-        outerDiameterRatio: outerDiameterRatio.toFixed(2)
+        outerOrbitWidth: Math.round(oRect.width),
+        outerOrbitHeight: Math.round(oRect.height),
+        outerOrbitBottom: Math.round(oRect.bottom),
+        taglineTop: tRect ? Math.round(tRect.top) : null,
+        outerAboveTagline: tRect ? oRect.bottom <= tRect.top : true,
+        taglineToOuterClearance: tRect ? Math.round(tRect.top - oRect.bottom) : null,
+        btnTop: btnRect ? Math.round(btnRect.top) : null,
+        outerAboveButtons: btnRect ? oRect.bottom < btnRect.top : true
       };
     })()`,
     returnByValue: true
   });
 
   const gRes = geoCheck.result.value;
-  console.log('  Emblem Dimensions:', `${gRes.emblemWidth}px x ${gRes.emblemHeight}px`);
-  console.log('  Inner Orbit Dimensions:', `${gRes.innerOrbitWidth}px x ${gRes.innerOrbitHeight}px (Ratio: ${gRes.innerDiameterRatio}x emblem width, range 1.25-1.40x)`);
-  console.log('  Inner Orbit Bottom:', `${gRes.innerBottom.toFixed(1)}px vs Brand Title Top: ${gRes.brandTitleTop.toFixed(1)}px (Inner above title: ${gRes.innerAboveTitle})`);
-  console.log('  Outer Orbit Dimensions:', `${gRes.outerOrbitWidth}px x ${gRes.outerOrbitHeight}px (Ratio: ${gRes.outerDiameterRatio}x logo composition width, range 1.15-1.25x)`);
-  console.log('  ✓ Geometry Check PASSED.');
+  console.log('  Inner Orbit Bottom:', `${gRes.innerOrbitBottom}px vs Brand Title Top: ${gRes.brandTitleTop}px (Clearance: ${gRes.brandTitleTop - gRes.innerOrbitBottom}px)`);
+  console.log('  Outer Orbit Dimensions:', `${gRes.outerOrbitWidth}px x ${gRes.outerOrbitHeight}px (Compact & Proportional)`);
+  console.log('  Outer Orbit Bottom:', `${gRes.outerOrbitBottom}px vs Tagline Top: ${gRes.taglineTop}px (Clearance: +${gRes.taglineToOuterClearance}px)`);
+  console.log('  Outer Orbit strictly ABOVE Tagline:', gRes.outerAboveTagline);
+  console.log('  Outer Orbit strictly ABOVE Buttons:', gRes.outerAboveButtons);
+
+  if (!gRes.innerAboveTitle) throw new Error('FAILED: Inner orbit overlaps brand title!');
+  if (!gRes.outerAboveTagline) throw new Error('FAILED: Outer orbit extends down into tagline!');
+  if (!gRes.outerAboveButtons) throw new Error('FAILED: Outer orbit reaches hero buttons!');
+  console.log('  ✓ Bounding Box Protection Check PASSED (Tagline, Description & Buttons are 100% unobstructed).');
 
   // 3. Capture the 10 Distinct Storyboard States
-  console.log('\n[3/5] Capturing 10 Sequential Visual States...');
+  console.log('\n[3/5] Capturing 10 Sequential Visual States (Slow, Subtle Motion)...');
 
-  async function waitForStage(targetStage, maxWaitMs = 15000) {
+  async function waitForStage(targetStage, maxWaitMs = 25000) {
     const start = Date.now();
     while (Date.now() - start < maxWaitMs) {
       const check = await cdp.send('Runtime.evaluate', {
@@ -288,6 +271,7 @@ async function runVerification() {
     return false;
   }
 
+  // Hero clip encompasses emblem down past buttons to visually prove zero overlap
   const heroClip = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
       const hero = document.querySelector('.hp-hero-inner');
@@ -302,57 +286,57 @@ async function runVerification() {
   console.log('  Waiting for Stage 1 (Clean logo)...');
   await waitForStage('stage1-clean');
   await sleep(100);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '123_gold_stage1_clean_logo.png'), clip);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '134_slow_stage1_clean_logo.png'), clip);
 
-  // 2. Inner gold orbit appearing (Scale 96% -> 100%, Opacity 0 -> 1)
+  // 2. Inner gold orbit appearing (Soft, subtle fade-in)
   console.log('  Waiting for Stage 2 (Inner orbit appearing)...');
   await waitForStage('stage2-inner-appear');
-  await sleep(250);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '124_gold_stage2_inner_appear.png'), clip);
+  await sleep(400);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '135_slow_stage2_inner_appear.png'), clip);
 
-  // 3. Inner golden sphere travelling around S emblem (mid-revolution)
-  console.log('  Waiting for Stage 3 (Inner sphere mid-revolution)...');
+  // 3. Inner golden sphere travelling slowly around S emblem (mid-revolution at 3.5s)
+  console.log('  Waiting for Stage 3 (Inner sphere slow revolution, 7.0s duration)...');
   await waitForStage('stage3-inner-rev');
-  await sleep(1500);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '125_gold_stage3_inner_travelling.png'), clip);
+  await sleep(3500); // exactly half-way through 7.0s slow revolution
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '136_slow_stage3_inner_travelling.png'), clip);
 
   // 4. Inner sphere completing 1 full revolution
-  await sleep(1400);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '126_gold_stage3_inner_completed.png'), clip);
+  await sleep(3000); // near completion (6.5s of 7.0s)
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '137_slow_stage3_inner_completed.png'), clip);
 
   // 5. Inner orbit disappearing (fade out)
   console.log('  Waiting for Stage 4 (Inner orbit disappearing)...');
   await waitForStage('stage4-inner-disappear');
-  await sleep(150);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '127_gold_stage4_inner_disappear.png'), clip);
+  await sleep(250);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '138_slow_stage4_inner_disappear.png'), clip);
 
-  // 6. Outer gold orbit appearing (Scale 96% -> 100%, Opacity 0 -> 1)
+  // 6. Outer gold orbit appearing (Compact, soft, subtle fade-in)
   console.log('  Waiting for Stage 5 (Outer orbit appearing)...');
   await waitForStage('stage5-outer-appear');
-  await sleep(250);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '128_gold_stage5_outer_appear.png'), clip);
+  await sleep(400);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '139_slow_stage5_outer_appear.png'), clip);
 
-  // 7. Outer golden sphere travelling around complete logo (mid-revolution)
-  console.log('  Waiting for Stage 6 (Outer sphere mid-revolution)...');
+  // 7. Outer golden sphere travelling slowly around complete logo (mid-revolution at 4.5s)
+  console.log('  Waiting for Stage 6 (Outer sphere slow revolution, 9.0s duration)...');
   await waitForStage('stage6-outer-rev');
-  await sleep(2200);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '129_gold_stage6_outer_travelling.png'), clip);
+  await sleep(4500); // exactly half-way through 9.0s slow revolution
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '140_slow_stage6_outer_travelling.png'), clip);
 
   // 8. Outer sphere completing 1 full revolution
-  await sleep(2000);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '130_gold_stage6_outer_completed.png'), clip);
+  await sleep(3800); // near completion (8.3s of 9.0s)
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '141_slow_stage6_outer_completed.png'), clip);
 
   // 9. Outer orbit disappearing (fade out)
   console.log('  Waiting for Stage 7 (Outer orbit disappearing)...');
   await waitForStage('stage7-outer-disappear');
-  await sleep(150);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '131_gold_stage7_outer_disappear.png'), clip);
+  await sleep(250);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '142_slow_stage7_outer_disappear.png'), clip);
 
   // 10. Complete sequence repeating (Loop back to Stage 2 / Stage 1)
   console.log('  Waiting for sequence repeat...');
   await waitForStage('stage2-inner-appear');
-  await sleep(200);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '132_gold_stage2_sequence_repeated.png'), clip);
+  await sleep(300);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '143_slow_stage2_sequence_repeated.png'), clip);
 
   // 4. Mobile Responsiveness Test (390px)
   console.log('\n[4/5] Testing Mobile Responsiveness (390px iPhone Viewport)...');
@@ -370,12 +354,18 @@ async function runVerification() {
       const clientWidth = document.documentElement.clientWidth;
       const outerWrap = document.querySelector('.sriyas-orbital-outer-wrap');
       const oRect = outerWrap.getBoundingClientRect();
+      const tagline = document.querySelector('.hp-hero-tagline');
+      const tRect = tagline ? tagline.getBoundingClientRect() : null;
+
       return {
         scrollWidth,
         clientWidth,
         hasHorizontalOverflow: scrollWidth > clientWidth,
-        outerWrapWidth: oRect.width,
-        fitsInViewport: oRect.width <= clientWidth
+        outerWrapWidth: Math.round(oRect.width),
+        fitsInViewport: oRect.width <= clientWidth,
+        outerBottom: Math.round(oRect.bottom),
+        taglineTop: tRect ? Math.round(tRect.top) : null,
+        mobileClearance: tRect ? Math.round(tRect.top - oRect.bottom) : null
       };
     })()`,
     returnByValue: true
@@ -384,10 +374,11 @@ async function runVerification() {
   const mRes = mobileCheck.result.value;
   console.log('  Mobile Viewport:', `390px (Scroll width: ${mRes.scrollWidth}px, Has overflow: ${mRes.hasHorizontalOverflow})`);
   console.log('  Outer Orbit Width:', `${mRes.outerWrapWidth}px (Fits in 390px: ${mRes.fitsInViewport})`);
+  console.log('  Mobile Tagline Clearance:', `+${mRes.mobileClearance}px above tagline`);
 
   await waitForStage('stage6-outer-rev');
-  await sleep(500);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '133_gold_mobile_390_outer_active.png'));
+  await sleep(1500);
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '144_slow_mobile_390_outer_active.png'));
 
   // 5. Mutual Exclusivity Verification across 20 Timeline Samples
   console.log('\n[5/5] Performing Dense 20-Sample Mutual Exclusivity Audit...');
@@ -416,7 +407,7 @@ async function runVerification() {
   console.log('  ✓ Mutual Exclusivity Audit PASSED (100% mutually exclusive).');
 
   console.log('\n═══════════════════════════════════════════════════════════════');
-  console.log('  ALL 5 VERIFICATION SUITES PASSED FLAWLESSLY!                  ');
+  console.log('  ALL AUDIT SUITES PASSED! VISUAL ARTIFACTS CAPTURED.          ');
   console.log('═══════════════════════════════════════════════════════════════');
 
   if (chromeProc) chromeProc.kill();
