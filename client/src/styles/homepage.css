@@ -466,197 +466,27 @@
   left: 50%;
   top: var(--hero-rings-origin-y, clamp(160px, 22vh, 230px));
   transform: translate(-50%, -50%);
-  width: clamp(700px, 100vw, 1140px);
-  height: clamp(700px, 100vw, 1140px);
+  width: clamp(300px, 45vw, 520px);
+  height: clamp(300px, 45vw, 520px);
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  /* Seamless radial edge masking: dissolves softly into ivory cream background */
-  mask-image: radial-gradient(circle at center, black 45%, transparent 78%);
-  -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 78%);
 }
 
-/* Center ambient glow giving warm depth against cream background */
+/* Center ambient glow giving warm depth against ivory cream background without yellowish haze */
 .hp-concentric-ambient-glow {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(300px, 45vw, 520px);
-  height: clamp(300px, 45vw, 520px);
+  width: clamp(260px, 34vw, 400px);
+  height: clamp(260px, 34vw, 400px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.07) 0%, rgba(250, 248, 243, 0) 65%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.045) 0%, rgba(251, 249, 244, 0) 70%);
   pointer-events: none;
-}
-
-/* Base ring wrapper centered at origin with strict 1:1 circular aspect ratio */
-.hp-concentric-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: ringBreathe 9s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-.hp-concentric-ring-circle {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  box-sizing: border-box;
-}
-
-/* ── Ring 1 (Innermost Halo): ~220px desktop, ~160px mobile ── */
-.hp-concentric-ring--1 {
-  width: clamp(160px, 22vw, 220px);
-  height: clamp(160px, 22vw, 220px);
-  animation-delay: 0s;
-}
-.hp-concentric-ring--1 .hp-concentric-ring-circle {
-  border: 1px solid rgba(197, 160, 89, 0.22);
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.06);
-}
-
-/* ── Ring 2 (Inner Core): ~380px desktop, ~270px mobile ── */
-.hp-concentric-ring--2 {
-  width: clamp(270px, 38vw, 380px);
-  height: clamp(270px, 38vw, 380px);
-  animation-delay: 1.2s;
-}
-.hp-concentric-ring--2 .hp-concentric-ring-circle {
-  border: 1px solid rgba(197, 160, 89, 0.16);
-}
-
-/* ── Ring 3 (Mid Primary): ~560px desktop, ~390px mobile ── */
-.hp-concentric-ring--3 {
-  width: clamp(390px, 56vw, 560px);
-  height: clamp(390px, 56vw, 560px);
-  animation-delay: 2.4s;
-}
-.hp-concentric-ring--3 .hp-concentric-ring-circle {
-  border: 1px solid rgba(212, 175, 55, 0.12);
-}
-
-/* ── Ring 4 (Mid Outer): ~760px desktop, ~520px mobile ── */
-.hp-concentric-ring--4 {
-  width: clamp(520px, 76vw, 760px);
-  height: clamp(520px, 76vw, 760px);
-  animation-delay: 3.6s;
-}
-.hp-concentric-ring--4 .hp-concentric-ring-circle {
-  border: 1px solid rgba(212, 175, 55, 0.08);
-}
-
-/* ── Ring 5 (Outermost Horizon): ~980px desktop, ~660px mobile ── */
-.hp-concentric-ring--5 {
-  width: clamp(660px, 98vw, 980px);
-  height: clamp(660px, 98vw, 980px);
-  animation-delay: 4.8s;
-}
-.hp-concentric-ring--5 .hp-concentric-ring-circle {
-  border: 1px solid rgba(212, 175, 55, 0.045);
-}
-
-/* Staggered Breathing Pulse (scale 0.985 to 1.015, ±15% opacity over 9s) */
-@keyframes ringBreathe {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.985);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.015);
-    opacity: 1.15;
-  }
-}
-
-/* Rotator wrapper taking full size of parent ring to sweep orbital dot along perimeter */
-.hp-concentric-rotator {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform;
-}
-
-/* Dot 1 on Ring 2: 34s linear infinite (clockwise) */
-.hp-concentric-rotator--ring2 {
-  animation: orbitClockwise 34s linear infinite;
-}
-
-/* Dot 2 on Ring 3: 48s linear infinite reverse (counter-clockwise from 135deg offset) */
-.hp-concentric-rotator--ring3 {
-  animation: orbitCounterClockwiseRing3 48s linear infinite;
-}
-
-/* Dot 3 on Ring 4: 62s linear infinite (clockwise from 250deg offset, opacity 0.65) */
-.hp-concentric-rotator--ring4 {
-  opacity: 0.65;
-  animation: orbitClockwiseRing4 62s linear infinite;
-}
-
-/* Precision Gold Orbital Particle */
-.hp-concentric-dot {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 3.5px;
-  height: 3.5px;
-  border-radius: 50%;
-  background: #D4AF37;
-  box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.45);
-  display: block;
-}
-
-/* Dashed Accent Arc wrapper and SVG */
-.hp-concentric-dashed-wrapper {
-  position: absolute;
-  inset: -1px;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: orbitClockwise 80s linear infinite;
-  will-change: transform;
-}
-
-.hp-concentric-dashed-arc {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-/* Orbit keyframes */
-@keyframes orbitClockwise {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes orbitCounterClockwiseRing3 {
-  from {
-    transform: rotate(135deg);
-  }
-  to {
-    transform: rotate(-225deg);
-  }
-}
-
-@keyframes orbitClockwiseRing4 {
-  from {
-    transform: rotate(250deg);
-  }
-  to {
-    transform: rotate(610deg);
-  }
 }
 
 .hp-hero-emblem-wrap {
@@ -668,13 +498,18 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SRIYAS HEALTHCARE TWO-STAGE GOLD ORBITAL LOGO ANIMATION
-   Subtle, Refined, Slow & Graceful Corporate Brand Signature
-   - Prominent orbit: 35–45% opacity, thin 1.1px stroke (#D4AF37 / #C8A64B)
-   - Secondary orbit: 18–22% opacity, delicate 0.8px stroke (#E9D9A6 / #F4EBD2)
-   - 3D Metallic Spheres with restrained warm-gold shadow (#A9822C)
-   - Constant angular velocity (linear): 7.0s inner revolution, 9.0s outer revolution
-   - Bounding Box Protection: Orbit strictly contained within logo area, zero overlap with tagline, description, or CTA buttons
+   SRIYAS HEALTHCARE UNIFIED THREE-RING ORBITAL SYSTEM
+   Minimalist Luxury Healthcare Technology Aesthetic
+   - Shared Geometric Origin: Centered precisely behind the golden 'S' emblem
+   - Exactly THREE Intentional Concentric Orbital Layers:
+     1. Secondary Inner Ring (r=64px, 0.75px stroke, 24% opacity)
+     2. Primary Orbital Ring (r=118px, 0.95px stroke, 36% opacity)
+        with ONE small, refined golden satellite (4.8px) revolving at 60s
+     3. Outer Accent Ring (r=186px, 0.65px stroke, 14% opacity)
+   - Critical Typography Masking: Soft feathered mask guarantees orbital lines
+     and moving particle naturally dissolve behind SRIYAS HEALTHCARE, PVT LTD,
+     and the tagline without any awkward cuts or letter collisions.
+   - Strict 1:1 Circular Geometry across all viewports
    ═══════════════════════════════════════════════════════════ */
 
 .hp-hero-brand-lockup-wrapper {
@@ -688,134 +523,63 @@
   z-index: 2;
 }
 
-/* ── Common Orbit Path Styles (Ultra-Light Gold & Champagne) ── */
-.sriyas-orbit-path {
-  fill: none;
-  pointer-events: none;
-  vector-effect: non-scaling-stroke;
-}
-
-.sriyas-orbit-path--prominent {
-  stroke-linecap: round;
-  opacity: 0.42;
-}
-
-.sriyas-orbit-path--secondary {
-  stroke-linecap: round;
-  opacity: 0.18;
-}
-
-/* ── Stage 2-4: Inner Orbital System (Around ONLY Central S Emblem) ── */
-.sriyas-orbital-inner-wrap {
+/* Master Orbital System Container centered precisely on the emblem */
+.sriyas-orbital-system-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.97);
-  width: clamp(124px, 13vw, 144px);
-  height: clamp(124px, 13vw, 144px);
-  pointer-events: none;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
-  will-change: opacity, transform;
-}
-
-/* Stage 2 & 3: Inner orbit visible and scaled */
-.sriyas-orbital-inner-wrap.is-entering,
-.sriyas-orbital-inner-wrap.is-rotating {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Stage 4: Inner orbit fading out smoothly */
-.sriyas-orbital-inner-wrap.is-exiting {
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, -50%) scale(1);
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-.sriyas-orbital-inner-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.sriyas-inner-ball-rotator {
-  transform-origin: 80px 80px;
-  transform: rotate(0deg);
-}
-
-/* Slow, graceful constant angular velocity (linear, 7.0s revolution) */
-.sriyas-inner-ball-rotator.is-spinning {
-  animation: sriyasInnerRev 7.0s linear forwards;
-  will-change: transform;
-}
-
-/* ── Stage 5-7: Outer Orbital System (Around Complete Logo Composition) ── */
-.sriyas-orbital-outer-wrap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.97);
-  width: clamp(380px, 42vw, 440px);
-  height: clamp(380px, 42vw, 440px);
+  transform: translate(-50%, -50%);
+  width: clamp(400px, 46vw, 540px);
+  height: clamp(400px, 46vw, 540px);
   aspect-ratio: 1 / 1;
   pointer-events: none;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
-  will-change: opacity, transform;
+  overflow: visible;
 }
 
-/* Stage 5 & 6: Outer orbit visible and scaled */
-.sriyas-orbital-outer-wrap.is-entering,
-.sriyas-orbital-outer-wrap.is-rotating {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Stage 7: Outer orbit fading out smoothly */
-.sriyas-orbital-outer-wrap.is-exiting {
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, -50%) scale(1);
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-.sriyas-orbital-outer-svg {
+.sriyas-orbital-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.sriyas-outer-ball-rotator {
-  transform-origin: 220px 220px;
-  transform: rotate(0deg);
+/* Base Orbital Rings (Sub-pixel, pure vector circles) */
+.sriyas-orbit-ring {
+  fill: none;
+  pointer-events: none;
+  vector-effect: non-scaling-stroke;
 }
 
-/* Slow, stately constant speed along true circular orbit (linear, 9.0s revolution) */
-.sriyas-outer-ball-rotator.is-spinning {
-  animation: sriyasOuterRev 9.0s linear forwards;
+/* Secondary Inner Ring: framing central S emblem */
+.sriyas-orbit-ring--secondary {
+  stroke-width: 0.75px;
+  opacity: 0.24;
+}
+
+/* Primary Orbital Ring: main focal orbital track */
+.sriyas-orbit-ring--primary {
+  stroke-width: 0.95px;
+  opacity: 0.36;
+}
+
+/* Outer Accent Ring: ethereal spatial accent */
+.sriyas-orbit-ring--outer {
+  stroke-width: 0.65px;
+  opacity: 0.14;
+}
+
+/* Single Refined Golden Satellite Rotator: 60s slow, continuous, steady revolution */
+.sriyas-satellite-rotator {
+  transform-origin: 300px 300px;
+  transform: rotate(0deg);
+  animation: sriyasSatelliteOrbit 60s linear infinite;
   will-change: transform;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ROTATION KEYFRAMES (EXACTLY ONE 360-DEGREE REVOLUTION, LINEAR)
-   ═══════════════════════════════════════════════════════════ */
-
-/* Inner Sphere 1-Revolution Rotation (0deg to 360deg = 360deg) */
-@keyframes sriyasInnerRev {
+@keyframes sriyasSatelliteOrbit {
   from {
     transform: rotate(0deg);
   }
@@ -824,26 +588,25 @@
   }
 }
 
-/* Outer Sphere 1-Revolution Rotation Along Perfect Circular Orbit (0deg to 360deg = 360deg) */
-@keyframes sriyasOuterRev {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Typography Priority: elevate text layers above decorative orbits */
+.hp-hero-title-slot {
+  position: relative;
+  z-index: 3;
 }
 
-/* Reduced motion accessibility preference: clean static logo & pause concentric ring animations */
+.hp-hero-title-stack {
+  position: relative;
+  z-index: 3;
+}
+
+.hp-hero-tagline {
+  position: relative;
+  z-index: 3;
+}
+
+/* Reduced motion accessibility preference: clean static logo & pause orbital satellite */
 @media (prefers-reduced-motion: reduce) {
-  .sriyas-orbital-inner-wrap,
-  .sriyas-orbital-outer-wrap {
-    display: none !important;
-  }
-
-  .hp-concentric-ring,
-  .hp-concentric-rotator,
-  .hp-concentric-dashed-wrapper {
+  .sriyas-satellite-rotator {
     animation: none !important;
   }
 }
@@ -3098,17 +2861,10 @@
     padding: 86px 20px 64px;
   }
 
-  .sriyas-orbital-inner-wrap {
-    width: clamp(112px, 13vw, 130px);
-    height: clamp(112px, 13vw, 130px);
+  .sriyas-orbital-system-wrap {
+    width: clamp(340px, 46vw, 440px);
+    height: clamp(340px, 46vw, 440px);
     aspect-ratio: 1 / 1;
-  }
-
-  .sriyas-orbital-outer-wrap {
-    width: clamp(320px, 48vw, 380px);
-    height: clamp(320px, 48vw, 380px);
-    aspect-ratio: 1 / 1;
-    max-width: 92vw;
   }
 
   .hp-hero-emblem-slot {
@@ -3172,17 +2928,10 @@
     margin-bottom: clamp(40px, 5.2vh, 52px);
   }
 
-  .sriyas-orbital-inner-wrap {
-    width: clamp(96px, 14vw, 114px);
-    height: clamp(96px, 14vw, 114px);
+  .sriyas-orbital-system-wrap {
+    width: clamp(280px, 86vw, 360px);
+    height: clamp(280px, 86vw, 360px);
     aspect-ratio: 1 / 1;
-  }
-
-  .sriyas-orbital-outer-wrap {
-    width: clamp(280px, 84vw, 330px);
-    height: clamp(280px, 84vw, 330px);
-    aspect-ratio: 1 / 1;
-    max-width: 94vw;
   }
 
   .hp-hero-emblem-slot {
@@ -3484,9 +3233,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sriyas-orbital-inner-wrap,
-  .sriyas-orbital-outer-wrap {
-    display: none !important;
+  .sriyas-satellite-rotator {
+    animation: none !important;
   }
 
   .hp-scroll-cue-line,
