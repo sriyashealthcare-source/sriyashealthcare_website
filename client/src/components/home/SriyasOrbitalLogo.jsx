@@ -46,6 +46,7 @@ export function SriyasInnerOrbit({ stage, isVisible, isEntering, isRotating, isE
         viewBox="0 0 160 160"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
           {/* Prominent soft metallic-gold gradient */}
@@ -155,9 +156,10 @@ export function SriyasOuterOrbit({ stage, isVisible, isEntering, isRotating, isE
     <div className={classes} aria-hidden="true" data-orbit-system="outer" data-stage={stage}>
       <svg
         className="sriyas-orbital-outer-svg"
-        viewBox="0 0 600 320"
+        viewBox="0 0 440 440"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
           {/* Prominent soft metallic-gold gradient */}
@@ -202,45 +204,48 @@ export function SriyasOuterOrbit({ stage, isVisible, isEntering, isRotating, isE
           </filter>
         </defs>
 
-        {/* 1. Secondary delicate champagne elliptical path (Concentric outer ellipse: rx = 262, ry = 128) */}
-        <path
-          d="M 300, 32 a 262,128 0 1,0 0.01,0 Z"
+        {/* 1. Secondary delicate champagne circular path (Concentric outer circle: cx = 220, cy = 220, r = 206) */}
+        <circle
+          cx="220"
+          cy="220"
+          r="206"
           className="sriyas-orbit-path sriyas-orbit-path--secondary"
           stroke="url(#sriyas-gold-outer-champagne)"
           strokeWidth="0.8"
         />
 
-        {/* 2. Prominent metallic-gold elliptical path (Primary orbit path: rx = 250, ry = 120) */}
-        <path
-          id="sriyas-outer-ellipse-track"
-          d="M 300, 40 a 250,120 0 1,0 0.01,0 Z"
+        {/* 2. Prominent metallic-gold circular path (Primary orbit path: cx = 220, cy = 220, r = 190) */}
+        <circle
+          cx="220"
+          cy="220"
+          r="190"
           className="sriyas-orbit-path sriyas-orbit-path--prominent"
           stroke="url(#sriyas-gold-outer-prominent)"
           strokeWidth="1.2"
         />
 
-        {/* 3. Golden Sphere with Luminous Glow travelling along the prominent ellipse path */}
+        {/* 3. Golden Sphere with Luminous Glow travelling along the prominent circle path (r = 190) */}
         <g className={`sriyas-outer-ball-rotator ${isRotating ? 'is-spinning' : ''}`}>
           {/* Radiant Celestial Halo */}
           <circle
-            cx="0"
-            cy="0"
+            cx="220"
+            cy="30"
             r="15"
             fill="url(#sriyas-gold-halo-outer)"
             filter="url(#sriyas-outer-glow-blur)"
           />
           {/* 3D Metallic-Gold Sphere (Desktop diameter ~11.2px) */}
           <circle
-            cx="0"
-            cy="0"
+            cx="220"
+            cy="30"
             r="5.6"
             fill="url(#sriyas-gold-outer-sphere)"
             filter="url(#sriyas-outer-sphere-shadow)"
           />
           {/* Specular Highlight Glint */}
           <circle
-            cx="-1.6"
-            cy="-1.6"
+            cx="218.4"
+            cy="28.4"
             r="1.6"
             fill="#FFFFFF"
             opacity="0.9"

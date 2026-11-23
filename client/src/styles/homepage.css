@@ -763,9 +763,9 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) scale(0.97);
-  width: clamp(340px, 48vw, 540px);
-  height: clamp(180px, 25.6vw, 288px);
-  max-width: 94vw;
+  width: clamp(380px, 42vw, 440px);
+  height: clamp(380px, 42vw, 440px);
+  aspect-ratio: 1 / 1;
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -800,16 +800,14 @@
 }
 
 .sriyas-outer-ball-rotator {
-  offset-path: path("M 300, 40 a 250,120 0 1,0 0.01,0 Z");
-  offset-rotate: 0deg;
-  offset-anchor: 0 0;
-  offset-distance: 0%;
+  transform-origin: 220px 220px;
+  transform: rotate(0deg);
 }
 
-/* Slow, stately constant speed along proportional ellipse (linear, 9.0s revolution) */
+/* Slow, stately constant speed along true circular orbit (linear, 9.0s revolution) */
 .sriyas-outer-ball-rotator.is-spinning {
   animation: sriyasOuterRev 9.0s linear forwards;
-  will-change: offset-distance;
+  will-change: transform;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -826,13 +824,13 @@
   }
 }
 
-/* Outer Sphere 1-Revolution Along Proportional Ellipse (0% to 100%) */
+/* Outer Sphere 1-Revolution Rotation Along Perfect Circular Orbit (0deg to 360deg = 360deg) */
 @keyframes sriyasOuterRev {
   from {
-    offset-distance: 0%;
+    transform: rotate(0deg);
   }
   to {
-    offset-distance: 100%;
+    transform: rotate(360deg);
   }
 }
 
@@ -3103,11 +3101,13 @@
   .sriyas-orbital-inner-wrap {
     width: clamp(112px, 13vw, 130px);
     height: clamp(112px, 13vw, 130px);
+    aspect-ratio: 1 / 1;
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(320px, 50vw, 450px);
-    height: clamp(170px, 26.6vw, 240px);
+    width: clamp(320px, 48vw, 380px);
+    height: clamp(320px, 48vw, 380px);
+    aspect-ratio: 1 / 1;
     max-width: 92vw;
   }
 
@@ -3175,11 +3175,13 @@
   .sriyas-orbital-inner-wrap {
     width: clamp(96px, 14vw, 114px);
     height: clamp(96px, 14vw, 114px);
+    aspect-ratio: 1 / 1;
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(290px, 88vw, 360px);
-    height: clamp(155px, 47vw, 192px);
+    width: clamp(280px, 84vw, 330px);
+    height: clamp(280px, 84vw, 330px);
+    aspect-ratio: 1 / 1;
     max-width: 94vw;
   }
 
