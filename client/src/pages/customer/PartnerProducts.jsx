@@ -38,7 +38,19 @@ export default function PartnerProducts() {
     async function loadPartnerData() {
       if (!partnerSlug) return;
 
-      // Handle direct legacy product slugs passed as partnerSlug
+      // Handle direct legacy brand and product slugs passed as partnerSlug
+      if (partnerSlug === 'peters') {
+        navigate('/products/ams', { replace: true });
+        return;
+      }
+      if (partnerSlug === 'liquiband') {
+        navigate('/products/ams?category=medical-adhesives', { replace: true });
+        return;
+      }
+      if (partnerSlug === 'gentacoll') {
+        navigate('/products/ams?category=wound-dressings', { replace: true });
+        return;
+      }
       if (partnerSlug === 'sterilene-mesh') {
         navigate('/products/ams/surgical-kit-hernia', { replace: true });
         return;

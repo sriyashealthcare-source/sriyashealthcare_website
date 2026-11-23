@@ -50,7 +50,9 @@ export default function Partners() {
         productService.getPublicCategories().catch(() => ({ categories: [] }))
       ]);
 
-      const activeBrands = (brandsRes?.brands || []).filter(b => b.isActive !== false);
+      const activeBrands = (brandsRes?.brands || []).filter(
+        b => b.isActive !== false && (b.productCount === undefined || b.productCount > 0)
+      );
       setBrands(activeBrands);
       setCategories(catsRes?.categories || []);
     } catch (err) {
