@@ -512,8 +512,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) scale(0.97);
-  width: clamp(108px, 11vw, 120px);
-  height: clamp(108px, 11vw, 120px);
+  width: clamp(124px, 13vw, 144px);
+  height: clamp(124px, 13vw, 144px);
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -521,7 +521,7 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease, transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
   will-change: opacity, transform;
 }
 
@@ -548,7 +548,7 @@
 }
 
 .sriyas-inner-ball-rotator {
-  transform-origin: 70px 70px;
+  transform-origin: 80px 80px;
   transform: rotate(0deg);
 }
 
@@ -564,9 +564,9 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) scale(0.97);
-  width: clamp(280px, 36vw, 380px);
-  height: clamp(280px, 36vw, 380px);
-  max-width: 90vw;
+  width: clamp(340px, 48vw, 540px);
+  height: clamp(180px, 25.6vw, 288px);
+  max-width: 94vw;
   pointer-events: none;
   z-index: 1;
   display: flex;
@@ -574,7 +574,7 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease, transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
   will-change: opacity, transform;
 }
 
@@ -601,14 +601,16 @@
 }
 
 .sriyas-outer-ball-rotator {
-  transform-origin: 220px 220px;
-  transform: rotate(0deg);
+  offset-path: path("M 300, 40 a 250,120 0 1,0 0.01,0 Z");
+  offset-rotate: 0deg;
+  offset-anchor: 0 0;
+  offset-distance: 0%;
 }
 
-/* Slow, stately constant angular velocity (linear, 9.0s revolution) */
+/* Slow, stately constant speed along proportional ellipse (linear, 9.0s revolution) */
 .sriyas-outer-ball-rotator.is-spinning {
   animation: sriyasOuterRev 9.0s linear forwards;
-  will-change: transform;
+  will-change: offset-distance;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -625,13 +627,13 @@
   }
 }
 
-/* Outer Sphere 1-Revolution Rotation (0deg to 360deg = 360deg) */
+/* Outer Sphere 1-Revolution Along Proportional Ellipse (0% to 100%) */
 @keyframes sriyasOuterRev {
   from {
-    transform: rotate(0deg);
+    offset-distance: 0%;
   }
   to {
-    transform: rotate(360deg);
+    offset-distance: 100%;
   }
 }
 
@@ -685,7 +687,7 @@
   flex-direction: column;
   align-items: center;
   gap: clamp(12px, 1.8vh, 18px);
-  margin-bottom: clamp(118px, 13vh, 138px);
+  margin-bottom: clamp(52px, 6.5vh, 68px);
 }
 
 .hp-hero-emblem-slot {
@@ -2899,14 +2901,14 @@
   }
 
   .sriyas-orbital-inner-wrap {
-    width: clamp(100px, 12vw, 116px);
-    height: clamp(100px, 12vw, 116px);
+    width: clamp(112px, 13vw, 130px);
+    height: clamp(112px, 13vw, 130px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(300px, 46vw, 360px);
-    height: clamp(300px, 46vw, 360px);
-    max-width: 90vw;
+    width: clamp(320px, 50vw, 450px);
+    height: clamp(170px, 26.6vw, 240px);
+    max-width: 92vw;
   }
 
   .hp-hero-emblem-slot {
@@ -2972,18 +2974,18 @@
   }
 
   .hp-hero-lockup-flow {
-    margin-bottom: clamp(82px, 11vh, 98px);
+    margin-bottom: clamp(40px, 5.2vh, 52px);
   }
 
   .sriyas-orbital-inner-wrap {
-    width: clamp(90px, 13vw, 102px);
-    height: clamp(90px, 13vw, 102px);
+    width: clamp(96px, 14vw, 114px);
+    height: clamp(96px, 14vw, 114px);
   }
 
   .sriyas-orbital-outer-wrap {
-    width: clamp(270px, 84vw, 310px);
-    height: clamp(270px, 84vw, 310px);
-    max-width: 90vw;
+    width: clamp(290px, 88vw, 360px);
+    height: clamp(155px, 47vw, 192px);
+    max-width: 94vw;
   }
 
   .hp-hero-emblem-slot {

@@ -380,6 +380,15 @@ async function runVerification() {
   await sleep(1500);
   await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '144_slow_mobile_390_outer_active.png'));
 
+  // Reset viewport back to desktop for continuous checks
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: 1280,
+    height: 800,
+    deviceScaleFactor: 1,
+    mobile: false
+  });
+  await sleep(500);
+
   // 5. Mutual Exclusivity Verification across 20 Timeline Samples
   console.log('\n[5/5] Performing Dense 20-Sample Mutual Exclusivity Audit...');
   let overlapViolations = 0;
@@ -388,15 +397,26 @@ async function runVerification() {
       expression: `(() => {
         const inner = document.querySelector('.sriyas-orbital-inner-wrap');
         const outer = document.querySelector('.sriyas-orbital-outer-wrap');
-        const iVis = window.getComputedStyle(inner).visibility === 'visible' && parseFloat(window.getComputedStyle(inner).opacity) > 0.05;
-        const oVis = window.getComputedStyle(outer).visibility === 'visible' && parseFloat(window.getComputedStyle(outer).opacity) > 0.05;
-        return { iVis, oVis, bothVisible: iVis && oVis };
+        const logo = document.querySelector('[data-testid="sriyas-orbital-logo"]');
+        const iStyle = inner ? window.getComputedStyle(inner) : null;
+        const oStyle = outer ? window.getComputedStyle(outer) : null;
+        const iVis = iStyle && iStyle.visibility === 'visible' && parseFloat(iStyle.opacity) > 0.05;
+        const oVis = oStyle && oStyle.visibility === 'visible' && parseFloat(oStyle.opacity) > 0.05;
+        return {
+          stage: logo?.getAttribute('data-stage'),
+          iVis,
+          oVis,
+          bothVisible: !!(iVis && oVis)
+        };
       })()`,
       returnByValue: true
     });
-    if (sample.result.value.bothVisible) {
+    const val = sample.result.value || {};
+    if (val.bothVisible) {
       overlapViolations++;
-      console.error(`  Violation at sample ${i + 1}: BOTH inner and outer orbits are visible!`);
+      console.error(`  Violation at sample ${i + 1} (Stage: ${val.stage}): iVis=${val.iVis}, oVis=${val.oVis}`);
+    } else {
+      console.log(`  Sample ${i + 1}: OK (Stage: ${val.stage}, inner: ${val.iVis ? 'visible' : 'hidden'}, outer: ${val.oVis ? 'visible' : 'hidden'})`);
     }
     await sleep(400);
   }
