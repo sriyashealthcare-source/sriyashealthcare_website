@@ -37,6 +37,17 @@ export default function PartnerProducts() {
 
     async function loadPartnerData() {
       if (!partnerSlug) return;
+
+      // Handle direct legacy product slugs passed as partnerSlug
+      if (partnerSlug === 'sterilene-mesh') {
+        navigate('/products/ams/surgical-kit-hernia', { replace: true });
+        return;
+      }
+      if (partnerSlug === 'peters-c-section-kit') {
+        navigate('/products/ams/surgical-kit-obstetrics', { replace: true });
+        return;
+      }
+
       try {
         setLoading(true);
         setError('');
@@ -136,13 +147,17 @@ export default function PartnerProducts() {
     };
   }, [partnerSlug, navigate, initialCategoryParam]);
 
-  // Distinct category filter options derived from active categories & products
+  // Distinct category filter options derived from active categories & products (sorted by displayOrder)
   const categoryFilterOptions = useMemo(() => {
     const list = [{ id: 'all', name: 'All Categories' }];
     const seenCatIds = new Set();
 
-    // From populated category collection
-    for (const cat of categories) {
+    // From populated category collection, strictly sorted by displayOrder
+    const sortedCats = [...categories].sort(
+      (a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99)
+    );
+
+    for (const cat of sortedCats) {
       const cid = String(cat._id);
       if (!seenCatIds.has(cid)) {
         seenCatIds.add(cid);
@@ -167,7 +182,7 @@ export default function PartnerProducts() {
     return list;
   }, [categories, products]);
 
-  // Filtered products by category and search query
+  // Filtered products by category and search query, ordered strictly by Category I-VI and product order
   const filteredProducts = useMemo(() => {
     let result = products;
 
@@ -203,8 +218,16 @@ export default function PartnerProducts() {
       });
     }
 
-    return result;
-  }, [products, selectedCategory, searchQuery]);
+    // Strict Roman numeral category ordering (I through VI) then product displayOrder
+    return [...result].sort((a, b) => {
+      const catA = categories.find(c => String(c._id) === String(a.category?._id || a.category));
+      const catB = categories.find(c => String(c._id) === String(b.category?._id || b.category));
+      const catOrderA = Number(catA?.displayOrder) || 99;
+      const catOrderB = Number(catB?.displayOrder) || 99;
+      if (catOrderA !== catOrderB) return catOrderA - catOrderB;
+      return (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0);
+    });
+  }, [products, selectedCategory, searchQuery, categories]);
 
   const brandLogoUrl = brand?.logoUrl ? resolveAssetUrl(brand.logoUrl) : '';
 

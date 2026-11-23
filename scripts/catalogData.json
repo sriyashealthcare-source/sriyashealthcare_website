@@ -1,6 +1,19 @@
 {
   "brands": [
     {
+      "_id": "65e8a123bcdef0123456789a",
+      "createdAt": "2026-11-23T16:31:21.799Z",
+      "slug": "ams",
+      "name": "Advanced Medical Solutions",
+      "description": "Advanced Medical Solutions (AMS) is a world-leading developer and manufacturer of innovative tissue adhesives, surgical sutures, laparoscopic port access systems, and advanced wound care technologies.",
+      "logoUrl": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048218/sriyas-healthcare/brands/advanced-medical-solutions-logo.jpg",
+      "seoTitle": "Advanced Medical Solutions (AMS) Surgical & Wound Care | Sriyas Healthcare",
+      "seoDescription": "Explore the complete portfolio of Advanced Medical Solutions (AMS) distributed by Sriyas Healthcare in India: Medical Adhesives, Sutures, Surgical Kits, Haemostasis, Wound Dressings, and Trocar systems.",
+      "displayOrder": 1,
+      "isActive": true,
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
       "slug": "peters",
       "name": "Peters Surgical",
       "tabLabel": "Peters Surgical",
@@ -51,204 +64,349 @@
   ],
   "categories": [
     {
-      "name": "Synthetic Absorbable Sutures",
+      "_id": "80f8a373a28951b30452530c",
+      "createdAt": "2026-11-07T14:49:31.824Z",
       "slug": "peters-synthetic-absorbable-sutures",
-      "brandSlug": "peters",
+      "name": "Synthetic Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "Synthetic Absorbable Sutures",
       "description": "High-performance sutures with predictable absorption and superior tensile strength.",
       "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048270/sriyas-healthcare/categories/cat-peters-synthetic-sutures.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-synthetic-sutures"
+        "publicId": "sriyas-healthcare/categories/cat-peters-synthetic-sutures",
+        "format": "jpg"
       },
       "displayOrder": 1,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.725Z"
     },
     {
-      "name": "Natural Absorbable Sutures",
+      "_id": "dff9a2229cc64b41f551b3ed",
+      "createdAt": "2026-11-07T14:49:31.827Z",
       "slug": "peters-natural-absorbable-sutures",
-      "brandSlug": "peters",
+      "name": "Natural Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "Natural Absorbable Sutures",
       "description": "Time-tested natural sutures with reliable enzymatic absorption.",
       "heroGradient": "linear-gradient(135deg,#1a4a3c,#2d7a5e)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048259/sriyas-healthcare/categories/cat-peters-natural-sutures.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-natural-sutures"
+        "publicId": "sriyas-healthcare/categories/cat-peters-natural-sutures",
+        "format": "jpg"
       },
       "displayOrder": 2,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.727Z"
     },
     {
-      "name": "Non-Absorbable Sutures",
+      "_id": "4244e91bf07bf43850be13d8",
+      "createdAt": "2026-11-07T14:49:31.828Z",
       "slug": "peters-non-absorbable-sutures",
-      "brandSlug": "peters",
+      "name": "Non-Absorbable Sutures",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "Non-Absorbable Sutures",
       "description": "Permanent sutures for long-term tissue approximation and support.",
       "heroGradient": "linear-gradient(135deg,#1a2a4a,#2d4a7a)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048261/sriyas-healthcare/categories/cat-peters-non-absorbable.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-non-absorbable"
+        "publicId": "sriyas-healthcare/categories/cat-peters-non-absorbable",
+        "format": "jpg"
       },
       "displayOrder": 3,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.730Z"
     },
     {
-      "name": "Surgical Mesh",
+      "_id": "ade119ad090cfc2f9a5ac32f",
+      "createdAt": "2026-11-07T14:49:31.830Z",
       "slug": "peters-surgical-mesh",
-      "brandSlug": "peters",
+      "name": "Surgical Mesh",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "Sterilene Mesh",
       "description": "Flat knitted polypropylene mesh — the ideal choice for open & laparoscopic hernia repairs.",
       "heroGradient": "linear-gradient(135deg,#2a1a4a,#4a2d7a)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048267/sriyas-healthcare/categories/cat-peters-surgical-mesh.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-mesh"
+        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-mesh",
+        "format": "jpg"
       },
       "displayOrder": 4,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.732Z"
     },
     {
-      "name": "Surgical Kits · Obstetrics",
+      "_id": "889a1891a93ad80d926c17e3",
+      "createdAt": "2026-11-07T14:49:31.832Z",
       "slug": "peters-surgical-kits-obstetrics",
-      "brandSlug": "peters",
+      "name": "Surgical Kits · Obstetrics",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "C-Section Kit",
       "description": "Complete pre-assembled kits for Caesarean Section — Polycol™ + Stericryl™.",
       "heroGradient": "linear-gradient(135deg,#4a1a3c,#7a2d5e)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048265/sriyas-healthcare/categories/cat-peters-obstetrics-kits.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-obstetrics-kits"
+        "publicId": "sriyas-healthcare/categories/cat-peters-obstetrics-kits",
+        "format": "jpg"
       },
       "displayOrder": 5,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.735Z"
     },
     {
-      "name": "Haemostasis · Titanium Clips",
+      "_id": "3df3ab65d5682ec9cd626643",
+      "createdAt": "2026-11-07T14:49:31.835Z",
       "slug": "peters-haemostasis-titanium-clips",
-      "brandSlug": "peters",
+      "name": "Haemostasis · Titanium Clips",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "Titanium Hemostatic Clips",
       "description": "Pure titanium clips — biologically inert, radio-opaque, MRI compatible.",
       "heroGradient": "linear-gradient(135deg,#1a3a4a,#2d5e7a)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048256/sriyas-healthcare/categories/cat-peters-titanium-clips.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-titanium-clips"
+        "publicId": "sriyas-healthcare/categories/cat-peters-titanium-clips",
+        "format": "jpg"
       },
       "displayOrder": 6,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.737Z"
     },
     {
-      "name": "Surgical Adhesive",
+      "_id": "99b356a9fc4fec3a7c02665c",
+      "createdAt": "2026-11-07T14:49:31.837Z",
       "slug": "peters-surgical-adhesive",
-      "brandSlug": "peters",
+      "name": "Surgical Adhesive",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "IFABOND®",
       "description": "A few drops glue a lot — n-hexyl cyanoacrylate surgical adhesive. EU MDR certified.",
       "heroGradient": "linear-gradient(135deg,#c0392b,#e74c3c)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048262/sriyas-healthcare/categories/cat-peters-surgical-adhesive.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-adhesive"
+        "publicId": "sriyas-healthcare/categories/cat-peters-surgical-adhesive",
+        "format": "jpg"
       },
       "displayOrder": 7,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.740Z"
     },
     {
-      "name": "Barbed Sutures · Knotless",
+      "_id": "f8c3d46e031ac1dbe894463d",
+      "createdAt": "2026-11-07T14:49:31.840Z",
       "slug": "peters-barbed-sutures-knotless",
-      "brandSlug": "peters",
+      "name": "Barbed Sutures · Knotless",
+      "brand": "3cdaf38cd6ec21cb2897de48",
       "heroTitle": "FILBLOC® Barbed Sutures",
       "description": "Knotless closure device with Final Lock System — absorbable and non-absorbable.",
       "heroGradient": "linear-gradient(135deg,#00695c,#00897b)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048255/sriyas-healthcare/categories/cat-peters-barbed-sutures.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-peters-barbed-sutures"
+        "publicId": "sriyas-healthcare/categories/cat-peters-barbed-sutures",
+        "format": "jpg"
       },
       "displayOrder": 8,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.742Z"
     },
     {
-      "name": "Topical Skin Adhesive",
+      "_id": "e93935d6019c0b920303264a",
+      "createdAt": "2026-11-07T14:49:31.843Z",
       "slug": "liquiband-topical-skin-adhesive",
-      "brandSlug": "liquiband",
+      "name": "Topical Skin Adhesive",
+      "brand": "a442964e0705299d0edebdfd",
       "heroTitle": "LiquiBand® Optima",
       "description": "Topical skin adhesive — microbial barrier in 10 seconds. Take the sting out of wound closure.",
       "heroGradient": "linear-gradient(135deg,#0d2d5e,#1a5799)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048253/sriyas-healthcare/categories/cat-liquiband-skin-adhesive.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-liquiband-skin-adhesive"
+        "publicId": "sriyas-healthcare/categories/cat-liquiband-skin-adhesive",
+        "format": "jpg"
       },
       "displayOrder": 9,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.744Z"
     },
     {
-      "name": "Hernia Mesh Fixation",
+      "_id": "eb6de5974e0ec833f8bb2e5f",
+      "createdAt": "2026-11-07T14:49:31.846Z",
       "slug": "liquiband-hernia-mesh-fixation",
-      "brandSlug": "liquiband",
+      "name": "Hernia Mesh Fixation",
+      "brand": "a442964e0705299d0edebdfd",
       "heroTitle": "LiquiBand® FIX8®",
       "description": "Laparoscopic hernia mesh fixation device — atraumatic, precise, strong.",
       "heroGradient": "linear-gradient(135deg,#1a3a5c,#2d6b9e)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048251/sriyas-healthcare/categories/cat-liquiband-mesh-fixation.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-liquiband-mesh-fixation"
+        "publicId": "sriyas-healthcare/categories/cat-liquiband-mesh-fixation",
+        "format": "jpg"
       },
       "displayOrder": 10,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.747Z"
     },
     {
-      "name": "Wound Care · Infection Management",
+      "_id": "f54e7074526254eddae12e54",
+      "createdAt": "2026-11-07T14:49:31.849Z",
       "slug": "cutimed-wound-care-infection-management",
-      "brandSlug": "cutimed",
+      "name": "Wound Care · Infection Management",
+      "brand": "174cfc5a46c3f32f366f01f2",
       "heroTitle": "Cutimed® Sorbact®",
       "description": "Clinically proven antibiotic-free wound infection management — purely physical mode of action.",
       "heroGradient": "linear-gradient(135deg,#006064,#00838f)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048245/sriyas-healthcare/categories/cat-cutimed-wound-care.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-cutimed-wound-care"
+        "publicId": "sriyas-healthcare/categories/cat-cutimed-wound-care",
+        "format": "jpg"
       },
       "displayOrder": 11,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.749Z"
     },
     {
-      "name": "Haemostasis · Antibiotic Collagen Sponge",
+      "_id": "1284f1c2c7f8e3b6df857379",
+      "createdAt": "2026-11-07T14:49:31.852Z",
       "slug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
-      "brandSlug": "gentacoll",
+      "name": "Haemostasis · Antibiotic Collagen Sponge",
+      "brand": "2748e2cc45786d848ccbcb18",
       "heroTitle": "Genta-Coll® resorb",
       "description": "Haemostatic collagen sponge with gentamicin sulphate — effective protection with strong haemostyptic action.",
       "heroGradient": "linear-gradient(135deg,#3e2723,#6d4c41)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048248/sriyas-healthcare/categories/cat-gentacoll-haemostasis.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-gentacoll-haemostasis"
+        "publicId": "sriyas-healthcare/categories/cat-gentacoll-haemostasis",
+        "format": "jpg"
       },
       "displayOrder": 12,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.751Z"
     },
     {
-      "name": "Absorbable Biomaterials & Tissue Reinforcement",
+      "_id": "81773e70be835ab40127286f",
+      "createdAt": "2026-11-07T14:49:31.855Z",
       "slug": "gore-absorbable-biomaterials-tissue-reinforcement",
-      "brandSlug": "gore",
+      "name": "Absorbable Biomaterials & Tissue Reinforcement",
+      "brand": "3f6ee4170b954093815e47a5",
       "heroTitle": "W.L. Gore & Associates",
       "description": "Innovative biomaterials for abdominal wall reconstruction, hernia repair and tissue reinforcement — backed by 20+ years of clinical results.",
       "heroGradient": "linear-gradient(135deg,#2c2c2c,#5c1a1a)",
       "heroImage": {
         "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048249/sriyas-healthcare/categories/cat-gore-biomaterials.jpg",
-        "publicId": "sriyas-healthcare/categories/cat-gore-biomaterials"
+        "publicId": "sriyas-healthcare/categories/cat-gore-biomaterials",
+        "format": "jpg"
       },
       "displayOrder": 13,
-      "isActive": true
+      "isActive": true,
+      "updatedAt": "2026-11-07T14:57:11.754Z"
+    },
+    {
+      "_id": "cat_ams_01_med_adhesives",
+      "name": "I) MEDICAL ADHESIVES",
+      "slug": "medical-adhesives",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 1,
+      "heroTitle": "I) MEDICAL ADHESIVES",
+      "description": "Advanced tissue and skin adhesives including IFABOND surgical cyanoacrylate and LiquiBand topical and hernia fixation systems.",
+      "seoTitle": "Medical Adhesives · IFABOND & LiquiBand | Sriyas Healthcare",
+      "seoDescription": "Explore advanced medical adhesives including IFABOND and LiquiBand from Advanced Medical Solutions distributed by Sriyas Healthcare.",
+      "heroGradient": "linear-gradient(135deg, #1b3a4b, #2c6e80)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
+      "_id": "cat_ams_02_sutures",
+      "name": "II) SUTURES",
+      "slug": "sutures",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 2,
+      "heroTitle": "II) SUTURES",
+      "description": "Comprehensive portfolio of surgical sutures: Natural Absorbable, Synthetic Absorbable, Non-Absorbable, and FILBLOC Knotless Barbed Sutures.",
+      "seoTitle": "Surgical Sutures · Absorbable & Non-Absorbable | Sriyas Healthcare",
+      "seoDescription": "High-precision surgical sutures by Peters Surgical and AMS: Catgut Chromic, Polycol, Stericryl, Monocol, Sterilene, and FILBLOC barbed sutures.",
+      "heroGradient": "linear-gradient(135deg, #14213d, #284b63)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
+      "_id": "cat_ams_03_surgical_kits",
+      "name": "III) SURGICAL KITS",
+      "slug": "surgical-kits",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 3,
+      "heroTitle": "III) SURGICAL KITS",
+      "description": "Pre-assembled specialized surgical kits: Surgical Kit - Obstetrics (C-Section) and Surgical Kit - Hernia repair mesh systems.",
+      "seoTitle": "Surgical Kits · Obstetrics & Hernia | Sriyas Healthcare",
+      "seoDescription": "Specialized pre-assembled surgical kits: Surgical Kit - Obstetrics and Surgical Kit - Hernia by Advanced Medical Solutions.",
+      "heroGradient": "linear-gradient(135deg, #1a2f42, #355070)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
+      "_id": "cat_ams_04_haemostasis",
+      "name": "IV) HAEMOSTASIS",
+      "slug": "haemostasis",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 4,
+      "heroTitle": "IV) HAEMOSTASIS",
+      "description": "High-grade surgical haemostasis solutions including titanium hemostatic ligation clips for open and endoscopic procedures.",
+      "seoTitle": "Haemostasis · Titanium Hemostatic Clips | Sriyas Healthcare",
+      "seoDescription": "Precision titanium hemostatic ligation clips by Peters Surgical and AMS for secure vascular occlusion.",
+      "heroGradient": "linear-gradient(135deg, #1c2541, #3a506b)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
+      "_id": "cat_ams_05_wound_dressings",
+      "name": "V) WOUND DRESSINGS",
+      "slug": "wound-dressings",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 5,
+      "heroTitle": "V) WOUND DRESSINGS",
+      "description": "Advanced collagen sponge and antibiotic wound dressing solutions including Genta-Coll resorb by Resorba / AMS.",
+      "seoTitle": "Wound Dressings · Genta-Coll resorb | Sriyas Healthcare",
+      "seoDescription": "Genta-Coll resorb antibiotic collagen sponge for surgical haemostasis and local infection prophylaxis.",
+      "heroGradient": "linear-gradient(135deg, #22223b, #4a4e69)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
+    },
+    {
+      "_id": "cat_ams_06_trocar",
+      "name": "VI) TROCAR",
+      "slug": "trocar",
+      "brand": "65e8a123bcdef0123456789a",
+      "displayOrder": 6,
+      "heroTitle": "VI) TROCAR",
+      "description": "YelloPort® Elite — Reposable Laparoscopic Port Access System by Microline Surgical. Universal Seal (5-12mm) and premium reusable cannula & obturators.",
+      "seoTitle": "Trocar · YelloPort® Elite Laparoscopic Port Access System | Sriyas Healthcare",
+      "seoDescription": "YelloPort® Elite reposable laparoscopic trocar port access system with universal 5-12mm seal and reusable cannula and obturators.",
+      "heroGradient": "linear-gradient(135deg, #0d1b2a, #1b263b)",
+      "isActive": true,
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "updatedAt": "2026-11-23T16:31:21.810Z"
     }
   ],
   "products": [
     {
+      "_id": "35f7e506ecf50cea69f776b0",
+      "createdAt": "2026-11-07T14:49:31.857Z",
+      "slug": "i-col",
       "legacyId": "icol",
       "name": "I-Col™",
-      "slug": "i-col",
-      "brandSlug": "peters",
-      "categorySlug": "peters-synthetic-absorbable-sutures",
-      "cardCategory": "Braided · Polyglycolic Acid",
-      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglycolic Acid",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Synthetic Absorbable",
+      "detailCategory": "II) SUTURES · Synthetic Absorbable Sutures",
       "shortSpecification": "PGA · Coated · Absorption 60–75 Days",
       "description": "I-Col™ is a synthetic absorbable braided suture made from Polyglycolic Acid (PGA), coated with Calcium Stearate and Polycaprolactone. It provides high initial tensile strength with predictable absorption — ideal for procedures requiring extended wound support.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048286/sriyas-healthcare/products/peters-surgical/icol-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/icol-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -300,23 +458,30 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 1
+      "displayOrder": 20,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.758Z",
+      "lastViewedAt": "2026-11-07T14:50:42.321Z",
+      "viewCount": 2
     },
     {
+      "_id": "524ccc78797e0859c8a1adda",
+      "createdAt": "2026-11-07T14:49:31.860Z",
+      "slug": "i-col-fast",
       "legacyId": "icol_fast",
       "name": "I-Col™ Fast",
-      "slug": "i-col-fast",
-      "brandSlug": "peters",
-      "categorySlug": "peters-synthetic-absorbable-sutures",
-      "cardCategory": "Braided · Short Term",
-      "detailCategory": "Synthetic Absorbable Suture · Braided · Short Term",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Synthetic Absorbable",
+      "detailCategory": "II) SUTURES · Synthetic Absorbable Sutures",
       "shortSpecification": "Treated PGA · Absorption 40–45 Days",
       "description": "I-Col™ Fast is a short-term synthetic absorbable braided suture made from treated Polyglycolic Acid. Spontaneous elimination after 10 days saves surgical time and provides excellent wound healing with very soft thread handling.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048287/sriyas-healthcare/products/peters-surgical/icol_fast-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/icol_fast-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -368,23 +533,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 2
+      "displayOrder": 21,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.760Z"
     },
     {
+      "_id": "80893003417bd5cd21d97299",
+      "createdAt": "2026-11-07T14:49:31.863Z",
+      "slug": "polycol",
       "legacyId": "polycol",
       "name": "Polycol™",
-      "slug": "polycol",
-      "brandSlug": "peters",
-      "categorySlug": "peters-synthetic-absorbable-sutures",
-      "cardCategory": "Braided · Polyglactin 910",
-      "detailCategory": "Synthetic Absorbable Suture · Braided · Polyglactin 910",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Synthetic Absorbable",
+      "detailCategory": "II) SUTURES · Synthetic Absorbable Sutures",
       "shortSpecification": "Polyglactin 910 · Coated · Absorption 60–75 Days",
       "description": "Polycol™ is a synthetic absorbable braided suture made from Polyglactin 910, coated with Poly-Glycolide-co-Lactide and Calcium Stearate. It offers excellent tensile strength, improved handling and minimal tissue reaction.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048297/sriyas-healthcare/products/peters-surgical/polycol-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/polycol-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -437,23 +607,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 3
+      "displayOrder": 22,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.763Z"
     },
     {
+      "_id": "7971eb872a1500f85c7fe99e",
+      "createdAt": "2026-11-07T14:49:31.866Z",
+      "slug": "stericryl",
       "legacyId": "stericryl",
       "name": "Stericryl™",
-      "slug": "stericryl",
-      "brandSlug": "peters",
-      "categorySlug": "peters-synthetic-absorbable-sutures",
-      "cardCategory": "Monofilament · Poliglecaprone 25",
-      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Poliglecaprone 25",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Synthetic Absorbable",
+      "detailCategory": "II) SUTURES · Synthetic Absorbable Sutures",
       "shortSpecification": "PGA-PCL · Absorption 90–120 Days",
       "description": "Stericryl™ is a synthetic absorbable monofilament suture made from Poliglecaprone 25 (PGA-PCL). It features smooth atraumatic tissue penetration, mild tissue reactivity, and reduces postoperative adhesion.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048299/sriyas-healthcare/products/peters-surgical/stericryl-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/stericryl-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -505,23 +680,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 4
+      "displayOrder": 23,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.765Z"
     },
     {
+      "_id": "ee9ff4b4ce2c4e45e60efdac",
+      "createdAt": "2026-11-07T14:49:31.869Z",
+      "slug": "monocol",
       "legacyId": "monocol",
       "name": "Monocol™",
-      "slug": "monocol",
-      "brandSlug": "peters",
-      "categorySlug": "peters-synthetic-absorbable-sutures",
-      "cardCategory": "Monofilament · Polydioxanone",
-      "detailCategory": "Synthetic Absorbable Suture · Monofilament · Polydioxanone",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Synthetic Absorbable",
+      "detailCategory": "II) SUTURES · Synthetic Absorbable Sutures",
       "shortSpecification": "PDO · Absorption 180–210 Days",
       "description": "Monocol™ is a long-term synthetic absorbable monofilament suture made from Polydioxanone (PDO). Provides sustained wound support over 60 days with homogeneous absorption kinetics and exceptional resistance in aggressive biological environments.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048295/sriyas-healthcare/products/peters-surgical/monocol-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/monocol-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -572,23 +752,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 5
+      "displayOrder": 24,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.767Z"
     },
     {
+      "_id": "36824cfce0e47626658b066f",
+      "createdAt": "2026-11-07T14:49:31.872Z",
+      "slug": "catgut-chromic",
       "legacyId": "catgut",
       "name": "Catgut Chromic™",
-      "slug": "catgut-chromic",
-      "brandSlug": "peters",
-      "categorySlug": "peters-natural-absorbable-sutures",
-      "cardCategory": "Twisted · Chromic Catgut",
-      "detailCategory": "Natural Absorbable Suture · Chromic Catgut · Twisted",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Natural Absorbable",
+      "detailCategory": "II) SUTURES · Natural Absorbable Sutures",
       "shortSpecification": "Natural Collagen · Absorption ~90 Days",
       "description": "Catgut Chromic™ is a natural absorbable suture made from the submucosa of sheep intestines, treated with chromium salts to prolong absorption. Naturally absorbed by enzymatic action of body tissues.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048271/sriyas-healthcare/products/peters-surgical/catgut-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/catgut-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -640,23 +825,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 6
+      "displayOrder": 10,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.770Z"
     },
     {
+      "_id": "c29cb307f0c8b20422511a4d",
+      "createdAt": "2026-11-07T14:49:31.874Z",
+      "slug": "sterisil",
       "legacyId": "sterisil",
       "name": "Sterisil™",
-      "slug": "sterisil",
-      "brandSlug": "peters",
-      "categorySlug": "peters-non-absorbable-sutures",
-      "cardCategory": "Braided Silk · Non-Absorbable",
-      "detailCategory": "Non-Absorbable Suture · Braided Silk · Black",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Non-Absorbable",
+      "detailCategory": "II) SUTURES · Non-Absorbable Sutures",
       "shortSpecification": "Black Braided Silk · Permanent",
       "description": "Sterisil™ is a non-absorbable surgical suture made from natural black braided silk, coated for smooth tissue passage. Valued for excellent handling characteristics and secure knotting in all surgical environments.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048310/sriyas-healthcare/products/peters-surgical/sterisil-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/sterisil-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -703,23 +893,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 7
+      "displayOrder": 30,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.772Z"
     },
     {
+      "_id": "0f80d5d4fae6bc2b93e2096d",
+      "createdAt": "2026-11-07T14:49:31.877Z",
+      "slug": "sterilon",
       "legacyId": "sterilon",
       "name": "Sterilon™",
-      "slug": "sterilon",
-      "brandSlug": "peters",
-      "categorySlug": "peters-non-absorbable-sutures",
-      "cardCategory": "Monofilament · Polyamide (Nylon)",
-      "detailCategory": "Non-Absorbable Suture · Monofilament Polyamide (Nylon) · Blue",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Non-Absorbable",
+      "detailCategory": "II) SUTURES · Non-Absorbable Sutures",
       "shortSpecification": "Monofilament Polyamide · Blue · Permanent",
       "description": "Sterilon™ is a synthetic non-absorbable monofilament suture made from Polyamide (Nylon). Blue coloured for enhanced visibility with low tissue reactivity and predictable long-term strength.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048309/sriyas-healthcare/products/peters-surgical/sterilon-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/sterilon-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -766,23 +961,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 8
+      "displayOrder": 31,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.775Z"
     },
     {
+      "_id": "19ad2af957d7d3d25731791b",
+      "createdAt": "2026-11-07T14:49:31.880Z",
+      "slug": "sterilene-suture",
       "legacyId": "sterilene_suture",
       "name": "Sterilene™ Suture",
-      "slug": "sterilene-suture",
-      "brandSlug": "peters",
-      "categorySlug": "peters-non-absorbable-sutures",
-      "cardCategory": "Monofilament · Polypropylene",
-      "detailCategory": "Non-Absorbable Suture · Monofilament Polypropylene · Blue",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Non-Absorbable",
+      "detailCategory": "II) SUTURES · Non-Absorbable Sutures",
       "shortSpecification": "Monofilament PP · Blue · Permanent",
       "description": "Sterilene™ is a synthetic non-absorbable monofilament suture made from Polypropylene — the most biologically inert suture material. Ideal for use in infected tissue and procedures requiring permanent strength.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048308/sriyas-healthcare/products/peters-surgical/sterilene_suture-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_suture-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -829,23 +1029,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 9
+      "displayOrder": 32,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.778Z"
     },
     {
+      "_id": "efed7d6fa93400d8df5b5d8b",
+      "createdAt": "2026-11-07T14:49:31.882Z",
+      "slug": "steribon",
       "legacyId": "steribon",
       "name": "Steribon™",
-      "slug": "steribon",
-      "brandSlug": "peters",
-      "categorySlug": "peters-non-absorbable-sutures",
-      "cardCategory": "Braided Polyester · Non-Absorbable",
-      "detailCategory": "Non-Absorbable Suture · Coated Braided Polyester",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Non-Absorbable",
+      "detailCategory": "II) SUTURES · Non-Absorbable Sutures",
       "shortSpecification": "Coated Braided PET · Permanent",
       "description": "Steribon™ is a synthetic non-absorbable coated braided polyester suture. It offers superior tensile strength — the highest of all non-absorbable sutures — and is the choice when permanent support is required.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048298/sriyas-healthcare/products/peters-surgical/steribon-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/steribon-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -892,38 +1097,44 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 10
+      "displayOrder": 33,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.780Z"
     },
     {
-      "legacyId": "sterilene_mesh",
-      "name": "Sterilene™ Mesh",
-      "slug": "sterilene-mesh",
-      "brandSlug": "peters",
-      "categorySlug": "peters-surgical-mesh",
-      "cardCategory": "Flat Knitted · Polypropylene",
-      "detailCategory": "Surgical Mesh · Flat Knitted Polypropylene",
-      "shortSpecification": "Light / Regular / Heavy variants\nOpen &\nLaparoscopic Hernia",
-      "description": "Sterilene™ Mesh is a flat knitted polypropylene mesh — the ideal mesh for open and laparoscopic hernia repairs. Available in Light, Regular and Heavy variants to suit the specific requirements of each procedure.",
+      "_id": "aa587c819ab9cca4cf789de0",
+      "createdAt": "2026-11-07T14:49:31.885Z",
+      "slug": "surgical-kit-hernia",
+      "legacyId": "surgical_kit_hernia",
+      "name": "Surgical Kit - Hernia",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_03_surgical_kits",
+      "cardCategory": "III) SURGICAL KITS",
+      "detailCategory": "III) SURGICAL KITS · Hernia Repair System",
+      "shortSpecification": "Light / Regular / Heavy variants\nOpen & Laparoscopic Hernia Kit",
+      "description": "Surgical Kit - Hernia provides a complete flat knitted polypropylene mesh and fixation system for open and laparoscopic hernia repairs. Available in Light, Regular and Heavy variants to suit the specific clinical requirements of inguinal, ventral, umbilical, and incisional hernia procedures.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048303/sriyas-healthcare/products/peters-surgical/sterilene_mesh-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_mesh-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048307/sriyas-healthcare/products/peters-surgical/sterilene_mesh-2.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/sterilene_mesh-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
       "features": [
-        "Sterilene Light: 56% lighter than regular mesh — better compatibility and fast tissue integration",
-        "Sterilene Regular: Good shape memory and perfect fitment against cavity wall",
-        "Sterilene Heavy: Highest tensile and burst strength — ideal for open hernia repair",
+        "Surgical Kit - Hernia Light: 56% lighter than regular mesh — better compatibility and fast tissue integration",
+        "Surgical Kit - Hernia Regular: Good shape memory and perfect fitment against cavity wall",
+        "Surgical Kit - Hernia Heavy: Highest tensile and burst strength — ideal for open hernia repair",
         "Monofilament polypropylene — excellent biological inertness",
-        "Laser cutting for precise edges",
-        "Hernia Kit and Hernia Kit Plus configurations available"
+        "Laser cutting for precise, fray-free edges",
+        "Complete Hernia Kit and Hernia Kit Plus procedural configurations available"
       ],
       "specifications": [
         {
@@ -952,12 +1163,12 @@
         }
       ],
       "applications": [
-        "Laparoscopic inguinal hernia repair (TAPP/TEP)",
-        "Open hernia repair",
+        "Laparoscopic inguinal hernia repair (TAPP / TEP)",
+        "Open inguinal hernia repair (Lichtenstein technique)",
         "Incisional hernia repair",
         "Ventral hernia repair",
         "Umbilical hernia repair",
-        "Hernia Kit — complete repair solution"
+        "Complete procedural hernia repair kit"
       ],
       "brochure": {
         "url": "",
@@ -965,23 +1176,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 11
+      "displayOrder": 2,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.783Z"
     },
     {
-      "legacyId": "csection",
-      "name": "Peters C-Section Kit",
-      "slug": "peters-c-section-kit",
-      "brandSlug": "peters",
-      "categorySlug": "peters-surgical-kits-obstetrics",
-      "cardCategory": "Pre-assembled Sterile Kit",
-      "detailCategory": "Surgical Kit · Obstetrics · Caesarean Section",
+      "_id": "9d46ec39d708d0fa200fc43d",
+      "createdAt": "2026-11-07T14:49:31.887Z",
+      "slug": "surgical-kit-obstetrics",
+      "legacyId": "surgical_kit_obstetrics",
+      "name": "Surgical Kit - Obstetrics",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_03_surgical_kits",
+      "cardCategory": "III) SURGICAL KITS",
+      "detailCategory": "III) SURGICAL KITS · Obstetrics · Caesarean Section",
       "shortSpecification": "Polycol™ + Stericryl™\nAll C-Section Layers",
-      "description": "Peters C-Section Kit is a pre-assembled sterile kit specifically designed for Caesarean Section procedures. Contains Polycol™ and Stericryl™ sutures — providing the complete suturing solution for all layers.",
+      "description": "Surgical Kit - Obstetrics is a complete pre-assembled sterile procedure kit specifically designed for Caesarean Section deliveries. Contains Polycol™ and Stericryl™ sutures engineered to provide the optimal suturing solution across all anatomical layers from uterus to subcuticular skin.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048273/sriyas-healthcare/products/peters-surgical/csection-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/csection-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1029,28 +1245,34 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 12
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.786Z"
     },
     {
-      "legacyId": "titanium",
-      "name": "Titanium Hemostatic Clips",
+      "_id": "4d2ddbe1bd9d35ce4c57d63e",
+      "createdAt": "2026-11-07T14:49:31.890Z",
       "slug": "titanium-hemostatic-clips",
-      "brandSlug": "peters",
-      "categorySlug": "peters-haemostasis-titanium-clips",
-      "cardCategory": "Pure Titanium · Haemostasis",
-      "detailCategory": "Haemostasis · Pure Titanium Ligation Clips",
+      "legacyId": "titanium",
+      "name": "Titanium Clips",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_04_haemostasis",
+      "cardCategory": "IV) HAEMOSTASIS",
+      "detailCategory": "IV) HAEMOSTASIS · Titanium Hemostatic Ligation Clips",
       "shortSpecification": "7 sizes · 7 colour codes\nOpen & Laparoscopic",
       "description": "Peters Surgical Titanium Hemostatic Clips are pure titanium, chevron-shaped clips for reliable vessel ligation. Biologically inert, radio-opaque, non-magnetic, and annealed to consistent malleability for more reliable tip-to-tip engulfing closure.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048312/sriyas-healthcare/products/peters-surgical/titanium-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/titanium-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048315/sriyas-healthcare/products/peters-surgical/titanium-2.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/titanium-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1104,28 +1326,34 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 13
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.788Z"
     },
     {
+      "_id": "2fcd93b13db663d51e1f49c3",
+      "createdAt": "2026-11-07T14:49:31.893Z",
+      "slug": "ifabond",
       "legacyId": "ifabond",
       "name": "IFABOND®",
-      "slug": "ifabond",
-      "brandSlug": "peters",
-      "categorySlug": "peters-surgical-adhesive",
-      "cardCategory": "Surgical Adhesive · n-hexyl cyanoacrylate",
-      "detailCategory": "Surgical Adhesive · n-hexyl cyanoacrylate · Class III Implantable",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_01_med_adhesives",
+      "cardCategory": "I) MEDICAL ADHESIVES",
+      "detailCategory": "I) MEDICAL ADHESIVES · Surgical Adhesive",
       "shortSpecification": "Class III Implantable · Biodegradable\nFlexible\napplicators: 15/37/45 cm",
       "description": "IFABOND® is an n-hexyl cyanoacrylate synthetic surgical adhesive. Class III implantable and biodegradable, EU MDR certified. Non-irritant and non-toxic — used by surgeons in France and abroad for over 20 years.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048289/sriyas-healthcare/products/peters-surgical/ifabond-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/ifabond-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048293/sriyas-healthcare/products/peters-surgical/ifabond-2.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/ifabond-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1173,28 +1401,34 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 14
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.791Z"
     },
     {
+      "_id": "543337f2703fe4f30ff52eae",
+      "createdAt": "2026-11-07T14:49:31.906Z",
+      "slug": "filbloc-90",
       "legacyId": "filbloc90",
       "name": "FILBLOC® 90",
-      "slug": "filbloc-90",
-      "brandSlug": "peters",
-      "categorySlug": "peters-barbed-sutures-knotless",
-      "cardCategory": "Absorbable Barbed · Monofilament",
-      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PGCL",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Barbed Sutures - Knotless",
+      "detailCategory": "II) SUTURES · Barbed Sutures - Knotless",
       "shortSpecification": "Poly(glycolide-co-Caprolactone) · PGCL\nComplete\nabsorption within weeks",
       "description": "FILBLOC® 90 is an absorbable monofilament barbed suture with Final Lock System. The knotless closure device fastens thread quickly and efficiently — eliminating the need to tie a knot at the beginning of suturing.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048279/sriyas-healthcare/products/peters-surgical/filbloc90-1.jpg",
           "publicId": "sriyas-healthcare/products/peters-surgical/filbloc90-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048282/sriyas-healthcare/products/peters-surgical/filbloc90-2.png",
           "publicId": "sriyas-healthcare/products/peters-surgical/filbloc90-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "png"
         }
       ],
       "cardBg": "",
@@ -1241,23 +1475,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 15
+      "displayOrder": 40,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.794Z"
     },
     {
+      "_id": "f0f58bc8df4581d3a9807bbc",
+      "createdAt": "2026-11-07T14:49:31.911Z",
+      "slug": "filbloc",
       "legacyId": "filbloc",
       "name": "FILBLOC®",
-      "slug": "filbloc",
-      "brandSlug": "peters",
-      "categorySlug": "peters-barbed-sutures-knotless",
-      "cardCategory": "Absorbable Barbed · Monofilament",
-      "detailCategory": "Barbed Suture · Absorbable · Monofilament · PDO",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Barbed Sutures - Knotless",
+      "detailCategory": "II) SUTURES · Barbed Sutures - Knotless",
       "shortSpecification": "Poly(p-dioxanone) PDO · Violet or Undyed\nAbsorption\n180–210 Days",
       "description": "FILBLOC® is an absorbable monofilament barbed suture with Final Lock System, made from poly(p-dioxanone) PDO. Provides 28-day strength retention with complete absorption between 180–210 days.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048275/sriyas-healthcare/products/peters-surgical/filbloc-1.png",
           "publicId": "sriyas-healthcare/products/peters-surgical/filbloc-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "png"
         }
       ],
       "cardBg": "",
@@ -1305,23 +1544,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 16
+      "displayOrder": 41,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.796Z"
     },
     {
+      "_id": "90b84d92e2d6b1123f85cad9",
+      "createdAt": "2026-11-07T14:49:31.914Z",
+      "slug": "filbloc-permanent",
       "legacyId": "filbloc_perm",
       "name": "FILBLOC® Permanent",
-      "slug": "filbloc-permanent",
-      "brandSlug": "peters",
-      "categorySlug": "peters-barbed-sutures-knotless",
-      "cardCategory": "Non-Absorbable Barbed · Monofilament",
-      "detailCategory": "Barbed Suture · Non-Absorbable · Monofilament · Polypropylene",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_02_sutures",
+      "cardCategory": "II) SUTURES · Barbed Sutures - Knotless",
+      "detailCategory": "II) SUTURES · Barbed Sutures - Knotless",
       "shortSpecification": "Polypropylene (PP) · Blue or Undyed\nPermanent",
       "description": "FILBLOC® Permanent is a non-absorbable monofilament barbed suture with Final Lock System, made from Polypropylene (PP). Provides permanent tissue approximation with the efficiency of knotless technique.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048285/sriyas-healthcare/products/peters-surgical/filbloc_perm-1.png",
           "publicId": "sriyas-healthcare/products/peters-surgical/filbloc_perm-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "png"
         }
       ],
       "cardBg": "",
@@ -1364,28 +1608,34 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 17
+      "displayOrder": 42,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.799Z"
     },
     {
+      "_id": "bcd136e6e11df855011dd676",
+      "createdAt": "2026-11-07T14:49:31.917Z",
+      "slug": "liquiband-optima",
       "legacyId": "lb_optima",
       "name": "LiquiBand® Optima",
-      "slug": "liquiband-optima",
-      "brandSlug": "liquiband",
-      "categorySlug": "liquiband-topical-skin-adhesive",
-      "cardCategory": "Topical Adhesive · Skin Closure",
-      "detailCategory": "Topical Skin Adhesive · LiquiBand® Optima",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_01_med_adhesives",
+      "cardCategory": "I) MEDICAL ADHESIVES",
+      "detailCategory": "I) MEDICAL ADHESIVES · Topical Skin Adhesive",
       "shortSpecification": "0.35g × 10 per box · REF OPT002\nMicrobial barrier in\n10 seconds",
       "description": "LiquiBand® Optima is a topical skin adhesive that forms a microbial barrier in just 10 seconds. It takes the sting out of wound closure by replacing sutures and staples for superficial skin lacerations.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048319/sriyas-healthcare/products/liquiband/lb_optima-1.jpg",
           "publicId": "sriyas-healthcare/products/liquiband/lb_optima-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048325/sriyas-healthcare/products/liquiband/lb_optima-2.jpg",
           "publicId": "sriyas-healthcare/products/liquiband/lb_optima-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1428,28 +1678,34 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 18
+      "displayOrder": 4,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.801Z"
     },
     {
+      "_id": "5facd1682343d412680ea63c",
+      "createdAt": "2026-11-07T14:49:31.921Z",
+      "slug": "liquiband-exceed",
       "legacyId": "lb_exceed",
       "name": "LiquiBand® Exceed™",
-      "slug": "liquiband-exceed",
-      "brandSlug": "liquiband",
-      "categorySlug": "liquiband-topical-skin-adhesive",
-      "cardCategory": "Topical Adhesive · Precision Delivery",
-      "detailCategory": "Topical Skin Adhesive · LiquiBand® Exceed™",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_01_med_adhesives",
+      "cardCategory": "I) MEDICAL ADHESIVES",
+      "detailCategory": "I) MEDICAL ADHESIVES · Topical Skin Adhesive",
       "shortSpecification": "XS (0.4g, 7cm yield) / Standard (0.8g, 30cm)\n99.5%\nantimicrobial barrier over 3 days",
       "description": "LiquiBand® Exceed™ Range offers improved precision and controlled delivery with innovative tip design. Available in XS (small incisions) and standard (medium to long incisions) — with 99.5% antimicrobial barrier over 3 days and 97.9% over 7 days.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048327/sriyas-healthcare/products/liquiband/lb_exceed-1.jpg",
           "publicId": "sriyas-healthcare/products/liquiband/lb_exceed-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048329/sriyas-healthcare/products/liquiband/lb_exceed-2.jpg",
           "publicId": "sriyas-healthcare/products/liquiband/lb_exceed-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1492,23 +1748,28 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 19
+      "displayOrder": 3,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.804Z"
     },
     {
+      "_id": "fc6080670231c297a72b2d4a",
+      "createdAt": "2026-11-07T14:49:31.924Z",
+      "slug": "liquiband-fix8",
       "legacyId": "fix8",
       "name": "LiquiBand® FIX8®",
-      "slug": "liquiband-fix8",
-      "brandSlug": "liquiband",
-      "categorySlug": "liquiband-hernia-mesh-fixation",
-      "cardCategory": "Surgical Device · Laparoscopic",
-      "detailCategory": "Surgical Device · Laparoscopic Hernia Mesh Fixation",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_01_med_adhesives",
+      "cardCategory": "I) MEDICAL ADHESIVES",
+      "detailCategory": "I) MEDICAL ADHESIVES · Hernia Mesh Fixation",
       "shortSpecification": "Liquid anchor fixation · New atraumatic tip\nVentral\n& Incisional Hernia",
       "description": "LiquiBand® FIX8® is a laparoscopic hernia mesh fixation device using innovative liquid anchors to deliver strong, atraumatic mesh fixation. Low incidence of post-operative pain compared to mechanical tacks.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048331/sriyas-healthcare/products/liquiband/fix8-1.jpg",
           "publicId": "sriyas-healthcare/products/liquiband/fix8-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1561,14 +1822,18 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 20
+      "displayOrder": 2,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.806Z"
     },
     {
+      "_id": "bd8403983ce6c155e77a213b",
+      "createdAt": "2026-11-07T14:49:31.926Z",
+      "slug": "cutimed-sorbact",
       "legacyId": "cutimed_sorbact",
       "name": "Cutimed® Sorbact®",
-      "slug": "cutimed-sorbact",
-      "brandSlug": "cutimed",
-      "categorySlug": "cutimed-wound-care-infection-management",
+      "brand": "174cfc5a46c3f32f366f01f2",
+      "category": "f54e7074526254eddae12e54",
       "cardCategory": "Wound Dressing · DACC Technology",
       "detailCategory": "Wound Dressing · Infection Management · DACC Technology",
       "shortSpecification": "73.1% bacterial reduction in 4 days\nNo antimicrobial\nagents released",
@@ -1577,7 +1842,8 @@
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048332/sriyas-healthcare/products/cutimed-sorbact/cutimed_sorbact-1.jpg",
           "publicId": "sriyas-healthcare/products/cutimed-sorbact/cutimed_sorbact-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1625,14 +1891,18 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 21
+      "displayOrder": 21,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.809Z"
     },
     {
+      "_id": "08005d029fabfddb03de796e",
+      "createdAt": "2026-11-07T14:49:31.930Z",
+      "slug": "cutimed-siltec-sorbact",
       "legacyId": "cutimed_siltec",
       "name": "Cutimed® Siltec® Sorbact®",
-      "slug": "cutimed-siltec-sorbact",
-      "brandSlug": "cutimed",
-      "categorySlug": "cutimed-wound-care-infection-management",
+      "brand": "174cfc5a46c3f32f366f01f2",
+      "category": "f54e7074526254eddae12e54",
       "cardCategory": "Silicone Foam · DACC Technology",
       "detailCategory": "Silicone Foam Dressing · Infection Management · DACC Technology",
       "shortSpecification": "Super-absorbent · Silicone border\nModerate to high\nexudate",
@@ -1641,7 +1911,8 @@
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048333/sriyas-healthcare/products/cutimed-sorbact/cutimed_siltec-1.jpg",
           "publicId": "sriyas-healthcare/products/cutimed-sorbact/cutimed_siltec-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1693,38 +1964,46 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 22
+      "displayOrder": 22,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.812Z"
     },
     {
-      "legacyId": "gentacoll",
-      "name": "Genta-Coll® resorb",
+      "_id": "22b11d55a81d4518db5f3445",
+      "createdAt": "2026-11-07T14:49:31.933Z",
       "slug": "genta-coll-resorb",
-      "brandSlug": "gentacoll",
-      "categorySlug": "gentacoll-haemostasis-antibiotic-collagen-sponge",
-      "cardCategory": "Resorbable · Collagen + Gentamicin",
-      "detailCategory": "Haemostasis · Resorbable Collagen Sponge · Antibiotic",
+      "legacyId": "gentacoll",
+      "name": "Genta-Coll resorb",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_05_wound_dressings",
+      "cardCategory": "V) WOUND DRESSINGS",
+      "detailCategory": "V) WOUND DRESSINGS · Antibiotic Collagen Sponge",
       "shortSpecification": "Equine collagen · Completely absorbable\nSizes:\n2.5×2.5cm to 5×20cm",
       "description": "Genta-Coll® resorb is a haemostatic collagen sponge containing gentamicin sulphate to protect the implant from infection. Made from equine collagen — completely absorbable with strong haemostyptic action.",
       "images": [
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048335/sriyas-healthcare/products/genta-coll/gentacoll-1.jpg",
           "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048337/sriyas-healthcare/products/genta-coll/gentacoll-2.jpg",
           "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048339/sriyas-healthcare/products/genta-coll/gentacoll-3.jpg",
           "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-3",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048341/sriyas-healthcare/products/genta-coll/gentacoll-4.jpg",
           "publicId": "sriyas-healthcare/products/genta-coll/gentacoll-4",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "",
@@ -1774,14 +2053,18 @@
         "filename": ""
       },
       "isActive": true,
-      "displayOrder": 23
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.814Z"
     },
     {
+      "_id": "e32f82a7043e8651787d3283",
+      "createdAt": "2026-11-07T14:49:31.936Z",
+      "slug": "gore-bio-a-tissue-reinforcement",
       "legacyId": "gore_bioa",
       "name": "GORE® BIO-A® Tissue Reinforcement",
-      "slug": "gore-bio-a-tissue-reinforcement",
-      "brandSlug": "gore",
-      "categorySlug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "brand": "3f6ee4170b954093815e47a5",
+      "category": "81773e70be835ab40127286f",
       "cardCategory": "Absorbable · 100% Synthetic Tissue Scaffold",
       "detailCategory": "Absorbable Biomaterial · 100% Synthetic Tissue Reinforcement",
       "shortSpecification": "PGA:TMC · Bioabsorbable · 10 Years Clinical\nResults\nMatrix for tissue generation & healing",
@@ -1790,7 +2073,8 @@
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048342/sriyas-healthcare/products/gore/gore_bioa-1.jpg",
           "publicId": "sriyas-healthcare/products/gore/gore_bioa-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         }
       ],
       "cardBg": "#f5f5f0",
@@ -1849,17 +2133,24 @@
       "brochure": {
         "url": "https://res.cloudinary.com/pgjzw0zu/raw/upload/v1795048353/sriyas-healthcare/documents/gore-bio-a-brochure.pdf",
         "publicId": "sriyas-healthcare/documents/gore-bio-a-brochure.pdf",
-        "filename": "GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf"
+        "filename": "GORE_BIO-A_Tissue_Reinforcement_Brochure.pdf",
+        "format": "pdf"
       },
       "isActive": true,
-      "displayOrder": 24
+      "displayOrder": 24,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.817Z",
+      "lastViewedAt": "2026-11-07T14:50:42.316Z",
+      "viewCount": 1
     },
     {
+      "_id": "ccfd048dd7096e59f93a02b9",
+      "createdAt": "2026-11-07T14:49:31.939Z",
+      "slug": "gore-synecor-intraperitoneal-biomaterial",
       "legacyId": "gore_synecor_ip",
       "name": "GORE® SYNECOR Intraperitoneal Biomaterial",
-      "slug": "gore-synecor-intraperitoneal-biomaterial",
-      "brandSlug": "gore",
-      "categorySlug": "gore-absorbable-biomaterials-tissue-reinforcement",
+      "brand": "3f6ee4170b954093815e47a5",
+      "category": "81773e70be835ab40127286f",
       "cardCategory": "Intraperitoneal · Tri-layer Hybrid Biomaterial",
       "detailCategory": "Intraperitoneal Biomaterial · Tri-layer Hybrid · PTFE + PGA:TMC",
       "shortSpecification": "PTFE + PGA:TMC · Permanent Strength · VHWG Grade\n2\nMaterial innovation for permanent strength",
@@ -1868,17 +2159,20 @@
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048343/sriyas-healthcare/products/gore/gore_synecor_ip-1.jpg",
           "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-1",
-          "isPrimary": true
+          "isPrimary": true,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048344/sriyas-healthcare/products/gore/gore_synecor_ip-2.jpg",
           "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-2",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         },
         {
           "url": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048345/sriyas-healthcare/products/gore/gore_synecor_ip-3.jpg",
           "publicId": "sriyas-healthcare/products/gore/gore_synecor_ip-3",
-          "isPrimary": false
+          "isPrimary": false,
+          "format": "jpg"
         }
       ],
       "cardBg": "#f5f5f0",
@@ -1944,10 +2238,208 @@
       "brochure": {
         "url": "https://res.cloudinary.com/pgjzw0zu/raw/upload/v1795048367/sriyas-healthcare/documents/gore-synecor-ip-brochure.pdf",
         "publicId": "sriyas-healthcare/documents/gore-synecor-ip-brochure.pdf",
-        "filename": "GORE_SYNECOR_IP_Biomaterial_Brochure.pdf"
+        "filename": "GORE_SYNECOR_IP_Biomaterial_Brochure.pdf",
+        "format": "pdf"
       },
       "isActive": true,
-      "displayOrder": 25
+      "displayOrder": 25,
+      "deletedAt": null,
+      "updatedAt": "2026-11-07T14:57:11.819Z"
+    },
+    {
+      "_id": "prod_ams_yelloport_elite_01",
+      "createdAt": "2026-11-23T16:31:21.810Z",
+      "slug": "yelloport-elite",
+      "legacyId": "yelloport_elite",
+      "name": "YelloPort® Elite — Reposable Laparoscopic Port Access System",
+      "brand": "65e8a123bcdef0123456789a",
+      "category": "cat_ams_06_trocar",
+      "cardCategory": "VI) TROCAR",
+      "detailCategory": "VI) TROCAR · Reposable Laparoscopic Port Access System",
+      "shortSpecification": "Universal Seal (5–12mm) · Reposable Cannula & Obturators",
+      "description": "YelloPort® Elite is a reposable laparoscopic port access system by Microline Surgical (an Advanced Medical Solutions company). Featuring a universal seal accommodating 5–12mm instruments without separate reducers, YelloPort® Elite combines single-use universal seals with high-grade reusable cannulas and obturators to deliver maximum clinical precision, cost-effectiveness, and low-profile ergonomics.",
+      "images": [
+        {
+          "url": "/assets/products/yelloport_elite-1.png",
+          "publicId": "sriyas-healthcare/products/ams/yelloport_elite-1",
+          "isPrimary": true,
+          "format": "png"
+        }
+      ],
+      "cardBg": "",
+      "features": [
+        "Accommodates 5–12mm instruments with zero reducer caps required",
+        "Reposable, cost-effective port access system combining single-use seals with reusable cannulas",
+        "Lightweight and low-profile design minimizes abdominal footprint and prevents instrument clash",
+        "Micro-ribbed cannula design ensures excellent abdominal wall retention during instrument exchanges",
+        "Available in multiple working lengths (75mm, 105mm, 150mm) and diameters (10mm, 12mm)",
+        "Four obturator styles available: Pencil Point, Blunt, Dilating Pyramidal, and Locking Shielded",
+        "Hasson adaptor and dedicated seals available for open cut-down access"
+      ],
+      "specifications": [
+        {
+          "name": "Product Line",
+          "value": "YelloPort® Elite — Reposable Laparoscopic Port Access System"
+        },
+        {
+          "name": "Subtitle / Tagline",
+          "value": "Universal Seal | Reposable Product"
+        },
+        {
+          "name": "Instrument Range",
+          "value": "5mm to 12mm universal instrument entry"
+        },
+        {
+          "name": "Cannula Style",
+          "value": "Micro-Ribbed Reusable (10mm and 12mm; 75mm, 105mm, 150mm)"
+        },
+        {
+          "name": "Obturator Styles",
+          "value": "Pencil Point (Style 03), Blunt (Style 04), Dilating Pyramidal (Style 07), Locking Shielded (Style 09)"
+        },
+        {
+          "name": "Universal Seal",
+          "value": "Single-Use 5–12mm (Code: EA512US, Qty: 5)"
+        },
+        {
+          "name": "Hasson Options",
+          "value": "10mm (EA10NH + EA10HS05) & 12mm (EA12NH + EA12HS05)"
+        },
+        {
+          "name": "Manufacturer",
+          "value": "Microline Surgical / Advanced Medical Solutions (AMS)"
+        }
+      ],
+      "applications": [
+        "Laparoscopic general surgery (cholecystectomy, appendectomy, hernia repair)",
+        "Laparoscopic gynaecology (hysterectomy, ovarian cystectomy, diagnostic laparoscopy)",
+        "Laparoscopic bariatric surgery (150mm extended cannula options)",
+        "Laparoscopic urology (nephrectomy, prostatectomy)",
+        "Open cut-down Hasson primary access"
+      ],
+      "skuMatrix": {
+        "universalSeal": [
+          {
+            "component": "Single-Use Universal Seal",
+            "diameter": "5–12mm",
+            "qty": 5,
+            "productCode": "EA512US"
+          }
+        ],
+        "cannula": [
+          {
+            "diameter": "10mm",
+            "workingLength": "75mm",
+            "productCode": "EC1007520"
+          },
+          {
+            "diameter": "10mm",
+            "workingLength": "105mm",
+            "productCode": "EC1010520"
+          },
+          {
+            "diameter": "10mm",
+            "workingLength": "150mm",
+            "productCode": "EC1015020"
+          },
+          {
+            "diameter": "12mm",
+            "workingLength": "75mm",
+            "productCode": "EC1207520"
+          },
+          {
+            "diameter": "12mm",
+            "workingLength": "105mm",
+            "productCode": "EC1210520"
+          },
+          {
+            "diameter": "12mm",
+            "workingLength": "150mm",
+            "productCode": "EC1215020"
+          }
+        ],
+        "obturator": [
+          {
+            "style": "Pencil Point (Style 03)",
+            "diameter": "10mm",
+            "length75": "ET1007503",
+            "length105": "ET1010503",
+            "length150": "ET1015003"
+          },
+          {
+            "style": "Pencil Point (Style 03)",
+            "diameter": "12mm",
+            "length75": "ET1207503",
+            "length105": "ET1210503",
+            "length150": "ET1215003"
+          },
+          {
+            "style": "Blunt (Style 04)",
+            "diameter": "10mm",
+            "length75": "ET1007504",
+            "length105": "ET1010504",
+            "length150": "ET1015004"
+          },
+          {
+            "style": "Blunt (Style 04)",
+            "diameter": "12mm",
+            "length75": "ET1207504",
+            "length105": "ET1210504",
+            "length150": "ET1215004"
+          },
+          {
+            "style": "Dilating Pyramidal (Style 07)",
+            "diameter": "10mm",
+            "length75": "ET1007507",
+            "length105": "ET1010507",
+            "length150": "ET1015007"
+          },
+          {
+            "style": "Dilating Pyramidal (Style 07)",
+            "diameter": "12mm",
+            "length75": "ET1207507",
+            "length105": "ET1210507",
+            "length150": "ET1215007"
+          },
+          {
+            "style": "Locking Shielded (Style 09)",
+            "diameter": "10mm",
+            "length75": "ET1007509",
+            "length105": "ET1010509",
+            "length150": "ET1015009"
+          },
+          {
+            "style": "Locking Shielded (Style 09)",
+            "diameter": "12mm",
+            "length75": "ET1207509",
+            "length105": "ET1210509",
+            "length150": "ET1215009"
+          }
+        ],
+        "hasson": [
+          {
+            "component": "10mm Hasson Adaptor",
+            "diameter": "10mm",
+            "adaptorCode": "EA10NH",
+            "sealsQty5Code": "EA10HS05"
+          },
+          {
+            "component": "12mm Hasson Adaptor",
+            "diameter": "12mm",
+            "adaptorCode": "EA12NH",
+            "sealsQty5Code": "EA12HS05"
+          }
+        ]
+      },
+      "brochure": {
+        "url": "",
+        "publicId": "",
+        "filename": ""
+      },
+      "isActive": true,
+      "displayOrder": 1,
+      "deletedAt": null,
+      "updatedAt": "2026-11-23T16:31:21.810Z"
     }
   ]
 }

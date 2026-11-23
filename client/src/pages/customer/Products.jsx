@@ -115,18 +115,18 @@ export default function Products() {
       p => String(p.brand?._id || p.brand) === brandIdStr
     );
 
-    const brandCats = categories.filter(
-      c => String(c.brand?._id || c.brand) === brandIdStr
-    );
+    const brandCats = categories
+      .filter(c => String(c.brand?._id || c.brand) === brandIdStr)
+      .sort((a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99));
 
     const sections = [];
     const groupedCategoryIds = new Set();
 
     for (const cat of brandCats) {
       const catIdStr = String(cat._id);
-      const prodsInCat = brandProducts.filter(
-        p => String(p.category?._id || p.category) === catIdStr
-      );
+      const prodsInCat = brandProducts
+        .filter(p => String(p.category?._id || p.category) === catIdStr)
+        .sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
       if (prodsInCat.length > 0) {
         sections.push({
           category: cat,
@@ -197,7 +197,7 @@ export default function Products() {
         <button
           type="button"
           className="partner-logo-item"
-          onClick={() => handleSelectBrand('liquiband')}
+          onClick={() => handleSelectBrand('ams')}
           title="Advanced Medical Solutions"
         >
           <img

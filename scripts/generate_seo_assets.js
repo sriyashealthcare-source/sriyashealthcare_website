@@ -253,30 +253,32 @@ function fetchJson(url, timeoutMs = 7000) {
 }
 
 async function loadPublishedData() {
-  // 1. Try public Render API first (works in all environments, zero DB credential exposure)
+  // 1. Try local MongoDB / localDbEngine first to ensure newest catalog changes are prerendered
   try {
-    console.log('[Data] Checking live published backend API (Render)...');
-    const [brandsRes, prodsRes, hpRes] = await Promise.all([
-      fetchJson('https://sriyashealthcare-website.onrender.com/api/brands', 6000),
-      fetchJson('https://sriyashealthcare-website.onrender.com/api/products', 6000),
-      fetchJson('https://sriyashealthcare-website.onrender.com/api/homepage', 6000).catch(() => null)
-    ]);
-
-    const apiBrands = (brandsRes && brandsRes.brands) ? brandsRes.brands : [];
-    const apiProducts = (prodsRes && prodsRes.products) ? prodsRes.products : [];
-    if (apiBrands.length > 0 && apiProducts.length > 0) {
-      console.log(`[Data] Successfully loaded from live Render backend (${apiBrands.length} brands, ${apiProducts.length} products).`);
-      return {
-        activeBrands: apiBrands.filter(b => b.isActive !== false),
-        activeProducts: apiProducts.filter(p => p.isActive !== false && !p.deletedAt),
-        hpDoc: hpRes
-      };
+    const { getLocalDb } = require('../server/utils/localDbEngine');
+    const localDb = getLocalDb();
+    const activeBrands = (localDb.brands || []).filter(b => b.isActive !== false);
+    const rawProducts = (localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
+    if (activeBrands.length > 0 && rawProducts.length > 0) {
+      // Ensure brand and category references are populated
+      const activeProducts = rawProducts.map(p => {
+        const pCopy = { ...p };
+        if (typeof pCopy.brand === 'string') {
+          pCopy.brand = activeBrands.find(b => String(b._id) === pCopy.brand) || { _id: pCopy.brand, name: 'Advanced Medical Solutions', slug: 'ams' };
+        }
+        if (typeof pCopy.category === 'string') {
+          pCopy.category = (localDb.categories || []).find(c => String(c._id) === pCopy.category) || { _id: pCopy.category, name: pCopy.cardCategory || 'Medical Devices' };
+        }
+        return pCopy;
+      });
+      console.log(`[Data] Loaded from local database (${activeBrands.length} brands, ${activeProducts.length} products).`);
+      return { activeBrands, activeProducts, hpDoc: localDb.homepageContent?.[0] || null };
     }
-  } catch (err) {
-    console.log(`[Data] Live API check: ${err.message}. Trying database connection...`);
+  } catch (localErr) {
+    console.log(`[Data] Local database check: ${localErr.message}`);
   }
 
-  // 2. Fall back to local MongoDB / localDbEngine
+  // 2. Try database adapter connection
   try {
     await connectDatabase();
     const [brands, products, hpDoc] = await Promise.all([
@@ -295,17 +297,28 @@ async function loadPublishedData() {
     console.warn('[Data] Database connection attempt:', dbErr.message);
   }
 
-  // 3. Fallback to localDbEngine file directly if available
+  // 3. Fallback to public Render API
   try {
-    const { getLocalDb } = require('../server/utils/localDbEngine');
-    const localDb = getLocalDb();
-    const activeBrands = (localDb.brands || []).filter(b => b.isActive !== false);
-    const activeProducts = (localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
-    if (activeBrands.length > 0) {
-      console.log(`[Data] Loaded from localDbEngine backup (${activeBrands.length} brands, ${activeProducts.length} products).`);
-      return { activeBrands, activeProducts, hpDoc: localDb.homepageContent?.[0] || null };
+    console.log('[Data] Checking live published backend API (Render)...');
+    const [brandsRes, prodsRes, hpRes] = await Promise.all([
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/brands', 6000),
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/products', 6000),
+      fetchJson('https://sriyashealthcare-website.onrender.com/api/homepage', 6000).catch(() => null)
+    ]);
+
+    const apiBrands = (brandsRes && brandsRes.brands) ? brandsRes.brands : [];
+    const apiProducts = (prodsRes && prodsRes.products) ? prodsRes.products : [];
+    if (apiBrands.length > 0 && apiProducts.length > 0) {
+      console.log(`[Data] Loaded from live Render backend (${apiBrands.length} brands, ${apiProducts.length} products).`);
+      return {
+        activeBrands: apiBrands.filter(b => b.isActive !== false),
+        activeProducts: apiProducts.filter(p => p.isActive !== false && !p.deletedAt),
+        hpDoc: hpRes
+      };
     }
-  } catch (_) {}
+  } catch (err) {
+    console.log(`[Data] Live API check: ${err.message}.`);
+  }
 
   return { activeBrands: [], activeProducts: [], hpDoc: null };
 }
@@ -596,6 +609,38 @@ async function run() {
 
       fs.writeFileSync(path.join(productDir, 'index.html'), prodHtml, 'utf8');
     }
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // G. Legacy Route Redirects (e.g. sterilene-mesh -> surgical-kit-hernia)
+  // ─────────────────────────────────────────────────────────────
+  const legacyRedirects = [
+    { from: 'products/peters/sterilene-mesh', to: '/products/ams/surgical-kit-hernia' },
+    { from: 'products/ams/sterilene-mesh', to: '/products/ams/surgical-kit-hernia' },
+    { from: 'products/sterilene-mesh', to: '/products/ams/surgical-kit-hernia' },
+    { from: 'products/peters/peters-c-section-kit', to: '/products/ams/surgical-kit-obstetrics' },
+    { from: 'products/ams/peters-c-section-kit', to: '/products/ams/surgical-kit-obstetrics' },
+    { from: 'products/peters-c-section-kit', to: '/products/ams/surgical-kit-obstetrics' }
+  ];
+
+  for (const redir of legacyRedirects) {
+    const targetDir = path.join(distDir, redir.from);
+    ensureDirSync(targetDir);
+    const redirectHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting to ${escapeHtml(redir.to)}</title>
+  <meta http-equiv="refresh" content="0;url=${escapeHtml(redir.to)}">
+  <link rel="canonical" href="${DOMAIN}${escapeHtml(redir.to)}">
+  <script>window.location.replace("${escapeHtml(redir.to)}");</script>
+</head>
+<body>
+  <p>Redirecting to <a href="${escapeHtml(redir.to)}">${escapeHtml(redir.to)}</a>...</p>
+</body>
+</html>`;
+    fs.writeFileSync(path.join(targetDir, 'index.html'), redirectHtml, 'utf8');
+    console.log(`  ✓ Created legacy redirect: /${redir.from} -> ${redir.to}`);
   }
 
   console.log(`  ✓ Prerendered ${activeProducts.length} individual product pages.`);

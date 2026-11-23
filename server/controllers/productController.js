@@ -360,7 +360,13 @@ const getPublicProducts = async (req, res, next) => {
 // GET /api/products/slug/:slug (Public)
 const getPublicProductBySlug = async (req, res, next) => {
   try {
-    const slugParam = String(req.params.slug || '').trim().toLowerCase();
+    let slugParam = String(req.params.slug || '').trim().toLowerCase();
+    // Backward compatibility redirects for renamed products
+    if (slugParam === 'sterilene-mesh' || slugParam === 'sterilene_mesh') {
+      slugParam = 'surgical-kit-hernia';
+    } else if (slugParam === 'peters-c-section-kit' || slugParam === 'csection') {
+      slugParam = 'surgical-kit-obstetrics';
+    }
     const product = await Product.findOne({
       isActive: true,
       deletedAt: null,
@@ -388,7 +394,12 @@ const getPublicProductBySlug = async (req, res, next) => {
 // GET /api/products/:id (Public — supports ObjectId, slug, or legacyId)
 const getPublicProductById = async (req, res, next) => {
   try {
-    const idParam = String(req.params.id || '').trim();
+    let idParam = String(req.params.id || '').trim();
+    if (idParam.toLowerCase() === 'sterilene-mesh' || idParam.toLowerCase() === 'sterilene_mesh') {
+      idParam = 'surgical-kit-hernia';
+    } else if (idParam.toLowerCase() === 'peters-c-section-kit' || idParam.toLowerCase() === 'csection') {
+      idParam = 'surgical-kit-obstetrics';
+    }
     const or = [
       { slug: idParam.toLowerCase() },
       { legacyId: idParam.toLowerCase() }

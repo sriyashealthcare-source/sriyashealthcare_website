@@ -11,7 +11,14 @@ import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 export default function ProductDetails() {
   const { partnerSlug, productSlug, slug } = useParams();
-  const effectiveProductSlug = productSlug || slug;
+  const rawProductSlug = productSlug || slug;
+  // Handle backward compatibility / renamed product slugs
+  const effectiveProductSlug =
+    rawProductSlug === 'sterilene-mesh'
+      ? 'surgical-kit-hernia'
+      : rawProductSlug === 'peters-c-section-kit'
+      ? 'surgical-kit-obstetrics'
+      : rawProductSlug;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -305,6 +312,139 @@ export default function ProductDetails() {
                   <li key={idx}>{app}</li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* System Components Breakdown / SKU Matrix (for YelloPort® Elite and modular systems) */}
+          {product.skuMatrix && (
+            <div id="ud-sku-matrix-wrap" style={{ marginTop: '24px' }}>
+              <div className="detail-sec-lbl" style={{ color: 'var(--gold, #c5a059)' }}>
+                System Components Breakdown &amp; SKU Matrix
+              </div>
+
+              {/* 1. Universal Seal */}
+              {Array.isArray(product.skuMatrix.universalSeal) && (
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink, #1b2a3a)', marginBottom: '8px' }}>
+                    1. Single-Use Universal Seal (Single-use only component)
+                  </div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="sku-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                      <thead>
+                        <tr style={{ background: '#f5f0e6', borderBottom: '1px solid #dfba66' }}>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Component</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Diameter</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Quantity</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Product Code</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.skuMatrix.universalSeal.map((item, idx) => (
+                          <tr key={idx} style={{ borderBottom: '1px solid #ede5d3' }}>
+                            <td style={{ padding: '8px 10px' }}>{item.component || item.description || 'Universal Seal'}</td>
+                            <td style={{ padding: '8px 10px' }}>{item.diameter}</td>
+                            <td style={{ padding: '8px 10px' }}>{item.qty}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.productCode}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* 2. Reusable Cannula */}
+              {Array.isArray(product.skuMatrix.cannula) && (
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink, #1b2a3a)', marginBottom: '8px' }}>
+                    2. Reusable Cannula (Micro-Ribbed)
+                  </div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="sku-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                      <thead>
+                        <tr style={{ background: '#f5f0e6', borderBottom: '1px solid #dfba66' }}>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Diameter</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Working Length</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Product Code</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.skuMatrix.cannula.map((item, idx) => (
+                          <tr key={idx} style={{ borderBottom: '1px solid #ede5d3' }}>
+                            <td style={{ padding: '8px 10px' }}>{item.diameter}</td>
+                            <td style={{ padding: '8px 10px' }}>{item.workingLength}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.productCode}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* 3. Reusable Trocar Obturator */}
+              {Array.isArray(product.skuMatrix.obturator) && (
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink, #1b2a3a)', marginBottom: '8px' }}>
+                    3. Reusable Trocar Obturator
+                  </div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="sku-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                      <thead>
+                        <tr style={{ background: '#f5f0e6', borderBottom: '1px solid #dfba66' }}>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Style</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Diameter</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>75mm Code</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>105mm Code</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>150mm Code</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.skuMatrix.obturator.map((item, idx) => (
+                          <tr key={idx} style={{ borderBottom: '1px solid #ede5d3' }}>
+                            <td style={{ padding: '8px 10px' }}>{item.style}</td>
+                            <td style={{ padding: '8px 10px' }}>{item.diameter}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.length75}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.length105}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.length150}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* 4. Reusable Hasson Adaptor & Seals */}
+              {Array.isArray(product.skuMatrix.hasson) && (
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink, #1b2a3a)', marginBottom: '8px' }}>
+                    4. Reusable Hasson Adaptor &amp; Seals
+                  </div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="sku-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                      <thead>
+                        <tr style={{ background: '#f5f0e6', borderBottom: '1px solid #dfba66' }}>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Component</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Diameter</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Hasson Adaptor Code</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'left' }}>Seals (Qty 5) Code</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.skuMatrix.hasson.map((item, idx) => (
+                          <tr key={idx} style={{ borderBottom: '1px solid #ede5d3' }}>
+                            <td style={{ padding: '8px 10px' }}>{item.component}</td>
+                            <td style={{ padding: '8px 10px' }}>{item.diameter}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.adaptorCode}</td>
+                            <td style={{ padding: '8px 10px', fontWeight: 700, color: '#9a762e' }}>{item.sealsQty5Code}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

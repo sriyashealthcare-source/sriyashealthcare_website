@@ -83,7 +83,8 @@ async function buildSitemapXml(providedBrands = null, providedProducts = null, p
   // Active individual product pages
   for (const p of products) {
     if (!p.slug) continue;
-    const brandSlug = p.brand?.slug || 'peters';
+    const matchedBrand = brands.find(b => String(b._id) === String(p.brand?._id || p.brand));
+    const brandSlug = matchedBrand?.slug || p.brand?.slug || 'ams';
     urls.push({
       loc: `${DOMAIN}/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(p.slug)}`,
       lastmod: formatDate(p.updatedAt || p.createdAt),

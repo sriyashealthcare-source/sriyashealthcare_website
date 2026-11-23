@@ -501,9 +501,20 @@ function activateLocalDbAdapter() {
   ].forEach(attachLocalAdapterToModel);
 }
 
+function getLocalDb() {
+  const s = loadStore();
+  return {
+    brands: s.Brand || [],
+    categories: s.Category || [],
+    products: s.Product || [],
+    homepageContent: s.HomepageContent || []
+  };
+}
+
 module.exports = {
   activateLocalDbAdapter,
   generateObjectId,
-  dbFilePath
+  dbFilePath,
+  getLocalDb
 };
 
