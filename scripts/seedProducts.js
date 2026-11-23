@@ -172,6 +172,7 @@ async function runSeed({ silent = false } = {}) {
           features: p.features || [],
           specifications: p.specifications || [],
           applications: p.applications || [],
+          skuMatrix: p.skuMatrix || null,
           brochure: brochureObj,
           isActive: true,
           displayOrder: p.displayOrder,

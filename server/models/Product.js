@@ -104,6 +104,10 @@ const productSchema = new mongoose.Schema(
       format: { type: String, default: 'pdf' },
       bytes: { type: Number, default: 0 }
     },
+    skuMatrix: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null
+    },
     seoTitle: {
       type: String,
       trim: true,
