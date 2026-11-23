@@ -3,33 +3,44 @@ import React from 'react';
 /**
  * SriyasOrbitalLogo
  *
- * Implements the Unified Three-Ring Gold Orbital System for Sriyas Healthcare:
+ * Implements the Sriyas Healthcare Premium Two-Stage Alternating Orbital Animation:
  * 
- * 1. Primary Orbital Ring (r = 118px):
- *    - Thin champagne-gold stroke (0.95px, 36% opacity).
- *    - One small, refined golden satellite (4.8px) with subtle warm glow.
- *    - Smooth, continuous 60s linear revolution.
+ * 1. Synchronized 12-Second Timeline (Clockwise, Infinite - 6 Storyboard Stages):
+ *    - Stage 1: Initial State (0.0s - 0.4s, 0% - 3.3%)
+ *      * Logo emblem stands clean and pristine.
+ *    - Stage 2: Inner Ring Active (0.4s - 5.4s, 3.3% - 45.0%)
+ *      * 3.3% - 8.3% (0.4s - 1.0s): Smooth fade-in (opacity 0 -> 1, scale 0.96 -> 1)
+ *      * 8.3% - 40.0% (1.0s - 4.8s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 90px)
+ *      * 40.0% - 45.0% (4.8s - 5.4s): Smooth fade-out (opacity 1 -> 0, scale 1 -> 0.97)
+ *    - Stage 3: Inner Ring Disappears (5.4s - 6.4s, 45.0% - 53.3%)
+ *      * Clean breathing pause; inner ring completely invisible.
+ *    - Stage 4: Outer Ring Active (6.4s - 11.4s, 53.3% - 95.0%)
+ *      * 53.3% - 58.3% (6.4s - 7.0s): Smooth fade-in (opacity 0 -> 1, scale 0.96 -> 1)
+ *      * 58.3% - 90.0% (7.0s - 10.8s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 220px)
+ *      * 90.0% - 95.0% (10.8s - 11.4s): Smooth fade-out (opacity 1 -> 0, scale 1 -> 0.97)
+ *    - Stage 5: Outer Ring Disappears (11.4s - 12.0s, 95.0% - 100.0%)
+ *      * Clean breathing pause; outer ring completely invisible.
+ *    - Stage 6: Animation Repeats (seamless infinite loop back to Stage 1 at 0s).
  * 
- * 2. Secondary Orbital Ring (r = 64px):
- *    - Delicate, subtle champagne-gold stroke (0.75px, 24% opacity).
- *    - Perfectly frames the central 'S' emblem with zero text intersection.
+ * 2. Strict Mutual Exclusivity:
+ *    - Only ONE ring is ever visible at any given moment.
+ *    - Zero overlap between stages, even during fade transitions.
  * 
- * 3. Outer Accent Ring (r = 186px):
- *    - Faint, thin, ethereal champagne-gold stroke (0.65px, 14% opacity).
- *    - Adds spatial luxury and depth without visual clutter.
+ * 3. Shared Geometric Origin:
+ *    - Both rings are perfectly concentric, centered at (230, 230) on the central S-lotus emblem.
  * 
- * 4. Critical Typography Protection Mask:
- *    - SVG feathered mask (#sriyas-typography-feather-mask) over heading,
- *      subtitle, and tagline.
- *    - Ensures orbital strokes and the moving satellite naturally dissolve
- *      behind the typography zone with zero letter collisions.
+ * 4. Geometry:
+ *    - Inner Ring: Diameter 180px desktop, 140px mobile (1px champagne-gold, rgba(197, 160, 89, 0.25)).
+ *      Dot: 4px x 4px, #D4AF37, subtle glow.
+ *    - Outer Ring: Diameter 440px desktop, 300px mobile (1px champagne-gold, rgba(197, 160, 89, 0.22)).
+ *      Dot: 4.5px x 4.5px, #D4AF37, soft restrained glow.
+ *      Spans approximately from the first R in SRIYAS to the R in HEALTHCARE.
  * 
- * Visual Hierarchy:
- * 1. Golden 'S' Emblem
- * 2. SRIYAS HEALTHCARE Company Name
- * 3. Tagline
- * 4. Supporting Intro & CTA Buttons
- * 5. Subtle, restrained orbital decoration
+ * 5. Critical Typography Protection:
+ *    - SVG feathered mask (#sriyas-outer-typography-mask) protects SRIYAS HEALTHCARE,
+ *      PVT LTD, and the tagline.
+ *    - Outer circular stroke and dot naturally dissolve behind the typography zone,
+ *      ensuring zero letters are ever cut through or obscured.
  */
 export default function SriyasOrbitalLogo({
   logoUrl,
@@ -50,149 +61,97 @@ export default function SriyasOrbitalLogo({
     >
       <div className="hp-hero-lockup-flow">
         <div className="hp-hero-emblem-wrap">
-          {/* Unified Three-Ring Orbital System centered precisely on the emblem */}
+          {/* Synchronized Two-Stage Alternating Orbital System */}
           <div
-            className="sriyas-orbital-system-wrap"
+            className="sriyas-two-stage-orbital-wrap"
             aria-hidden="true"
-            data-testid="sriyas-orbital-system"
+            data-testid="sriyas-two-stage-orbital"
           >
             <svg
-              className="sriyas-orbital-svg"
-              viewBox="0 0 600 600"
+              className="sriyas-two-stage-svg"
+              viewBox="0 0 460 460"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
-                {/* Primary Soft Metallic Champagne-Gold Gradient */}
-                <linearGradient id="sriyas-gold-primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E4D1A0" />
-                  <stop offset="50%" stopColor="#C8A64B" />
-                  <stop offset="100%" stopColor="#E4D1A0" />
-                </linearGradient>
-
-                {/* Secondary Delicate Champagne-Gold Gradient */}
-                <linearGradient id="sriyas-gold-secondary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E9D9A6" />
-                  <stop offset="50%" stopColor="#F4EBD2" />
-                  <stop offset="100%" stopColor="#E9D9A6" />
-                </linearGradient>
-
-                {/* Outer Accent Faint Gradient */}
-                <linearGradient id="sriyas-gold-outer-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E9D9A6" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#C8A64B" stopOpacity="0.4" />
-                </linearGradient>
-
-                {/* Satellite Warm-Gold Luminous Halo (Small & subtle: r=6px, NO big blurry cloud) */}
-                <radialGradient id="sriyas-satellite-halo-grad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.45" />
-                  <stop offset="50%" stopColor="#C8A64B" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#C8A64B" stopOpacity="0" />
+                {/* Luminous Warm-Gold Glow for Orbital Dots */}
+                <radialGradient id="sriyas-dot-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.75" />
+                  <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
                 </radialGradient>
 
-                {/* 3D Metallic-Gold Satellite Sphere */}
-                <radialGradient id="sriyas-satellite-sphere-grad" cx="30%" cy="28%" r="72%">
-                  <stop offset="0%" stopColor="#FFFFFF" />
-                  <stop offset="25%" stopColor="#FDF4DC" />
-                  <stop offset="65%" stopColor="#D4AF37" />
-                  <stop offset="85%" stopColor="#C8A64B" />
-                  <stop offset="100%" stopColor="#A9822C" />
-                </radialGradient>
-
-                {/* Subtle warm shadow on satellite */}
-                <filter id="sriyas-satellite-shadow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feDropShadow dx="0" dy="1.0" stdDeviation="1.0" floodColor="#A9822C" floodOpacity="0.35" />
+                {/* Soft Feather Filter for Typography Mask */}
+                <filter id="sriyas-text-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" />
                 </filter>
 
-                {/* Mask Gaussian Blur for soft, feathered transition at typography boundary */}
-                <filter id="sriyas-mask-feather-blur" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="8" />
-                </filter>
-
-                {/*
-                  CRITICAL TYPOGRAPHY MASK:
-                  Protects SRIYAS HEALTHCARE, PVT LTD, and the tagline.
-                  White (#FFFFFF) = Fully visible.
-                  Black (#000000) = Completely transparent.
-                  The feathered black rectangle covers the typography band,
-                  ensuring orbital lines and moving satellite naturally disappear
-                  behind the text with zero awkward breaks or overlapping strokes.
+                {/* 
+                  Typography Protection Mask for Outer Ring & Outer Dot:
+                  White (#FFFFFF) = Fully visible outside text.
+                  Black (#000000) = Completely masked out behind text.
                 */}
-                <mask id="sriyas-typography-feather-mask">
-                  {/* White base canvas */}
-                  <rect x="0" y="0" width="600" height="600" fill="#FFFFFF" />
-
-                  {/* Feathered Black Protection Mask over Heading, Subtitle & Tagline */}
+                <mask id="sriyas-outer-typography-mask">
+                  <rect x="0" y="0" width="460" height="460" fill="#FFFFFF" />
                   <rect
-                    x="25"
-                    y="350"
-                    width="550"
-                    height="138"
-                    rx="24"
+                    x="15"
+                    y="298"
+                    width="430"
+                    height="126"
+                    rx="18"
                     fill="#000000"
-                    filter="url(#sriyas-mask-feather-blur)"
+                    filter="url(#sriyas-text-mask-blur)"
                   />
                 </mask>
               </defs>
 
               {/* 
-                Masked Orbital Group:
-                Strokes and the moving satellite naturally dissolve before reaching text.
+                STAGE 1: INNER RING (0% - 50% of 12s timeline)
+                - Diameter: 180px (r = 90px), centered at (230, 230)
+                - 1px champagne-gold border: rgba(197, 160, 89, 0.25)
+                - Luminous orbital dot (4px x 4px) revolving 360deg clockwise from 5% to 43%
+                - Completely finished and invisible at 50%
               */}
-              <g mask="url(#sriyas-typography-feather-mask)">
-                {/* Ring B: Secondary Inner Orbital Ring (r = 64) */}
+              <g className="sriyas-stage-inner-group">
                 <circle
-                  cx="300"
-                  cy="300"
-                  r="64"
-                  className="sriyas-orbit-ring sriyas-orbit-ring--secondary"
-                  stroke="url(#sriyas-gold-secondary-grad)"
+                  cx="230"
+                  cy="230"
+                  r="90"
+                  className="sriyas-inner-ring-circle"
                 />
+                <g className="sriyas-inner-dot-rotator">
+                  {/* Subtle outer glow */}
+                  <circle cx="230" cy="140" r="5" fill="url(#sriyas-dot-glow)" />
+                  {/* Crisp 4px dot */}
+                  <circle cx="230" cy="140" r="2" fill="#D4AF37" />
+                  {/* Specular glint */}
+                  <circle cx="229.4" cy="139.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
+                </g>
+              </g>
 
-                {/* Ring A: Primary Orbital Ring (r = 118) */}
+              {/* 
+                STAGE 2: OUTER RING (50% - 100% of 12s timeline)
+                - Diameter: 440px (r = 220px), centered at (230, 230)
+                - 1px champagne-gold border: rgba(197, 160, 89, 0.22)
+                - Luminous orbital dot (4.5px x 4.5px) revolving 360deg clockwise from 55% to 93%
+                - Protected by sriyas-outer-typography-mask: strokes and dot naturally dissolve behind text
+                - Completely finished and invisible at 100%
+              */}
+              <g className="sriyas-stage-outer-group" mask="url(#sriyas-outer-typography-mask)">
                 <circle
-                  cx="300"
-                  cy="300"
-                  r="118"
-                  className="sriyas-orbit-ring sriyas-orbit-ring--primary"
-                  stroke="url(#sriyas-gold-primary-grad)"
+                  cx="230"
+                  cy="230"
+                  r="220"
+                  className="sriyas-outer-ring-circle"
                 />
-
-                {/* Ring C: Optional Outer Accent Ring (r = 186) */}
-                <circle
-                  cx="300"
-                  cy="300"
-                  r="186"
-                  className="sriyas-orbit-ring sriyas-orbit-ring--outer"
-                  stroke="url(#sriyas-gold-outer-grad)"
-                />
-
-                {/* Single Refined Golden Satellite on Primary Ring (r = 118, top is at cy = 182) */}
-                <g className="sriyas-satellite-rotator">
-                  {/* Subtle radiant halo */}
-                  <circle
-                    cx="300"
-                    cy="182"
-                    r="6.5"
-                    fill="url(#sriyas-satellite-halo-grad)"
-                  />
-                  {/* 3D Metallic-Gold Sphere (Diameter ~4.8px) */}
-                  <circle
-                    cx="300"
-                    cy="182"
-                    r="2.4"
-                    fill="url(#sriyas-satellite-sphere-grad)"
-                    filter="url(#sriyas-satellite-shadow)"
-                  />
-                  {/* Specular pinpoint highlight */}
-                  <circle
-                    cx="299.2"
-                    cy="181.2"
-                    r="0.75"
-                    fill="#FFFFFF"
-                    opacity="0.95"
-                  />
+                <g className="sriyas-outer-dot-rotator">
+                  {/* Subtle outer glow */}
+                  <circle cx="230" cy="10" r="6" fill="url(#sriyas-dot-glow)" />
+                  {/* Crisp 4.5px dot */}
+                  <circle cx="230" cy="10" r="2.25" fill="#D4AF37" />
+                  {/* Specular glint */}
+                  <circle cx="229.3" cy="9.3" r="0.75" fill="#FFFFFF" opacity="0.95" />
                 </g>
               </g>
             </svg>
@@ -226,7 +185,6 @@ export default function SriyasOrbitalLogo({
         </div>
       </div>
 
-      {/* Tagline positioned with typography priority */}
       {showTagline && tagline && (
         <p className="hp-hero-tagline">{tagline}</p>
       )}

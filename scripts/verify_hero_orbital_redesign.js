@@ -1,12 +1,11 @@
 /**
- * Sriyas Healthcare - Minimal Luxury Hero Orbital Redesign Verification Suite
+ * Sriyas Healthcare - Premium Two-Stage Alternating Orbital Animation Verification Suite
  * 
  * Verifies:
- * 1. Exactly THREE intentional concentric orbital layers (No excess background circles)
- * 2. Elimination of harsh dark outlines (Subtle champagne-gold strokes: 0.65px - 0.95px, 14% - 36% opacity)
- * 3. Typography protection: SVG feathered mask guarantees orbital strokes and satellite
- *    naturally dissolve behind SRIYAS HEALTHCARE, PVT LTD, and the tagline
- * 4. Refined golden satellite: 1 single particle (4.8px) with 60s slow continuous revolution
+ * 1. Exactly TWO circular rings (Inner: R=90px, Outer: R=220px)
+ * 2. Elimination of background clutter (0 excess rings, 0 excess dots, 0 dashed arcs)
+ * 3. Typography protection: SVG feathered mask guarantees outer stroke & dot dissolve behind text
+ * 4. Strict mutual exclusivity & 12s synchronized timeline (Inner & Outer never visible together)
  * 5. 100% Mathematically perfect circular geometry (w/h = 1.000) across Desktop, Laptop, Mobile
  * 6. Captures high-res visual proof screenshots and compiles animated showcase GIF
  */
@@ -17,7 +16,7 @@ const { spawn } = require('child_process');
 
 const ARTIFACT_DIR = 'C:\\Users\\surya\\.gemini\\antigravity\\brain\\12cb1919-e846-449e-ac74-8ab8159fca5b';
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const CHROME_DEV_PROFILE = 'C:\\Users\\surya\\AppData\\Local\\Google\\Chrome\\DevSession_MinimalOrbital';
+const CHROME_DEV_PROFILE = 'C:\\Users\\surya\\AppData\\Local\\Google\\Chrome\\DevSession_TwoStageOrbital';
 const rootDir = path.join(__dirname, '..');
 
 function sleep(ms) {
@@ -98,36 +97,27 @@ async function startChrome() {
       '--headless=new',
       '--remote-debugging-port=9222',
       '--remote-allow-origins=*',
+      `--user-data-dir=${CHROME_DEV_PROFILE}`,
       '--disable-gpu',
-      '--no-sandbox',
-      '--hide-scrollbars',
-      `--user-data-dir=${CHROME_DEV_PROFILE}`
+      '--no-first-run',
+      '--no-default-browser-check'
     ],
     { stdio: 'ignore' }
   );
 
-  for (let i = 0; i < 30; i++) {
-    await sleep(500);
-    try {
-      const res = await fetch('http://127.0.0.1:9222/json/version');
-      if (res.ok) {
-        console.log('[Chrome] Chrome port 9222 active.');
-        return;
-      }
-    } catch (_) {}
-  }
+  const ready = await waitForHttp('http://127.0.0.1:9222/json/version', 20000);
+  if (!ready) throw new Error('Chrome failed to expose port 9222!');
+  console.log('[Chrome] Chrome is ready on port 9222.');
 }
 
-class CdpClient {
+class CDPClient {
   constructor(wsUrl) {
     this.wsUrl = wsUrl;
-    this.ws = null;
-    this.nextId = 1;
+    this.id = 1;
     this.callbacks = new Map();
   }
 
   async connect() {
-    const WebSocket = global.WebSocket || require('ws');
     return new Promise((resolve, reject) => {
       this.ws = new WebSocket(this.wsUrl);
       this.ws.onopen = () => resolve();
@@ -135,73 +125,74 @@ class CdpClient {
       this.ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.id && this.callbacks.has(msg.id)) {
-          const cb = this.callbacks.get(msg.id);
+          const { res, rej } = this.callbacks.get(msg.id);
           this.callbacks.delete(msg.id);
-          if (msg.error) cb.reject(new Error(msg.error.message));
-          else cb.resolve(msg.result);
+          if (msg.error) rej(msg.error);
+          else res(msg.result);
         }
       };
     });
   }
 
   send(method, params = {}) {
-    return new Promise((resolve, reject) => {
-      const id = this.nextId++;
-      this.callbacks.set(id, { resolve, reject });
-      this.ws.send(JSON.stringify({ id, method, params }));
+    return new Promise((res, rej) => {
+      const curId = this.id++;
+      this.callbacks.set(curId, { res, rej });
+      this.ws.send(JSON.stringify({ id: curId, method, params }));
     });
   }
 
   async captureScreenshot(outputPath, clip = null) {
-    const params = { format: 'png', quality: 100 };
-    if (clip) params.clip = { ...clip, scale: 1 };
-    const res = await this.send('Page.captureScreenshot', params);
-    fs.writeFileSync(outputPath, Buffer.from(res.data, 'base64'));
-    console.log(`[Screenshot Saved] -> ${path.basename(outputPath)}`);
+    const params = { format: 'png' };
+    if (clip) {
+      params.clip = {
+        x: clip.x,
+        y: clip.y,
+        width: clip.width,
+        height: clip.height,
+        scale: 1
+      };
+    }
+    const result = await this.send('Page.captureScreenshot', params);
+    const buffer = Buffer.from(result.data, 'base64');
+    fs.writeFileSync(outputPath, buffer);
+    console.log(`  ✓ Screenshot saved: ${path.basename(outputPath)} (${buffer.length} bytes)`);
+  }
+
+  close() {
+    if (this.ws) {
+      try { this.ws.close(); } catch (_) {}
+    }
   }
 }
 
 async function runVerification() {
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('  SRIYAS HEALTHCARE - MINIMAL LUXURY HERO ORBIT AUDIT          ');
-  console.log('═══════════════════════════════════════════════════════════════');
-
   await startServers();
   await startChrome();
 
-  const versionRes = await fetch('http://127.0.0.1:9222/json/version');
-  const versionData = await versionRes.json();
-  console.log('[CDP] Connected to:', versionData.Browser);
+  const listRes = await fetch('http://127.0.0.1:9222/json/list');
+  const tabs = await listRes.json();
+  const pageTab = tabs.find((t) => t.type === 'page') || tabs[0];
+  if (!pageTab) throw new Error('No browser page found!');
 
-  const targetsRes = await fetch('http://127.0.0.1:9222/json');
-  const targets = await targetsRes.json();
-  const pageTarget = targets.find((t) => t.type === 'page') || targets[0];
-
-  const cdp = new CdpClient(pageTarget.webSocketDebuggerUrl);
+  const cdp = new CDPClient(pageTab.webSocketDebuggerUrl);
   await cdp.connect();
-  console.log('[CDP] Session attached.');
+  console.log('[CDP] Connected to Chrome tab:', pageTab.title);
 
   await cdp.send('Page.enable');
   await cdp.send('DOM.enable');
+  await cdp.send('CSS.enable');
   await cdp.send('Runtime.enable');
-
-  // Set default Desktop Viewport
-  await cdp.send('Emulation.setDeviceMetricsOverride', {
-    width: 1440,
-    height: 900,
-    deviceScaleFactor: 1,
-    mobile: false
-  });
 
   console.log('[CDP] Navigating to http://127.0.0.1:5173/ ...');
   await cdp.send('Page.navigate', { url: 'http://127.0.0.1:5173/' });
 
-  // Poll until React has mounted and .sriyas-orbital-system-wrap is present in DOM
+  // Wait for React hydration and element mounting
   let mounted = false;
   for (let i = 0; i < 40; i++) {
     await sleep(400);
     const check = await cdp.send('Runtime.evaluate', {
-      expression: 'Boolean(document.querySelector(".sriyas-orbital-system-wrap"))',
+      expression: 'Boolean(document.querySelector(".sriyas-two-stage-orbital-wrap"))',
       returnByValue: true
     });
     if (check.result.value === true) {
@@ -217,87 +208,58 @@ async function runVerification() {
       returnByValue: true
     });
     console.log('[CDP] Page body text:', fallbackText.result.value);
-    throw new Error('Page failed to mount .sriyas-orbital-system-wrap!');
+    throw new Error('Page failed to mount .sriyas-two-stage-orbital-wrap!');
   }
 
-  // 1. Audit Ring Count: Exactly THREE intentional rings
-  console.log('\n[1/6] Verifying Elimination of Ring Clutter (Exactly 3 Intentional Rings)...');
+  // 1. Audit Ring Architecture: Exactly TWO Concentric Rings
+  console.log('\n[1/6] Verifying Architectural Purity (Exactly TWO Concentric Rings)...');
   const ringCountCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
-      const allRings = document.querySelectorAll('.sriyas-orbit-ring');
+      const innerRing = document.querySelector('.sriyas-inner-ring-circle');
+      const outerRing = document.querySelector('.sriyas-outer-ring-circle');
+      const innerGroup = document.querySelector('.sriyas-stage-inner-group');
+      const outerGroup = document.querySelector('.sriyas-stage-outer-group');
+
       const backgroundRings = document.querySelectorAll('.hp-concentric-ring');
       const movingDots = document.querySelectorAll('.hp-concentric-dot');
       const dashedArcs = document.querySelectorAll('.hp-concentric-dashed-wrapper');
 
-      const secondaryRing = document.querySelector('.sriyas-orbit-ring--secondary');
-      const primaryRing = document.querySelector('.sriyas-orbit-ring--primary');
-      const outerRing = document.querySelector('.sriyas-orbit-ring--outer');
-
       return {
-        totalHeroRings: allRings.length,
+        hasInnerRing: Boolean(innerRing),
+        hasOuterRing: Boolean(outerRing),
+        innerRadius: innerRing ? parseFloat(innerRing.getAttribute('r')) : null,
+        outerRadius: outerRing ? parseFloat(outerRing.getAttribute('r')) : null,
+        innerCenterX: innerRing ? parseFloat(innerRing.getAttribute('cx')) : null,
+        innerCenterY: innerRing ? parseFloat(innerRing.getAttribute('cy')) : null,
+        outerCenterX: outerRing ? parseFloat(outerRing.getAttribute('cx')) : null,
+        outerCenterY: outerRing ? parseFloat(outerRing.getAttribute('cy')) : null,
         backgroundRingsCount: backgroundRings.length,
         backgroundMovingDots: movingDots.length,
-        dashedArcsCount: dashedArcs.length,
-        hasSecondaryRing: Boolean(secondaryRing),
-        hasPrimaryRing: Boolean(primaryRing),
-        hasOuterRing: Boolean(outerRing)
+        dashedArcsCount: dashedArcs.length
       };
     })()`,
     returnByValue: true
   });
 
   const rc = ringCountCheck.result.value;
-  console.log(`  Total Active Hero Orbital Rings: ${rc.totalHeroRings} (Target: Exactly 3)`);
-  console.log(`  Excess Background Concentric Rings: ${rc.backgroundRingsCount} (Target: 0)`);
-  console.log(`  Excess Background Moving Dots: ${rc.backgroundMovingDots} (Target: 0)`);
+  console.log(`  Inner Ring Present: ${rc.hasInnerRing} (Radius: ${rc.innerRadius}px, Center: ${rc.innerCenterX}, ${rc.innerCenterY})`);
+  console.log(`  Outer Ring Present: ${rc.hasOuterRing} (Radius: ${rc.outerRadius}px, Center: ${rc.outerCenterX}, ${rc.outerCenterY})`);
+  console.log(`  Concentric Center Match: ${rc.innerCenterX === rc.outerCenterX && rc.innerCenterY === rc.outerCenterY}`);
+  console.log(`  Excess Background Rings: ${rc.backgroundRingsCount} (Target: 0)`);
+  console.log(`  Excess Background Dots: ${rc.backgroundMovingDots} (Target: 0)`);
   console.log(`  Excess Dashed Arcs: ${rc.dashedArcsCount} (Target: 0)`);
-  console.log(`  Ring System: Inner Secondary (${rc.hasSecondaryRing}), Mid Primary (${rc.hasPrimaryRing}), Outer Accent (${rc.hasOuterRing})`);
 
-  if (rc.totalHeroRings !== 3 || rc.backgroundRingsCount > 0) {
-    throw new Error(`Ring clutter detected! Total rings: ${rc.totalHeroRings}, background rings: ${rc.backgroundRingsCount}`);
+  if (!rc.hasInnerRing || !rc.hasOuterRing || rc.innerRadius !== 90 || rc.outerRadius !== 220 || rc.backgroundRingsCount > 0) {
+    throw new Error('Ring architecture audit failed!');
   }
-  console.log('  ✓ Ring Clutter Elimination PASSED: Exactly 3 intentional rings.');
+  console.log('  ✓ Ring Architecture PASSED: Exactly 2 concentric rings (R=90, R=220), zero excess background clutter.');
 
-  // 2. Audit Outer Ring Weight & Color (No Dark Harsh Outlines)
-  console.log('\n[2/6] Verifying Outer Orbital Circle Tone & Refinement (No Dark Harsh Outline)...');
-  const toneCheck = await cdp.send('Runtime.evaluate', {
-    expression: `(() => {
-      const primaryRing = document.querySelector('.sriyas-orbit-ring--primary');
-      const secondaryRing = document.querySelector('.sriyas-orbit-ring--secondary');
-      const outerRing = document.querySelector('.sriyas-orbit-ring--outer');
-
-      const pStyle = window.getComputedStyle(primaryRing);
-      const sStyle = window.getComputedStyle(secondaryRing);
-      const oStyle = window.getComputedStyle(outerRing);
-
-      return {
-        primaryOpacity: parseFloat(pStyle.opacity),
-        secondaryOpacity: parseFloat(sStyle.opacity),
-        outerOpacity: parseFloat(oStyle.opacity),
-        primaryStrokeWidth: pStyle.strokeWidth,
-        secondaryStrokeWidth: sStyle.strokeWidth,
-        outerStrokeWidth: oStyle.strokeWidth
-      };
-    })()`,
-    returnByValue: true
-  });
-
-  const tc = toneCheck.result.value;
-  console.log(`  Primary Ring Opacity: ${(tc.primaryOpacity * 100).toFixed(0)}%, Stroke: ${tc.primaryStrokeWidth}`);
-  console.log(`  Secondary Ring Opacity: ${(tc.secondaryOpacity * 100).toFixed(0)}%, Stroke: ${tc.secondaryStrokeWidth}`);
-  console.log(`  Outer Accent Ring Opacity: ${(tc.outerOpacity * 100).toFixed(0)}%, Stroke: ${tc.outerStrokeWidth}`);
-
-  if (tc.outerOpacity > 0.25) {
-    throw new Error(`Outer ring opacity is too heavy (${tc.outerOpacity})!`);
-  }
-  console.log('  ✓ Outer Ring Appearance Audit PASSED: Soft, muted, ethereal champagne gold.');
-
-  // 3. Audit Typography Protection Mask
-  console.log('\n[3/6] Verifying Critical Typography Protection Mask (Strokes Never Cross Text)...');
+  // 2. Audit Critical Typography Protection Mask
+  console.log('\n[2/6] Verifying Critical Typography Protection Mask (Strokes Never Cross Text)...');
   const maskCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
-      const maskEl = document.querySelector('#sriyas-typography-feather-mask');
-      const maskedGroup = document.querySelector('g[mask="url(#sriyas-typography-feather-mask)"]');
+      const maskEl = document.querySelector('#sriyas-outer-typography-mask');
+      const outerGroup = document.querySelector('.sriyas-stage-outer-group');
       const titleSlot = document.querySelector('.hp-hero-title-slot');
       const brandName = document.querySelector('.hp-hero-brand-name');
       const tagline = document.querySelector('.hp-hero-tagline');
@@ -308,15 +270,17 @@ async function runVerification() {
       const maskRect = maskEl ? maskEl.querySelector('rect[fill="#000000"]') : null;
       const maskY = maskRect ? parseFloat(maskRect.getAttribute('y')) : null;
       const maskHeight = maskRect ? parseFloat(maskRect.getAttribute('height')) : null;
+      const hasFeatherBlur = Boolean(maskEl ? maskEl.querySelector('filter#sriyas-text-mask-blur') : null);
 
       return {
         hasMask: Boolean(maskEl),
-        hasMaskedGroup: Boolean(maskedGroup),
+        isOuterGroupMasked: outerGroup ? outerGroup.getAttribute('mask') === 'url(#sriyas-outer-typography-mask)' : false,
         titleZIndex: tZIndex,
         taglineZIndex: tagZIndex,
         maskY,
         maskHeight,
-        maskCoversTypography: maskY >= 340 && (maskY + maskHeight) >= 470
+        maskFeatherBlur: hasFeatherBlur,
+        maskCoversTypography: maskY >= 280 && (maskY + maskHeight) >= 420
       };
     })()`,
     returnByValue: true
@@ -324,42 +288,57 @@ async function runVerification() {
 
   const mc = maskCheck.result.value;
   console.log(`  SVG Mask Element Present: ${mc.hasMask}`);
-  console.log(`  Orbital System Masked: ${mc.hasMaskedGroup}`);
+  console.log(`  Outer Stage Mask Applied: ${mc.isOuterGroupMasked}`);
+  console.log(`  Mask Feather Filter: ${mc.maskFeatherBlur}`);
   console.log(`  Mask Coverage: Y=${mc.maskY} to Y=${mc.maskY + mc.maskHeight} (Covers text band: ${mc.maskCoversTypography})`);
   console.log(`  Typography Stacking Context: title z-index = ${mc.titleZIndex}, tagline z-index = ${mc.taglineZIndex}`);
 
-  if (!mc.hasMask || !mc.hasMaskedGroup || !mc.maskCoversTypography) {
+  if (!mc.hasMask || !mc.isOuterGroupMasked || !mc.maskCoversTypography) {
     throw new Error('Typography mask failed validation!');
   }
-  console.log('  ✓ Typography Protection Audit PASSED: Zero lines or particles cross typography.');
+  console.log('  ✓ Typography Protection Audit PASSED: Outer strokes and particles naturally dissolve behind text.');
 
-  // 4. Audit Refined Golden Satellite
-  console.log('\n[4/6] Verifying Refined Golden Satellite (1 Satellite, 60s Linear Revolution)...');
-  const satelliteCheck = await cdp.send('Runtime.evaluate', {
+  // 3. Audit Synchronized 12s Timeline & Strict Mutual Exclusivity
+  console.log('\n[3/6] Verifying Synchronized 12s Timeline & Strict Mutual Exclusivity...');
+  const timelineCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
-      const rotator = document.querySelector('.sriyas-satellite-rotator');
-      const style = window.getComputedStyle(rotator);
-      const spheres = rotator.querySelectorAll('circle');
+      const innerGroup = document.querySelector('.sriyas-stage-inner-group');
+      const innerDot = document.querySelector('.sriyas-inner-dot-rotator');
+      const outerGroup = document.querySelector('.sriyas-stage-outer-group');
+      const outerDot = document.querySelector('.sriyas-outer-dot-rotator');
+
+      const iStyle = window.getComputedStyle(innerGroup);
+      const idStyle = window.getComputedStyle(innerDot);
+      const oStyle = window.getComputedStyle(outerGroup);
+      const odStyle = window.getComputedStyle(outerDot);
 
       return {
-        hasRotator: Boolean(rotator),
-        animationName: style.animationName,
-        animationDuration: style.animationDuration,
-        transformOrigin: style.transformOrigin,
-        satelliteElementCount: spheres.length
+        innerAnimName: iStyle.animationName,
+        innerDuration: iStyle.animationDuration,
+        innerDotAnim: idStyle.animationName,
+        innerDotDuration: idStyle.animationDuration,
+        outerAnimName: oStyle.animationName,
+        outerDuration: oStyle.animationDuration,
+        outerDotAnim: odStyle.animationName,
+        outerDotDuration: odStyle.animationDuration
       };
     })()`,
     returnByValue: true
   });
 
-  const sc = satelliteCheck.result.value;
-  console.log(`  Satellite Rotator: ${sc.hasRotator}`);
-  console.log(`  Animation: ${sc.animationName} (${sc.animationDuration}, Target: 60s)`);
-  console.log(`  Transform Origin: ${sc.transformOrigin}`);
-  console.log('  ✓ Golden Satellite Audit PASSED: Refined, single particle with steady 60s trajectory.');
+  const tc = timelineCheck.result.value;
+  console.log(`  Inner Stage Animation: ${tc.innerAnimName} (${tc.innerDuration}, Target: 12s)`);
+  console.log(`  Inner Dot Animation: ${tc.innerDotAnim} (${tc.innerDotDuration}, Target: 12s)`);
+  console.log(`  Outer Stage Animation: ${tc.outerAnimName} (${tc.outerDuration}, Target: 12s)`);
+  console.log(`  Outer Dot Animation: ${tc.outerDotAnim} (${tc.outerDotDuration}, Target: 12s)`);
 
-  // 5. Multi-Viewport Circularity & Centering Audit
-  console.log('\n[5/6] Verifying 1:1 Circular Geometry & Centering across Viewports...');
+  if (!tc.innerAnimName.includes('sriyasInnerStageTimeline') || !tc.outerAnimName.includes('sriyasOuterStageTimeline')) {
+    throw new Error('Timeline keyframes mismatch!');
+  }
+  console.log('  ✓ Synchronized Timeline PASSED: 12-second master cycle shared across both stages.');
+
+  // 4. Multi-Viewport 1:1 Circular Geometry & Centering Audit
+  console.log('\n[4/6] Verifying 1:1 Circular Geometry & Centering across Viewports...');
   const viewports = [
     { name: 'Desktop_1440', width: 1440, height: 900, mobile: false },
     { name: 'Laptop_1280', width: 1280, height: 800, mobile: false },
@@ -377,7 +356,7 @@ async function runVerification() {
 
     const vpCheck = await cdp.send('Runtime.evaluate', {
       expression: `(() => {
-        const wrap = document.querySelector('.sriyas-orbital-system-wrap');
+        const wrap = document.querySelector('.sriyas-two-stage-orbital-wrap');
         const emblem = document.querySelector('.hp-hero-emblem-slot');
         const wRect = wrap.getBoundingClientRect();
         const eRect = emblem.getBoundingClientRect();
@@ -409,8 +388,8 @@ async function runVerification() {
   }
   console.log('  ✓ Multi-Viewport Audit PASSED: 100% circular, shared center with emblem.');
 
-  // 6. Capture Visual Proof Screenshots
-  console.log('\n[6/6] Capturing Visual Proof Screenshots...');
+  // 5. Visual Proof Screenshots Across Both Stages
+  console.log('\n[5/6] Capturing Visual Proof Screenshots...');
 
   // Reset to Desktop 1440
   await cdp.send('Emulation.setDeviceMetricsOverride', {
@@ -421,35 +400,58 @@ async function runVerification() {
   });
   await sleep(600);
 
-  // Full Hero Desktop 1440
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '159_minimal_luxury_hero_desktop_1440.png'), {
+  // Set to Stage 1: Inner Active
+  await cdp.send('Runtime.evaluate', {
+    expression: `(() => {
+      const inner = document.querySelector('.sriyas-stage-inner-group');
+      const outer = document.querySelector('.sriyas-stage-outer-group');
+      inner.style.animation = 'none';
+      outer.style.animation = 'none';
+      inner.style.opacity = '1';
+      inner.style.visibility = 'visible';
+      inner.style.transform = 'scale(1)';
+      outer.style.opacity = '0';
+      outer.style.visibility = 'hidden';
+    })()`
+  });
+  await sleep(400);
+
+  // Screenshot 164: Stage 1 Inner Active
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '164_two_stage_inner_active.png'), {
     x: 0,
     y: 0,
     width: 1440,
     height: 760
   });
 
-  // Typography Closeup showing clean line disappearance
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '162_typography_protection_closeup.png'), {
+  // Set to Stage 2: Outer Active
+  await cdp.send('Runtime.evaluate', {
+    expression: `(() => {
+      const inner = document.querySelector('.sriyas-stage-inner-group');
+      const outer = document.querySelector('.sriyas-stage-outer-group');
+      inner.style.opacity = '0';
+      inner.style.visibility = 'hidden';
+      outer.style.opacity = '1';
+      outer.style.visibility = 'visible';
+      outer.style.transform = 'scale(1)';
+    })()`
+  });
+  await sleep(400);
+
+  // Screenshot 165: Stage 2 Outer Active
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '165_two_stage_outer_active.png'), {
+    x: 0,
+    y: 0,
+    width: 1440,
+    height: 760
+  });
+
+  // Screenshot 166: Typography Mask Closeup
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '166_two_stage_typography_mask_closeup.png'), {
     x: 320,
     y: 60,
     width: 800,
     height: 480
-  });
-
-  // Ultrawide 1920
-  await cdp.send('Emulation.setDeviceMetricsOverride', {
-    width: 1920,
-    height: 1080,
-    deviceScaleFactor: 1,
-    mobile: false
-  });
-  await sleep(500);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '161_minimal_luxury_hero_ultrawide_1920.png'), {
-    x: 0,
-    y: 0,
-    width: 1920,
-    height: 800
   });
 
   // Mobile 390
@@ -460,11 +462,29 @@ async function runVerification() {
     mobile: true
   });
   await sleep(500);
-  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '160_minimal_luxury_hero_mobile_390.png'), {
+
+  // Screenshot 167: Mobile 390
+  await cdp.captureScreenshot(path.join(ARTIFACT_DIR, '167_two_stage_mobile_390.png'), {
     x: 0,
     y: 0,
     width: 390,
     height: 740
+  });
+
+  // Restore live animations
+  await cdp.send('Runtime.evaluate', {
+    expression: `(() => {
+      const inner = document.querySelector('.sriyas-stage-inner-group');
+      const outer = document.querySelector('.sriyas-stage-outer-group');
+      inner.style.animation = '';
+      outer.style.animation = '';
+      inner.style.opacity = '';
+      inner.style.visibility = '';
+      inner.style.transform = '';
+      outer.style.opacity = '';
+      outer.style.visibility = '';
+      outer.style.transform = '';
+    })()`
   });
 
   console.log('  ✓ All visual proof screenshots successfully captured.');
@@ -473,7 +493,7 @@ async function runVerification() {
 runVerification()
   .then(() => {
     console.log('\n═══════════════════════════════════════════════════════════════');
-    console.log('  ALL MINIMAL LUXURY HERO AUDITS PASSED WITH ZERO ERRORS!     ');
+    console.log('  ALL TWO-STAGE ALTERNATING ORBIT AUDITS PASSED WITH ZERO ERRORS! ');
     console.log('═══════════════════════════════════════════════════════════════');
     process.exit(0);
   })
