@@ -5,6 +5,7 @@ import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 import SriyasOrbitalLogo from './SriyasOrbitalLogo';
+import HeroConcentricRings from './HeroConcentricRings';
 
 function easeOutQuad(t) {
   return t * (2 - t);
@@ -30,6 +31,7 @@ export default function HeroMorphSection({
     setBrandMedia
   } = useHomepageScroll();
 
+  const heroSectionRef = useRef(null);
   const emblemPlaceholderRef = useRef(null);
   const [startRects, setStartRects] = useState(null);
 
@@ -103,15 +105,26 @@ export default function HeroMorphSection({
     return next;
   }, []);
 
-  useLayoutEffect(() => {
-    if (!useFixedMorph) {
-      setStartRects(null);
-      return undefined;
-    }
+  const syncRingsOrigin = useCallback(() => {
+    if (!emblemPlaceholderRef.current || !heroSectionRef.current) return;
+    const eRect = emblemPlaceholderRef.current.getBoundingClientRect();
+    const hRect = heroSectionRef.current.getBoundingClientRect();
+    if (!eRect.width || !eRect.height || !hRect.height) return;
+    const eCenterY = Math.round((eRect.top + eRect.bottom) / 2 - hRect.top);
+    const eCenterX = Math.round((eRect.left + eRect.right) / 2 - hRect.left);
+    heroSectionRef.current.style.setProperty('--hero-rings-origin-y', `${eCenterY}px`);
+    heroSectionRef.current.style.setProperty('--hero-rings-origin-x', `${eCenterX}px`);
+  }, []);
 
+  useLayoutEffect(() => {
     const syncAll = () => {
-      measureNavTargets();
-      measureStartAnchors();
+      if (useFixedMorph) {
+        measureNavTargets();
+        measureStartAnchors();
+      } else {
+        setStartRects(null);
+      }
+      syncRingsOrigin();
     };
 
     syncAll();
@@ -129,6 +142,7 @@ export default function HeroMorphSection({
         if (!cancelled) syncAll();
       });
       if (emblemPlaceholderRef.current) ro.observe(emblemPlaceholderRef.current);
+      if (heroSectionRef.current) ro.observe(heroSectionRef.current);
     }
 
     window.addEventListener('resize', syncAll, { passive: true });
@@ -137,7 +151,7 @@ export default function HeroMorphSection({
       if (ro) ro.disconnect();
       window.removeEventListener('resize', syncAll);
     };
-  }, [useFixedMorph, measureNavTargets, measureStartAnchors]);
+  }, [useFixedMorph, measureNavTargets, measureStartAnchors, syncRingsOrigin]);
 
   // Continuous rAF scroll listener consistent across desktop, laptop, tablet, and mobile
   useEffect(() => {
@@ -241,6 +255,7 @@ export default function HeroMorphSection({
 
   return (
     <section
+      ref={heroSectionRef}
       className={`hp-hero-section ${isPreview ? 'hp-hero-section--preview' : ''}`}
       id="hero"
       aria-label="Sriyas Healthcare Introduction"
@@ -260,9 +275,9 @@ export default function HeroMorphSection({
         </div>
       )}
 
-      {/* Subtle Silk Ivory & Gold Atmosphere */}
+      {/* Subtle Silk Ivory & Gold Atmosphere with Concentric Ring System */}
       <div className="hp-hero-backdrop" aria-hidden="true" style={{ opacity: auraOpacity }}>
-        <div className="hp-hero-halo" />
+        <HeroConcentricRings />
         <div className="hp-hero-grid-texture" />
       </div>
 

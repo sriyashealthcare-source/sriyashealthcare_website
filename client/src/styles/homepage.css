@@ -443,21 +443,220 @@
   z-index: 0;
 }
 
-.hp-hero-halo {
+/* ═══════════════════════════════════════════════════════════
+   HERO BACKGROUND CONCENTRIC RING SYSTEM
+   Luxury Clinical-Wellness Aesthetic & Pure 1:1 Circularity
+   ═══════════════════════════════════════════════════════════ */
+
+.hp-hero-concentric-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Outer wrapper centered vertically directly behind the golden 'S' emblem */
+.hp-concentric-outer-wrapper {
   position: absolute;
   left: 50%;
-  top: 42%;
-  width: clamp(380px, 52vw, 860px);
-  height: clamp(380px, 52vw, 860px);
+  top: var(--hero-rings-origin-y, clamp(160px, 22vh, 230px));
   transform: translate(-50%, -50%);
+  width: clamp(700px, 100vw, 1140px);
+  height: clamp(700px, 100vw, 1140px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* Seamless radial edge masking: dissolves softly into ivory cream background */
+  mask-image: radial-gradient(circle at center, black 45%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 78%);
+}
+
+/* Center ambient glow giving warm depth against cream background */
+.hp-concentric-ambient-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(300px, 45vw, 520px);
+  height: clamp(300px, 45vw, 520px);
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(212, 175, 55, 0.20) 0%,
-    rgba(212, 175, 55, 0.07) 48%,
-    rgba(251, 249, 244, 0) 74%
-  );
-  filter: blur(8px);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.07) 0%, rgba(250, 248, 243, 0) 65%);
+  pointer-events: none;
+}
+
+/* Base ring wrapper centered at origin with strict 1:1 circular aspect ratio */
+.hp-concentric-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ringBreathe 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hp-concentric-ring-circle {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* ── Ring 1 (Innermost Halo): ~220px desktop, ~160px mobile ── */
+.hp-concentric-ring--1 {
+  width: clamp(160px, 22vw, 220px);
+  height: clamp(160px, 22vw, 220px);
+  animation-delay: 0s;
+}
+.hp-concentric-ring--1 .hp-concentric-ring-circle {
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.06);
+}
+
+/* ── Ring 2 (Inner Core): ~380px desktop, ~270px mobile ── */
+.hp-concentric-ring--2 {
+  width: clamp(270px, 38vw, 380px);
+  height: clamp(270px, 38vw, 380px);
+  animation-delay: 1.2s;
+}
+.hp-concentric-ring--2 .hp-concentric-ring-circle {
+  border: 1px solid rgba(197, 160, 89, 0.16);
+}
+
+/* ── Ring 3 (Mid Primary): ~560px desktop, ~390px mobile ── */
+.hp-concentric-ring--3 {
+  width: clamp(390px, 56vw, 560px);
+  height: clamp(390px, 56vw, 560px);
+  animation-delay: 2.4s;
+}
+.hp-concentric-ring--3 .hp-concentric-ring-circle {
+  border: 1px solid rgba(212, 175, 55, 0.12);
+}
+
+/* ── Ring 4 (Mid Outer): ~760px desktop, ~520px mobile ── */
+.hp-concentric-ring--4 {
+  width: clamp(520px, 76vw, 760px);
+  height: clamp(520px, 76vw, 760px);
+  animation-delay: 3.6s;
+}
+.hp-concentric-ring--4 .hp-concentric-ring-circle {
+  border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+/* ── Ring 5 (Outermost Horizon): ~980px desktop, ~660px mobile ── */
+.hp-concentric-ring--5 {
+  width: clamp(660px, 98vw, 980px);
+  height: clamp(660px, 98vw, 980px);
+  animation-delay: 4.8s;
+}
+.hp-concentric-ring--5 .hp-concentric-ring-circle {
+  border: 1px solid rgba(212, 175, 55, 0.045);
+}
+
+/* Staggered Breathing Pulse (scale 0.985 to 1.015, ±15% opacity over 9s) */
+@keyframes ringBreathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.985);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.015);
+    opacity: 1.15;
+  }
+}
+
+/* Rotator wrapper taking full size of parent ring to sweep orbital dot along perimeter */
+.hp-concentric-rotator {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Dot 1 on Ring 2: 34s linear infinite (clockwise) */
+.hp-concentric-rotator--ring2 {
+  animation: orbitClockwise 34s linear infinite;
+}
+
+/* Dot 2 on Ring 3: 48s linear infinite reverse (counter-clockwise from 135deg offset) */
+.hp-concentric-rotator--ring3 {
+  animation: orbitCounterClockwiseRing3 48s linear infinite;
+}
+
+/* Dot 3 on Ring 4: 62s linear infinite (clockwise from 250deg offset, opacity 0.65) */
+.hp-concentric-rotator--ring4 {
+  opacity: 0.65;
+  animation: orbitClockwiseRing4 62s linear infinite;
+}
+
+/* Precision Gold Orbital Particle */
+.hp-concentric-dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: #D4AF37;
+  box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.45);
+  display: block;
+}
+
+/* Dashed Accent Arc wrapper and SVG */
+.hp-concentric-dashed-wrapper {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbitClockwise 80s linear infinite;
+  will-change: transform;
+}
+
+.hp-concentric-dashed-arc {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Orbit keyframes */
+@keyframes orbitClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitCounterClockwiseRing3 {
+  from {
+    transform: rotate(135deg);
+  }
+  to {
+    transform: rotate(-225deg);
+  }
+}
+
+@keyframes orbitClockwiseRing4 {
+  from {
+    transform: rotate(250deg);
+  }
+  to {
+    transform: rotate(610deg);
+  }
 }
 
 .hp-hero-emblem-wrap {
@@ -637,11 +836,17 @@
   }
 }
 
-/* Reduced motion accessibility preference: clean static logo */
+/* Reduced motion accessibility preference: clean static logo & pause concentric ring animations */
 @media (prefers-reduced-motion: reduce) {
   .sriyas-orbital-inner-wrap,
   .sriyas-orbital-outer-wrap {
     display: none !important;
+  }
+
+  .hp-concentric-ring,
+  .hp-concentric-rotator,
+  .hp-concentric-dashed-wrapper {
+    animation: none !important;
   }
 }
 
@@ -672,7 +877,7 @@
 
 .hp-hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   max-width: clamp(860px, 68vw, 1140px);
   width: 100%;
   display: flex;
@@ -2895,11 +3100,6 @@
     padding: 86px 20px 64px;
   }
 
-  .hp-hero-halo {
-    width: clamp(280px, 58vw, 400px);
-    height: clamp(280px, 58vw, 400px);
-  }
-
   .sriyas-orbital-inner-wrap {
     width: clamp(112px, 13vw, 130px);
     height: clamp(112px, 13vw, 130px);
@@ -2966,11 +3166,6 @@
 
   .hp-hero-section {
     padding: 82px 16px 56px;
-  }
-
-  .hp-hero-halo {
-    width: clamp(240px, 70vw, 290px);
-    height: clamp(240px, 70vw, 290px);
   }
 
   .hp-hero-lockup-flow {
