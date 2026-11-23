@@ -615,12 +615,12 @@
   }
 }
 
-/* Inner Dot: exactly one 360deg clockwise revolution from 8.3% to 40.0% */
+/* Inner Dot: exactly one 360deg clockwise revolution from 0% to 44.8% (~5.38s, 30% slower rotation speed) */
 @keyframes sriyasInnerDotRotation {
-  0%, 8.3% {
+  0% {
     transform: rotate(0deg);
   }
-  40.0%, 50% {
+  44.8%, 50% {
     transform: rotate(360deg);
   }
   50.01%, 100% {
@@ -660,12 +660,12 @@
   }
 }
 
-/* Outer Dot: exactly one 360deg clockwise revolution from 58.3% to 90.0% */
+/* Outer Dot: exactly one 360deg clockwise revolution from 50% to 94.8% (~5.38s, 30% slower rotation speed) */
 @keyframes sriyasOuterDotRotation {
-  0%, 58.3% {
+  0%, 50% {
     transform: rotate(0deg);
   }
-  90.0%, 100% {
+  94.8%, 100% {
     transform: rotate(360deg);
   }
 }

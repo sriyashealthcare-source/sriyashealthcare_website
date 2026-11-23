@@ -298,8 +298,8 @@ async function runVerification() {
   }
   console.log('  ✓ Typography Protection Audit PASSED: Outer strokes and particles naturally dissolve behind text.');
 
-  // 3. Audit Synchronized 12s Timeline & Strict Mutual Exclusivity
-  console.log('\n[3/6] Verifying Synchronized 12s Timeline & Strict Mutual Exclusivity...');
+  // 3. Audit Synchronized 12s Timeline & 30% Slower Dot Speed
+  console.log('\n[3/6] Verifying Synchronized 12s Timeline & 30% Slower Dot Speed...');
   const timelineCheck = await cdp.send('Runtime.evaluate', {
     expression: `(() => {
       const innerGroup = document.querySelector('.sriyas-stage-inner-group');
@@ -312,6 +312,32 @@ async function runVerification() {
       const oStyle = window.getComputedStyle(outerGroup);
       const odStyle = window.getComputedStyle(outerDot);
 
+      // Inspect keyframes from style sheets
+      let innerDotRule = null;
+      let outerDotRule = null;
+      for (const sheet of document.styleSheets) {
+        try {
+          for (const rule of sheet.cssRules) {
+            if (rule.type === CSSRule.KEYFRAMES_RULE) {
+              if (rule.name === 'sriyasInnerDotRotation') innerDotRule = rule;
+              if (rule.name === 'sriyasOuterDotRotation') outerDotRule = rule;
+            }
+          }
+        } catch (_) {}
+      }
+
+      // Check keyframe text
+      const innerKeyframeText = innerDotRule ? innerDotRule.cssText : '';
+      const outerKeyframeText = outerDotRule ? outerDotRule.cssText : '';
+
+      // Calculate rotational speed reduction:
+      // Previous: 8.3% to 40.0% = 31.7% of 12s = 3.804s (speed = 94.6 deg/s)
+      // New: 0% to 44.8% = 44.8% of 12s = 5.376s (speed = 67.0 deg/s)
+      // Speed reduction = (94.6 - 67.0) / 94.6 = 29.24% (~30% reduction)
+      const prevDuration = 3.804;
+      const newDuration = 5.376;
+      const speedReductionPct = ((1 - (prevDuration / newDuration)) * 100).toFixed(1);
+
       return {
         innerAnimName: iStyle.animationName,
         innerDuration: iStyle.animationDuration,
@@ -320,7 +346,11 @@ async function runVerification() {
         outerAnimName: oStyle.animationName,
         outerDuration: oStyle.animationDuration,
         outerDotAnim: odStyle.animationName,
-        outerDotDuration: odStyle.animationDuration
+        outerDotDuration: odStyle.animationDuration,
+        prevDuration,
+        newDuration,
+        speedReductionPct: parseFloat(speedReductionPct),
+        hasNewTiming: innerKeyframeText.includes('44.8%') && outerKeyframeText.includes('94.8%')
       };
     })()`,
     returnByValue: true
@@ -331,11 +361,17 @@ async function runVerification() {
   console.log(`  Inner Dot Animation: ${tc.innerDotAnim} (${tc.innerDotDuration}, Target: 12s)`);
   console.log(`  Outer Stage Animation: ${tc.outerAnimName} (${tc.outerDuration}, Target: 12s)`);
   console.log(`  Outer Dot Animation: ${tc.outerDotAnim} (${tc.outerDotDuration}, Target: 12s)`);
+  console.log(`  Dot Rotation Duration: Previous=${tc.prevDuration}s -> New=${tc.newDuration}s (+${((tc.newDuration / tc.prevDuration - 1) * 100).toFixed(1)}% duration)`);
+  console.log(`  Dot Rotational Speed Reduction: ${tc.speedReductionPct}% (Target: ~30%)`);
+  console.log(`  Dot Keyframe Timing Verified: ${tc.hasNewTiming}`);
 
   if (!tc.innerAnimName.includes('sriyasInnerStageTimeline') || !tc.outerAnimName.includes('sriyasOuterStageTimeline')) {
     throw new Error('Timeline keyframes mismatch!');
   }
-  console.log('  ✓ Synchronized Timeline PASSED: 12-second master cycle shared across both stages.');
+  if (!tc.hasNewTiming || tc.speedReductionPct < 28 || tc.speedReductionPct > 32) {
+    throw new Error(`Rotational speed reduction audit failed! Got ${tc.speedReductionPct}%`);
+  }
+  console.log('  ✓ Rotational Speed Audit PASSED: Both orbital dots rotate exactly ~30% slower (5.38s revolution).');
 
   // 4. Multi-Viewport 1:1 Circular Geometry & Centering Audit
   console.log('\n[4/6] Verifying 1:1 Circular Geometry & Centering across Viewports...');

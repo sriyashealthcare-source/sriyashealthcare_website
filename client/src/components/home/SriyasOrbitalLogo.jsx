@@ -5,18 +5,18 @@ import React from 'react';
  *
  * Implements the Sriyas Healthcare Premium Two-Stage Alternating Orbital Animation:
  * 
- * 1. Synchronized 12-Second Timeline (Clockwise, Infinite - 6 Storyboard Stages):
+ * 1. Synchronized 12-Second Timeline (Clockwise, Infinite - 6 Storyboard Stages, 30% Slower Dot Speed):
  *    - Stage 1: Initial State (0.0s - 0.4s, 0% - 3.3%)
  *      * Logo emblem stands clean and pristine.
  *    - Stage 2: Inner Ring Active (0.4s - 5.4s, 3.3% - 45.0%)
  *      * 3.3% - 8.3% (0.4s - 1.0s): Smooth fade-in (opacity 0 -> 1, scale 0.96 -> 1)
- *      * 8.3% - 40.0% (1.0s - 4.8s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 90px)
+ *      * 0% - 44.8% (0.0s - 5.38s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 90px, ~5.38s, 30% slower)
  *      * 40.0% - 45.0% (4.8s - 5.4s): Smooth fade-out (opacity 1 -> 0, scale 1 -> 0.97)
  *    - Stage 3: Inner Ring Disappears (5.4s - 6.4s, 45.0% - 53.3%)
  *      * Clean breathing pause; inner ring completely invisible.
  *    - Stage 4: Outer Ring Active (6.4s - 11.4s, 53.3% - 95.0%)
  *      * 53.3% - 58.3% (6.4s - 7.0s): Smooth fade-in (opacity 0 -> 1, scale 0.96 -> 1)
- *      * 58.3% - 90.0% (7.0s - 10.8s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 220px)
+ *      * 50.0% - 94.8% (6.0s - 11.38s): Luminous gold dot completes exactly ONE 360° clockwise revolution (R = 220px, ~5.38s, 30% slower)
  *      * 90.0% - 95.0% (10.8s - 11.4s): Smooth fade-out (opacity 1 -> 0, scale 1 -> 0.97)
  *    - Stage 5: Outer Ring Disappears (11.4s - 12.0s, 95.0% - 100.0%)
  *      * Clean breathing pause; outer ring completely invisible.
