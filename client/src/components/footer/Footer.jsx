@@ -1,7 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { useContactInfo } from '../../context/ContactContext';
+import { productService } from '../../services/productService';
+
+const DEFAULT_PARTNER_PORTFOLIOS = [
+  { slug: 'ams', name: 'Advanced Medical Solutions', specialty: 'Surgical & Wound Care' },
+  { slug: 'peters', name: 'Peters Surgical', specialty: 'Sutures & Mesh' },
+  { slug: 'liquiband', name: 'LiquiBand®', specialty: 'Tissue Adhesives' },
+  { slug: 'cutimed', name: 'Cutimed® Sorbact®', specialty: 'Wound Care' },
+  { slug: 'gentacoll', name: 'Genta-Coll® resorb', specialty: 'Haemostasis' },
+  { slug: 'gore', name: 'W. L. Gore', specialty: 'Biomaterials' }
+];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,6 +26,59 @@ export default function Footer() {
     registrations,
     socialLinks
   } = useContactInfo();
+
+  // Dynamic Partner Portfolios list (connected to Admin Portal / Database)
+  const [partnerPortfolios, setPartnerPortfolios] = useState(DEFAULT_PARTNER_PORTFOLIOS);
+  const [partnersLoading, setPartnersLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadActivePartners = async () => {
+      try {
+        setPartnersLoading(true);
+        const res = await productService.getPublicBrands();
+        if (!isMounted) return;
+
+        const brandList = Array.isArray(res) ? res : (res?.brands || []);
+        // Strictly filter active partner brands
+        const activeBrands = brandList.filter(
+          (b) => b && b.isActive !== false && b.status !== 'inactive' && (b.slug || b._id)
+        );
+
+        if (activeBrands.length > 0) {
+          setPartnerPortfolios(activeBrands);
+        }
+      } catch {
+        // Fall back gracefully to DEFAULT_PARTNER_PORTFOLIOS if offline or API error
+      } finally {
+        if (isMounted) setPartnersLoading(false);
+      }
+    };
+
+    loadActivePartners();
+
+    // Listen to admin brand changes or tab refocussing for instant live updates
+    const handleUpdate = () => loadActivePartners();
+    window.addEventListener('sriyas:brands-updated', handleUpdate);
+    window.addEventListener('focus', handleUpdate);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener('sriyas:brands-updated', handleUpdate);
+      window.removeEventListener('focus', handleUpdate);
+    };
+  }, []);
+
+  const getPartnerDisplayLabel = (partner) => {
+    if (partner.specialty && partner.specialty.trim()) {
+      return `${partner.name} (${partner.specialty.trim()})`;
+    }
+    if (partner.tabLabel && partner.tabLabel.trim() && partner.tabLabel.trim() !== partner.name.trim()) {
+      return `${partner.name} (${partner.tabLabel.trim()})`;
+    }
+    return partner.name;
+  };
 
   // Active footer phone numbers
   const footerPhones = useMemo(() => {
@@ -104,31 +167,22 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-heading">Partner Portfolios</h3>
             <ul className="footer-nav-list">
-              <li>
-                <Link to="/products/peters" className="footer-nav-link">
-                  Peters Surgical (Sutures &amp; Mesh)
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/liquiband" className="footer-nav-link">
-                  LiquiBand® (Tissue Adhesives)
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/cutimed" className="footer-nav-link">
-                  Cutimed® Sorbact® (Wound Care)
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/gentacoll" className="footer-nav-link">
-                  Genta-Coll® resorb (Haemostasis)
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/gore" className="footer-nav-link">
-                  W. L. Gore (Biomaterials)
-                </Link>
-              </li>
+              {partnerPortfolios.map((partner) => {
+                const slug = partner.slug || partner._id;
+                const label = getPartnerDisplayLabel(partner);
+                return (
+                  <li key={partner._id || slug}>
+                    <Link to={`/products/${slug}`} className="footer-nav-link">
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
+              {partnerPortfolios.length === 0 && !partnersLoading && (
+                <li style={{ color: 'rgba(255, 255, 255, 0.45)', fontSize: '0.82rem' }}>
+                  No active partner portfolios
+                </li>
+              )}
             </ul>
           </div>
 
@@ -168,8 +222,10 @@ export default function Footer() {
           <div className="footer-col footer-col--contact">
             <h3 className="footer-heading">{primaryAddress?.officeName || 'Chennai Office'}</h3>
             <address className="footer-address">
-              {primaryAddress?.line1 || 'Plot No.53A, First Floor, East Facing'}<br />
-              {primaryAddress?.line2 && <>{primaryAddress.line2}<br /></>}
+              {primaryAddress?.line1 || 'Plot No.53A, First Floor, East Facing, Oil Mill Road'}<br />
+              {(primaryAddress?.line2 || 'Maruthi Nagar, Karambakkam, Thundalam') && (
+                <>{primaryAddress?.line2 || 'Maruthi Nagar, Karambakkam, Thundalam'}<br /></>
+              )}
               {primaryAddress?.city || 'Chennai'} – {primaryAddress?.pincode || '600077'},<br />
               {primaryAddress?.state || 'Tamil Nadu'}, {primaryAddress?.country || 'India'}
             </address>

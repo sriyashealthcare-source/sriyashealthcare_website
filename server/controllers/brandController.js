@@ -154,6 +154,7 @@ const createBrand = async (req, res, next) => {
     const name = (req.body.name || '').trim();
     const slug = (req.body.slug || makeSlug(name)).trim().toLowerCase();
     const tabLabel = (req.body.tabLabel || name).trim();
+    const specialty = (req.body.specialty || '').trim();
     const icon = (req.body.icon || '🔬').trim();
     const description = (req.body.description || '').trim();
     let logoUrl = (req.body.logoUrl || '').trim();
@@ -192,6 +193,7 @@ const createBrand = async (req, res, next) => {
       name,
       slug,
       tabLabel,
+      specialty,
       icon,
       description,
       logoUrl,
@@ -227,6 +229,7 @@ const updateBrand = async (req, res, next) => {
     const name = req.body.name !== undefined ? req.body.name.trim() : brand.name;
     const slug = req.body.slug !== undefined ? req.body.slug.trim().toLowerCase() : brand.slug;
     const tabLabel = req.body.tabLabel !== undefined ? req.body.tabLabel.trim() : brand.tabLabel;
+    const specialty = req.body.specialty !== undefined ? req.body.specialty.trim() : (brand.specialty || '');
     const icon = req.body.icon !== undefined ? req.body.icon.trim() : brand.icon;
     const description = req.body.description !== undefined ? req.body.description.trim() : brand.description;
     const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : brand.displayOrder;
@@ -285,6 +288,7 @@ const updateBrand = async (req, res, next) => {
           name,
           slug,
           tabLabel,
+          specialty,
           icon,
           description,
           logoUrl,

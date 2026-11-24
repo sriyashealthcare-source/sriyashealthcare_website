@@ -21,6 +21,11 @@ const brandSchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    specialty: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     icon: {
       type: String,
       trim: true,

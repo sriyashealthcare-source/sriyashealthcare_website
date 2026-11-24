@@ -12,6 +12,8 @@ export default function BrandCategoryManagement() {
   const [brandModalOpen, setBrandModalOpen] = useState(false);
   const [editingBrand, setEditingBrand] = useState(null);
   const [brandName, setBrandName] = useState('');
+  const [brandSpecialty, setBrandSpecialty] = useState('');
+  const [brandIsActive, setBrandIsActive] = useState(true);
   const [brandTabLabel, setBrandTabLabel] = useState('');
   const [brandIcon, setBrandIcon] = useState('🔬');
   const [brandDescription, setBrandDescription] = useState('');
@@ -78,6 +80,8 @@ export default function BrandCategoryManagement() {
   const openAddBrand = () => {
     setEditingBrand(null);
     setBrandName('');
+    setBrandSpecialty('');
+    setBrandIsActive(true);
     setBrandTabLabel('');
     setBrandIcon('🔬');
     setBrandDescription('');
@@ -99,6 +103,8 @@ export default function BrandCategoryManagement() {
   const openEditBrand = (b) => {
     setEditingBrand(b);
     setBrandName(b.name || '');
+    setBrandSpecialty(b.specialty || '');
+    setBrandIsActive(b.isActive !== false);
     setBrandTabLabel(b.tabLabel || b.name || '');
     setBrandIcon(b.icon || '🔬');
     setBrandDescription(b.description || '');
@@ -196,6 +202,8 @@ export default function BrandCategoryManagement() {
     try {
       const payload = {
         name: brandName.trim(),
+        specialty: brandSpecialty.trim(),
+        isActive: brandIsActive,
         tabLabel: (brandTabLabel || brandName).trim(),
         icon: brandIcon.trim() || '🔬',
         description: brandDescription.trim(),
@@ -216,6 +224,7 @@ export default function BrandCategoryManagement() {
       }
       setBrandModalOpen(false);
       loadAll();
+      window.dispatchEvent(new CustomEvent('sriyas:brands-updated'));
     } catch (err) {
       showToast(err.response?.data?.message || 'Could not save brand.', true);
     }
@@ -226,6 +235,7 @@ export default function BrandCategoryManagement() {
       const res = await productService.toggleBrandStatus(b._id, !b.isActive);
       showToast(res.message || 'Brand status updated.');
       loadAll();
+      window.dispatchEvent(new CustomEvent('sriyas:brands-updated'));
     } catch (err) {
       showToast(err.response?.data?.message || 'Failed to update brand status.', true);
     }
@@ -302,6 +312,7 @@ export default function BrandCategoryManagement() {
       if (deleteTarget.type === 'brand') {
         const res = await productService.deleteBrand(deleteTarget.item._id);
         showToast(res.message || 'Brand deleted.');
+        window.dispatchEvent(new CustomEvent('sriyas:brands-updated'));
       } else {
         const res = await productService.deleteCategory(deleteTarget.item._id);
         showToast(res.message || 'Category deleted.');
@@ -394,6 +405,11 @@ export default function BrandCategoryManagement() {
                         <div className="admin-prod-name">
                           {b.name}
                         </div>
+                        {b.specialty && (
+                          <div style={{ fontSize: '0.75rem', color: '#a9822c', fontWeight: 600, marginTop: '2px' }}>
+                            🏷️ {b.specialty}
+                          </div>
+                        )}
                         {b.description && (
                           <div className="admin-prod-sub">
                             {b.description.slice(0, 75)}
@@ -604,6 +620,38 @@ export default function BrandCategoryManagement() {
                     value={brandOrder}
                     onChange={(e) => setBrandOrder(e.target.value)}
                   />
+                </div>
+              </div>
+
+              <div className="admin-form-grid">
+                <div className="admin-field">
+                  <label htmlFor="bm-specialty">
+                    Portfolio Specialty / Footer Subtitle
+                  </label>
+                  <input
+                    id="bm-specialty"
+                    type="text"
+                    value={brandSpecialty}
+                    onChange={(e) => setBrandSpecialty(e.target.value)}
+                    placeholder="e.g. Sutures & Mesh, Tissue Adhesives, Haemostasis"
+                  />
+                  <small style={{ fontSize: '0.74rem', color: 'var(--text-mute)', display: 'block', marginTop: '3px' }}>
+                    Rendered in global footer: <strong>{brandName || 'Brand'} ({brandSpecialty || 'Specialty'})</strong>
+                  </small>
+                </div>
+                <div className="admin-field" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600, marginTop: '16px' }}>
+                    <input
+                      type="checkbox"
+                      checked={brandIsActive}
+                      onChange={(e) => setBrandIsActive(e.target.checked)}
+                      style={{ width: '18px', height: '18px', accentColor: '#a9822c', cursor: 'pointer' }}
+                    />
+                    Active Partner (Shown in Footer &amp; Website)
+                  </label>
+                  <small style={{ fontSize: '0.74rem', color: 'var(--text-mute)', marginLeft: '26px' }}>
+                    Uncheck to hide this partner from the footer and public product directory.
+                  </small>
                 </div>
               </div>
 
