@@ -198,7 +198,7 @@ export default function WhatWeDoSection({
     <section
       ref={sectionRef}
       id="what-we-do"
-      className={`hp-section hp-section--tinted hp-wwd-showcase-section ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-section--tinted hp-wwd-showcase-section home-viewport-section ${isVisible ? 'is-revealed' : ''}`}
       aria-labelledby="wwd-heading"
     >
       <div className="hp-container">

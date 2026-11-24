@@ -380,7 +380,7 @@ export default function ProfileShowcaseSection({
     <section
       ref={sectionRef}
       id={id}
-      className={`hp-section ${tinted ? 'hp-section--tinted' : ''} hp-people-section hp-people--${variant} ${isVisible ? 'is-revealed' : ''
+      className={`hp-section ${tinted ? 'hp-section--tinted' : ''} hp-people-section hp-people--${variant} home-viewport-section ${isVisible ? 'is-revealed' : ''
         }`}
       aria-labelledby={`${id}-heading`}
     >

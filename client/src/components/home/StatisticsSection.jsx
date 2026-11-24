@@ -130,7 +130,7 @@ export default function StatisticsSection({
     <section
       ref={sectionRef}
       id="company-statistics"
-      className={`hp-section hp-stats-section ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-stats-section home-viewport-section ${isVisible ? 'is-revealed' : ''}`}
       aria-labelledby="stats-heading"
     >
       <div className="hp-container">

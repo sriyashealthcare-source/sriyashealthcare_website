@@ -42,7 +42,7 @@ export default function AboutSection({
     <section
       ref={sectionRef}
       id="about-sriyas"
-      className={`hp-section hp-about-section hp-about--${preset} ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-about-section home-viewport-section hp-about--${preset} ${isVisible ? 'is-revealed' : ''}`}
       aria-labelledby="about-heading"
     >
       <div className="hp-container">

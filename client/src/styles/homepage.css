@@ -6,6 +6,7 @@
    =================================================================== */
 
 :root {
+  --navbar-height: 70px;
   /* Sriyas Healthcare Pure White & Gold Editorial Theme */
   --hp-bg-primary: #FFFFFF;
   --hp-bg-secondary: #FAFAFA;
@@ -3540,5 +3541,504 @@
     transition:
       opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
       transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+}
+
+/* ===================================================================
+   HOMEPAGE FULL-VIEWPORT ARCHITECTURE (DESKTOP >= 1024px)
+   Standardized system ensuring every homepage section fits cleanly
+   inside a single 100dvh viewport with zero clipping or internal scroll,
+   proportional clamp() typography and media scaling, and smooth scroll snapping.
+   =================================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.hp-root),
+  body:has(.hp-root) {
+    scroll-snap-type: y proximity;
+  }
+
+  .hp-root {
+    scroll-snap-type: y proximity;
+  }
+
+  /* Universal section wrapper for all homepage sections */
+  .home-viewport-section {
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    padding-block: clamp(0.75rem, 2.2vh, 2rem) !important;
+    padding-inline: 0 !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+
+  /* First section: Account for top fixed navbar so Hero fits completely above the fold */
+  .home-viewport-section.hp-hero-section {
+    padding-top: calc(var(--navbar-height, 70px) + clamp(8px, 1.5vh, 20px)) !important;
+    padding-bottom: clamp(12px, 2vh, 28px) !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    justify-content: center !important;
+  }
+
+  /* Section content container */
+  .home-viewport-section > .hp-container {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Section Header: tightened margins and clamp typography */
+  .home-viewport-section .hp-section-header {
+    margin-bottom: clamp(8px, 1.6vh, 20px);
+  }
+
+  .home-viewport-section .hp-eyebrow {
+    margin-bottom: clamp(4px, 0.7vh, 8px);
+    font-size: clamp(0.68rem, 1.05vh, 0.74rem);
+  }
+
+  .home-viewport-section .hp-heading {
+    font-size: clamp(1.65rem, 3.0vh, 2.45rem);
+    line-height: 1.15;
+    margin: 0 0 clamp(4px, 0.7vh, 8px);
+  }
+
+  .home-viewport-section .hp-section-subtitle {
+    font-size: clamp(0.82rem, 1.3vh, 0.94rem);
+    line-height: 1.45;
+    max-width: 680px;
+  }
+
+  .home-viewport-section .hp-gold-rule {
+    margin: 4px 0 clamp(6px, 1vh, 14px);
+  }
+
+  /* -----------------------------------------------------------------
+     1. HERO SECTION SCALING
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-hero-section .hp-hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-brand-lockup-wrapper {
+    margin: 0 auto clamp(6px, 1.2vh, 14px);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-brand-name {
+    font-size: clamp(2.2rem, 3.8vw, 3.8rem);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-brand-sub {
+    margin: clamp(4px, 0.8vh, 10px) 0 0;
+    font-size: clamp(0.72rem, 1.1vw, 0.95rem);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-tagline {
+    font-size: clamp(1.05rem, 1.8vh, 1.55rem);
+    line-height: 1.3;
+    margin: 0 0 clamp(6px, 1vh, 12px);
+    max-width: clamp(620px, 54vw, 840px);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-intro {
+    font-size: clamp(0.84rem, 1.35vh, 1.02rem);
+    line-height: 1.52;
+    margin: 0 0 clamp(8px, 1.3vh, 14px);
+    max-width: clamp(580px, 50vw, 780px);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-values {
+    margin: 0 0 clamp(10px, 1.8vh, 20px);
+    font-size: clamp(0.68rem, 1.05vh, 0.82rem);
+    gap: clamp(10px, 1.4vw, 20px);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-actions {
+    gap: clamp(10px, 1.2vw, 18px);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-actions .hp-btn-gold,
+  .home-viewport-section.hp-hero-section .hp-hero-actions .hp-btn-outline {
+    padding: clamp(9px, 1.2vh, 14px) clamp(20px, 1.8vw, 30px);
+    font-size: clamp(0.8rem, 1.15vh, 0.92rem);
+  }
+
+  .home-viewport-section.hp-hero-section .hp-hero-scroll-cue {
+    bottom: clamp(6px, 1vh, 12px);
+  }
+
+  /* -----------------------------------------------------------------
+     2. ABOUT US SECTION ("Connecting Clinical Excellence...")
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-about-section .hp-about-grid {
+    gap: clamp(20px, 3.2vw, 48px);
+    align-items: center;
+  }
+
+  .home-viewport-section.hp-about-section .hp-lead-paragraph {
+    font-size: clamp(0.82rem, 1.35vh, 0.96rem);
+    line-height: 1.48;
+    margin: 0 0 clamp(4px, 0.7vh, 8px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-body-paragraph {
+    font-size: clamp(0.78rem, 1.25vh, 0.90rem);
+    line-height: 1.45;
+    margin: 0 0 clamp(6px, 0.8vh, 10px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-purpose-cards {
+    margin-top: clamp(6px, 1.2vh, 14px);
+    gap: clamp(8px, 1.2vw, 14px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-purpose-card {
+    padding: clamp(0.6rem, 1.3vh, 0.95rem) clamp(0.75rem, 1.2vw, 1.15rem);
+    border-radius: 12px;
+  }
+
+  .home-viewport-section.hp-about-section .hp-purpose-label {
+    font-size: 0.66rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.16em;
+  }
+
+  .home-viewport-section.hp-about-section .hp-purpose-card p {
+    font-size: clamp(0.74rem, 1.18vh, 0.84rem);
+    line-height: 1.42;
+  }
+
+  .home-viewport-section.hp-about-section .hp-collage-frame--primary {
+    width: 86%;
+  }
+
+  .home-viewport-section.hp-about-section .hp-collage-frame--primary .hp-collage-media {
+    aspect-ratio: 16 / 10;
+    max-height: clamp(170px, 28vh, 270px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-collage-frame--secondary {
+    width: 66%;
+    margin-top: clamp(-42px, -5.5vh, -24px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-collage-frame--secondary .hp-collage-media {
+    aspect-ratio: 16 / 10;
+    max-height: clamp(120px, 20vh, 190px);
+  }
+
+  .home-viewport-section.hp-about-section .hp-collage-caption {
+    padding: clamp(4px, 0.8vh, 8px) 6px 2px;
+    font-size: clamp(0.7rem, 1.1vh, 0.76rem);
+  }
+
+  /* -----------------------------------------------------------------
+     3. WORKPLACE GALLERY / CAROUSEL ("OUR COMPANY IN ACTION")
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-carousel-section .hp-carousel {
+    max-width: 980px;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-viewport {
+    min-height: auto !important;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-media-wrap {
+    height: clamp(200px, 39vh, 360px) !important;
+    aspect-ratio: auto !important;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-media {
+    height: 100%;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-media img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-content {
+    padding: clamp(6px, 1.2vh, 12px) clamp(14px, 1.8vw, 24px) !important;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-title {
+    font-size: clamp(0.92rem, 1.5vh, 1.18rem) !important;
+    line-height: 1.25 !important;
+    margin: 0 0 3px !important;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-caption {
+    font-size: clamp(0.76rem, 1.2vh, 0.86rem) !important;
+    line-height: 1.38 !important;
+    margin: 0 !important;
+  }
+
+  .home-viewport-section.hp-carousel-section .hp-carousel-footer {
+    padding: clamp(6px, 1vh, 10px) clamp(14px, 1.8vw, 24px) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     4. STATISTICS SECTION
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-stats-section .hp-stats-grid {
+    gap: clamp(12px, 1.8vw, 22px);
+  }
+
+  .home-viewport-section.hp-stats-section .hp-stat-card {
+    padding: clamp(14px, 2.2vh, 26px) clamp(12px, 1.5vw, 20px);
+  }
+
+  .home-viewport-section.hp-stats-section .hp-stat-number {
+    font-size: clamp(1.8rem, 4vh, 3rem);
+  }
+
+  .home-viewport-section.hp-stats-section .hp-stat-label {
+    font-size: clamp(0.74rem, 1.2vh, 0.86rem);
+  }
+
+  /* -----------------------------------------------------------------
+     5. LEADERSHIP & TEAM SECTIONS
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-people--leadership .hp-leadership-container {
+    gap: clamp(10px, 1.8vh, 20px);
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-row {
+    gap: clamp(14px, 2.2vw, 32px);
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-photo-wrap {
+    max-height: clamp(110px, 17vh, 170px);
+    max-width: clamp(130px, 18vw, 190px);
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-photo-wrap img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-name {
+    font-size: clamp(1.05rem, 1.7vh, 1.35rem);
+    margin-bottom: 2px;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-role {
+    font-size: clamp(0.72rem, 1.1vh, 0.82rem);
+    margin-bottom: clamp(4px, 0.6vh, 6px);
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-rule {
+    margin-bottom: clamp(4px, 0.6vh, 8px);
+    height: 1.5px;
+    width: 44px;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-bio {
+    font-size: clamp(0.74rem, 1.15vh, 0.84rem);
+    line-height: 1.4;
+    margin-bottom: clamp(6px, 1vh, 12px);
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-email-btn {
+    padding: clamp(5px, 0.8vh, 8px) clamp(12px, 1.2vw, 18px);
+    font-size: clamp(0.72rem, 1.05vh, 0.8rem);
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-grid {
+    gap: clamp(12px, 1.8vw, 22px);
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-card {
+    padding: clamp(12px, 1.8vh, 20px) clamp(10px, 1.4vw, 18px);
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-portrait-wrap {
+    width: clamp(68px, 10vh, 96px);
+    height: clamp(68px, 10vh, 96px);
+    margin-bottom: clamp(6px, 1vh, 10px);
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-name {
+    font-size: clamp(0.95rem, 1.5vh, 1.15rem);
+    margin-bottom: 2px;
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-role {
+    font-size: clamp(0.72rem, 1.1vh, 0.82rem);
+    margin-bottom: 6px;
+  }
+
+  .home-viewport-section.hp-people--team .hp-team-bio {
+    font-size: clamp(0.74rem, 1.15vh, 0.84rem);
+    line-height: 1.4;
+  }
+
+  /* -----------------------------------------------------------------
+     6. WHAT WE DO SHOWCASE SECTION
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-grid-layout {
+    padding: clamp(12px, 1.8vh, 22px) clamp(16px, 2vw, 28px);
+    gap: clamp(16px, 2.2vw, 30px);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-photo-container {
+    max-height: clamp(125px, 20vh, 200px);
+    aspect-ratio: 16 / 9;
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-featured-body {
+    padding: clamp(8px, 1.3vh, 14px) 0 0;
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-active-title {
+    font-size: clamp(1.05rem, 1.7vh, 1.35rem);
+    margin-bottom: 3px;
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-rule {
+    margin: 3px 0 clamp(5px, 0.9vh, 10px);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-active-desc {
+    font-size: clamp(0.76rem, 1.2vh, 0.86rem);
+    line-height: 1.4;
+    margin-bottom: clamp(6px, 1vh, 12px);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-actions {
+    gap: 12px;
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-cta-link {
+    padding: clamp(7px, 1vh, 11px) clamp(14px, 1.5vw, 22px);
+    font-size: clamp(0.76rem, 1.1vh, 0.84rem);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-rail-item {
+    padding: clamp(7px, 1.1vh, 12px) clamp(10px, 1.2vw, 16px);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-rail-title {
+    font-size: clamp(0.8rem, 1.25vh, 0.92rem);
+  }
+
+  .home-viewport-section.hp-wwd-showcase-section .hp-wwd-rail-desc {
+    font-size: clamp(0.7rem, 1.05vh, 0.78rem);
+    line-height: 1.35;
+  }
+
+  /* -----------------------------------------------------------------
+     7. VALUES SECTION
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-values-section .hp-values-layout {
+    gap: clamp(16px, 2.5vw, 36px);
+    align-items: center;
+  }
+
+  .home-viewport-section.hp-values-section .hp-values-feature-frame img {
+    max-height: clamp(160px, 26vh, 260px);
+  }
+
+  .home-viewport-section.hp-values-section .hp-value-item {
+    padding: clamp(8px, 1.3vh, 14px) clamp(12px, 1.4vw, 18px);
+    border-radius: 12px;
+    gap: 14px;
+  }
+
+  .home-viewport-section.hp-values-section .hp-value-numeral {
+    font-size: clamp(1.1rem, 1.6vh, 1.3rem);
+  }
+
+  .home-viewport-section.hp-values-section .hp-value-line {
+    height: clamp(14px, 2vh, 22px);
+  }
+
+  .home-viewport-section.hp-values-section .hp-value-title {
+    font-size: clamp(0.9rem, 1.35vh, 1.05rem);
+  }
+
+  .home-viewport-section.hp-values-section .hp-value-description {
+    font-size: clamp(0.75rem, 1.15vh, 0.84rem);
+    line-height: 1.4;
+  }
+
+  /* -----------------------------------------------------------------
+     8. CALL TO ACTION SECTION
+     ----------------------------------------------------------------- */
+  .home-viewport-section.hp-cta-section .hp-cta-card {
+    padding: clamp(20px, 3.5vh, 40px) clamp(18px, 2.8vw, 38px);
+    max-width: 940px;
+    border-radius: 20px;
+  }
+
+  .home-viewport-section.hp-cta-section .hp-cta-heading {
+    font-size: clamp(1.5rem, 2.8vh, 2.35rem);
+    line-height: 1.18;
+    margin-bottom: clamp(6px, 1vh, 10px);
+  }
+
+  .home-viewport-section.hp-cta-section .hp-cta-sub {
+    font-size: clamp(0.8rem, 1.25vh, 0.92rem);
+    line-height: 1.45;
+    margin-bottom: clamp(10px, 1.6vh, 20px);
+  }
+
+  .home-viewport-section.hp-cta-section .hp-cta-actions {
+    gap: clamp(10px, 1.4vw, 18px);
+  }
+
+  .home-viewport-section.hp-cta-section .hp-btn-gold,
+  .home-viewport-section.hp-cta-section .hp-btn-outline {
+    padding: clamp(9px, 1.2vh, 14px) clamp(22px, 2vw, 32px);
+    font-size: clamp(0.8rem, 1.15vh, 0.92rem);
+  }
+
+  .home-viewport-section.hp-cta-section .hp-cta-contact-strip {
+    margin-top: clamp(14px, 2vh, 24px);
+    padding-top: clamp(10px, 1.5vh, 18px);
+    font-size: clamp(0.76rem, 1.15vh, 0.84rem);
+  }
+}
+
+/* ===================================================================
+   MOBILE & TABLET RESPONSIVE RESET (< 1024px)
+   Revert to natural content flow with zero truncation or forced heights
+   =================================================================== */
+@media (max-width: 1023px) {
+  .hp-root {
+    scroll-snap-type: none !important;
+  }
+
+  .home-viewport-section {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+    padding-block: clamp(48px, 8vh, 72px) !important;
+  }
+
+  .home-viewport-section.hp-hero-section {
+    min-height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding-top: clamp(80px, 11vh, 110px) !important;
+    padding-bottom: clamp(48px, 6vh, 64px) !important;
   }
 }

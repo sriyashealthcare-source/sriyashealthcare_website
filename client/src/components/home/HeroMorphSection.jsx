@@ -256,7 +256,7 @@ export default function HeroMorphSection({
   return (
     <section
       ref={heroSectionRef}
-      className={`hp-hero-section ${isPreview ? 'hp-hero-section--preview' : ''}`}
+      className={`hp-hero-section home-viewport-section ${isPreview ? 'hp-hero-section--preview' : ''}`}
       id="hero"
       aria-label="Sriyas Healthcare Introduction"
     >

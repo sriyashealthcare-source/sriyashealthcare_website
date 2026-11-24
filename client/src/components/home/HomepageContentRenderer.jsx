@@ -21,6 +21,17 @@ const DEFAULT_ORDER = [
   'callToAction'
 ];
 
+/**
+ * SRIYAS HEALTHCARE HOMEPAGE ARCHITECTURE:
+ * On desktop and laptop viewports (min-width: 1024px), every section rendered by this
+ * component utilizes the standardized `.home-viewport-section` wrapper class.
+ * This guarantees that every section fits cleanly inside a single full-screen viewport (100dvh)
+ * with zero internal overflow or clipping, vertical centering, and smooth scroll snapping.
+ *
+ * NOTE FOR FUTURE SECTIONS:
+ * Any future section component added to the homepage must apply the `.home-viewport-section`
+ * class to its root <section> element.
+ */
 export default function HomepageContentRenderer({
   homepage,
   isPreview = false,

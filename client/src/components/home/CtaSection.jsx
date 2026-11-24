@@ -54,7 +54,7 @@ export default function CtaSection({
     <section
       ref={sectionRef}
       id="cta-connect"
-      className={`hp-section hp-cta-section ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-cta-section home-viewport-section ${isVisible ? 'is-revealed' : ''}`}
       aria-labelledby="cta-heading"
     >
       {hasBackground && (

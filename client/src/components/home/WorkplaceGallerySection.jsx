@@ -269,7 +269,7 @@ export default function WorkplaceGallerySection({
     <section
       ref={sectionRef}
       id="our-workplace"
-      className={`hp-section hp-section--alt hp-carousel-section ${
+      className={`hp-section hp-section--alt hp-carousel-section home-viewport-section ${
         isVisible ? 'is-revealed' : ''
       }`}
       aria-roledescription="carousel"

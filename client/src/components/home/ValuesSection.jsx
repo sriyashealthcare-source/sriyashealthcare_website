@@ -36,7 +36,7 @@ export default function ValuesSection({
     <section
       ref={sectionRef}
       id="why-choose-sriyas"
-      className={`hp-section hp-values-section ${isVisible ? 'is-revealed' : ''}`}
+      className={`hp-section hp-values-section home-viewport-section ${isVisible ? 'is-revealed' : ''}`}
       aria-labelledby="values-heading"
     >
       <div className="hp-container">
