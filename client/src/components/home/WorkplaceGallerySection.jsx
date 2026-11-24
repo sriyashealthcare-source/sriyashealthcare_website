@@ -151,11 +151,11 @@ export default function WorkplaceGallerySection({
   const images = validImages.length >= 8
     ? validImages.slice(0, 8)
     : [
-        ...validImages,
-        ...EIGHT_WORKPLACE_IMAGES_FALLBACK.filter(
-          (fallback) => !validImages.some((v) => v.id === fallback.id || v.publicId === fallback.publicId)
-        )
-      ].slice(0, 8);
+      ...validImages,
+      ...EIGHT_WORKPLACE_IMAGES_FALLBACK.filter(
+        (fallback) => !validImages.some((v) => v.id === fallback.id || v.publicId === fallback.publicId)
+      )
+    ].slice(0, 8);
 
   const total = images.length;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -269,9 +269,8 @@ export default function WorkplaceGallerySection({
     <section
       ref={sectionRef}
       id="our-workplace"
-      className={`hp-section hp-section--alt hp-carousel-section home-viewport-section ${
-        isVisible ? 'is-revealed' : ''
-      }`}
+      className={`hp-section hp-section--alt hp-carousel-section home-viewport-section ${isVisible ? 'is-revealed' : ''
+        }`}
       aria-roledescription="carousel"
       aria-label="Our Company in Action"
       onKeyDown={handleKeyDown}

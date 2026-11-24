@@ -101,11 +101,11 @@ export default function WhatWeDoSection({
   const items = validItems.length >= 5
     ? validItems.slice(0, 5)
     : [
-        ...validItems,
-        ...DEFAULT_CAPABILITIES.filter(
-          (def) => !validItems.some((v) => v.id === def.id || v.title === def.title)
-        )
-      ].slice(0, 5);
+      ...validItems,
+      ...DEFAULT_CAPABILITIES.filter(
+        (def) => !validItems.some((v) => v.id === def.id || v.title === def.title)
+      )
+    ].slice(0, 5);
 
   const total = items.length;
   const [activeIndex, setActiveIndex] = useState(0);

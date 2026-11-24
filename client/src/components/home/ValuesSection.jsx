@@ -18,8 +18,8 @@ export default function ValuesSection({
 
   const items = Array.isArray(values.items)
     ? [...values.items]
-        .filter((item) => item && item.isActive !== false && item.title)
-        .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
+      .filter((item) => item && item.isActive !== false && item.title)
+      .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 
   if (items.length === 0) return null;
@@ -41,9 +41,8 @@ export default function ValuesSection({
     >
       <div className="hp-container">
         <div
-          className={`hp-values-layout ${
-            hasFeatureImage ? 'hp-values-layout--with-media' : ''
-          }`}
+          className={`hp-values-layout ${hasFeatureImage ? 'hp-values-layout--with-media' : ''
+            }`}
         >
           {/* Values Intro & Feature Image — Signature Left Entrance */}
           <div className="hp-values-intro hp-converge-left" style={{ '--reveal-delay': '0ms' }}>

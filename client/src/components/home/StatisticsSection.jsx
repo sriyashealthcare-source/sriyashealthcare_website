@@ -92,8 +92,8 @@ export default function StatisticsSection({
 
   const items = Array.isArray(statistics.items)
     ? [...statistics.items]
-        .filter((it) => it && it.isActive !== false && it.title && Number.isFinite(Number(it.value)))
-        .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
+      .filter((it) => it && it.isActive !== false && it.title && Number.isFinite(Number(it.value)))
+      .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
     : [];
 
   // When no verified statistics exist:
@@ -147,15 +147,14 @@ export default function StatisticsSection({
         )}
 
         <div
-          className={`hp-stats-grid ${
-            items.length === 1
-              ? 'hp-stats-grid--1'
-              : items.length === 2
-                ? 'hp-stats-grid--2'
-                : items.length === 3
-                  ? 'hp-stats-grid--3'
-                  : 'hp-stats-grid--4'
-          }`}
+          className={`hp-stats-grid ${items.length === 1
+            ? 'hp-stats-grid--1'
+            : items.length === 2
+              ? 'hp-stats-grid--2'
+              : items.length === 3
+                ? 'hp-stats-grid--3'
+                : 'hp-stats-grid--4'
+            }`}
         >
           {items.map((stat, idx) => (
             <StatCard
