@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { contactService } from '../../services/contactService';
 import { useContactInfo } from '../../context/ContactContext';
+import { GOOGLE_MAPS_SEARCH_URL } from '../../constants/contact';
 
 function generateLocalId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -66,7 +67,11 @@ export default function AdminContactManagement() {
         const c = res.contact;
         setCompanyName(c.companyName || 'Sriyas Healthcare Private Limited');
         setTagline(c.tagline || 'Empowering Healthcare with Care and Innovation.');
-        setGoogleMapsUrl(c.googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw');
+        setGoogleMapsUrl(
+          c.googleMapsUrl && !c.googleMapsUrl.includes('H981BLR5kQ2Yz1Sr7')
+            ? c.googleMapsUrl
+            : GOOGLE_MAPS_SEARCH_URL
+        );
         setMapCoordinates(c.mapCoordinates || { lat: 13.0458, lng: 80.1472 });
         setPhones(Array.isArray(c.phones) ? c.phones : []);
         setWhatsapps(Array.isArray(c.whatsapps) ? c.whatsapps : []);

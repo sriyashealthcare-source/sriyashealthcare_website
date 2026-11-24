@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { contactService } from '../services/contactService';
-import { COMPANY_CONTACT } from '../constants/contact';
+import { COMPANY_CONTACT, GOOGLE_MAPS_SEARCH_URL } from '../constants/contact';
 import { STOREFRONT_LOCATION_URL } from '../utils/cloudinaryAssets';
 
 const ContactContext = createContext(null);
@@ -79,7 +79,7 @@ const DEFAULT_INITIAL_STATE = {
       state: COMPANY_CONTACT.address.state,
       pincode: COMPANY_CONTACT.address.pincode,
       country: COMPANY_CONTACT.address.country,
-      googleMapsUrl: 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw',
+      googleMapsUrl: GOOGLE_MAPS_SEARCH_URL,
       coordinates: { lat: 13.0458, lng: 80.1472 },
       isPrimary: true,
       isActive: true,
@@ -143,7 +143,7 @@ const DEFAULT_INITIAL_STATE = {
       displayOrder: 1
     }
   ],
-  googleMapsUrl: 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw',
+  googleMapsUrl: GOOGLE_MAPS_SEARCH_URL,
   mapCoordinates: { lat: 13.0458, lng: 80.1472 }
 };
 
@@ -316,7 +316,9 @@ export function ContactProvider({ children }) {
     registrations: contactData.registrations || [],
     socialLinks: (contactData.socialLinks || []).filter((s) => s.isActive !== false && s.url),
     officeImages: contactData.officeImages || [],
-    googleMapsUrl: contactData.googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw',
+    googleMapsUrl: (contactData.googleMapsUrl && !contactData.googleMapsUrl.includes('H981BLR5kQ2Yz1Sr7'))
+      ? contactData.googleMapsUrl
+      : GOOGLE_MAPS_SEARCH_URL,
     mapCoordinates: contactData.mapCoordinates || { lat: 13.0458, lng: 80.1472 }
   };
 

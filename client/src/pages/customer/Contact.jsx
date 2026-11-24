@@ -4,6 +4,7 @@ import { enquiryService } from '../../services/enquiryService';
 import { trackAnalyticsEvent } from '../../utils/session';
 import SeoHead from '../../components/common/SeoHead';
 import { SRIYAS_EMBLEM_URL, STOREFRONT_LOCATION_URL } from '../../utils/cloudinaryAssets';
+import { GOOGLE_MAPS_SEARCH_URL } from '../../constants/contact';
 import { useContactInfo } from '../../context/ContactContext';
 
 export default function Contact() {
@@ -36,11 +37,35 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  const resolvedGoogleMapsUrl = useMemo(() => {
+    if (googleMapsUrl && !googleMapsUrl.includes('H981BLR5kQ2Yz1Sr7')) {
+      return googleMapsUrl;
+    }
+    return GOOGLE_MAPS_SEARCH_URL;
+  }, [googleMapsUrl]);
 
   useEffect(() => {
     document.title = 'Contact Us | Sriyas Healthcare Pvt Ltd';
     trackAnalyticsEvent('page_view', { pageTitle: 'Contact Us' });
   }, []);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isLightboxOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -403,7 +428,11 @@ export default function Contact() {
             </div>
             <div className="contact-card-footer">
               <a
-                href={primaryAddress?.googleMapsUrl || googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                href={
+                  primaryAddress?.googleMapsUrl && !primaryAddress.googleMapsUrl.includes('H981BLR5kQ2Yz1Sr7')
+                    ? primaryAddress.googleMapsUrl
+                    : resolvedGoogleMapsUrl
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-card-action-link"
@@ -517,13 +546,12 @@ export default function Contact() {
         <section className="contact-office-section" aria-label="Corporate Office Location">
           <div className="contact-office-container">
             <div className="office-portrait-card">
-              <a
+              <button
+                type="button"
                 className="office-portrait-frame"
-                href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Click to view Sriyas Healthcare on Google Maps"
-                aria-label="Open Sriyas Healthcare corporate office location in Google Maps"
+                onClick={() => setIsLightboxOpen(true)}
+                title="Click to view full photo"
+                aria-label="Enlarge Sriyas Healthcare corporate office building photo"
               >
                 <img
                   className="office-portrait-img map-photo"
@@ -531,7 +559,10 @@ export default function Contact() {
                   alt={primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
                   loading="lazy"
                 />
-              </a>
+                <span className="office-zoom-badge" aria-hidden="true">
+                  🔍 Click to enlarge
+                </span>
+              </button>
 
               {primaryOfficeImage?.caption && (
                 <div className="office-portrait-caption">
@@ -542,7 +573,7 @@ export default function Contact() {
               <div className="office-maps-actions">
                 <a
                   className="office-maps-btn office-maps-btn-primary"
-                  href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
+                  href={resolvedGoogleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="View Sriyas Healthcare Location on Google Maps"
@@ -550,18 +581,43 @@ export default function Contact() {
                   <span className="office-maps-btn-icon">📍</span>
                   <span>View Location on Google Maps ↗</span>
                 </a>
-                <a
-                  className="office-maps-btn office-maps-btn-secondary"
-                  href={googleMapsUrl || 'https://maps.app.goo.gl/H981BLR5kQ2Yz1Sr7?g_st=iw'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open Registered Office in Google Maps"
-                >
-                  <span className="office-maps-btn-icon">🗺️</span>
-                  <span>Open Registered Office in Google Maps ↗</span>
-                </a>
               </div>
             </div>
+
+            {/* Fullscreen Image Lightbox Modal */}
+            {isLightboxOpen && (
+              <div
+                className="office-lightbox-overlay"
+                onClick={() => setIsLightboxOpen(false)}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Full-size corporate office photograph"
+              >
+                <div
+                  className="office-lightbox-content"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    className="office-lightbox-close"
+                    onClick={() => setIsLightboxOpen(false)}
+                    aria-label="Close fullscreen view"
+                  >
+                    &times;
+                  </button>
+                  <img
+                    className="office-lightbox-img"
+                    src={primaryOfficeImage?.url || STOREFRONT_LOCATION_URL}
+                    alt={primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
+                  />
+                  {primaryOfficeImage?.caption && (
+                    <div className="office-lightbox-caption">
+                      {primaryOfficeImage.caption}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {officeImages && officeImages.length > 1 && (
               <div className="office-gallery-secondary">

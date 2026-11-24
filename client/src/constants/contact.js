@@ -28,6 +28,14 @@ export const COMPANY_CONTACT = {
 };
 
 /**
+ * Standard, reliable Google Maps search URL for Sriyas Healthcare corporate office.
+ * Direct search query by address avoids shortlink redirect timeouts or broken connections.
+ */
+export const GOOGLE_MAPS_SEARCH_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `Sriyas Healthcare, ${COMPANY_CONTACT.address.line1}, ${COMPANY_CONTACT.address.line2}, ${COMPANY_CONTACT.address.city} - ${COMPANY_CONTACT.address.pincode}, ${COMPANY_CONTACT.address.state}, ${COMPANY_CONTACT.address.country}`
+)}`;
+
+/**
  * Builds the official WhatsApp click-to-chat URL with properly encoded message.
  * Supports optional dynamic phone number with fallback to default corporate WhatsApp.
  * @param {string} [customMessage]
