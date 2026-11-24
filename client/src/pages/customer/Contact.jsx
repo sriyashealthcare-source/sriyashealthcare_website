@@ -214,6 +214,15 @@ export default function Contact() {
     );
   }, [whatsapps]);
 
+  // Active Official Email for Contact Tile
+  const activeEmailAddress = useMemo(() => {
+    return (
+      primaryEmail?.email ||
+      visibleEmails[0]?.email ||
+      'sriyashealthcare@gmail.com'
+    );
+  }, [primaryEmail, visibleEmails]);
+
   // Schema generation
   const contactSchemas = useMemo(() => [
     {
@@ -411,9 +420,9 @@ export default function Contact() {
           </form>
         </div>
 
-        {/* Exactly 5 Tiles in One Horizontal Row on Desktop */}
+        {/* Exactly 6 Tiles in 2 Rows × 3 Columns on Desktop */}
         <div className="contact-grid" aria-label="Official Corporate Contact Channels">
-          {/* Tile 1: Corporate Office & Distribution Centre */}
+          {/* Tile 1 (Row 1, Col 1): Corporate Office & Distribution Centre */}
           <div className="contact-card contact-card-address">
             <div className="contact-icon" aria-hidden="true">📍</div>
             <h3>{primaryAddress?.officeName || 'Corporate Office & Distribution Centre'}</h3>
@@ -443,7 +452,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Tile 2: Main Office – Contact Numbers (Combined) */}
+          {/* Tile 2 (Row 1, Col 2): Main Office – Contact Numbers (Combined) */}
           <div className="contact-card contact-card-phones">
             <div className="contact-icon" aria-hidden="true">📞</div>
             <h3>Main Office &ndash; Contact Numbers</h3>
@@ -475,7 +484,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Tile 3: Official WhatsApp Support */}
+          {/* Tile 3 (Row 1, Col 3): Official WhatsApp Support */}
           <div className="contact-card contact-card-whatsapp">
             <div className="contact-icon" aria-hidden="true">💬</div>
             <h3>{activeWhatsApp.label || 'Official WhatsApp Support'}</h3>
@@ -506,7 +515,27 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Tile 4: GSTIN */}
+          {/* Tile 4 (Row 2, Col 1): Official Email */}
+          <div className="contact-card contact-card-email">
+            <div className="contact-icon" aria-hidden="true">✉️</div>
+            <h3>Official Email</h3>
+            <div className="contact-card-body">
+              <div className="contact-email-block">
+                <a
+                  href={`mailto:${activeEmailAddress}`}
+                  className="contact-email-link"
+                  aria-label={`Send email to Sriyas Healthcare at ${activeEmailAddress}`}
+                >
+                  {activeEmailAddress}
+                </a>
+                <span className="contact-email-desc">
+                  {primaryEmail?.department || 'Corporate & Institutional Correspondence'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 5 (Row 2, Col 2): GSTIN */}
           <div className="contact-card contact-card-gstin">
             <div className="contact-icon" aria-hidden="true">🧾</div>
             <h3>GSTIN</h3>
@@ -520,7 +549,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Tile 5: Drug Licence (DL) No. */}
+          {/* Tile 6 (Row 2, Col 3): Drug Licence (DL) No. */}
           <div className="contact-card contact-card-dl">
             <div className="contact-icon" aria-hidden="true">📄</div>
             <h3>Drug Licence (DL) No.</h3>

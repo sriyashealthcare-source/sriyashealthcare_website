@@ -172,6 +172,16 @@ export function ContactProvider({ children }) {
 
   useEffect(() => {
     loadContactInfo(false);
+
+    // Re-fetch whenever admin updates contact settings or user re-focuses tab
+    const handleUpdate = () => loadContactInfo(true);
+    window.addEventListener('sriyas:contact-updated', handleUpdate);
+    window.addEventListener('focus', handleUpdate);
+
+    return () => {
+      window.removeEventListener('sriyas:contact-updated', handleUpdate);
+      window.removeEventListener('focus', handleUpdate);
+    };
   }, [loadContactInfo]);
 
   const refreshContactInfo = useCallback(async () => {

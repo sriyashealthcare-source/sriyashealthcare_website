@@ -138,6 +138,7 @@ export default function AdminContactManagement() {
         setSuccessMsg('✓ Contact information successfully saved to MongoDB Atlas. Public website synchronized!');
         setHasChanges(false);
         await refreshContactInfo();
+        window.dispatchEvent(new CustomEvent('sriyas:contact-updated'));
       } else {
         setError(res?.message || 'Could not save contact information.');
       }
@@ -258,6 +259,49 @@ export default function AdminContactManagement() {
     });
   };
 
+  const primaryEmailItem = useMemo(() => {
+    return emails.find(e => e.isPrimary) || emails[0] || {
+      id: 'email-main',
+      label: 'Official Email',
+      email: 'sriyashealthcare@gmail.com',
+      department: 'Corporate & Institutional Correspondence',
+      isPrimary: true,
+      isActive: true,
+      showOnContactPage: true,
+      showInFooter: true,
+      enableMailto: true,
+      displayOrder: 1
+    };
+  }, [emails]);
+
+  const updatePrimaryEmail = (field, value) => {
+    markChanged();
+    setEmails(prev => {
+      const list = [...prev];
+      if (list.length === 0) {
+        list.push({
+          id: generateLocalId('email'),
+          label: 'Official Email',
+          email: 'sriyashealthcare@gmail.com',
+          department: 'Corporate & Institutional Correspondence',
+          isPrimary: true,
+          isActive: true,
+          showOnContactPage: true,
+          showInFooter: true,
+          enableMailto: true,
+          displayOrder: 1
+        });
+      }
+      let pIdx = list.findIndex(e => e.isPrimary);
+      if (pIdx === -1) pIdx = 0;
+      list[pIdx] = {
+        ...list[pIdx],
+        [field]: value
+      };
+      return list;
+    });
+  };
+
   const updateStatutoryRegistration = (type, val) => {
     markChanged();
     setRegistrations(prev => {
@@ -371,12 +415,12 @@ export default function AdminContactManagement() {
       });
     } else if (type === 'email') {
       setModalForm({
-        label: '',
+        label: 'Official Email',
         email: '',
-        department: 'Healthcare Enquiries',
+        department: 'Corporate & Institutional Correspondence',
         isPrimary: emails.length === 0,
         isActive: true,
-        showOnContactPage: false,
+        showOnContactPage: true,
         showInFooter: true,
         enableMailto: true
       });
@@ -852,7 +896,7 @@ export default function AdminContactManagement() {
           { key: 'whatsapps', label: '💬 WhatsApp Support', count: whatsapps.length },
           { key: 'addresses', label: '📍 Corporate Office Address', count: addresses.length },
           { key: 'registrations', label: '📑 GSTIN & Drug Licences', count: registrations.length },
-          { key: 'emails', label: '✉️ System & Footer Email', count: emails.length },
+          { key: 'emails', label: '✉️ Official Email', count: emails.length },
           { key: 'images', label: '🏢 Photos & Map', count: officeImages.length },
           { key: 'social', label: '🌐 Social Profiles', count: socialLinks.length }
         ].map((tab) => (
@@ -1337,15 +1381,15 @@ export default function AdminContactManagement() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════
-          TAB 3: SYSTEM & FOOTER EMAIL
+          TAB 5: OFFICIAL EMAIL & CORRESPONDENCE
       ═══════════════════════════════════════════════════════════ */}
       {activeTab === 'emails' && (
         <div className="admin-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '10px' }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>System &amp; Footer Email Addresses</h2>
+              <h2 style={{ fontSize: '1.25rem', margin: 0, color: 'var(--ink)' }}>Official Email &amp; Correspondence</h2>
               <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-mute)' }}>
-                Official email addresses used for the website footer, customer enquiry alerts, and backend correspondence. (Standalone email tile removed from Contact page).
+                Official email address displayed in the Contact page 3×2 grid (Row 2, Tile 1) and the global website footer. Editing this address updates all public mailto links instantly upon saving.
               </p>
             </div>
             <button
@@ -1353,9 +1397,100 @@ export default function AdminContactManagement() {
               className="adm-btn adm-btn-primary adm-btn-sm"
               onClick={() => openAddModal('email')}
             >
-              + Add Email Address
+              + Add Additional Email Address
             </button>
           </div>
+
+          {/* Dedicated Official Email Group: Public Contact Page Tile & Global Footer */}
+          <div style={{ background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(169, 130, 44, 0.25)', borderRadius: 'var(--radius-sm)', padding: '20px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.2rem' }}>✉️</span>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>
+                Official Corporate Email (Public Contact Page Row 2, Tile 1 &amp; Site Footer)
+              </h3>
+            </div>
+
+            <div style={{ background: '#fff', border: '1px solid #e0d8c8', borderRadius: '8px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)', maxWidth: '680px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)' }}>Primary Official Email</span>
+                  <span style={{ fontSize: '0.7rem', padding: '1px 6px', background: 'rgba(212, 175, 55, 0.2)', color: 'var(--gold-deep)', borderRadius: '4px', fontWeight: 700 }}>
+                    ★ Primary
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="adm-btn adm-btn-sm"
+                  style={{
+                    padding: '2px 8px',
+                    fontSize: '0.72rem',
+                    background: primaryEmailItem?.isActive !== false ? 'rgba(39, 174, 96, 0.15)' : 'rgba(128, 128, 128, 0.15)',
+                    color: primaryEmailItem?.isActive !== false ? 'var(--status-success)' : '#777'
+                  }}
+                  onClick={() => toggleItemActive('email', primaryEmailItem?.id)}
+                >
+                  {primaryEmailItem?.isActive !== false ? '● Active' : '○ Disabled'}
+                </button>
+              </div>
+
+              <div className="admin-form-group" style={{ marginBottom: '12px' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                  Official Email Address *
+                </label>
+                <input
+                  type="email"
+                  style={{ width: '100%', padding: '9px 12px', border: '1px solid #dcd3c3', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 700, fontSize: '0.95rem', color: 'var(--ink)' }}
+                  value={primaryEmailItem?.email || ''}
+                  onChange={(e) => updatePrimaryEmail('email', e.target.value)}
+                  placeholder="e.g. sriyashealthcare@gmail.com"
+                  required
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px', marginBottom: '12px' }}>
+                <div className="admin-form-group">
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Tile Heading / Display Label
+                  </label>
+                  <input
+                    type="text"
+                    style={{ width: '100%', padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontSize: '0.85rem' }}
+                    value={primaryEmailItem?.label || ''}
+                    onChange={(e) => updatePrimaryEmail('label', e.target.value)}
+                    placeholder="e.g. Official Email"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>
+                    Tile Subtext / Department
+                  </label>
+                  <input
+                    type="text"
+                    style={{ width: '100%', padding: '8px 10px', border: '1px solid #dcd3c3', borderRadius: '4px', fontSize: '0.85rem' }}
+                    value={primaryEmailItem?.department || ''}
+                    onChange={(e) => updatePrimaryEmail('department', e.target.value)}
+                    placeholder="e.g. Corporate &amp; Institutional Correspondence"
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'var(--text-mute)', marginTop: '8px' }}>
+                <span>
+                  Rendered in Contact 3×2 grid as: <strong>{primaryEmailItem?.email || 'sriyashealthcare@gmail.com'}</strong>
+                </span>
+                <button
+                  type="button"
+                  className="adm-btn adm-btn-secondary adm-btn-sm"
+                  onClick={() => openEditModal('email', primaryEmailItem)}
+                >
+                  Advanced Settings
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <h3 style={{ fontSize: '1rem', color: 'var(--ink)', marginBottom: '12px' }}>All Configured Email Addresses</h3>
 
           <div className="admin-table-wrap">
             <table className="admin-table">
@@ -1366,7 +1501,7 @@ export default function AdminContactManagement() {
                   <th>Department</th>
                   <th>Primary</th>
                   <th>Status</th>
-                  <th>Footer &amp; Mailto</th>
+                  <th>Visibility</th>
                   <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
@@ -1374,7 +1509,7 @@ export default function AdminContactManagement() {
                 {emails.length === 0 ? (
                   <tr>
                     <td colSpan="7" style={{ textAlign: 'center', padding: '30px', color: 'var(--text-mute)' }}>
-                      No emails configured.
+                      No emails configured. Click &ldquo;+ Add Additional Email Address&rdquo; to add one.
                     </td>
                   </tr>
                 ) : (
@@ -1436,6 +1571,11 @@ export default function AdminContactManagement() {
                       </td>
                       <td>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                          {email.showOnContactPage !== false && (
+                            <span style={{ fontSize: '0.7rem', padding: '1px 5px', background: '#f0f0f0', borderRadius: '3px' }}>
+                              Contact
+                            </span>
+                          )}
                           {email.showInFooter && (
                             <span style={{ fontSize: '0.7rem', padding: '1px 5px', background: '#f0f0f0', borderRadius: '3px' }}>
                               Footer
@@ -2287,6 +2427,14 @@ export default function AdminContactManagement() {
                         onChange={(e) => setModalForm(prev => ({ ...prev, isPrimary: e.target.checked }))}
                       />
                       Primary Email
+                    </label>
+                    <label style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <input
+                        type="checkbox"
+                        checked={modalForm.showOnContactPage !== false}
+                        onChange={(e) => setModalForm(prev => ({ ...prev, showOnContactPage: e.target.checked }))}
+                      />
+                      Show on Contact Page Tile
                     </label>
                     <label style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <input
