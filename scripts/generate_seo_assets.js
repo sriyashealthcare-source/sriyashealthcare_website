@@ -258,6 +258,7 @@ async function loadPublishedData() {
     const { getLocalDb } = require('../server/utils/localDbEngine');
     const localDb = getLocalDb();
     const activeBrands = (localDb.brands || []).filter(b => b.isActive !== false);
+    const activeCategories = (localDb.Category || localDb.categories || []).filter(c => c.isActive !== false);
     const rawProducts = (localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
     if (activeBrands.length > 0 && rawProducts.length > 0) {
       // Ensure brand and category references are populated
@@ -267,12 +268,12 @@ async function loadPublishedData() {
           pCopy.brand = activeBrands.find(b => String(b._id) === pCopy.brand) || { _id: pCopy.brand, name: 'Advanced Medical Solutions', slug: 'ams' };
         }
         if (typeof pCopy.category === 'string') {
-          pCopy.category = (localDb.categories || []).find(c => String(c._id) === pCopy.category) || { _id: pCopy.category, name: pCopy.cardCategory || 'Medical Devices' };
+          pCopy.category = activeCategories.find(c => String(c._id) === pCopy.category) || { _id: pCopy.category, name: pCopy.cardCategory || 'Medical Devices' };
         }
         return pCopy;
       });
-      console.log(`[Data] Loaded from local database (${activeBrands.length} brands, ${activeProducts.length} products).`);
-      return { activeBrands, activeProducts, hpDoc: localDb.homepageContent?.[0] || null };
+      console.log(`[Data] Loaded from local database (${activeBrands.length} brands, ${activeCategories.length} categories, ${activeProducts.length} products).`);
+      return { activeBrands, activeProducts, activeCategories, hpDoc: localDb.homepageContent?.[0] || null };
     }
   } catch (localErr) {
     console.log(`[Data] Local database check: ${localErr.message}`);
@@ -328,15 +329,15 @@ async function run() {
   console.log('  SRIYAS HEALTHCARE — SEO ASSET & PRERENDER GENERATOR');
   console.log('═══════════════════════════════════════════════════════════════');
 
-  const { activeBrands, activeProducts, hpDoc } = await loadPublishedData();
+  const { activeBrands, activeProducts, activeCategories, hpDoc } = await loadPublishedData();
   const hpPublished = hpDoc?.homepage || hpDoc?.published || {};
   const hpSeo = hpPublished.seo || {};
 
-  console.log(`[Data] Total active brands: ${activeBrands.length}, active products: ${activeProducts.length}`);
+  console.log(`[Data] Total active brands: ${activeBrands.length}, active categories: ${(activeCategories || []).length}, active products: ${activeProducts.length}`);
 
   // 2. Generate Sitemap.xml & Robots.txt
   console.log('[Assets] Generating sitemap.xml and robots.txt...');
-  const sitemapXml = await buildSitemapXml(activeBrands, activeProducts, hpDoc);
+  const sitemapXml = await buildSitemapXml(activeBrands, activeProducts, hpDoc, activeCategories);
   const robotsTxt = buildRobotsTxt();
 
   ensureDirSync(publicDir);
@@ -544,7 +545,70 @@ async function run() {
     console.log(`  ✓ Prerendered: /products/${b.slug} (${b.name})`);
 
     // ─────────────────────────────────────────────────────────────
-    // F. Individual Product Pages: /products/:brandSlug/:productSlug
+    // F. Category & Subcategory Pages
+    // ─────────────────────────────────────────────────────────────
+    const brandCategories = (activeCategories || []).filter(c => String(c.brand?._id || c.brand) === String(b._id));
+    const topCats = brandCategories.filter(c => !c.parentCategory);
+
+    for (const cat of topCats) {
+      if (!cat.slug) continue;
+      const catDir = path.join(brandDir, cat.slug);
+      ensureDirSync(catDir);
+
+      const catBreadcrumbs = buildBreadcrumbSchema([
+        { name: 'Home', url: `${DOMAIN}/` },
+        { name: 'Products', url: `${DOMAIN}/products` },
+        { name: b.name, url: `${DOMAIN}/products/${encodeURIComponent(b.slug)}` },
+        { name: cat.name, url: `${DOMAIN}/products/${encodeURIComponent(b.slug)}/${encodeURIComponent(cat.slug)}` }
+      ]);
+
+      const catTitle = `${cat.name} | ${b.name} | Sriyas Healthcare`;
+      const catDesc = cat.description || `Explore the complete ${cat.name} portfolio distributed by Sriyas Healthcare.`;
+
+      const catHtml = injectMetadataIntoHtml(templateHtml, {
+        title: catTitle,
+        description: catDesc,
+        canonicalUrl: `${DOMAIN}/products/${encodeURIComponent(b.slug)}/${encodeURIComponent(cat.slug)}`,
+        ogImage: brandLogo,
+        ogType: 'website',
+        schemas: [catBreadcrumbs]
+      });
+
+      fs.writeFileSync(path.join(catDir, 'index.html'), catHtml, 'utf8');
+
+      // Check for child subcategories
+      const childSubs = brandCategories.filter(s => String(s.parentCategory?._id || s.parentCategory) === String(cat._id));
+      for (const sub of childSubs) {
+        if (!sub.slug) continue;
+        const subDir = path.join(catDir, sub.slug);
+        ensureDirSync(subDir);
+
+        const subBreadcrumbs = buildBreadcrumbSchema([
+          { name: 'Home', url: `${DOMAIN}/` },
+          { name: 'Products', url: `${DOMAIN}/products` },
+          { name: b.name, url: `${DOMAIN}/products/${encodeURIComponent(b.slug)}` },
+          { name: cat.name, url: `${DOMAIN}/products/${encodeURIComponent(b.slug)}/${encodeURIComponent(cat.slug)}` },
+          { name: sub.name, url: `${DOMAIN}/products/${encodeURIComponent(b.slug)}/${encodeURIComponent(cat.slug)}/${encodeURIComponent(sub.slug)}` }
+        ]);
+
+        const subTitle = `${sub.name} - ${cat.name} | ${b.name} | Sriyas Healthcare`;
+        const subDesc = sub.description || `Clinical specifications and sizes for ${sub.name} by ${b.name}.`;
+
+        const subHtml = injectMetadataIntoHtml(templateHtml, {
+          title: subTitle,
+          description: subDesc,
+          canonicalUrl: `${DOMAIN}/products/${encodeURIComponent(b.slug)}/${encodeURIComponent(cat.slug)}/${encodeURIComponent(sub.slug)}`,
+          ogImage: brandLogo,
+          ogType: 'website',
+          schemas: [subBreadcrumbs]
+        });
+
+        fs.writeFileSync(path.join(subDir, 'index.html'), subHtml, 'utf8');
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // G. Individual Product Pages: /products/:brandSlug/:productSlug
     // ─────────────────────────────────────────────────────────────
     for (const p of brandProducts) {
       if (!p.slug) continue;

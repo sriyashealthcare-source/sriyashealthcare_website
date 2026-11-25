@@ -82,7 +82,21 @@ const uploadProductFiles = upload.fields([
   { name: 'brochure', maxCount: 1 }
 ]);
 
-const uploadCategoryHero = upload.single('heroImage');
+const uploadCategoryFiles = upload.fields([
+  { name: 'heroImage', maxCount: 1 },
+  { name: 'logo', maxCount: 1 },
+  { name: 'logoImage', maxCount: 1 }
+]);
+
+const uploadCategoryHero = (req, res, next) => {
+  uploadCategoryFiles(req, res, (err) => {
+    if (err) {
+      // Fallback to single heroImage in case of unexpected field shape
+      return upload.single('heroImage')(req, res, next);
+    }
+    next();
+  });
+};
 const uploadBrandLogo = brandLogoUpload.single('logo');
 
 module.exports = {

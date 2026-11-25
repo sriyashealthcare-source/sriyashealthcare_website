@@ -43,6 +43,8 @@ export default function BrandCategoryManagement() {
   const [catDescription, setCatDescription] = useState('');
   const [catGradient, setCatGradient] = useState('linear-gradient(135deg,#1a3a5c,#2d6b9e)');
   const [catHeroFile, setCatHeroFile] = useState(null);
+  const [catLogoFile, setCatLogoFile] = useState(null);
+  const [catLogoUrl, setCatLogoUrl] = useState('');
   const [catOrder, setCatOrder] = useState('');
 
   const [catBrandFilter, setCatBrandFilter] = useState('');
@@ -255,6 +257,8 @@ export default function BrandCategoryManagement() {
     setCatDescription('');
     setCatGradient('linear-gradient(135deg,#1a3a5c,#2d6b9e)');
     setCatHeroFile(null);
+    setCatLogoFile(null);
+    setCatLogoUrl('');
     setCatOrder(String(categories.length + 1));
     setCatModalOpen(true);
   };
@@ -268,6 +272,8 @@ export default function BrandCategoryManagement() {
     setCatDescription(c.description || '');
     setCatGradient(c.heroGradient || 'linear-gradient(135deg,#1a3a5c,#2d6b9e)');
     setCatHeroFile(null);
+    setCatLogoFile(null);
+    setCatLogoUrl(c.logoUrl || c.logo_url || c.logoImage?.url || '');
     setCatOrder(c.displayOrder !== undefined ? String(c.displayOrder) : '');
     setCatModalOpen(true);
   };
@@ -287,6 +293,12 @@ export default function BrandCategoryManagement() {
       }
       if (catHeroFile) {
         formData.append('heroImage', catHeroFile);
+      }
+      if (catLogoFile) {
+        formData.append('logo', catLogoFile);
+      }
+      if (catLogoUrl) {
+        formData.append('logoUrl', catLogoUrl.trim());
       }
 
       if (editingCategory) {
@@ -570,6 +582,21 @@ export default function BrandCategoryManagement() {
                           )}
                           <div>
                             <div className="admin-prod-name" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              {(c.logoUrl || c.logo_url) && (
+                                <img
+                                  src={c.logoUrl || c.logo_url}
+                                  alt={c.name}
+                                  style={{
+                                    height: '24px',
+                                    maxWidth: '48px',
+                                    objectFit: 'contain',
+                                    borderRadius: '4px',
+                                    background: '#ffffff',
+                                    padding: '2px',
+                                    border: '1px solid #e2e8f0'
+                                  }}
+                                />
+                              )}
                               <span>{c.name}</span>
                               {c.isSub ? (
                                 <span
@@ -1071,6 +1098,41 @@ export default function BrandCategoryManagement() {
                   onChange={(e) => setCatDescription(e.target.value)}
                   placeholder="High-performance sutures with predictable absorption..."
                 />
+              </div>
+
+              <div className="admin-form-grid" style={{ marginBottom: '14px' }}>
+                <div className="admin-field">
+                  <label htmlFor="cm-logo">Category / Sub-Brand Logo File (Optional)</label>
+                  <input
+                    id="cm-logo"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                    onChange={(e) => setCatLogoFile(e.target.files?.[0] || null)}
+                  />
+                  <small style={{ fontSize: '0.74rem', color: 'var(--text-mute)', display: 'block', marginTop: '2px' }}>
+                    Optional badge/logo for categories acting as sub-brands (e.g. Dolphin Sutures).
+                  </small>
+                </div>
+                <div className="admin-field">
+                  <label htmlFor="cm-logo-url">Or Category Logo URL</label>
+                  <input
+                    id="cm-logo-url"
+                    type="text"
+                    value={catLogoUrl}
+                    onChange={(e) => setCatLogoUrl(e.target.value)}
+                    placeholder="e.g. /images/brands/dolphin-sutures-logo.webp"
+                  />
+                  {catLogoUrl && (
+                    <div style={{ marginTop: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <img
+                        src={catLogoUrl}
+                        alt="Logo preview"
+                        style={{ height: '28px', maxWidth: '64px', objectFit: 'contain', border: '1px solid #ddd', padding: '2px', borderRadius: '4px', background: '#fff' }}
+                      />
+                      <span style={{ fontSize: '0.74rem', color: '#666' }}>Logo Preview</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="admin-form-grid">

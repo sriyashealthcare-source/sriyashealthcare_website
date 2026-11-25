@@ -2,6 +2,8 @@ const Brand = require('../models/Brand');
 const Product = require('../models/Product');
 const HomepageContent = require('../models/HomepageContent');
 
+const Category = require('../models/Category');
+
 const DOMAIN = 'https://sriyashealthcare.com';
 
 function formatDate(date) {
@@ -30,20 +32,23 @@ function escapeXml(unsafe) {
 /**
  * Generates dynamic sitemap XML from current active database content or provided items
  */
-async function buildSitemapXml(providedBrands = null, providedProducts = null, providedHomepageDoc = null) {
+async function buildSitemapXml(providedBrands = null, providedProducts = null, providedHomepageDoc = null, providedCategories = null) {
   let brands = providedBrands;
   let products = providedProducts;
   let homepageDoc = providedHomepageDoc;
+  let categories = providedCategories;
 
   if (!brands || !products) {
-    const [dbBrands, dbProducts, dbHp] = await Promise.all([
+    const [dbBrands, dbProducts, dbHp, dbCats] = await Promise.all([
       Brand.find({ isActive: true }).sort({ displayOrder: 1, name: 1 }),
-      Product.find({ isActive: true, deletedAt: null }).populate('brand').sort({ displayOrder: 1, name: 1 }),
-      HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null)
+      Product.find({ isActive: true, deletedAt: null }).populate('brand').populate('category').populate('subcategory').sort({ displayOrder: 1, name: 1 }),
+      HomepageContent.findOne({ singletonKey: 'main_homepage' }).catch(() => null),
+      Category.find({ isActive: true }).sort({ displayOrder: 1, name: 1 })
     ]);
     brands = brands || dbBrands;
     products = products || dbProducts;
     homepageDoc = homepageDoc || dbHp;
+    categories = categories || dbCats;
   }
 
   const lastHomeMod = homepageDoc?.lastPublishedAt || homepageDoc?.updatedAt || new Date();
@@ -78,6 +83,33 @@ async function buildSitemapXml(providedBrands = null, providedProducts = null, p
       changefreq: 'weekly',
       priority: '0.85'
     });
+  }
+
+  // Active category & subcategory routes
+  if (Array.isArray(categories)) {
+    for (const c of categories) {
+      if (!c.slug) continue;
+      const matchedBrand = brands.find(b => String(b._id) === String(c.brand?._id || c.brand));
+      const brandSlug = matchedBrand?.slug || 'ams';
+      if (!c.parentCategory) {
+        urls.push({
+          loc: `${DOMAIN}/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(c.slug)}`,
+          lastmod: formatDate(c.updatedAt || c.createdAt),
+          changefreq: 'weekly',
+          priority: '0.82'
+        });
+      } else {
+        const parentDoc = categories.find(p => String(p._id) === String(c.parentCategory?._id || c.parentCategory));
+        if (parentDoc?.slug) {
+          urls.push({
+            loc: `${DOMAIN}/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(parentDoc.slug)}/${encodeURIComponent(c.slug)}`,
+            lastmod: formatDate(c.updatedAt || c.createdAt),
+            changefreq: 'weekly',
+            priority: '0.82'
+          });
+        }
+      }
+    }
   }
 
   // Active individual product pages

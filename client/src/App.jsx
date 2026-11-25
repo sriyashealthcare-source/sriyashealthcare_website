@@ -10,6 +10,7 @@ import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/customer/Home';
 import Partners from './pages/customer/Partners';
 import PartnerProducts from './pages/customer/PartnerProducts';
+import PartnerCategoryOrProductDispatcher from './pages/customer/PartnerCategoryOrProductDispatcher';
 import ProductDetails from './pages/customer/ProductDetails';
 import Contact from './pages/customer/Contact';
 
@@ -60,7 +61,9 @@ export default function App() {
             <Route path="/about" element={<Home />} />
             <Route path="/products" element={<Partners />} />
             <Route path="/products/:partnerSlug" element={<PartnerProducts />} />
-            <Route path="/products/:partnerSlug/:productSlug" element={<ProductDetails />} />
+            <Route path="/products/:partnerSlug/:categoryOrProductSlug" element={<PartnerCategoryOrProductDispatcher />} />
+            <Route path="/products/:partnerSlug/:categorySlug/:subcategorySlug" element={<PartnerProducts />} />
+            <Route path="/products/:partnerSlug/:categorySlug/:subcategorySlug/:productSlug" element={<ProductDetails />} />
             <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFoundPage />} />

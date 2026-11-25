@@ -10,8 +10,8 @@ import { resolveAssetUrl } from '../../utils/session';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 
 export default function ProductDetails() {
-  const { partnerSlug, productSlug, slug } = useParams();
-  const rawProductSlug = productSlug || slug;
+  const { partnerSlug, productSlug, slug, categoryOrProductSlug } = useParams();
+  const rawProductSlug = productSlug || slug || categoryOrProductSlug;
   // Handle backward compatibility / renamed product slugs
   const effectiveProductSlug =
     rawProductSlug === 'sterilene-mesh'
@@ -104,7 +104,19 @@ export default function ProductDetails() {
     '';
   const brandName = product?.brand?.name || (brandSlug ? brandSlug.toUpperCase() : 'Partner');
   const brandLabel = brandName ? `${brandName} Products` : 'All Products';
-  const backUrl = brandSlug ? `/products/${encodeURIComponent(brandSlug)}` : '/products';
+  const backUrl = (brandSlug && product?.category?.slug && product?.subcategory?.slug)
+    ? `/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.category.slug)}/${encodeURIComponent(product.subcategory.slug)}`
+    : (brandSlug && product?.category?.slug)
+    ? `/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.category.slug)}`
+    : brandSlug
+    ? `/products/${encodeURIComponent(brandSlug)}`
+    : '/products';
+
+  const backLabel = product?.subcategory?.name
+    ? `Back to ${product.subcategory.name}`
+    : product?.category?.name
+    ? `Back to ${product.category.name}`
+    : `Back to ${brandLabel}`;
 
   if (loading) {
     return (
@@ -251,7 +263,7 @@ export default function ProductDetails() {
           {brandSlug && (
             <>
               <span className="breadcrumb-sep">/</span>
-              <Link to={`/products?brand=${encodeURIComponent(brandSlug)}`} className="breadcrumb-link">
+              <Link to={`/products/${encodeURIComponent(brandSlug)}`} className="breadcrumb-link">
                 {brandName}
               </Link>
             </>
@@ -259,13 +271,23 @@ export default function ProductDetails() {
           {product.category?.name && (
             <>
               <span className="breadcrumb-sep">/</span>
-              <span className="breadcrumb-link">{product.category.name}</span>
+              <Link
+                to={`/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.category.slug || product.category._id)}`}
+                className="breadcrumb-link"
+              >
+                {product.category.name}
+              </Link>
             </>
           )}
           {product.subcategory?.name && (
             <>
               <span className="breadcrumb-sep">/</span>
-              <span className="breadcrumb-link">{product.subcategory.name}</span>
+              <Link
+                to={`/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.category?.slug || product.category?._id)}/${encodeURIComponent(product.subcategory.slug || product.subcategory._id)}`}
+                className="breadcrumb-link"
+              >
+                {product.subcategory.name}
+              </Link>
             </>
           )}
           <span className="breadcrumb-sep">/</span>
@@ -283,7 +305,7 @@ export default function ProductDetails() {
               strokeLinejoin="round"
             />
           </svg>
-          <span id="detail-back-label">Back to {brandLabel}</span>
+          <span id="detail-back-label">{backLabel}</span>
         </Link>
       </div>
 

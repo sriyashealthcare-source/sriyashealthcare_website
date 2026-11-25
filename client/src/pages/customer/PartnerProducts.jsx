@@ -17,16 +17,23 @@ function normalizeSearchText(str) {
     .trim();
 }
 
-export default function PartnerProducts() {
-  const { partnerSlug } = useParams();
+export default function PartnerProducts({ categorySlugProp = null, subcategorySlugProp = null }) {
+  const params = useParams();
+  const partnerSlug = params.partnerSlug;
+  const routeCatSlug = params.categorySlug;
+  const routeSubSlug = params.subcategorySlug;
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const initialCategoryParam = (searchParams.get('category') || '').trim();
+  const queryCat = (searchParams.get('category') || '').trim();
+  const querySub = (searchParams.get('subcategory') || '').trim();
+
+  const effectiveCategorySlug = categorySlugProp || routeCatSlug || queryCat || null;
+  const effectiveSubcategorySlug = subcategorySlugProp || routeSubSlug || querySub || null;
 
   const [brand, setBrand] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,17 +45,17 @@ export default function PartnerProducts() {
     async function loadPartnerData() {
       if (!partnerSlug) return;
 
-      // Handle direct legacy brand and product slugs passed as partnerSlug
+      // Handle legacy redirects
       if (partnerSlug === 'peters') {
         navigate('/products/ams', { replace: true });
         return;
       }
       if (partnerSlug === 'liquiband') {
-        navigate('/products/ams?category=medical-adhesives', { replace: true });
+        navigate('/products/ams/medical-adhesives', { replace: true });
         return;
       }
       if (partnerSlug === 'gentacoll') {
-        navigate('/products/ams?category=wound-dressings', { replace: true });
+        navigate('/products/ams/wound-dressings', { replace: true });
         return;
       }
       if (partnerSlug === 'sterilene-mesh') {
@@ -64,7 +71,6 @@ export default function PartnerProducts() {
         setLoading(true);
         setError('');
 
-        // Step 1: Attempt to load the brand details
         let brandData = null;
         try {
           const brandRes = await productService.getPublicBrandBySlug(partnerSlug);
@@ -72,12 +78,12 @@ export default function PartnerProducts() {
             brandData = brandRes.brand;
           }
         } catch (brandErr) {
-          // If brand not found, check if partnerSlug might be an old direct product slug (backward compatibility)
+          // If brand not found, check if partnerSlug might be an old direct product slug
           try {
             const prodRes = await productService.getPublicProductBySlug(partnerSlug);
             const legacyProd = prodRes?.product;
             if (legacyProd && isMounted) {
-              const targetBrandSlug = legacyProd.brand?.slug || 'peters';
+              const targetBrandSlug = legacyProd.brand?.slug || 'ams';
               navigate(`/products/${encodeURIComponent(targetBrandSlug)}/${encodeURIComponent(legacyProd.slug)}`, {
                 replace: true
               });
@@ -101,43 +107,15 @@ export default function PartnerProducts() {
         setBrand(brandData);
         setPageBrand(brandData);
 
-        // SEO metadata
-        document.title = `${brandData.name} Products | Sriyas Healthcare Pvt Ltd`;
-        let metaDesc = document.querySelector('meta[name="description"]');
-        if (!metaDesc) {
-          metaDesc = document.createElement('meta');
-          metaDesc.name = 'description';
-          document.head.appendChild(metaDesc);
-        }
-        metaDesc.content = `Explore surgical and medical products from ${brandData.name} through Sriyas Healthcare across India.`;
-
-        // Step 2: Fetch products and categories belonging strictly to this partner
+        // Fetch products and categories for this partner
         const [productsRes, categoriesRes] = await Promise.all([
           productService.getPublicProducts({ brand: brandData.slug || brandData._id }),
           productService.getPublicCategories({ brand: brandData.slug || brandData._id })
         ]);
 
         if (!isMounted) return;
-
-        const partnerProducts = productsRes?.products || [];
-        setProducts(partnerProducts);
-
-        // Identify available categories strictly for this partner's products
-        const partnerCats = categoriesRes?.categories || [];
-        setCategories(partnerCats);
-
-        if (initialCategoryParam) {
-          const matched = partnerCats.find(
-            (c) =>
-              String(c._id) === initialCategoryParam ||
-              String(c.slug || '').toLowerCase() === initialCategoryParam.toLowerCase()
-          );
-          if (matched) {
-            setSelectedCategory(String(matched._id));
-          }
-        } else {
-          setSelectedCategory('all');
-        }
+        setProducts(productsRes?.products || []);
+        setCategories(categoriesRes?.categories || []);
       } catch (err) {
         if (!isMounted) return;
         setError(
@@ -157,140 +135,156 @@ export default function PartnerProducts() {
       isMounted = false;
       setPageBrand(null);
     };
-  }, [partnerSlug, navigate, initialCategoryParam]);
+  }, [partnerSlug, navigate]);
 
-  // Distinct category filter options derived from active categories & products (sorted by displayOrder)
-  const categoryFilterOptions = useMemo(() => {
-    const list = [{ id: 'all', name: 'All Categories' }];
-    const seenCatIds = new Set();
+  // Top-level categories (no parentCategory)
+  const topLevelCategories = useMemo(() => {
+    return categories
+      .filter((c) => !c.parentCategory)
+      .sort((a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99));
+  }, [categories]);
 
-    // From populated category collection, strictly sorted by displayOrder
-    const sortedCats = [...categories].sort(
-      (a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99)
+  // Identify active category from effectiveCategorySlug
+  const activeCategory = useMemo(() => {
+    if (!effectiveCategorySlug) return null;
+    const target = effectiveCategorySlug.toLowerCase();
+    return (
+      categories.find(
+        (c) =>
+          String(c.slug || '').toLowerCase() === target ||
+          String(c._id) === effectiveCategorySlug
+      ) || null
     );
+  }, [categories, effectiveCategorySlug]);
 
-    for (const cat of sortedCats) {
-      const cid = String(cat._id);
-      if (!seenCatIds.has(cid)) {
-        seenCatIds.add(cid);
-        list.push({ id: cid, name: cat.name });
-      }
-    }
+  // Subcategories belonging to the active category
+  const activeCategorySubcategories = useMemo(() => {
+    if (!activeCategory) return [];
+    const catId = String(activeCategory._id);
+    return categories
+      .filter((c) => {
+        const pId = c.parentCategory ? String(c.parentCategory._id || c.parentCategory) : null;
+        return pId === catId;
+      })
+      .sort((a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99));
+  }, [categories, activeCategory]);
 
-    // Also include any fallback cardCategory labels from products
-    for (const p of products) {
-      const cObj = p.category;
-      if (cObj && typeof cObj === 'object' && cObj._id) {
-        const cid = String(cObj._id);
-        if (!seenCatIds.has(cid)) {
-          seenCatIds.add(cid);
-          list.push({ id: cid, name: cObj.name || p.cardCategory });
-        }
-      } else if (p.cardCategory && !list.some(item => item.name === p.cardCategory)) {
-        list.push({ id: `card-${p.cardCategory}`, name: p.cardCategory });
-      }
-    }
+  const hasSubcategories = useMemo(() => {
+    if (!activeCategory) return false;
+    return (
+      activeCategorySubcategories.length > 0 ||
+      activeCategory.hasSubcategories === true ||
+      activeCategory.has_subcategories === true
+    );
+  }, [activeCategory, activeCategorySubcategories]);
 
-    return list;
-  }, [categories, products]);
+  // Identify active subcategory from effectiveSubcategorySlug
+  const activeSubcategory = useMemo(() => {
+    if (!effectiveSubcategorySlug || !activeCategory) return null;
+    const target = effectiveSubcategorySlug.toLowerCase();
+    return (
+      activeCategorySubcategories.find(
+        (s) =>
+          String(s.slug || '').toLowerCase() === target ||
+          String(s._id) === effectiveSubcategorySlug
+      ) || null
+    );
+  }, [activeCategorySubcategories, effectiveSubcategorySlug]);
 
-  // Filtered products by category and search query, ordered strictly by Category I-VI and product order
+  // Helper: count products under a specific subcategory
+  const getSubcategoryProductCount = (subId) => {
+    const idStr = String(subId);
+    return products.filter((p) => {
+      const pSub = String(p.subcategory?._id || p.subcategory || '');
+      return pSub === idStr;
+    }).length;
+  };
+
+  // Helper: count products under a top-level category (including all child subcategories)
+  const getCategoryProductCount = (cat) => {
+    const catIdStr = String(cat._id);
+    const childIds = new Set(
+      categories
+        .filter((c) => String(c.parentCategory?._id || c.parentCategory) === catIdStr)
+        .map((c) => String(c._id))
+    );
+    return products.filter((p) => {
+      const pCat = String(p.category?._id || p.category || '');
+      const pSub = String(p.subcategory?._id || p.subcategory || '');
+      return pCat === catIdStr || childIds.has(pSub) || pSub === catIdStr;
+    }).length;
+  };
+
+  // Filtered products:
+  // 1. If searching: search across ALL products under this brand!
+  // 2. If at Level 3 (Subcategory View): products strictly for activeSubcategory
+  // 3. If at Level 2 (Standard Category Product Grid, Case B): products for activeCategory
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // Filter by category or subcategory
-    if (selectedCategory !== 'all') {
-      const childSubcatIds = new Set(
-        categories
-          .filter(c => String(c.parentCategory?._id || c.parentCategory) === selectedCategory)
-          .map(c => String(c._id))
-      );
-
-      result = result.filter(p => {
-        const pCatId = String(p.category?._id || p.category || '');
-        const pSubId = String(p.subcategory?._id || p.subcategory || '');
-        if (selectedCategory.startsWith('card-')) {
-          const cardName = selectedCategory.replace('card-', '');
-          return p.cardCategory === cardName || pCatId === cardName;
-        }
-        return (
-          pCatId === selectedCategory ||
-          pSubId === selectedCategory ||
-          childSubcatIds.has(pSubId)
-        );
-      });
-    }
-
-    // Filter by search query within this partner's products
     if (searchQuery.trim()) {
       const q = normalizeSearchText(searchQuery);
       const tokens = q.split(/\s+/).filter(Boolean);
 
-      result = result.filter(p => {
+      result = result.filter((p) => {
         const name = normalizeSearchText(p.name);
         const spec = normalizeSearchText(p.shortSpecification);
         const cat = normalizeSearchText(p.category?.name || p.cardCategory);
+        const sub = normalizeSearchText(p.subcategory?.name);
         const desc = normalizeSearchText(p.description);
         const keywords = Array.isArray(p.keywords) ? normalizeSearchText(p.keywords.join(' ')) : '';
         const specsText = Array.isArray(p.specifications)
-          ? normalizeSearchText(p.specifications.map(s => `${s.key || ''} ${s.value || ''}`).join(' '))
+          ? normalizeSearchText(p.specifications.map((s) => `${s.key || ''} ${s.value || ''}`).join(' '))
           : '';
-        const combined = `${name} ${spec} ${cat} ${desc} ${keywords} ${specsText}`;
+        const combined = `${name} ${spec} ${cat} ${sub} ${desc} ${keywords} ${specsText}`;
 
-        return tokens.every(token => combined.includes(token));
+        return tokens.every((token) => combined.includes(token));
+      });
+      return result;
+    }
+
+    if (activeSubcategory) {
+      const subIdStr = String(activeSubcategory._id);
+      result = result.filter((p) => {
+        const pSub = String(p.subcategory?._id || p.subcategory || '');
+        return pSub === subIdStr;
+      });
+    } else if (activeCategory && !hasSubcategories) {
+      const catIdStr = String(activeCategory._id);
+      result = result.filter((p) => {
+        const pCat = String(p.category?._id || p.category || '');
+        return pCat === catIdStr;
       });
     }
 
-    // Strict Roman numeral category ordering (I through VI) then product displayOrder
-    return [...result].sort((a, b) => {
-      const catA = categories.find(c => String(c._id) === String(a.category?._id || a.category));
-      const catB = categories.find(c => String(c._id) === String(b.category?._id || b.category));
-      const catOrderA = Number(catA?.displayOrder) || 99;
-      const catOrderB = Number(catB?.displayOrder) || 99;
-      if (catOrderA !== catOrderB) return catOrderA - catOrderB;
-      return (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0);
-    });
-  }, [products, selectedCategory, searchQuery, categories]);
+    // Sort by product displayOrder
+    return [...result].sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+  }, [products, searchQuery, activeSubcategory, activeCategory, hasSubcategories]);
+
+  // Current Level Determination
+  const isSearchMode = Boolean(searchQuery.trim());
+  const isLevel3SubcategoryView = !isSearchMode && Boolean(activeCategory && hasSubcategories && activeSubcategory);
+  const isLevel2SubBrandWithSubcategories = !isSearchMode && Boolean(activeCategory && hasSubcategories && !activeSubcategory);
+  const isLevel2StandardCategoryProductGrid = !isSearchMode && Boolean(activeCategory && !hasSubcategories);
+  const isLevel1BrandView = !isSearchMode && !activeCategory;
 
   const brandLogoUrl = brand?.logoUrl ? resolveAssetUrl(brand.logoUrl) : '';
+  const brandName = brand ? brand.name : partnerSlug || 'Partner';
 
-  const brandName = brand ? brand.name : (partnerSlug || 'Partner');
-  const seoTitle =
-    brand?.seoTitle ||
-    `${brandName} Surgical & Medical Products | Sriyas Healthcare`;
-  const seoDesc =
-    brand?.seoDescription ||
-    (brand?.description
-      ? `${brandName}: ${brand.description.slice(0, 140)}... Distributed by Sriyas Healthcare.`
-      : `Explore authorized ${brandName} surgical sutures, medical devices, and equipment distributed by Sriyas Healthcare in India.`);
-  const canonicalPath = `/products/${encodeURIComponent(partnerSlug || '')}`;
+  // Dynamic SEO metadata
+  let seoTitle = `${brandName} Surgical & Medical Products | Sriyas Healthcare`;
+  let seoDesc = brand?.description || `Explore authorized ${brandName} medical products distributed by Sriyas Healthcare.`;
+  let canonicalPath = `/products/${encodeURIComponent(partnerSlug || '')}`;
 
-  const jsonLdSchemas = brand
-    ? [
-        {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
-            { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://sriyashealthcare.com/products' },
-            {
-              '@type': 'ListItem',
-              position: 3,
-              name: brandName,
-              item: `https://sriyashealthcare.com/products/${encodeURIComponent(partnerSlug)}`
-            }
-          ]
-        },
-        {
-          '@context': 'https://schema.org',
-          '@type': 'Brand',
-          name: brand.name,
-          logo: brandLogoUrl || SRIYAS_EMBLEM_URL,
-          url: `https://sriyashealthcare.com/products/${encodeURIComponent(partnerSlug)}`,
-          description: brand.description || seoDesc
-        }
-      ]
-    : null;
+  if (activeSubcategory && activeCategory) {
+    seoTitle = `${activeSubcategory.name} - ${activeCategory.name} | ${brandName} | Sriyas Healthcare`;
+    seoDesc = activeSubcategory.description || `Clinical specifications and sizes for ${activeSubcategory.name}.`;
+    canonicalPath = `/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}/${encodeURIComponent(activeSubcategory.slug)}`;
+  } else if (activeCategory) {
+    seoTitle = `${activeCategory.name} - ${brandName} | Sriyas Healthcare`;
+    seoDesc = activeCategory.description || `Explore the ${activeCategory.name} range under ${brandName}.`;
+    canonicalPath = `/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}`;
+  }
 
   return (
     <>
@@ -300,181 +294,480 @@ export default function PartnerProducts() {
         canonicalPath={canonicalPath}
         ogImage={brandLogoUrl}
         ogType="website"
-        schema={jsonLdSchemas}
       />
 
       <section className="partner-products-page" id="partner-products-page" aria-label="Partner Products">
-      <div className="partner-top-bar">
-        {/* Breadcrumb Navigation */}
-        <nav className="partner-breadcrumbs" aria-label="Breadcrumbs">
-          <Link to="/" className="breadcrumb-link">
-            Home
-          </Link>
-          <span className="breadcrumb-sep">/</span>
-          <Link to="/products" className="breadcrumb-link">
-            Products
-          </Link>
-          <span className="breadcrumb-sep">/</span>
-          <span className="breadcrumb-current">{brand ? brand.name : partnerSlug}</span>
-        </nav>
+        {/* Breadcrumb Navigation Bar */}
+        <div className="partner-top-bar">
+          <nav className="partner-breadcrumbs" aria-label="Breadcrumbs">
+            <Link to="/" className="breadcrumb-link">
+              Home
+            </Link>
+            <span className="breadcrumb-sep">/</span>
+            <Link to="/products" className="breadcrumb-link">
+              Products
+            </Link>
+            <span className="breadcrumb-sep">/</span>
 
-        {/* Back to All Partners Button */}
-        <Link to="/products" className="back-to-partners-btn" id="btn-back-to-partners">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-            <path
-              d="M11 14L6 9l5-5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span>Back to All Partners</span>
-        </Link>
-      </div>
+            {/* Level 1: Brand */}
+            {activeCategory ? (
+              <Link to={`/products/${encodeURIComponent(partnerSlug)}`} className="breadcrumb-link">
+                {brandName}
+              </Link>
+            ) : (
+              <span className="breadcrumb-current">{brandName}</span>
+            )}
 
-      {loading && (
-        <div className="state-container" style={{ minHeight: '450px' }}>
-          <div className="spinner" />
-          <div className="state-title">Loading Partner Catalogue</div>
-          <p className="state-desc">Fetching clinical products and specifications...</p>
-        </div>
-      )}
-
-      {error && !loading && (
-        <div className="state-container" style={{ minHeight: '450px' }}>
-          <div className="state-title">Partner Not Found</div>
-          <p className="state-desc">{error}</p>
-          <Link to="/products" className="hero-cta">
-            Return to All Partners
-          </Link>
-        </div>
-      )}
-
-      {!loading && !error && brand && (
-        <>
-          {/* A. Partner Header */}
-          <div className="partner-hero-banner">
-            <div className="partner-hero-content">
-              <div className="partner-hero-logo-box">
-                {brandLogoUrl ? (
-                  <img
-                    src={brandLogoUrl}
-                    alt={`${brand.name} logo`}
-                    className="partner-hero-logo"
-                  />
+            {/* Level 2: Category / Sub-Brand */}
+            {activeCategory && (
+              <>
+                <span className="breadcrumb-sep">/</span>
+                {activeSubcategory ? (
+                  <Link
+                    to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}`}
+                    className="breadcrumb-link"
+                  >
+                    {activeCategory.name}
+                  </Link>
                 ) : (
-                  <div className="partner-hero-fallback-badge">
-                    <span className="partner-hero-fallback-icon" aria-hidden="true">{brand.icon || '🔬'}</span>
-                    <span className="partner-hero-fallback-name">{brand.name}</span>
+                  <span className="breadcrumb-current">{activeCategory.name}</span>
+                )}
+              </>
+            )}
+
+            {/* Level 3: Subcategory */}
+            {activeSubcategory && (
+              <>
+                <span className="breadcrumb-sep">/</span>
+                <span className="breadcrumb-current">{activeSubcategory.name}</span>
+              </>
+            )}
+          </nav>
+
+          {/* Contextual Back Button */}
+          {activeSubcategory ? (
+            <Link
+              to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}`}
+              className="back-to-partners-btn"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M11 14L6 9l5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Back to {activeCategory.name}</span>
+            </Link>
+          ) : activeCategory ? (
+            <Link
+              to={`/products/${encodeURIComponent(partnerSlug)}`}
+              className="back-to-partners-btn"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M11 14L6 9l5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Back to {brandName} Categories</span>
+            </Link>
+          ) : (
+            <Link to="/products" className="back-to-partners-btn" id="btn-back-to-partners">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M11 14L6 9l5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Back to All Partners</span>
+            </Link>
+          )}
+        </div>
+
+        {loading && (
+          <div className="state-container" style={{ minHeight: '450px' }}>
+            <div className="spinner" />
+            <div className="state-title">Loading Catalogue</div>
+            <p className="state-desc">Fetching clinical products and category structures...</p>
+          </div>
+        )}
+
+        {error && !loading && (
+          <div className="state-container" style={{ minHeight: '450px' }}>
+            <div className="state-title">Partner Not Found</div>
+            <p className="state-desc">{error}</p>
+            <Link to="/products" className="hero-cta">
+              Return to All Partners
+            </Link>
+          </div>
+        )}
+
+        {!loading && !error && brand && (
+          <>
+            {/* ═══════════════════════════════════════════════════════════
+                HEADER BANNER (Dual Branding for Sub-Brands, Standard for Brands)
+                ═══════════════════════════════════════════════════════════ */}
+            <div className="partner-hero-banner">
+              <div className="partner-hero-content">
+                {/* Logo Box */}
+                <div className="partner-hero-logo-box">
+                  {isLevel2SubBrandWithSubcategories || isLevel3SubcategoryView ? (
+                    // Dual Branding / Sub-Brand Logo
+                    activeCategory?.logoUrl || activeCategory?.logo_url ? (
+                      <div className="dual-brand-lockup">
+                        <img
+                          src={resolveAssetUrl(activeCategory.logoUrl || activeCategory.logo_url)}
+                          alt={`${activeCategory.name} logo`}
+                          className="subbrand-logo-frame"
+                        />
+                      </div>
+                    ) : brandLogoUrl ? (
+                      <img src={brandLogoUrl} alt={`${brand.name} logo`} className="partner-hero-logo" />
+                    ) : (
+                      <div className="partner-hero-fallback-badge">
+                        <span className="partner-hero-fallback-icon" aria-hidden="true">{brand.icon || '🔬'}</span>
+                        <span className="partner-hero-fallback-name">{activeCategory?.name || brand.name}</span>
+                      </div>
+                    )
+                  ) : brandLogoUrl ? (
+                    <img src={brandLogoUrl} alt={`${brand.name} logo`} className="partner-hero-logo" />
+                  ) : (
+                    <div className="partner-hero-fallback-badge">
+                      <span className="partner-hero-fallback-icon" aria-hidden="true">{brand.icon || '🔬'}</span>
+                      <span className="partner-hero-fallback-name">{brand.name}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Banner Text */}
+                <div className="partner-hero-text">
+                  <div className="partner-hero-eyebrow">
+                    {isLevel3SubcategoryView
+                      ? `${activeCategory?.name || brand.name} · SURGICAL SUBCATEGORY`
+                      : isLevel2SubBrandWithSubcategories
+                      ? `SUB-BRAND CATALOGUE · ${brand.name}`
+                      : isLevel2StandardCategoryProductGrid
+                      ? `${brand.name} · CLINICAL CATEGORY`
+                      : 'PARTNER PRODUCT CATALOGUE'}
+                  </div>
+
+                  <h1 className="partner-hero-title">
+                    {isLevel3SubcategoryView
+                      ? activeSubcategory.name
+                      : isLevel2SubBrandWithSubcategories || isLevel2StandardCategoryProductGrid
+                      ? activeCategory.name
+                      : `${brand.name} Products`}
+                  </h1>
+
+                  <p className="partner-hero-desc">
+                    {isLevel3SubcategoryView
+                      ? activeSubcategory.description || activeCategory?.description || brand.description
+                      : isLevel2SubBrandWithSubcategories || isLevel2StandardCategoryProductGrid
+                      ? activeCategory.description || brand.description
+                      : brand.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════
+                SEARCH TOOLBAR
+                ═══════════════════════════════════════════════════════════ */}
+            <div className="catalog-toolbar partner-toolbar">
+              <GlobalSearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+                onClear={() => setSearchQuery('')}
+                placeholder={`Search across all ${brand.name} products...`}
+                ariaLabel={`Search across all ${brand.name} products`}
+                id="partner-products-search-input"
+              />
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════
+                LIVE SEARCH RESULTS (When user is searching across the brand)
+                ═══════════════════════════════════════════════════════════ */}
+            {isSearchMode ? (
+              <div className="partner-products-container">
+                <div style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                  <div className="partner-search-count-badge">
+                    Showing <strong>{filteredProducts.length}</strong> {filteredProducts.length === 1 ? 'product' : 'products'} matching &ldquo;{searchQuery}&rdquo; under {brand.name}
+                  </div>
+                  <button
+                    type="button"
+                    className="subcat-reset-btn"
+                    onClick={() => setSearchQuery('')}
+                  >
+                    ✕ Clear Search &amp; Return to Step View
+                  </button>
+                </div>
+
+                {filteredProducts.length === 0 ? (
+                  <div className="state-container" style={{ minHeight: '260px' }}>
+                    <div className="state-title">No Matching Products</div>
+                    <p className="state-desc">No products under {brand.name} matched &ldquo;{searchQuery}&rdquo;.</p>
+                    <button
+                      type="button"
+                      className="hero-cta"
+                      style={{ border: 'none', padding: '10px 24px' }}
+                      onClick={() => setSearchQuery('')}
+                    >
+                      Clear Search
+                    </button>
+                  </div>
+                ) : (
+                  <div className="prod-grid" role="list">
+                    {filteredProducts.map((product) => (
+                      <ProductCard key={product._id || product.slug} product={product} partnerSlug={brand.slug} />
+                    ))}
                   </div>
                 )}
               </div>
+            ) : isLevel1BrandView ? (
+              /* ═══════════════════════════════════════════════════════════
+                 STEP 1: BRAND VIEW (SHOW ONLY TOP-LEVEL CATEGORY CARDS)
+                 ═══════════════════════════════════════════════════════════ */
+              <div className="drilldown-container">
+                <div className="drilldown-header">
+                  <div className="drilldown-eyebrow">
+                    <span>◈</span>
+                    <span>CLINICAL PRODUCT PORTFOLIOS</span>
+                  </div>
+                  <h2 className="drilldown-title">Browse {brand.name} Categories</h2>
+                  <p className="drilldown-desc">
+                    Select a specialized clinical category below to explore verified medical ranges and surgical device specifications.
+                  </p>
+                </div>
 
-              <div className="partner-hero-text">
-                <div className="partner-hero-eyebrow">PARTNER PRODUCT CATALOGUE</div>
-                <h1 className="partner-hero-title">{brand.name} Products</h1>
-                {brand.description && (
-                  <p className="partner-hero-desc">{brand.description}</p>
+                {topLevelCategories.length === 0 ? (
+                  <div className="state-container" style={{ minHeight: '320px' }}>
+                    <div className="state-title">No Categories Listed Yet</div>
+                    <p className="state-desc">Categories for {brand.name} are currently being added. Please check back soon.</p>
+                  </div>
+                ) : (
+                  <div className="drilldown-category-grid" role="list">
+                    {topLevelCategories.map((cat) => {
+                      const catTotalProducts = getCategoryProductCount(cat);
+                      const catChildSubs = categories.filter(
+                        (s) => String(s.parentCategory?._id || s.parentCategory) === String(cat._id)
+                      );
+                      const catLogo = cat.logoUrl || cat.logo_url || (cat.logoImage && cat.logoImage.url);
+
+                      return (
+                        <Link
+                          key={cat._id}
+                          to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(cat.slug)}`}
+                          className="drilldown-category-card"
+                          role="listitem"
+                          aria-label={`View ${cat.name} product portfolio`}
+                        >
+                          <div className="drilldown-category-card-header">
+                            {catLogo ? (
+                              <div className="drilldown-cat-logo-wrap">
+                                <img
+                                  src={resolveAssetUrl(catLogo)}
+                                  alt={`${cat.name} logo`}
+                                  className="drilldown-cat-logo"
+                                />
+                              </div>
+                            ) : (
+                              <div className="drilldown-cat-icon-badge" aria-hidden="true">
+                                🔬
+                              </div>
+                            )}
+
+                            {catChildSubs.length > 0 ? (
+                              <span className="drilldown-cat-type-pill">
+                                {catChildSubs.length} Subcategories
+                              </span>
+                            ) : (
+                              <span className="drilldown-cat-type-pill">
+                                Category Range
+                              </span>
+                            )}
+                          </div>
+
+                          <h3 className="drilldown-category-title">{cat.name}</h3>
+
+                          <p className="drilldown-category-desc">
+                            {cat.description ||
+                              cat.heroTitle ||
+                              `Specialized clinical solutions and medical instrumentation manufactured under international standards.`}
+                          </p>
+
+                          <div className="drilldown-category-footer">
+                            <span className="drilldown-count-badge">
+                              {catChildSubs.length > 0
+                                ? `${catChildSubs.length} Subcategories · ${catTotalProducts} Products`
+                                : `${catTotalProducts} Clinical Products`}
+                            </span>
+                            <span className="drilldown-cta-link">
+                              <span>View Range</span>
+                              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </span>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 )}
               </div>
-            </div>
-          </div>
+            ) : isLevel2SubBrandWithSubcategories ? (
+              /* ═══════════════════════════════════════════════════════════
+                 STEP 2 (CASE A): CATEGORY / SUB-BRAND VIEW (SHOW ONLY SUBCATEGORY TILES)
+                 ═══════════════════════════════════════════════════════════ */
+              <div className="drilldown-container">
+                <Link
+                  to={`/products/${encodeURIComponent(partnerSlug)}`}
+                  className="drilldown-back-btn"
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span>← Back to {brand.name} Categories</span>
+                </Link>
 
-          {/* B. Filter and Search Toolbar */}
-          <div className="catalog-toolbar partner-toolbar">
-            <GlobalSearchBar
-              value={searchQuery}
-              onChange={setSearchQuery}
-              onClear={() => setSearchQuery('')}
-              placeholder={`Search within ${brand.name} products...`}
-              ariaLabel={`Search within ${brand.name} products`}
-              id="partner-products-search-input"
-            />
+                <div className="drilldown-header">
+                  <div className="drilldown-eyebrow">
+                    <span>◈</span>
+                    <span>{activeCategory.name.toUpperCase()} · {activeCategorySubcategories.length} PRODUCT SUBCATEGORIES</span>
+                  </div>
+                  <h2 className="drilldown-title">Choose a Product Subcategory</h2>
+                  <p className="drilldown-desc">
+                    Click any subcategory below to inspect individual surgical codes, specifications, packaging sizes, and clinical applications.
+                  </p>
+                </div>
 
-            {/* Category Filter Pills (if multiple categories exist) */}
-            {categoryFilterOptions.length > 2 && (
-              <div className="partner-category-pills" role="tablist" aria-label="Product categories">
-                {categoryFilterOptions.map(cat => (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={selectedCategory === cat.id}
-                    className={`category-pill ${selectedCategory === cat.id ? 'active' : ''}`}
-                    onClick={() => setSelectedCategory(cat.id)}
-                  >
-                    {cat.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+                <div className="drilldown-subcat-grid" role="list">
+                  {activeCategorySubcategories.map((sub, idx) => {
+                    const subCount = getSubcategoryProductCount(sub._id);
+                    const numeral = String(idx + 1).padStart(2, '0');
 
-          {/* Search Result Feedback Indicator */}
-          {searchQuery.trim() && (
-            <div className="partner-products-container" style={{ marginBottom: '20px' }}>
-              <div className="partner-search-count-badge">
-                Showing <strong>{filteredProducts.length}</strong> {filteredProducts.length === 1 ? 'product' : 'products'} matching &ldquo;{searchQuery}&rdquo;
-                {selectedCategory !== 'all' && (
-                  <span> in category: <em>{categoryFilterOptions.find(c => c.id === selectedCategory)?.name || selectedCategory}</em></span>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* C. Product Grid or Empty State */}
-          <div className="partner-products-container">
-            {products.length === 0 ? (
-              <div className="state-container" style={{ minHeight: '320px' }}>
-                <div className="state-title">No Products Listed Yet</div>
-                <p className="state-desc">
-                  Products for {brand.name} are currently being added to our clinical catalogue.
-                  Please check back soon or contact our medical supply specialists.
-                </p>
-                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <Link to="/products" className="detail-back" style={{ marginBottom: 0 }}>
-                    ← Back to All Partners
-                  </Link>
-                  <Link to="/contact" className="hero-cta" style={{ display: 'inline-flex', padding: '10px 24px' }}>
-                    Contact Support
-                  </Link>
+                    return (
+                      <Link
+                        key={sub._id}
+                        to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}/${encodeURIComponent(sub.slug)}`}
+                        className="drilldown-subcat-card"
+                        role="listitem"
+                        aria-label={`View products in ${sub.name}`}
+                      >
+                        <div className="drilldown-subcat-numeral">{numeral}</div>
+                        <h3 className="drilldown-subcat-title">{sub.name}</h3>
+                        <p className="drilldown-subcat-desc">
+                          {sub.description ||
+                            sub.heroTitle ||
+                            `Verified surgical devices and precision wound-closure solutions.`}
+                        </p>
+                        <div className="drilldown-subcat-footer">
+                          <span className="drilldown-subcat-count">{subCount} Products</span>
+                          <span className="drilldown-subcat-cta">
+                            <span>View Products</span>
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
-            ) : filteredProducts.length === 0 ? (
-              <div className="state-container" style={{ minHeight: '280px' }}>
-                <div className="state-title">No Matching Products</div>
-                <p className="state-desc">
-                  No {brand.name} products matched your search or category filter.
-                </p>
-                <button
-                  type="button"
-                  className="hero-cta"
-                  style={{ border: 'none', padding: '10px 24px' }}
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                  }}
+            ) : isLevel3SubcategoryView ? (
+              /* ═══════════════════════════════════════════════════════════
+                 STEP 3 (CASE A): SUBCATEGORY PRODUCT GRID + SIBLING SWITCHER
+                 ═══════════════════════════════════════════════════════════ */
+              <div className="partner-products-container">
+                <Link
+                  to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}`}
+                  className="drilldown-back-btn"
                 >
-                  Clear Filters
-                </button>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span>← Back to {activeCategory.name} Subcategories</span>
+                </Link>
+
+                {/* Sibling Subcategories Switcher Pills */}
+                {activeCategorySubcategories.length > 1 && (
+                  <div className="sibling-subcat-switcher" role="tablist" aria-label="Sibling Subcategories">
+                    {activeCategorySubcategories.map((sibling) => {
+                      const isActive = String(sibling._id) === String(activeSubcategory._id);
+                      const sCount = getSubcategoryProductCount(sibling._id);
+
+                      return (
+                        <Link
+                          key={sibling._id}
+                          to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}/${encodeURIComponent(sibling.slug)}`}
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`sibling-subcat-pill ${isActive ? 'active' : ''}`}
+                        >
+                          <span>{sibling.name}</span>
+                          <span className="sibling-subcat-pill-count">({sCount})</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Product Grid */}
+                {filteredProducts.length === 0 ? (
+                  <div className="state-container" style={{ minHeight: '300px' }}>
+                    <div className="state-title">No Products in this Subcategory</div>
+                    <p className="state-desc">
+                      Products for {activeSubcategory.name} are currently being updated in our clinical database.
+                    </p>
+                    <Link
+                      to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}`}
+                      className="detail-back"
+                    >
+                      ← Back to {activeCategory.name}
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="prod-grid" role="list">
+                    {filteredProducts.map((product) => (
+                      <ProductCard key={product._id || product.slug} product={product} partnerSlug={brand.slug} />
+                    ))}
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="prod-grid" role="list">
-                {filteredProducts.map(product => (
-                  <ProductCard
-                    key={product._id || product.slug}
-                    product={product}
-                    partnerSlug={brand.slug}
-                  />
-                ))}
+            ) : isLevel2StandardCategoryProductGrid ? (
+              /* ═══════════════════════════════════════════════════════════
+                 STEP 2 (CASE B): STANDARD CATEGORY PRODUCT GRID (NO SUBCATEGORIES)
+                 ═══════════════════════════════════════════════════════════ */
+              <div className="partner-products-container">
+                <Link
+                  to={`/products/${encodeURIComponent(partnerSlug)}`}
+                  className="drilldown-back-btn"
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span>← Back to {brand.name} Categories</span>
+                </Link>
+
+                <div className="drilldown-header" style={{ marginBottom: '22px' }}>
+                  <div className="drilldown-eyebrow">
+                    <span>◈</span>
+                    <span>{activeCategory.name.toUpperCase()} RANGE</span>
+                  </div>
+                  <h2 className="drilldown-title">{activeCategory.name}</h2>
+                  {activeCategory.description && (
+                    <p className="drilldown-desc">{activeCategory.description}</p>
+                  )}
+                </div>
+
+                {filteredProducts.length === 0 ? (
+                  <div className="state-container" style={{ minHeight: '300px' }}>
+                    <div className="state-title">No Products in this Category</div>
+                    <p className="state-desc">Products for this category are being updated.</p>
+                  </div>
+                ) : (
+                  <div className="prod-grid" role="list">
+                    {filteredProducts.map((product) => (
+                      <ProductCard key={product._id || product.slug} product={product} partnerSlug={brand.slug} />
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </>
-      )}
-    </section>
-  </>
+            ) : null}
+          </>
+        )}
+      </section>
+    </>
   );
 }
-

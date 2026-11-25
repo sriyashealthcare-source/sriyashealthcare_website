@@ -14,9 +14,14 @@ export default function ProductCard({ product, partnerSlug }) {
     product.brand?.slug ||
     (typeof product.brand === 'string' ? product.brand : '');
 
-  const productPath = effectiveBrandSlug
-    ? `/products/${encodeURIComponent(effectiveBrandSlug)}/${encodeURIComponent(targetSlug)}`
-    : `/products/${encodeURIComponent(targetSlug)}`;
+  let productPath = `/products/${encodeURIComponent(targetSlug)}`;
+  if (effectiveBrandSlug) {
+    if (product.category?.slug && product.subcategory?.slug) {
+      productPath = `/products/${encodeURIComponent(effectiveBrandSlug)}/${encodeURIComponent(product.category.slug)}/${encodeURIComponent(product.subcategory.slug)}/${encodeURIComponent(targetSlug)}`;
+    } else {
+      productPath = `/products/${encodeURIComponent(effectiveBrandSlug)}/${encodeURIComponent(targetSlug)}`;
+    }
+  }
 
   const cardCatText = product.cardCategory || product.category?.name || '';
   const subcategoryText = product.subcategory?.name || '';

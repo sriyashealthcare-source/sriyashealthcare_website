@@ -27,6 +27,20 @@ const categorySchema = new mongoose.Schema(
       default: null,
       index: true
     },
+    hasSubcategories: {
+      type: Boolean,
+      default: false
+    },
+    logoUrl: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    logoImage: {
+      url: { type: String, default: '' },
+      publicId: { type: String, default: '' },
+      format: { type: String, default: 'webp' }
+    },
     heroTitle: {
       type: String,
       trim: true,

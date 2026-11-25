@@ -51,12 +51,27 @@ const getPublicCategories = async (req, res, next) => {
     const enriched = categories.map(c => {
       const cObj = typeof c.toObject === 'function' ? c.toObject() : { ...c };
       const cId = String(cObj._id);
+      cObj.brand_id = cObj.brand ? (cObj.brand._id || cObj.brand) : null;
+      cObj.category_id = cObj._id;
+      cObj.parent_category_id = cObj.parentCategory ? (cObj.parentCategory._id || cObj.parentCategory) : null;
+      cObj.logoUrl = cObj.logoUrl || (cObj.logoImage && cObj.logoImage.url) || '';
+      cObj.logo_url = cObj.logoUrl;
       cObj.subcategories = categories
         .filter(sub => {
           const pId = sub.parentCategory ? String(sub.parentCategory._id || sub.parentCategory) : null;
           return pId === cId;
         })
-        .map(sub => (typeof sub.toObject === 'function' ? sub.toObject() : { ...sub }));
+        .map(sub => {
+          const subObj = typeof sub.toObject === 'function' ? sub.toObject() : { ...sub };
+          subObj.brand_id = subObj.brand ? (subObj.brand._id || subObj.brand) : null;
+          subObj.category_id = subObj.parentCategory ? (subObj.parentCategory._id || subObj.parentCategory) : null;
+          subObj.subcategory_id = subObj._id;
+          subObj.logoUrl = subObj.logoUrl || (subObj.logoImage && subObj.logoImage.url) || '';
+          subObj.logo_url = subObj.logoUrl;
+          return subObj;
+        });
+      cObj.has_subcategories = Boolean((cObj.subcategories && cObj.subcategories.length > 0) || cObj.hasSubcategories);
+      cObj.hasSubcategories = cObj.has_subcategories;
       return cObj;
     });
 
@@ -92,10 +107,26 @@ const getAdminCategories = async (req, res, next) => {
     // Attach subcategories array to main categories
     enriched.forEach(cObj => {
       const cId = String(cObj._id);
-      cObj.subcategories = enriched.filter(sub => {
-        const pId = sub.parentCategory ? String(sub.parentCategory._id || sub.parentCategory) : null;
-        return pId === cId;
-      });
+      cObj.brand_id = cObj.brand ? (cObj.brand._id || cObj.brand) : null;
+      cObj.category_id = cObj._id;
+      cObj.parent_category_id = cObj.parentCategory ? (cObj.parentCategory._id || cObj.parentCategory) : null;
+      cObj.logoUrl = cObj.logoUrl || (cObj.logoImage && cObj.logoImage.url) || '';
+      cObj.logo_url = cObj.logoUrl;
+      cObj.subcategories = enriched
+        .filter(sub => {
+          const pId = sub.parentCategory ? String(sub.parentCategory._id || sub.parentCategory) : null;
+          return pId === cId;
+        })
+        .map(sub => {
+          sub.brand_id = sub.brand ? (sub.brand._id || sub.brand) : null;
+          sub.category_id = sub.parentCategory ? (sub.parentCategory._id || sub.parentCategory) : null;
+          sub.subcategory_id = sub._id;
+          sub.logoUrl = sub.logoUrl || (sub.logoImage && sub.logoImage.url) || '';
+          sub.logo_url = sub.logoUrl;
+          return sub;
+        });
+      cObj.has_subcategories = Boolean((cObj.subcategories && cObj.subcategories.length > 0) || cObj.hasSubcategories);
+      cObj.hasSubcategories = cObj.has_subcategories;
     });
 
     res.status(200).json({
@@ -148,8 +179,30 @@ const createCategory = async (req, res, next) => {
       publicId: ''
     };
 
-    if (req.file && req.file.buffer) {
-      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.categories, 'image');
+    let logoUrl = (req.body.logoUrl || req.body.logo_url || '').trim();
+    let logoImage = {
+      url: logoUrl,
+      publicId: '',
+      format: 'webp'
+    };
+
+    let heroFile = null;
+    let logoFile = null;
+
+    if (req.files) {
+      if (req.files.heroImage && req.files.heroImage[0]) heroFile = req.files.heroImage[0];
+      if (req.files.logo && req.files.logo[0]) logoFile = req.files.logo[0];
+      if (req.files.logoImage && req.files.logoImage[0]) logoFile = req.files.logoImage[0];
+    } else if (req.file) {
+      if (req.file.fieldname === 'logo' || req.file.fieldname === 'logoImage') {
+        logoFile = req.file;
+      } else {
+        heroFile = req.file;
+      }
+    }
+
+    if (heroFile && heroFile.buffer) {
+      const uploaded = await uploadBuffer(heroFile.buffer, heroFile.originalname, CLOUDINARY_FOLDERS.categories, 'image');
       heroImage = {
         url: uploaded.url,
         publicId: uploaded.publicId,
@@ -158,6 +211,25 @@ const createCategory = async (req, res, next) => {
         height: uploaded.height
       };
     }
+
+    if (logoFile && logoFile.buffer) {
+      const uploadedLogo = await uploadBuffer(logoFile.buffer, logoFile.originalname, CLOUDINARY_FOLDERS.brands || 'sriyas-healthcare/brands', 'image');
+      logoImage = {
+        url: uploadedLogo.url,
+        publicId: uploadedLogo.publicId,
+        format: uploadedLogo.format,
+        width: uploadedLogo.width,
+        height: uploadedLogo.height
+      };
+      logoUrl = uploadedLogo.url;
+    }
+
+    const hasSubcategories = Boolean(
+      req.body.hasSubcategories === true ||
+      String(req.body.hasSubcategories) === 'true' ||
+      req.body.has_subcategories === true ||
+      String(req.body.has_subcategories) === 'true'
+    );
 
     const totalCats = await Category.countDocuments({});
     const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : totalCats + 1;
@@ -182,6 +254,9 @@ const createCategory = async (req, res, next) => {
       slug,
       brand: brandId,
       parentCategory: parentCategoryId,
+      hasSubcategories,
+      logoUrl,
+      logoImage,
       heroTitle,
       description,
       heroGradient,
@@ -255,11 +330,32 @@ const updateCategory = async (req, res, next) => {
     }
 
     let heroImage = category.heroImage || { url: '', publicId: '', format: 'webp', width: 0, height: 0 };
-    if (req.file && req.file.buffer) {
+    let logoUrl = req.body.logoUrl !== undefined
+      ? req.body.logoUrl.trim()
+      : (req.body.logo_url !== undefined ? req.body.logo_url.trim() : (category.logoUrl || category.logoImage?.url || ''));
+
+    let logoImage = category.logoImage || { url: logoUrl, publicId: '', format: 'webp', width: 0, height: 0 };
+
+    let heroFile = null;
+    let logoFile = null;
+
+    if (req.files) {
+      if (req.files.heroImage && req.files.heroImage[0]) heroFile = req.files.heroImage[0];
+      if (req.files.logo && req.files.logo[0]) logoFile = req.files.logo[0];
+      if (req.files.logoImage && req.files.logoImage[0]) logoFile = req.files.logoImage[0];
+    } else if (req.file) {
+      if (req.file.fieldname === 'logo' || req.file.fieldname === 'logoImage') {
+        logoFile = req.file;
+      } else {
+        heroFile = req.file;
+      }
+    }
+
+    if (heroFile && heroFile.buffer) {
       if (heroImage.publicId) {
         await deleteAsset(heroImage.publicId, 'image', true);
       }
-      const uploaded = await uploadBuffer(req.file.buffer, req.file.originalname, CLOUDINARY_FOLDERS.categories, 'image');
+      const uploaded = await uploadBuffer(heroFile.buffer, heroFile.originalname, CLOUDINARY_FOLDERS.categories, 'image');
       heroImage = {
         url: uploaded.url,
         publicId: uploaded.publicId,
@@ -277,6 +373,30 @@ const updateCategory = async (req, res, next) => {
       };
     }
 
+    if (logoFile && logoFile.buffer) {
+      if (logoImage.publicId) {
+        await deleteAsset(logoImage.publicId, 'image', true);
+      }
+      const uploadedLogo = await uploadBuffer(logoFile.buffer, logoFile.originalname, CLOUDINARY_FOLDERS.brands || 'sriyas-healthcare/brands', 'image');
+      logoImage = {
+        url: uploadedLogo.url,
+        publicId: uploadedLogo.publicId,
+        format: uploadedLogo.format,
+        width: uploadedLogo.width,
+        height: uploadedLogo.height
+      };
+      logoUrl = uploadedLogo.url;
+    }
+
+    const hasSubcategories = req.body.hasSubcategories !== undefined || req.body.has_subcategories !== undefined
+      ? Boolean(
+          req.body.hasSubcategories === true ||
+          String(req.body.hasSubcategories) === 'true' ||
+          req.body.has_subcategories === true ||
+          String(req.body.has_subcategories) === 'true'
+        )
+      : (category.hasSubcategories || false);
+
     const updated = await Category.findByIdAndUpdate(
       req.params.id,
       {
@@ -284,6 +404,9 @@ const updateCategory = async (req, res, next) => {
           name,
           brand: brandId,
           parentCategory: parentCategoryId,
+          hasSubcategories,
+          logoUrl,
+          logoImage,
           heroTitle,
           description,
           heroGradient,
