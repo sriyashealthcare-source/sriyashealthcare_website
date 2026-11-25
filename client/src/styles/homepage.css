@@ -1935,18 +1935,22 @@
    Stagger: 0ms, 180ms, 360ms
    ═══════════════════════════════════════════════════════════ */
 
-.hp-people--team {
+.hp-people--team,
+#our-team {
   position: relative;
   overflow-x: clip; /* Prevent horizontal overflow from off-screen card transforms */
+  overflow-x: hidden;
 }
 
 /* Team Profiles Grid */
 .hp-team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: stretch;
   gap: 28px;
   max-width: 1060px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .hp-team-card {
@@ -1961,29 +1965,31 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   opacity: 0;
   will-change: transform, opacity;
+  height: 100%;
+  box-sizing: border-box;
   transition:
-    opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
-    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
+    opacity 0.75s ease-out var(--team-delay, 0ms),
     border-color 0.35s ease,
     box-shadow 0.35s var(--ease);
 }
 
-/* Card 1 – ANUSREE R: Enters prominently from LEFT to RIGHT */
+/* Card 1 – ANUSREE R: Enters smoothly from LEFT to RIGHT */
 .hp-team-card--from-left {
   --team-delay: 0ms;
-  transform: translate3d(clamp(-220px, -18vw, -140px), 0, 0);
+  transform: translate3d(-60px, 0, 0);
 }
 
-/* Card 2 – SWETHA G: Enters prominently from BOTTOM to TOP */
+/* Card 2 – SWETHA G: Enters smoothly from BOTTOM to TOP */
 .hp-team-card--from-bottom {
-  --team-delay: 180ms;
-  transform: translate3d(0, 120px, 0);
+  --team-delay: 100ms;
+  transform: translate3d(0, 60px, 0);
 }
 
-/* Card 3 – RAHUL S: Enters prominently from RIGHT to LEFT */
+/* Card 3 – RAHUL S: Enters smoothly from RIGHT to LEFT */
 .hp-team-card--from-right {
-  --team-delay: 360ms;
-  transform: translate3d(clamp(140px, 18vw, 220px), 0, 0);
+  --team-delay: 150ms;
+  transform: translate3d(60px, 0, 0);
 }
 
 /* Final settled position */
@@ -1991,8 +1997,8 @@
 .hp-team-grid.is-revealed .hp-team-card,
 .hp-root--preview .hp-team-card,
 .hp-scroll-reveal-off .hp-team-card {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 /* Clean up will-change after settling to free GPU memory */
@@ -2002,7 +2008,7 @@
 
 /* Hover state only after card has settled */
 .hp-team-card.is-revealed:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px) !important;
   border-color: rgba(196, 154, 40, 0.4);
   box-shadow: 0 16px 36px rgba(23, 39, 71, 0.08);
 }
@@ -3342,6 +3348,12 @@
   .hp-collage-frame--secondary {
     animation: none !important;
   }
+
+  .hp-team-card {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
 
 
@@ -3872,11 +3884,18 @@
   }
 
   .home-viewport-section.hp-people--team .hp-team-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
     gap: clamp(12px, 1.8vw, 22px);
+    width: 100%;
   }
 
   .home-viewport-section.hp-people--team .hp-team-card {
     padding: clamp(12px, 1.8vh, 20px) clamp(10px, 1.4vw, 18px);
+    height: 100% !important;
+    box-sizing: border-box !important;
+    align-self: stretch !important;
   }
 
   .home-viewport-section.hp-people--team .hp-team-portrait-wrap {

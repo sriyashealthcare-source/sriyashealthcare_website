@@ -197,7 +197,6 @@ function SpecialistTeamGrid({
     // Direct anchor landing (#our-team)
     if (window.location.hash === '#our-team') {
       setIsRevealed(true);
-      return undefined;
     }
 
     const grid = gridRef.current;
@@ -207,87 +206,55 @@ function SpecialistTeamGrid({
     let observer = null;
     let fallbackScrollListener = null;
 
-    const cleanup = () => {
-      if (observer) {
-        observer.disconnect();
-        observer = null;
-      }
-      if (fallbackScrollListener) {
-        window.removeEventListener('scroll', fallbackScrollListener);
-        window.removeEventListener('resize', fallbackScrollListener);
-        fallbackScrollListener = null;
-      }
-    };
-
-    const checkVisibility = () => {
-      if (!grid || !targetSection) return;
-      const secRect = targetSection.getBoundingClientRect();
-      const gridRect = grid.getBoundingClientRect();
-      const currentVh = window.innerHeight || 800;
-      const h = secRect.height || 400;
-      const enteredPx = currentVh - secRect.top;
-
-      // Trigger animation when ~20% of the specialist section enters viewport
-      if ((enteredPx >= h * 0.18 && secRect.bottom >= 40) || gridRect.top < currentVh * 0.88) {
-        setIsRevealed(true);
-        // Requirement 3: Animate only once per page load, do not reset on scroll up
-        cleanup();
-      }
-    };
-
     if (typeof IntersectionObserver !== 'undefined') {
       observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            const secRect = targetSection.getBoundingClientRect();
-            const gridRect = grid.getBoundingClientRect();
-            const currentVh = window.innerHeight || 800;
-            const h = secRect.height || 400;
-            const enteredPx = currentVh - secRect.top;
-
-            if (entry.isIntersecting && ((enteredPx >= h * 0.18 && secRect.bottom >= 40) || gridRect.top < currentVh * 0.88)) {
-              setIsRevealed(true);
-              cleanup();
-              break;
-            }
+            // Replay every time you scroll up or down into the section
+            setIsRevealed(entry.isIntersecting);
           }
         },
         {
-          threshold: [0, 0.05, 0.1, 0.18, 0.2, 0.25],
-          rootMargin: '0px 0px -4% 0px'
+          threshold: 0.15,
+          rootMargin: '0px'
         }
       );
       observer.observe(targetSection);
+    } else {
+      fallbackScrollListener = () => {
+        if (!targetSection) return;
+        const secRect = targetSection.getBoundingClientRect();
+        const currentVh = window.innerHeight || 800;
+        const inView = secRect.top < currentVh * 0.85 && secRect.bottom > currentVh * 0.15;
+        setIsRevealed(inView);
+      };
+      window.addEventListener('scroll', fallbackScrollListener, { passive: true });
+      window.addEventListener('resize', fallbackScrollListener, { passive: true });
+      fallbackScrollListener();
     }
-
-    fallbackScrollListener = () => {
-      window.requestAnimationFrame(checkVisibility);
-    };
-    window.addEventListener('scroll', fallbackScrollListener, { passive: true });
-    window.addEventListener('resize', fallbackScrollListener, { passive: true });
-
-    // Initial check on mount
-    checkVisibility();
 
     // Listen to hash change if navigated directly
     const handleHash = () => {
       if (window.location.hash === '#our-team') {
         setIsRevealed(true);
-        cleanup();
       }
     };
     window.addEventListener('hashchange', handleHash);
 
     return () => {
-      cleanup();
+      if (observer) observer.disconnect();
+      if (fallbackScrollListener) {
+        window.removeEventListener('scroll', fallbackScrollListener);
+        window.removeEventListener('resize', fallbackScrollListener);
+      }
       window.removeEventListener('hashchange', handleHash);
     };
   }, [isPreview, scrollRevealEnabled]);
 
   const getDirectionClass = (idx) => {
-    // Card 1 (idx 0): From LEFT to RIGHT
-    // Card 2 (idx 1): From BOTTOM to TOP
-    // Card 3 (idx 2): From RIGHT to LEFT
+    // Card 1 (idx 0 – ANUSREE R): From LEFT to RIGHT (translateX(-60px) -> 0)
+    // Card 2 (idx 1 – SWETHA G): From BOTTOM to TOP (translateY(60px) -> 0)
+    // Card 3 (idx 2 – RAHUL S): From RIGHT to LEFT (translateX(60px) -> 0)
     const mod = idx % 3;
     if (mod === 0) return 'hp-team-card--from-left';
     if (mod === 1) return 'hp-team-card--from-bottom';
@@ -295,9 +262,9 @@ function SpecialistTeamGrid({
   };
 
   const getStaggerDelay = (idx) => {
-    // Stagger: 0ms, 180ms, 360ms (~150-200ms stagger)
-    const mod = idx % 3;
-    return `${mod * 180}ms`;
+    // Refined subtle stagger: 0ms, 100ms, 150ms
+    const delays = ['0ms', '100ms', '150ms'];
+    return delays[idx % 3] || '0ms';
   };
 
   return (
