@@ -215,12 +215,19 @@ async function runSuite() {
       const secondaryMedia = sec.querySelector('.hp-collage-frame--secondary .hp-collage-media');
       const leadP = sec.querySelector('.hp-lead-paragraph');
       const heading = sec.querySelector('h2');
+      const eyebrow = sec.querySelector('.hp-eyebrow');
+      const navbar = document.querySelector('.navbar') || document.querySelector('header');
       const caption1 = sec.querySelector('.hp-collage-frame--primary .hp-collage-caption');
       const caption2 = sec.querySelector('.hp-collage-frame--secondary .hp-collage-caption');
+
+      const eyebrowRect = eyebrow ? eyebrow.getBoundingClientRect() : { top: 0, bottom: 0 };
+      const navbarBottom = navbar ? navbar.getBoundingClientRect().bottom : 70;
 
       return {
         secHeight: sec.getBoundingClientRect().height,
         containerWidth: container.getBoundingClientRect().width,
+        eyebrowTop: eyebrowRect.top,
+        eyebrowNavbarGap: eyebrowRect.top - navbarBottom,
         leadFontSize: window.getComputedStyle(leadP).fontSize,
         headingFontSize: window.getComputedStyle(heading).fontSize,
         primaryHeight: primaryMedia ? primaryMedia.getBoundingClientRect().height : 0,
@@ -232,6 +239,7 @@ async function runSuite() {
     })()`);
 
     console.log(`  Section Height: ${s1.secHeight}px (matches ${vp.height}px: ${Math.abs(s1.secHeight - vp.height) <= 1})`);
+    console.log(`  Eyebrow Top: ${s1.eyebrowTop.toFixed(1)}px (Clearance below Navbar: ${s1.eyebrowNavbarGap.toFixed(1)}px)`);
     console.log(`  Container Width: ${s1.containerWidth.toFixed(1)}px (Widen to fill viewport)`);
     console.log(`  Heading Font: ${s1.headingFontSize}, Lead P Font: ${s1.leadFontSize}`);
     console.log(`  Photo 1 Height: ${s1.primaryHeight.toFixed(1)}px (object-position: ${s1.primaryObjPos})`);

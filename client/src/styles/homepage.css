@@ -3713,6 +3713,12 @@
   /* -----------------------------------------------------------------
      2. ABOUT US SECTION ("Connecting Clinical Excellence...")
      ----------------------------------------------------------------- */
+  .home-viewport-section.hp-about-section {
+    padding-top: clamp(2.5rem, 5vh, 4rem) !important;
+    padding-bottom: clamp(1rem, 2vh, 1.75rem) !important;
+    justify-content: center !important;
+  }
+
   .home-viewport-section.hp-about-section .hp-about-grid {
     display: grid !important;
     grid-template-columns: 1.18fr 0.82fr !important;
@@ -3732,22 +3738,22 @@
   .home-viewport-section.hp-about-section .hp-lead-paragraph {
     font-size: clamp(0.98rem, 1.65vh, 1.1rem) !important;
     line-height: 1.55 !important;
-    margin: 0 0 clamp(6px, 1vh, 10px) !important;
+    margin: 0 0 clamp(4px, 0.7vh, 8px) !important;
   }
 
   .home-viewport-section.hp-about-section .hp-body-paragraph {
     font-size: clamp(0.95rem, 1.55vh, 1.05rem) !important;
     line-height: 1.52 !important;
-    margin: 0 0 clamp(8px, 1.2vh, 12px) !important;
+    margin: 0 0 clamp(5px, 0.8vh, 8px) !important;
   }
 
   .home-viewport-section.hp-about-section .hp-purpose-cards {
-    margin-top: clamp(8px, 1.4vh, 16px) !important;
-    gap: clamp(10px, 1.4vw, 16px) !important;
+    margin-top: clamp(6px, 1vh, 12px) !important;
+    gap: clamp(8px, 1.2vw, 14px) !important;
   }
 
   .home-viewport-section.hp-about-section .hp-purpose-card {
-    padding: clamp(0.7rem, 1.4vh, 1.1rem) clamp(0.9rem, 1.4vw, 1.35rem) !important;
+    padding: clamp(0.55rem, 1.1vh, 0.85rem) clamp(0.85rem, 1.3vw, 1.25rem) !important;
     border-radius: 12px !important;
   }
 
@@ -3766,7 +3772,7 @@
   .home-viewport-section.hp-about-section .hp-about-visuals {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1rem !important;
+    gap: clamp(0.6rem, 1.1vh, 0.85rem) !important;
     width: 100% !important;
   }
 
@@ -3776,7 +3782,7 @@
   }
 
   .home-viewport-section.hp-about-section .hp-collage-frame--primary .hp-collage-media {
-    height: clamp(175px, 27vh, 240px) !important;
+    height: clamp(165px, 25vh, 230px) !important;
     aspect-ratio: auto !important;
     border-radius: 14px !important;
     overflow: hidden !important;
@@ -3796,7 +3802,7 @@
   }
 
   .home-viewport-section.hp-about-section .hp-collage-frame--secondary .hp-collage-media {
-    height: clamp(170px, 26vh, 230px) !important;
+    height: clamp(160px, 24vh, 220px) !important;
     aspect-ratio: auto !important;
     border-radius: 14px !important;
     overflow: hidden !important;
@@ -3810,7 +3816,7 @@
   }
 
   .home-viewport-section.hp-about-section .hp-collage-caption {
-    padding: clamp(6px, 1vh, 10px) 8px 3px !important;
+    padding: clamp(4px, 0.7vh, 8px) 8px 2px !important;
     font-size: clamp(0.78rem, 1.2vh, 0.88rem) !important;
     line-height: 1.38 !important;
     font-weight: 500 !important;
