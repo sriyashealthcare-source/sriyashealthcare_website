@@ -3893,21 +3893,38 @@
      5. LEADERSHIP & TEAM SECTIONS (ALTERNATING EDITORIAL ROWS)
      ----------------------------------------------------------------- */
   .home-viewport-section.hp-people--leadership {
-    height: auto !important;
-    min-height: 100dvh !important;
-    max-height: none !important;
-    overflow: visible !important;
-    padding-block: clamp(2.5rem, 5vh, 4.5rem) !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    padding-block: clamp(0.75rem, 2vh, 1.5rem) !important;
+    box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-section-header {
+    margin-bottom: clamp(0.75rem, 2vh, 1.5rem) !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-eyebrow {
+    margin-bottom: clamp(2px, 0.4vh, 6px) !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-heading {
+    margin-bottom: clamp(2px, 0.5vh, 6px) !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-section-subtitle {
+    margin-bottom: 0 !important;
   }
 
   .home-viewport-section.hp-people--leadership .hp-leadership-container {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    gap: clamp(24px, 3.5vh, 48px) !important;
+    gap: clamp(0.75rem, 1.8vh, 1.25rem) !important;
     max-width: 1140px !important;
     width: 100% !important;
     margin: 0 auto !important;
@@ -3916,7 +3933,7 @@
   .home-viewport-section.hp-people--leadership .hp-leadership-row {
     display: grid !important;
     grid-template-columns: 1fr auto !important;
-    gap: clamp(2rem, 4vw, 4.5rem) !important;
+    gap: clamp(1.75rem, 3.5vw, 3.5rem) !important;
     align-items: center !important;
     width: 100% !important;
     background: transparent !important;
@@ -3985,19 +4002,19 @@
       transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* Photo Wrapper - True Tall Vertical Executive Portrait (3:4 ratio) */
+  /* Photo Wrapper - Viewport-Proportioned Tall Portrait Frame (4:5 Ratio) */
   .home-viewport-section.hp-people--leadership .hp-leadership-photo-wrap {
     position: relative !important;
-    width: clamp(280px, 22vw, 360px) !important;
-    height: clamp(370px, 44vh, 480px) !important;
-    aspect-ratio: 3 / 4 !important;
+    width: auto !important;
+    height: clamp(190px, 28vh, 255px) !important;
+    aspect-ratio: 4 / 5 !important;
     flex-shrink: 0 !important;
     margin: 0 !important;
-    border-radius: 22px !important;
+    border-radius: 18px !important;
     background: #FFFFFF !important;
-    padding: 10px !important;
+    padding: 6px !important;
     border: 1px solid #EAEAEA !important;
-    box-shadow: 0 20px 48px rgba(23, 39, 71, 0.1), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 14px 36px rgba(23, 39, 71, 0.08), 0 3px 8px rgba(0, 0, 0, 0.02) !important;
     overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
@@ -4009,7 +4026,7 @@
   .home-viewport-section.hp-people--leadership .hp-leadership-photo-inner {
     width: 100% !important;
     height: 100% !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
     overflow: hidden !important;
     background: #F0F0F0 !important;
     aspect-ratio: auto !important;
@@ -4021,14 +4038,14 @@
     height: 100% !important;
     object-fit: cover !important;
     object-position: top center !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
     display: block !important;
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .home-viewport-section.hp-people--leadership .hp-leadership-photo-wrap:hover {
-      box-shadow: 0 26px 56px rgba(23, 39, 71, 0.15), 0 6px 16px rgba(212, 175, 55, 0.12) !important;
+      box-shadow: 0 20px 48px rgba(23, 39, 71, 0.12), 0 4px 12px rgba(212, 175, 55, 0.1) !important;
     }
     .home-viewport-section.hp-people--leadership .hp-leadership-photo-wrap:hover img {
       transform: scale(1.04) !important;
@@ -4048,6 +4065,44 @@
     max-width: 620px !important;
     overflow: hidden !important;
     will-change: transform, opacity;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-name {
+    font-size: clamp(1.15rem, 1.85vh, 1.45rem) !important;
+    line-height: 1.2 !important;
+    margin: 0 0 2px !important;
+    color: var(--navy-dark, #0d1e38) !important;
+    font-weight: 600 !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-role {
+    font-size: clamp(0.72rem, 1.1vh, 0.82rem) !important;
+    letter-spacing: 0.12em !important;
+    font-weight: 600 !important;
+    color: #996e19 !important;
+    margin: 0 0 clamp(3px, 0.5vh, 6px) !important;
+    text-transform: uppercase !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-rule {
+    margin: 0 0 clamp(4px, 0.7vh, 8px) !important;
+    height: 2px !important;
+    width: 44px !important;
+    background: #c49a28 !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-bio {
+    font-size: clamp(0.85rem, 1.3vh, 0.96rem) !important;
+    line-height: 1.45 !important;
+    margin: 0 0 clamp(6px, 1vh, 12px) !important;
+    color: var(--color-text-secondary, #4a5568) !important;
+    max-width: 620px !important;
+  }
+
+  .home-viewport-section.hp-people--leadership .hp-leadership-email-btn {
+    padding: clamp(5px, 0.7vh, 8px) clamp(12px, 1.2vw, 18px) !important;
+    font-size: clamp(0.72rem, 1.05vh, 0.8rem) !important;
+    border-radius: 8px !important;
   }
 
   .home-viewport-section.hp-people--leadership .hp-leadership-name {
