@@ -1968,8 +1968,8 @@
   height: 100%;
   box-sizing: border-box;
   transition:
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
-    opacity 0.75s ease-out var(--team-delay, 0ms),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
     border-color 0.35s ease,
     box-shadow 0.35s var(--ease);
 }
@@ -1999,6 +1999,11 @@
 .hp-scroll-reveal-off .hp-team-card {
   opacity: 1 !important;
   transform: translate3d(0, 0, 0) !important;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--team-delay, 0ms),
+    opacity 0.75s ease-out var(--team-delay, 0ms),
+    border-color 0.35s ease,
+    box-shadow 0.35s var(--ease) !important;
 }
 
 /* Clean up will-change after settling to free GPU memory */

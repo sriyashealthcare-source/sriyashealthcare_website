@@ -206,32 +206,46 @@ function SpecialistTeamGrid({
     let observer = null;
     let fallbackScrollListener = null;
 
+    const checkVisibility = () => {
+      if (!grid) return;
+      const secRect = targetSection ? targetSection.getBoundingClientRect() : grid.getBoundingClientRect();
+      const gridRect = grid.getBoundingClientRect();
+      const currentVh = window.innerHeight || 800;
+      const secH = secRect.height || 400;
+      const enteredPx = currentVh - secRect.top;
+
+      // Trigger entrance when ~18% of section enters viewport OR grid top is comfortably visible
+      if ((enteredPx >= secH * 0.18 && secRect.bottom >= 60) || (gridRect.top < currentVh * 0.88 && gridRect.bottom >= 60)) {
+        setIsRevealed(true);
+      } else if (secRect.top > currentVh * 0.94 || secRect.bottom < 50) {
+        // Reset when user scrolls back UP above this section (secRect.top > 0.94*vh)
+        // OR when user scrolls DOWN past this section (secRect.bottom < 50)
+        setIsRevealed(false);
+      }
+    };
+
     if (typeof IntersectionObserver !== 'undefined') {
       observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            // Replay every time you scroll up or down into the section
-            setIsRevealed(entry.isIntersecting);
-          }
+        () => {
+          checkVisibility();
         },
         {
-          threshold: 0.15,
-          rootMargin: '0px'
+          threshold: [0, 0.05, 0.1, 0.18, 0.25, 0.4],
+          rootMargin: '0px 0px -4% 0px'
         }
       );
       observer.observe(targetSection);
-    } else {
-      fallbackScrollListener = () => {
-        if (!targetSection) return;
-        const secRect = targetSection.getBoundingClientRect();
-        const currentVh = window.innerHeight || 800;
-        const inView = secRect.top < currentVh * 0.85 && secRect.bottom > currentVh * 0.15;
-        setIsRevealed(inView);
-      };
-      window.addEventListener('scroll', fallbackScrollListener, { passive: true });
-      window.addEventListener('resize', fallbackScrollListener, { passive: true });
-      fallbackScrollListener();
     }
+
+    // Scroll listener backup to guarantee trigger and bidirectional reset across varying scroll speeds
+    fallbackScrollListener = () => {
+      window.requestAnimationFrame(checkVisibility);
+    };
+    window.addEventListener('scroll', fallbackScrollListener, { passive: true });
+    window.addEventListener('resize', fallbackScrollListener, { passive: true });
+
+    // Initial check on mount
+    checkVisibility();
 
     // Listen to hash change if navigated directly
     const handleHash = () => {

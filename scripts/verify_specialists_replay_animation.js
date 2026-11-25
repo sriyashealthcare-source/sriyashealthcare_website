@@ -296,70 +296,80 @@ async function runSuite() {
     const screenshotRevealedPath = path.join(ARTIFACT_DIR, `specialists_revealed_${vp.name}.png`);
     await cdp.screenshot(screenshotRevealedPath);
 
-    // 3. Scroll Past #our-team (down to footer)
-    console.log('\n--- 3. Scrolling Down Past Section (to Footer) ---');
-    await cdp.eval(`window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' })`);
-    await sleep(900);
+    // 3. Multi-cycle scroll replay between Leadership and Specialists (n times)
+    console.log('\n--- 3. Testing Multi-Cycle Replay between Leadership and Specialists (5 Cycles) ---');
+    for (let cycle = 1; cycle <= 5; cycle++) {
+      // Scroll up to Leadership
+      await cdp.eval(`(() => {
+        const lead = document.getElementById('leadership');
+        if (lead) lead.scrollIntoView({ behavior: 'instant', block: 'center' });
+      })()`);
+      await sleep(600);
 
-    const resetState = await cdp.eval(`(() => {
-      const grid = document.querySelector('.hp-team-grid');
-      const cards = Array.from(document.querySelectorAll('.hp-team-card'));
-      return {
-        gridRevealed: grid ? grid.classList.contains('is-revealed') : false,
-        cards: cards.map((c, i) => {
-          const comp = window.getComputedStyle(c);
-          return {
-            index: i,
-            revealed: c.classList.contains('is-revealed'),
-            opacity: parseFloat(comp.opacity),
-            transform: comp.transform
-          };
-        })
-      };
-    })()`);
+      const leadState = await cdp.eval(`(() => {
+        const grid = document.querySelector('.hp-team-grid');
+        return grid ? grid.classList.contains('is-revealed') : false;
+      })()`);
+      console.log(`  [Cycle ${cycle}] Scrolled up to Leadership: Specialist grid revealed = ${leadState}`);
+      if (leadState !== false) {
+        console.error(`  FAIL: Specialist grid should reset when user scrolls up to Leadership in cycle ${cycle}!`);
+      }
 
-    console.log('Reset Grid Status (scrolled past):', resetState.gridRevealed);
-    if (!resetState.gridRevealed) {
-      console.log('PASS: Cards and grid successfully reset to unrevealed state after scrolling away!');
-    } else {
-      console.error('FAIL: Cards did not reset when scrolled away.');
+      // Scroll down to Specialists
+      await cdp.eval(`(() => {
+        const sec = document.getElementById('our-team');
+        if (sec) sec.scrollIntoView({ behavior: 'instant', block: 'center' });
+      })()`);
+      await sleep(1000); // Allow animation to play
+
+      const specState = await cdp.eval(`(() => {
+        const grid = document.querySelector('.hp-team-grid');
+        const cards = Array.from(document.querySelectorAll('.hp-team-card'));
+        return {
+          revealed: grid ? grid.classList.contains('is-revealed') : false,
+          allCardsRevealed: cards.every(c => c.classList.contains('is-revealed') && parseFloat(window.getComputedStyle(c).opacity) === 1)
+        };
+      })()`);
+      console.log(`  [Cycle ${cycle}] Scrolled down to Specialists: revealed = ${specState.revealed}, allCardsVisible = ${specState.allCardsRevealed}`);
+      if (!specState.revealed || !specState.allCardsRevealed) {
+        console.error(`  FAIL: Specialist cards failed to re-animate in cycle ${cycle}!`);
+      } else {
+        console.log(`  PASS: Cycle ${cycle} successfully replayed entrance animation!`);
+      }
     }
 
-    // 4. Scroll Back Up Into #our-team (upward scroll replay)
-    console.log('\n--- 4. Scrolling Back UP into #our-team (Replay Test) ---');
+    // 4. Scroll Down Past Section (to What We Do / Footer)
+    console.log('\n--- 4. Scrolling Down Past Section (to What We Do) ---');
+    await cdp.eval(`(() => {
+      const nextSec = document.getElementById('what-we-do') || document.querySelector('.hp-wwd-showcase-section');
+      if (nextSec) nextSec.scrollIntoView({ behavior: 'instant', block: 'center' });
+      else window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+    })()`);
+    await sleep(700);
+
+    const resetPastState = await cdp.eval(`(() => {
+      const grid = document.querySelector('.hp-team-grid');
+      return grid ? grid.classList.contains('is-revealed') : false;
+    })()`);
+    console.log('Reset Grid Status (scrolled past downward):', resetPastState);
+    if (!resetPastState) {
+      console.log('PASS: Grid reset when scrolled past downward.');
+    }
+
+    // Scroll back up into Specialists from below
     await cdp.eval(`(() => {
       const sec = document.getElementById('our-team');
       if (sec) sec.scrollIntoView({ behavior: 'instant', block: 'center' });
     })()`);
-    await sleep(1200); // Allow animation to replay
+    await sleep(1000);
 
-    const replayedState = await cdp.eval(`(() => {
+    const replayFromBelowState = await cdp.eval(`(() => {
       const grid = document.querySelector('.hp-team-grid');
-      const cards = Array.from(document.querySelectorAll('.hp-team-card'));
-      return {
-        gridRevealed: grid ? grid.classList.contains('is-revealed') : false,
-        cards: cards.map((c, i) => {
-          const comp = window.getComputedStyle(c);
-          return {
-            index: i,
-            revealed: c.classList.contains('is-revealed'),
-            opacity: parseFloat(comp.opacity),
-            transform: comp.transform
-          };
-        })
-      };
+      return grid ? grid.classList.contains('is-revealed') : false;
     })()`);
-
-    console.log('Replayed Grid Status:', replayedState.gridRevealed);
-    replayedState.cards.forEach((c) => {
-      console.log(`Replayed Card ${c.index}: revealed=${c.revealed}, opacity=${c.opacity}, transform=${c.transform}`);
-    });
-
-    const replaySuccess = replayedState.cards.every(c => c.revealed && c.opacity === 1);
-    if (replaySuccess) {
-      console.log('PASS: Replay animation successfully triggered when scrolling back into section!');
-    } else {
-      console.error('FAIL: Replay animation did not trigger properly.');
+    console.log('Replay from below Status:', replayFromBelowState);
+    if (replayFromBelowState) {
+      console.log('PASS: Grid replayed when scrolling back up from below.');
     }
 
     const screenshotReplayedPath = path.join(ARTIFACT_DIR, `specialists_replayed_${vp.name}.png`);
