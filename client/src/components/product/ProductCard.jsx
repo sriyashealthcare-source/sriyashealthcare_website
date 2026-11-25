@@ -19,6 +19,7 @@ export default function ProductCard({ product, partnerSlug }) {
     : `/products/${encodeURIComponent(targetSlug)}`;
 
   const cardCatText = product.cardCategory || product.category?.name || '';
+  const subcategoryText = product.subcategory?.name || '';
 
   return (
     <Link
@@ -38,7 +39,14 @@ export default function ProductCard({ product, partnerSlug }) {
         )}
       </div>
       <div className="prod-card-body">
-        {cardCatText && <div className="prod-card-cat">{cardCatText}</div>}
+        <div className="prod-card-cat-wrap">
+          {cardCatText && <div className="prod-card-cat">{cardCatText}</div>}
+          {subcategoryText && (
+            <span className="prod-card-subcat-pill" title={`Subcategory: ${subcategoryText}`}>
+              {subcategoryText}
+            </span>
+          )}
+        </div>
         <div className="prod-card-name">{product.name}</div>
         {product.shortSpecification && (
           <div className="prod-card-spec">{product.shortSpecification}</div>

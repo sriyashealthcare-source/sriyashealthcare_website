@@ -21,6 +21,12 @@ const categorySchema = new mongoose.Schema(
       default: null,
       index: true
     },
+    parentCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null,
+      index: true
+    },
     heroTitle: {
       type: String,
       trim: true,
@@ -70,6 +76,7 @@ const categorySchema = new mongoose.Schema(
 );
 
 categorySchema.index({ brand: 1, isActive: 1, displayOrder: 1 });
+categorySchema.index({ brand: 1, parentCategory: 1, isActive: 1, displayOrder: 1 });
 
 module.exports = mongoose.model('Category', categorySchema);
 

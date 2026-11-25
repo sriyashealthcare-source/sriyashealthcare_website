@@ -146,6 +146,10 @@ const REF_MAP = {
   brandId: 'Brand',
   category: 'Category',
   categoryId: 'Category',
+  parentCategory: 'Category',
+  parentCategoryId: 'Category',
+  subcategory: 'Category',
+  subcategoryId: 'Category',
   productId: 'Product'
 };
 

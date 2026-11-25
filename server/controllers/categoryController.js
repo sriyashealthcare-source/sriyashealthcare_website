@@ -31,14 +31,39 @@ const getPublicCategories = async (req, res, next) => {
         filter.brand = bDoc._id;
       }
     }
+    if (req.query.parentCategory !== undefined) {
+      if (req.query.parentCategory === 'null' || req.query.parentCategory === '') {
+        filter.parentCategory = null;
+      } else {
+        const pVal = String(req.query.parentCategory).trim();
+        const or = [{ slug: pVal.toLowerCase() }, { name: pVal }];
+        if (isObjectId(pVal)) or.unshift({ _id: pVal });
+        const pDoc = await Category.findOne({ $or: or });
+        filter.parentCategory = pDoc ? pDoc._id : pVal;
+      }
+    }
     const categories = await Category.find(filter)
       .populate('brand', 'name slug tabLabel icon isActive')
+      .populate('parentCategory', 'name slug heroTitle description isActive')
       .sort({ displayOrder: 1, name: 1 });
+
+    // Attach nested subcategories for consumer convenience
+    const enriched = categories.map(c => {
+      const cObj = typeof c.toObject === 'function' ? c.toObject() : { ...c };
+      const cId = String(cObj._id);
+      cObj.subcategories = categories
+        .filter(sub => {
+          const pId = sub.parentCategory ? String(sub.parentCategory._id || sub.parentCategory) : null;
+          return pId === cId;
+        })
+        .map(sub => (typeof sub.toObject === 'function' ? sub.toObject() : { ...sub }));
+      return cObj;
+    });
 
     res.status(200).json({
       success: true,
-      count: categories.length,
-      categories
+      count: enriched.length,
+      categories: enriched
     });
   } catch (error) {
     next(error);
@@ -50,6 +75,7 @@ const getAdminCategories = async (req, res, next) => {
   try {
     const categories = await Category.find({})
       .populate('brand', 'name slug tabLabel icon isActive')
+      .populate('parentCategory', 'name slug heroTitle description isActive')
       .sort({ displayOrder: 1, name: 1 });
 
     const allProducts = await Product.find({ deletedAt: null });
@@ -57,9 +83,19 @@ const getAdminCategories = async (req, res, next) => {
     const enriched = categories.map(c => {
       const cObj = typeof c.toObject === 'function' ? c.toObject() : { ...c };
       const cId = String(cObj._id);
-      cObj.productCount = allProducts.filter(p => String(p.category) === cId).length;
-      cObj.activeProductCount = allProducts.filter(p => String(p.category) === cId && p.isActive).length;
+      // Count products directly assigned to this category or subcategory
+      cObj.productCount = allProducts.filter(p => String(p.category) === cId || String(p.subcategory) === cId).length;
+      cObj.activeProductCount = allProducts.filter(p => (String(p.category) === cId || String(p.subcategory) === cId) && p.isActive).length;
       return cObj;
+    });
+
+    // Attach subcategories array to main categories
+    enriched.forEach(cObj => {
+      const cId = String(cObj._id);
+      cObj.subcategories = enriched.filter(sub => {
+        const pId = sub.parentCategory ? String(sub.parentCategory._id || sub.parentCategory) : null;
+        return pId === cId;
+      });
     });
 
     res.status(200).json({
@@ -126,10 +162,26 @@ const createCategory = async (req, res, next) => {
     const totalCats = await Category.countDocuments({});
     const displayOrder = req.body.displayOrder !== undefined ? Number(req.body.displayOrder) : totalCats + 1;
 
+    let parentCategoryId = null;
+    const parentInput = req.body.parentCategory || req.body.parentCategoryId;
+    if (parentInput && parentInput !== 'null' && parentInput !== '') {
+      const pVal = String(parentInput).trim();
+      const or = [{ slug: pVal.toLowerCase() }, { name: pVal }];
+      if (isObjectId(pVal)) or.unshift({ _id: pVal });
+      const parentDoc = await Category.findOne({ $or: or });
+      if (parentDoc) {
+        parentCategoryId = parentDoc._id;
+        if (!brandId && parentDoc.brand) {
+          brandId = parentDoc.brand;
+        }
+      }
+    }
+
     const created = await Category.create({
       name,
       slug,
       brand: brandId,
+      parentCategory: parentCategoryId,
       heroTitle,
       description,
       heroGradient,
@@ -138,7 +190,9 @@ const createCategory = async (req, res, next) => {
       isActive
     });
 
-    const populated = await Category.findById(created._id).populate('brand', 'name slug tabLabel icon isActive');
+    const populated = await Category.findById(created._id)
+      .populate('brand', 'name slug tabLabel icon isActive')
+      .populate('parentCategory', 'name slug heroTitle description isActive');
 
     res.status(201).json({
       success: true,
@@ -181,6 +235,25 @@ const updateCategory = async (req, res, next) => {
       ? (typeof req.body.isActive === 'boolean' ? req.body.isActive : String(req.body.isActive) === 'true')
       : category.isActive;
 
+    let parentCategoryId = category.parentCategory || null;
+    if (req.body.parentCategory !== undefined || req.body.parentCategoryId !== undefined) {
+      const parentInput = req.body.parentCategory !== undefined ? req.body.parentCategory : req.body.parentCategoryId;
+      if (!parentInput || parentInput === 'null' || parentInput === '') {
+        parentCategoryId = null;
+      } else {
+        const pVal = String(parentInput).trim();
+        if (pVal !== String(category._id)) {
+          const or = [{ slug: pVal.toLowerCase() }, { name: pVal }];
+          if (isObjectId(pVal)) or.unshift({ _id: pVal });
+          const parentDoc = await Category.findOne({ $or: or });
+          if (parentDoc && String(parentDoc._id) !== String(category._id)) {
+            parentCategoryId = parentDoc._id;
+            if (!brandId && parentDoc.brand) brandId = parentDoc.brand;
+          }
+        }
+      }
+    }
+
     let heroImage = category.heroImage || { url: '', publicId: '', format: 'webp', width: 0, height: 0 };
     if (req.file && req.file.buffer) {
       if (heroImage.publicId) {
@@ -210,6 +283,7 @@ const updateCategory = async (req, res, next) => {
         $set: {
           name,
           brand: brandId,
+          parentCategory: parentCategoryId,
           heroTitle,
           description,
           heroGradient,
@@ -219,7 +293,9 @@ const updateCategory = async (req, res, next) => {
         }
       },
       { new: true }
-    ).populate('brand', 'name slug tabLabel icon isActive');
+    )
+      .populate('brand', 'name slug tabLabel icon isActive')
+      .populate('parentCategory', 'name slug heroTitle description isActive');
 
     res.status(200).json({
       success: true,
@@ -270,8 +346,18 @@ const deleteCategory = async (req, res, next) => {
       });
     }
 
+    const childSubcategoriesCount = await Category.countDocuments({
+      parentCategory: category._id
+    });
+    if (childSubcategoriesCount > 0 && req.query.force !== 'true') {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot delete "${category.name}" because ${childSubcategoriesCount} subcategory/subcategories are nested under it. Delete or reassign the subcategories first.`
+      });
+    }
+
     const assignedProductsCount = await Product.countDocuments({
-      category: category._id,
+      $or: [{ category: category._id }, { subcategory: category._id }],
       deletedAt: null
     });
 

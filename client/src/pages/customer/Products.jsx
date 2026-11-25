@@ -115,30 +115,49 @@ export default function Products() {
       p => String(p.brand?._id || p.brand) === brandIdStr
     );
 
+    // Only top-level main categories for this brand
     const brandCats = categories
-      .filter(c => String(c.brand?._id || c.brand) === brandIdStr)
+      .filter(c => String(c.brand?._id || c.brand) === brandIdStr && !c.parentCategory)
       .sort((a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99));
+
+    const allSubcats = categories.filter(c => Boolean(c.parentCategory));
 
     const sections = [];
     const groupedCategoryIds = new Set();
 
     for (const cat of brandCats) {
       const catIdStr = String(cat._id);
-      const prodsInCat = brandProducts
-        .filter(p => String(p.category?._id || p.category) === catIdStr)
+      const subcategories = allSubcats
+        .filter(s => String(s.parentCategory?._id || s.parentCategory) === catIdStr)
         .sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
-      if (prodsInCat.length > 0) {
+
+      const subcatIdSet = new Set(subcategories.map(s => String(s._id)));
+
+      // Products in this category (either directly assigned to category, or assigned to one of its subcategories)
+      const prodsInCat = brandProducts
+        .filter(p => {
+          const pCatId = String(p.category?._id || p.category || '');
+          const pSubId = String(p.subcategory?._id || p.subcategory || '');
+          return pCatId === catIdStr || subcatIdSet.has(pSubId);
+        })
+        .sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+
+      if (prodsInCat.length > 0 || subcategories.length > 0) {
         sections.push({
           category: cat,
+          subcategories,
           products: prodsInCat
         });
         groupedCategoryIds.add(catIdStr);
+        subcategories.forEach(s => groupedCategoryIds.add(String(s._id)));
       }
     }
 
     // Include any products assigned to categories not yet in brandCats
     const remainingProds = brandProducts.filter(
-      p => !groupedCategoryIds.has(String(p.category?._id || p.category))
+      p =>
+        !groupedCategoryIds.has(String(p.category?._id || p.category)) &&
+        !groupedCategoryIds.has(String(p.subcategory?._id || p.subcategory))
     );
     if (remainingProds.length > 0) {
       const fallbackMap = {};
@@ -146,7 +165,7 @@ export default function Products() {
         const cObj = p.category || { _id: 'other', name: p.cardCategory || 'Other Products' };
         const cid = String(cObj._id || cObj.name);
         if (!fallbackMap[cid]) {
-          fallbackMap[cid] = { category: cObj, products: [] };
+          fallbackMap[cid] = { category: cObj, subcategories: [], products: [] };
         }
         fallbackMap[cid].products.push(p);
       }
@@ -341,45 +360,130 @@ export default function Products() {
               </p>
             </div>
           ) : (
-            brandCategorySections.map(({ category, products: catProducts }) => {
-              const heroImgUrl = category.heroImage?.url
-                ? resolveAssetUrl(category.heroImage.url)
-                : '';
-              const gradient =
-                category.heroGradient || 'linear-gradient(135deg,#1a3a5c,#2d6b9e)';
-
-              return (
-                <div className="cat-section" key={category._id || category.slug || category.name}>
-                  {(category.heroTitle || category.description || heroImgUrl) && (
-                    <div className="cat-hero" style={{ background: gradient }}>
-                      {heroImgUrl && (
-                        <img
-                          src={heroImgUrl}
-                          alt={category.heroTitle || category.name}
-                          loading="lazy"
-                        />
-                      )}
-                      <div className="cat-hero-text">
-                        <h3>{category.heroTitle || category.name}</h3>
-                        {category.description && <p>{category.description}</p>}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="cat-label">{category.name}</div>
-
-                  <div className="prod-grid">
-                    {catProducts.map((product) => (
-                      <ProductCard key={product._id || product.slug} product={product} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })
+            brandCategorySections.map(({ category, subcategories, products: catProducts }) => (
+              <CategorySectionView
+                key={category._id || category.slug || category.name}
+                category={category}
+                subcategories={subcategories}
+                products={catProducts}
+              />
+            ))
           )}
         </div>
       )}
     </section>
+  );
+}
+
+function CategorySectionView({ category, subcategories = [], products = [] }) {
+  const [activeSubId, setActiveSubId] = useState('all');
+
+  const heroImgUrl = category.heroImage?.url
+    ? resolveAssetUrl(category.heroImage.url)
+    : '';
+  const gradient =
+    category.heroGradient || 'linear-gradient(135deg,#1a3a5c,#2d6b9e)';
+
+  const displayedProducts = useMemo(() => {
+    if (activeSubId === 'all') return products;
+    return products.filter(p => {
+      const pSubId = String(p.subcategory?._id || p.subcategory || '');
+      return pSubId === activeSubId;
+    });
+  }, [products, activeSubId]);
+
+  return (
+    <div className="cat-section" key={category._id || category.slug || category.name}>
+      {(category.heroTitle || category.description || heroImgUrl) && (
+        <div className="cat-hero" style={{ background: gradient }}>
+          {heroImgUrl && (
+            <img
+              src={heroImgUrl}
+              alt={category.heroTitle || category.name}
+              loading="lazy"
+            />
+          )}
+          <div className="cat-hero-text">
+            <h3>{category.heroTitle || category.name}</h3>
+            {category.description && <p>{category.description}</p>}
+          </div>
+        </div>
+      )}
+
+      <div className="cat-header-row">
+        <div className="cat-label">{category.name}</div>
+        {products.length > 0 && (
+          <span className="cat-count-pill">
+            {products.length} {products.length === 1 ? 'Product' : 'Products'}
+          </span>
+        )}
+      </div>
+
+      {/* SUBCATEGORY TABS / FILTER CARDS */}
+      {subcategories.length > 0 && (
+        <div className="subcat-filter-wrapper" role="tablist" aria-label={`${category.name} subcategories`}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeSubId === 'all'}
+            className={`subcat-tab-card ${activeSubId === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveSubId('all')}
+          >
+            <div className="subcat-tab-name">
+              <span>All Products</span>
+              <span className="subcat-badge">{products.length}</span>
+            </div>
+            <div className="subcat-tab-desc">View full {category.name} range</div>
+          </button>
+
+          {subcategories.map((sub) => {
+            const countInSub = products.filter(
+              p => String(p.subcategory?._id || p.subcategory || '') === String(sub._id)
+            ).length;
+
+            return (
+              <button
+                key={sub._id || sub.slug}
+                type="button"
+                role="tab"
+                aria-selected={activeSubId === String(sub._id)}
+                className={`subcat-tab-card ${activeSubId === String(sub._id) ? 'active' : ''}`}
+                onClick={() => setActiveSubId(String(sub._id))}
+              >
+                <div className="subcat-tab-name">
+                  <span>{sub.name}</span>
+                  <span className="subcat-badge">{countInSub}</span>
+                </div>
+                {sub.description ? (
+                  <div className="subcat-tab-desc">{sub.description}</div>
+                ) : (
+                  <div className="subcat-tab-desc">Clinical surgical products</div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {displayedProducts.length === 0 ? (
+        <div className="subcat-empty-state">
+          <p>No products currently listed under this subcategory.</p>
+          <button
+            type="button"
+            className="subcat-reset-btn"
+            onClick={() => setActiveSubId('all')}
+          >
+            Show All Products in {category.name}
+          </button>
+        </div>
+      ) : (
+        <div className="prod-grid">
+          {displayedProducts.map((product) => (
+            <ProductCard key={product._id || product.slug} product={product} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

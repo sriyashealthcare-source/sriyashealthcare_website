@@ -24,6 +24,7 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
   const [name, setName] = useState('');
   const [brandId, setBrandId] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [subcategoryId, setSubcategoryId] = useState('');
   const [customCategoryName, setCustomCategoryName] = useState('');
   const [cardCategory, setCardCategory] = useState('');
   const [detailCategory, setDetailCategory] = useState('');
@@ -89,8 +90,10 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
       setName(initialData.name || '');
       const bId = String(initialData.brand?._id || initialData.brand || '');
       const cId = String(initialData.category?._id || initialData.category || '');
+      const sId = String(initialData.subcategory?._id || initialData.subcategory || '');
       setBrandId(bId);
       setCategoryId(cId);
+      setSubcategoryId(sId);
       setCardCategory(initialData.cardCategory || '');
       setDetailCategory(initialData.detailCategory || '');
       setShortSpecification(initialData.shortSpecification || '');
@@ -111,21 +114,38 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
     }
   }, [initialData]);
 
-  // Filter categories for selected brand
+  // Filter top-level main categories for selected brand
   const brandCategories = categories.filter(
-    c => !brandId || String(c.brand?._id || c.brand) === String(brandId)
+    c => (!brandId || String(c.brand?._id || c.brand) === String(brandId)) && !c.parentCategory
+  );
+
+  // Subcategories available for currently selected category
+  const availableSubcategories = categories.filter(
+    c => String(c.parentCategory?._id || c.parentCategory) === String(categoryId)
   );
 
   const handleBrandChange = (nextBrandId) => {
     setBrandId(nextBrandId);
     const matching = categories.filter(
-      c => String(c.brand?._id || c.brand) === String(nextBrandId)
+      c => String(c.brand?._id || c.brand) === String(nextBrandId) && !c.parentCategory
     );
     if (matching.length > 0) {
       setCategoryId(String(matching[0]._id));
+      setSubcategoryId('');
       setUseCustomCategory(false);
     } else {
       setCategoryId('');
+      setSubcategoryId('');
+    }
+  };
+
+  const handleCategoryChange = (nextCatId) => {
+    setCategoryId(nextCatId);
+    const matchingSubs = categories.filter(
+      c => String(c.parentCategory?._id || c.parentCategory) === String(nextCatId)
+    );
+    if (!matchingSubs.some(s => String(s._id) === String(subcategoryId))) {
+      setSubcategoryId('');
     }
   };
 
@@ -221,6 +241,7 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
     formData.append('name', cleanName);
     formData.append('brand', brandId);
     formData.append('category', resolvedCategory);
+    formData.append('subcategory', subcategoryId || '');
     formData.append('cardCategory', cardCategory.trim());
     formData.append('detailCategory', detailCategory.trim());
     formData.append('shortSpecification', shortSpecification.trim());
@@ -341,7 +362,7 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
             <select
               id="pf-category"
               value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               required
             >
               <option value="">Select Category...</option>
@@ -366,6 +387,33 @@ export default function ProductForm({ initialData = null, onSubmit, submitting =
           <div className="admin-field-hint">Displayed above the product title on catalogue cards.</div>
         </div>
       </div>
+
+      {/* DYNAMIC SUBCATEGORY SELECTOR */}
+      {!useCustomCategory && availableSubcategories.length > 0 && (
+        <div className="admin-field" style={{ marginBottom: '18px' }}>
+          <label htmlFor="pf-subcategory" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>Subcategory (Optional)</span>
+            <span style={{ fontSize: '0.74rem', color: 'var(--gold-deep)', fontWeight: 600 }}>
+              {availableSubcategories.length} subcategories available under this section
+            </span>
+          </label>
+          <select
+            id="pf-subcategory"
+            value={subcategoryId}
+            onChange={(e) => setSubcategoryId(e.target.value)}
+          >
+            <option value="">-- No Subcategory (Assign Directly to Main Category) --</option>
+            {availableSubcategories.map((sub) => (
+              <option key={sub._id} value={sub._id}>
+                {sub.name} {!sub.isActive ? '(Inactive)' : ''}
+              </option>
+            ))}
+          </select>
+          <div className="admin-field-hint">
+            Assigning a subcategory allows users to filter products specifically under this section on the customer catalogue.
+          </div>
+        </div>
+      )}
 
       <div className="admin-form-grid">
         <div className="admin-field">

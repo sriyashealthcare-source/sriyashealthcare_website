@@ -148,7 +148,9 @@ export default function ProductDetails() {
     product.brochure?.filename || `${product.slug || 'Product'}_Brochure.pdf`;
   const detailCategoryLabel =
     product.detailCategory ||
-    (product.category?.name && product.cardCategory
+    (product.category?.name && product.subcategory?.name
+      ? `${product.category.name} · ${product.subcategory.name}`
+      : product.category?.name && product.cardCategory
       ? `${product.category.name} · ${product.cardCategory}`
       : product.category?.name || product.cardCategory || '');
 
@@ -166,30 +168,47 @@ export default function ProductDetails() {
     (product.images || []).find((img) => img.isPrimary) || (product.images || [])[0];
   const primaryImgUrl = primaryImgObj?.url ? resolveAssetUrl(primaryImgObj.url) : '';
 
+  const breadcrumbElements = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://sriyashealthcare.com/products' }
+  ];
+  let curPos = 3;
+  if (brandSlug) {
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: curPos++,
+      name: brandName,
+      item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}`
+    });
+  }
+  if (product.category?.name) {
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: curPos++,
+      name: product.category.name,
+      item: `https://sriyashealthcare.com/products?brand=${encodeURIComponent(brandSlug)}`
+    });
+  }
+  if (product.subcategory?.name) {
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: curPos++,
+      name: product.subcategory.name,
+      item: `https://sriyashealthcare.com/products?brand=${encodeURIComponent(brandSlug)}`
+    });
+  }
+  breadcrumbElements.push({
+    '@type': 'ListItem',
+    position: curPos++,
+    name: product.name,
+    item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.slug)}`
+  });
+
   const jsonLdSchemas = [
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sriyashealthcare.com/' },
-        { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://sriyashealthcare.com/products' },
-        ...(brandSlug
-          ? [
-              {
-                '@type': 'ListItem',
-                position: 3,
-                name: brandName,
-                item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}`
-              }
-            ]
-          : []),
-        {
-          '@type': 'ListItem',
-          position: brandSlug ? 4 : 3,
-          name: product.name,
-          item: `https://sriyashealthcare.com/products/${encodeURIComponent(brandSlug)}/${encodeURIComponent(product.slug)}`
-        }
-      ]
+      itemListElement: breadcrumbElements
     },
     {
       '@context': 'https://schema.org',
@@ -220,7 +239,7 @@ export default function ProductDetails() {
 
       <section className="univ-detail" id="univ-detail" aria-label="Product Details">
       <div style={{ maxWidth: '1100px', margin: '0 auto 28px' }}>
-        {/* Breadcrumb Navigation: Home > Products > Partner Name > Product Name */}
+        {/* Breadcrumb Navigation: Home > Products > Partner Name > Category > Subcategory > Product Name */}
         <nav className="partner-breadcrumbs" aria-label="Breadcrumbs" style={{ marginBottom: '16px' }}>
           <Link to="/" className="breadcrumb-link">
             Home
@@ -232,9 +251,21 @@ export default function ProductDetails() {
           {brandSlug && (
             <>
               <span className="breadcrumb-sep">/</span>
-              <Link to={`/products/${encodeURIComponent(brandSlug)}`} className="breadcrumb-link">
+              <Link to={`/products?brand=${encodeURIComponent(brandSlug)}`} className="breadcrumb-link">
                 {brandName}
               </Link>
+            </>
+          )}
+          {product.category?.name && (
+            <>
+              <span className="breadcrumb-sep">/</span>
+              <span className="breadcrumb-link">{product.category.name}</span>
+            </>
+          )}
+          {product.subcategory?.name && (
+            <>
+              <span className="breadcrumb-sep">/</span>
+              <span className="breadcrumb-link">{product.subcategory.name}</span>
             </>
           )}
           <span className="breadcrumb-sep">/</span>

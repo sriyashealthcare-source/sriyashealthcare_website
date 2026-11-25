@@ -11,6 +11,7 @@ export default function ProductManagement() {
   const [search, setSearch] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('order');
 
@@ -50,6 +51,7 @@ export default function ProductManagement() {
         search: search.trim(),
         brand: selectedBrand,
         category: selectedCategory,
+        subcategory: selectedSubcategory,
         status: statusFilter,
         sort: sortBy,
         limit: 100
@@ -60,7 +62,7 @@ export default function ProductManagement() {
     } finally {
       setLoading(false);
     }
-  }, [search, selectedBrand, selectedCategory, statusFilter, sortBy]);
+  }, [search, selectedBrand, selectedCategory, selectedSubcategory, statusFilter, sortBy]);
 
   useEffect(() => {
     fetchProducts();
@@ -95,8 +97,12 @@ export default function ProductManagement() {
   };
 
   const filteredCategoryOptions = selectedBrand
-    ? categories.filter(c => String(c.brand?._id || c.brand) === String(selectedBrand))
-    : categories;
+    ? categories.filter(c => String(c.brand?._id || c.brand) === String(selectedBrand) && !c.parentCategory)
+    : categories.filter(c => !c.parentCategory);
+
+  const availableSubcategoryOptions = selectedCategory
+    ? categories.filter(c => String(c.parentCategory?._id || c.parentCategory) === String(selectedCategory))
+    : [];
 
   return (
     <div className="fade-in-up">
@@ -131,6 +137,7 @@ export default function ProductManagement() {
             onChange={(e) => {
               setSelectedBrand(e.target.value);
               setSelectedCategory('');
+              setSelectedSubcategory('');
             }}
             aria-label="Filter by brand"
           >
@@ -145,7 +152,10 @@ export default function ProductManagement() {
           <select
             className="admin-select"
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setSelectedSubcategory('');
+            }}
             aria-label="Filter by category"
           >
             <option value="">All Categories</option>
@@ -155,6 +165,22 @@ export default function ProductManagement() {
               </option>
             ))}
           </select>
+
+          {availableSubcategoryOptions.length > 0 && (
+            <select
+              className="admin-select"
+              value={selectedSubcategory}
+              onChange={(e) => setSelectedSubcategory(e.target.value)}
+              aria-label="Filter by subcategory"
+            >
+              <option value="">All Subcategories</option>
+              {availableSubcategoryOptions.map((s) => (
+                <option key={s._id} value={s._id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select
             className="admin-select"
@@ -208,6 +234,7 @@ export default function ProductManagement() {
                 setSearch('');
                 setSelectedBrand('');
                 setSelectedCategory('');
+                setSelectedSubcategory('');
                 setStatusFilter('all');
                 setSortBy('order');
               }}
@@ -272,7 +299,15 @@ export default function ProductManagement() {
 
                       <td>{p.brand?.name || '—'}</td>
 
-                      <td>{p.category?.name || p.cardCategory || '—'}</td>
+                      <td>
+                        <div style={{ fontWeight: 500 }}>{p.category?.name || p.cardCategory || '—'}</div>
+                        {p.subcategory?.name && (
+                          <div style={{ fontSize: '0.74rem', color: 'var(--gold-deep)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px', marginTop: '2px' }}>
+                            <span>↳</span>
+                            <span>{p.subcategory.name}</span>
+                          </div>
+                        )}
+                      </td>
 
                       <td>
                         <span style={{ fontSize: '0.8rem', color: 'var(--text-mute)' }}>

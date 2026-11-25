@@ -56,6 +56,12 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Category reference is required'],
       index: true
     },
+    subcategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null,
+      index: true
+    },
     cardCategory: {
       type: String,
       trim: true,
@@ -159,6 +165,7 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.index({ isActive: 1, deletedAt: 1, brand: 1, category: 1, displayOrder: 1 });
+productSchema.index({ isActive: 1, deletedAt: 1, brand: 1, category: 1, subcategory: 1, displayOrder: 1 });
 productSchema.index({ name: 'text', shortSpecification: 'text', description: 'text' });
 
 module.exports = mongoose.model('Product', productSchema);

@@ -124,6 +124,17 @@ async function resolveCategoryRef(categoryInput, brandDoc) {
   return doc;
 }
 
+async function resolveSubcategoryRef(subcategoryInput, categoryDoc) {
+  if (!subcategoryInput) return null;
+  const val = String(subcategoryInput).trim();
+  const or = [{ slug: val.toLowerCase() }, { name: val }];
+  if (isObjectId(val)) {
+    or.unshift({ _id: val });
+  }
+  let doc = await Category.findOne({ $or: or });
+  return doc;
+}
+
 function normalizeSearchText(str) {
   return String(str || '')
     .toLowerCase()
@@ -172,9 +183,23 @@ const searchPublicProducts = async (req, res, next) => {
       filter.category = cDoc._id;
     }
 
+    const subcategoryParam = String(req.query.subcategory || '').trim();
+    if (subcategoryParam && subcategoryParam !== 'all') {
+      const or = [{ slug: subcategoryParam.toLowerCase() }, { name: subcategoryParam }];
+      if (isObjectId(subcategoryParam)) {
+        or.unshift({ _id: subcategoryParam });
+      }
+      const sDoc = await Category.findOne({ $or: or });
+      if (!sDoc || !sDoc.isActive) {
+        return res.status(200).json({ success: true, count: 0, query: rawQ, products: [] });
+      }
+      filter.subcategory = sDoc._id;
+    }
+
     let products = await Product.find(filter)
       .populate('brand', 'name slug tabLabel icon logoUrl displayOrder isActive')
       .populate('category', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
       .sort({ displayOrder: 1, createdAt: 1 });
 
     products = filterActivePublicProducts(products);
@@ -291,7 +316,7 @@ const searchPublicProducts = async (req, res, next) => {
 const getPublicProducts = async (req, res, next) => {
   try {
     const searchVal = String(req.query.q || req.query.search || '').trim();
-    const { brand, category, sort } = req.query;
+    const { brand, category, subcategory, sort } = req.query;
     const filter = { isActive: true, deletedAt: null };
 
     if (brand && brand !== 'all') {
@@ -315,9 +340,23 @@ const getPublicProducts = async (req, res, next) => {
       filter.category = cDoc._id;
     }
 
+    if (subcategory && subcategory !== 'all') {
+      const subVal = String(subcategory).trim();
+      const or = [{ slug: subVal.toLowerCase() }, { name: subVal }];
+      if (isObjectId(subVal)) {
+        or.unshift({ _id: subVal });
+      }
+      const sDoc = await Category.findOne({ $or: or });
+      if (!sDoc || !sDoc.isActive) {
+        return res.status(200).json({ success: true, count: 0, products: [] });
+      }
+      filter.subcategory = sDoc._id;
+    }
+
     let products = await Product.find(filter)
       .populate('brand', 'name slug tabLabel icon logoUrl displayOrder isActive')
       .populate('category', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
       .sort({ displayOrder: 1, createdAt: 1 });
 
     products = filterActivePublicProducts(products);
@@ -373,7 +412,8 @@ const getPublicProductBySlug = async (req, res, next) => {
       $or: [{ slug: slugParam }, { legacyId: slugParam }]
     })
       .populate('brand', 'name slug tabLabel icon logoUrl isActive')
-      .populate('category', 'name slug heroTitle description heroGradient heroImage isActive');
+      .populate('category', 'name slug heroTitle description heroGradient heroImage isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage isActive');
 
     if (!product || (product.brand && product.brand.isActive === false) || (product.category && product.category.isActive === false)) {
       return res.status(404).json({
@@ -413,7 +453,8 @@ const getPublicProductById = async (req, res, next) => {
       $or: or
     })
       .populate('brand', 'name slug tabLabel icon logoUrl isActive')
-      .populate('category', 'name slug heroTitle description heroGradient heroImage isActive');
+      .populate('category', 'name slug heroTitle description heroGradient heroImage isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage isActive');
 
     if (!product || (product.brand && product.brand.isActive === false) || (product.category && product.category.isActive === false)) {
       return res.status(404).json({
@@ -449,6 +490,7 @@ const getPublicProductsByBrand = async (req, res, next) => {
     })
       .populate('brand', 'name slug tabLabel icon logoUrl isActive')
       .populate('category', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
       .sort({ displayOrder: 1 });
 
     products = filterActivePublicProducts(products);
@@ -488,6 +530,7 @@ const getPublicProductsByCategory = async (req, res, next) => {
     })
       .populate('brand', 'name slug tabLabel icon logoUrl isActive')
       .populate('category', 'name slug heroTitle description heroGradient heroImage isActive')
+      .populate('subcategory', 'name slug heroTitle description heroGradient heroImage displayOrder isActive')
       .sort({ displayOrder: 1 });
 
     products = filterActivePublicProducts(products);
@@ -514,6 +557,7 @@ const getAdminProducts = async (req, res, next) => {
       search = '',
       brand = '',
       category = '',
+      subcategory = '',
       status = 'all',
       sort = 'order',
       page = 1,
@@ -544,9 +588,20 @@ const getAdminProducts = async (req, res, next) => {
       if (cDoc) filter.category = cDoc._id;
     }
 
+    if (subcategory) {
+      const subVal = String(subcategory).trim();
+      const or = [{ slug: subVal.toLowerCase() }, { name: subVal }];
+      if (isObjectId(subVal)) {
+        or.unshift({ _id: subVal });
+      }
+      const sDoc = await Category.findOne({ $or: or });
+      if (sDoc) filter.subcategory = sDoc._id;
+    }
+
     let products = await Product.find(filter)
       .populate('brand', 'name slug tabLabel icon isActive')
-      .populate('category', 'name slug heroTitle isActive');
+      .populate('category', 'name slug heroTitle isActive')
+      .populate('subcategory', 'name slug heroTitle isActive');
 
     if (search && String(search).trim()) {
       const q = String(search).trim().toLowerCase();
@@ -556,7 +611,8 @@ const getAdminProducts = async (req, res, next) => {
           (p.shortSpecification || '').toLowerCase().includes(q) ||
           (p.cardCategory || '').toLowerCase().includes(q) ||
           (p.brand?.name || '').toLowerCase().includes(q) ||
-          (p.category?.name || '').toLowerCase().includes(q)
+          (p.category?.name || '').toLowerCase().includes(q) ||
+          (p.subcategory?.name || '').toLowerCase().includes(q)
         );
       });
     }
@@ -596,7 +652,8 @@ const getAdminProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate('brand', 'name slug tabLabel icon isActive')
-      .populate('category', 'name slug heroTitle isActive');
+      .populate('category', 'name slug heroTitle isActive')
+      .populate('subcategory', 'name slug heroTitle isActive');
 
     if (!product) {
       return res.status(404).json({
@@ -632,6 +689,12 @@ const createProduct = async (req, res, next) => {
         success: false,
         message: 'Valid category is required.'
       });
+    }
+
+    let subcategoryDoc = null;
+    const subcategoryInput = req.body.subcategory || req.body.subcategoryId;
+    if (subcategoryInput && subcategoryInput !== 'null' && subcategoryInput !== '') {
+      subcategoryDoc = await resolveSubcategoryRef(subcategoryInput, categoryDoc);
     }
 
     let baseSlug = req.body.slug ? makeSlug(req.body.slug) : makeSlug(name);
@@ -710,6 +773,7 @@ const createProduct = async (req, res, next) => {
       slug,
       brand: brandDoc._id,
       category: categoryDoc._id,
+      subcategory: subcategoryDoc ? subcategoryDoc._id : null,
       cardCategory,
       detailCategory,
       shortSpecification,
@@ -730,7 +794,8 @@ const createProduct = async (req, res, next) => {
 
     const populated = await Product.findById(created._id)
       .populate('brand', 'name slug tabLabel icon')
-      .populate('category', 'name slug heroTitle');
+      .populate('category', 'name slug heroTitle')
+      .populate('subcategory', 'name slug heroTitle');
 
     res.status(201).json({
       success: true,
@@ -909,6 +974,17 @@ const updateProduct = async (req, res, next) => {
       }
     }
 
+    let subcategoryId = product.subcategory || null;
+    if (req.body.subcategory !== undefined || req.body.subcategoryId !== undefined) {
+      const subInput = req.body.subcategory !== undefined ? req.body.subcategory : req.body.subcategoryId;
+      if (!subInput || subInput === 'null' || subInput === '') {
+        subcategoryId = null;
+      } else {
+        const subDoc = await resolveSubcategoryRef(subInput, categoryDoc || product.category);
+        subcategoryId = subDoc ? subDoc._id : null;
+      }
+    }
+
     const updated = await Product.findByIdAndUpdate(
       req.params.id,
       {
@@ -917,6 +993,7 @@ const updateProduct = async (req, res, next) => {
           slug: updatedSlug,
           brand: brandDoc ? brandDoc._id : product.brand,
           category: categoryDoc ? categoryDoc._id : product.category,
+          subcategory: subcategoryId,
           cardCategory,
           detailCategory,
           shortSpecification,
@@ -937,7 +1014,8 @@ const updateProduct = async (req, res, next) => {
       { new: true }
     )
       .populate('brand', 'name slug tabLabel icon')
-      .populate('category', 'name slug heroTitle');
+      .populate('category', 'name slug heroTitle')
+      .populate('subcategory', 'name slug heroTitle');
 
     res.status(200).json({
       success: true,

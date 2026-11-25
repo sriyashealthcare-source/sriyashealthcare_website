@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { productService } from '../../services/productService';
 import { resolveAssetUrl } from '../../utils/session';
 
@@ -38,6 +38,7 @@ export default function BrandCategoryManagement() {
   const [editingCategory, setEditingCategory] = useState(null);
   const [catName, setCatName] = useState('');
   const [catBrandId, setCatBrandId] = useState('');
+  const [catParentId, setCatParentId] = useState('');
   const [catHeroTitle, setCatHeroTitle] = useState('');
   const [catDescription, setCatDescription] = useState('');
   const [catGradient, setCatGradient] = useState('linear-gradient(135deg,#1a3a5c,#2d6b9e)');
@@ -242,10 +243,14 @@ export default function BrandCategoryManagement() {
   };
 
   // Category Handlers
-  const openAddCategory = () => {
+  const openAddCategory = (parentCat = null) => {
     setEditingCategory(null);
     setCatName('');
-    setCatBrandId(brands[0]?._id || '');
+    const defaultBrand = parentCat
+      ? String(parentCat.brand?._id || parentCat.brand || '')
+      : (catBrandFilter || brands[0]?._id || '');
+    setCatBrandId(defaultBrand);
+    setCatParentId(parentCat ? String(parentCat._id) : '');
     setCatHeroTitle('');
     setCatDescription('');
     setCatGradient('linear-gradient(135deg,#1a3a5c,#2d6b9e)');
@@ -258,6 +263,7 @@ export default function BrandCategoryManagement() {
     setEditingCategory(c);
     setCatName(c.name || '');
     setCatBrandId(String(c.brand?._id || c.brand || ''));
+    setCatParentId(c.parentCategory ? String(c.parentCategory._id || c.parentCategory) : '');
     setCatHeroTitle(c.heroTitle || c.name || '');
     setCatDescription(c.description || '');
     setCatGradient(c.heroGradient || 'linear-gradient(135deg,#1a3a5c,#2d6b9e)');
@@ -272,6 +278,7 @@ export default function BrandCategoryManagement() {
       const formData = new FormData();
       formData.append('name', catName.trim());
       formData.append('brand', catBrandId);
+      formData.append('parentCategory', catParentId || '');
       formData.append('heroTitle', (catHeroTitle || catName).trim());
       formData.append('description', catDescription.trim());
       formData.append('heroGradient', catGradient.trim());
@@ -325,9 +332,38 @@ export default function BrandCategoryManagement() {
     }
   };
 
-  const visibleCategories = catBrandFilter
+  const filteredCategories = catBrandFilter
     ? categories.filter(c => String(c.brand?._id || c.brand) === String(catBrandFilter))
     : categories;
+
+  // Hierarchical list: Main categories with their subcategories directly nested below
+  const hierarchicalCategories = useMemo(() => {
+    const mainCats = filteredCategories.filter(c => !c.parentCategory);
+    const subCats = filteredCategories.filter(c => Boolean(c.parentCategory));
+    const result = [];
+
+    mainCats.forEach(main => {
+      const children = subCats.filter(sub => {
+        const pId = String(sub.parentCategory?._id || sub.parentCategory);
+        return pId === String(main._id);
+      });
+      result.push({ ...main, isSub: false, subCount: children.length });
+      children.forEach(child => {
+        result.push({ ...child, isSub: true, parentName: main.name });
+      });
+    });
+
+    // Also include any subcategories whose parent wasn't in mainCats
+    subCats.forEach(sub => {
+      const pId = String(sub.parentCategory?._id || sub.parentCategory);
+      if (!mainCats.some(m => String(m._id) === pId)) {
+        const parentDoc = categories.find(c => String(c._id) === pId);
+        result.push({ ...sub, isSub: true, parentName: parentDoc?.name || 'Parent Category' });
+      }
+    });
+
+    return result;
+  }, [filteredCategories, categories]);
 
   return (
     <div className="fade-in-up">
@@ -472,7 +508,7 @@ export default function BrandCategoryManagement() {
           <div className="admin-card">
             <div className="admin-card-header">
               <h2 className="admin-card-title">
-                Product Categories ({visibleCategories.length})
+                Product Categories &amp; Subcategories ({hierarchicalCategories.length})
               </h2>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <select
@@ -491,7 +527,7 @@ export default function BrandCategoryManagement() {
                 <button
                   type="button"
                   className="adm-btn adm-btn-primary adm-btn-sm"
-                  onClick={openAddCategory}
+                  onClick={() => openAddCategory()}
                 >
                   + Add Category
                 </button>
@@ -503,7 +539,7 @@ export default function BrandCategoryManagement() {
                 <thead>
                   <tr>
                     <th>Order</th>
-                    <th>Category Name &amp; Banner</th>
+                    <th>Category Name &amp; Hierarchy</th>
                     <th>Brand</th>
                     <th>Products</th>
                     <th>Status</th>
@@ -511,14 +547,64 @@ export default function BrandCategoryManagement() {
                   </tr>
                 </thead>
                 <tbody>
-                  {visibleCategories.map((c) => (
-                    <tr key={c._id}>
+                  {hierarchicalCategories.map((c) => (
+                    <tr
+                      key={c._id}
+                      style={c.isSub ? { background: 'rgba(212, 175, 55, 0.03)' } : undefined}
+                    >
                       <td>{c.displayOrder}</td>
                       <td>
-                        <div className="admin-prod-name">{c.name}</div>
-                        <div className="admin-prod-sub">
-                          Banner: {c.heroTitle || c.name}
-                          {c.description ? ` — ${c.description.slice(0, 60)}...` : ''}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          {c.isSub && (
+                            <span
+                              style={{
+                                color: 'var(--gold-deep)',
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                fontSize: '1rem',
+                                paddingLeft: '16px'
+                              }}
+                            >
+                              ↳
+                            </span>
+                          )}
+                          <div>
+                            <div className="admin-prod-name" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              <span>{c.name}</span>
+                              {c.isSub ? (
+                                <span
+                                  className="status-badge"
+                                  style={{
+                                    background: 'rgba(212, 175, 55, 0.12)',
+                                    color: '#8a6d1c',
+                                    borderColor: 'rgba(212, 175, 55, 0.35)',
+                                    fontSize: '0.7rem',
+                                    padding: '2px 8px'
+                                  }}
+                                >
+                                  Subcategory of {c.parentName}
+                                </span>
+                              ) : (
+                                c.subCount > 0 && (
+                                  <span
+                                    className="status-badge"
+                                    style={{
+                                      background: 'rgba(13, 30, 56, 0.06)',
+                                      color: 'var(--ink)',
+                                      fontSize: '0.7rem',
+                                      padding: '2px 8px'
+                                    }}
+                                  >
+                                    {c.subCount} {c.subCount === 1 ? 'Subcategory' : 'Subcategories'}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                            <div className="admin-prod-sub">
+                              Banner: {c.heroTitle || c.name}
+                              {c.description ? ` — ${c.description.slice(0, 60)}...` : ''}
+                            </div>
+                          </div>
                         </div>
                       </td>
                       <td>{c.brand?.name || '—'}</td>
@@ -536,9 +622,21 @@ export default function BrandCategoryManagement() {
                           style={{
                             display: 'inline-flex',
                             gap: '6px',
-                            justifyContent: 'flex-end'
+                            justifyContent: 'flex-end',
+                            flexWrap: 'wrap'
                           }}
                         >
+                          {!c.isSub && (
+                            <button
+                              type="button"
+                              className="adm-btn adm-btn-secondary adm-btn-sm"
+                              style={{ borderColor: 'var(--gold-deep)', color: 'var(--gold-deep)', fontWeight: 600 }}
+                              onClick={() => openAddCategory(c)}
+                              title={`Add a new subcategory directly under "${c.name}"`}
+                            >
+                              + Subcategory
+                            </button>
+                          )}
                           <button
                             type="button"
                             className="adm-btn adm-btn-secondary adm-btn-sm"
@@ -858,18 +956,22 @@ export default function BrandCategoryManagement() {
         <div className="admin-modal-backdrop" role="dialog" aria-modal="true">
           <div className="admin-modal-dialog" style={{ maxWidth: '560px' }}>
             <h3>
-              {editingCategory ? `Edit Category: ${editingCategory.name}` : 'Add Product Category'}
+              {editingCategory
+                ? (editingCategory.parentCategory ? `Edit Subcategory: ${editingCategory.name}` : `Edit Category: ${editingCategory.name}`)
+                : (catParentId ? 'Add Subcategory' : 'Add Product Category')}
             </h3>
             <form onSubmit={handleSaveCategory} style={{ marginTop: '14px' }}>
               <div className="admin-form-grid">
                 <div className="admin-field">
-                  <label htmlFor="cm-name">Category Label *</label>
+                  <label htmlFor="cm-name">
+                    {catParentId ? 'Subcategory Name *' : 'Category Name *'}
+                  </label>
                   <input
                     id="cm-name"
                     type="text"
                     value={catName}
                     onChange={(e) => setCatName(e.target.value)}
-                    placeholder="e.g. Synthetic Absorbable Sutures"
+                    placeholder={catParentId ? 'e.g. Absorbable Hemostats or PGA Braided' : 'e.g. Synthetic Absorbable Sutures'}
                     required
                   />
                 </div>
@@ -878,7 +980,10 @@ export default function BrandCategoryManagement() {
                   <select
                     id="cm-brand"
                     value={catBrandId}
-                    onChange={(e) => setCatBrandId(e.target.value)}
+                    onChange={(e) => {
+                      setCatBrandId(e.target.value);
+                      setCatParentId('');
+                    }}
                     required
                   >
                     <option value="">Select Brand...</option>
@@ -889,6 +994,50 @@ export default function BrandCategoryManagement() {
                     ))}
                   </select>
                 </div>
+              </div>
+
+              {/* PARENT CATEGORY DROPDOWN */}
+              <div className="admin-field" style={{ marginBottom: '14px' }}>
+                <label htmlFor="cm-parent">
+                  Parent Category (Optional — leave blank for main category)
+                </label>
+                <select
+                  id="cm-parent"
+                  value={catParentId}
+                  onChange={(e) => {
+                    const nextPId = e.target.value;
+                    setCatParentId(nextPId);
+                    if (nextPId) {
+                      const pDoc = categories.find(c => String(c._id) === nextPId);
+                      if (pDoc && pDoc.brand) {
+                        setCatBrandId(String(pDoc.brand._id || pDoc.brand));
+                      }
+                    }
+                  }}
+                >
+                  <option value="">-- None (Top-Level Main Category) --</option>
+                  {categories
+                    .filter((c) => {
+                      const isNotSelf = !editingCategory || String(c._id) !== String(editingCategory._id);
+                      const isTopLevel = !c.parentCategory;
+                      const matchesBrand = !catBrandId || String(c.brand?._id || c.brand) === String(catBrandId);
+                      return isNotSelf && isTopLevel && matchesBrand;
+                    })
+                    .map((c) => (
+                      <option key={c._id} value={c._id}>
+                        {c.brand?.name ? `[${c.brand.name}] ` : ''}{c.name}
+                      </option>
+                    ))}
+                </select>
+                <small style={{ fontSize: '0.74rem', color: 'var(--text-mute)', display: 'block', marginTop: '3px' }}>
+                  {catParentId ? (
+                    <strong style={{ color: 'var(--gold-deep)' }}>
+                      ↳ Creating as a nested Subcategory under selected parent category.
+                    </strong>
+                  ) : (
+                    'Leave blank to create a main category under the brand.'
+                  )}
+                </small>
               </div>
 
               <div className="admin-form-grid">
