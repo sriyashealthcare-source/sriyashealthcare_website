@@ -22,7 +22,7 @@ export default function Products() {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [activeBrandSlug, setActiveBrandSlug] = useState(requestedBrand || 'peters');
+  const [activeBrandSlug, setActiveBrandSlug] = useState(requestedBrand || 'ams');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -186,60 +186,34 @@ export default function Products() {
       </div>
 
       {/* PARTNER LOGOS */}
-      <div className="partner-logos-row" aria-label="Partner Brand Logos">
-        <button
-          type="button"
-          className="partner-logo-item"
-          onClick={() => handleSelectBrand('peters')}
-          title="View Peters Surgical Products"
-        >
-          <img
-            src={BRAND_LOGOS.peters}
-            alt="Peters Surgical"
-            className="partner-logo-img logo-peters"
-            loading="lazy"
-          />
-        </button>
-        <button
-          type="button"
-          className="partner-logo-item"
-          onClick={() => handleSelectBrand('liquiband')}
-          title="View LiquiBand® Products"
-        >
-          <img
-            src={BRAND_LOGOS.liquiband}
-            alt="LiquiBand®"
-            className="partner-logo-img logo-liquiband"
-            loading="lazy"
-          />
-        </button>
-        <button
-          type="button"
-          className="partner-logo-item"
-          onClick={() => handleSelectBrand('ams')}
-          title="Advanced Medical Solutions"
-        >
-          <img
-            src={BRAND_LOGOS.ams}
-            alt="Advanced Medical Solutions"
-            className="partner-logo-img logo-ams"
-            loading="lazy"
-          />
-        </button>
-        <button
-          type="button"
-          className="partner-logo-item"
-          onClick={() => handleSelectBrand('gore')}
-          title="View W.L. Gore & Associates Products"
-        >
-          <img
-            src={BRAND_LOGOS.gore}
-            alt="W. L. Gore & Associates"
-            className="partner-logo-img logo-gore"
-            loading="lazy"
-          />
-        </button>
-      </div>
+      {brands.length > 0 && (
+        <div className="partner-logos-row" aria-label="Partner Brand Logos">
+          {brands.map((b) => {
+            const isSelected = activeBrand?.slug === b.slug && !searchQuery.trim();
+            const logoSrc = resolveAssetUrl(b.logoUrl) || BRAND_LOGOS[b.slug] || BRAND_LOGOS[b.slug.replace('-healthcare', '')];
+            return (
+              <button
+                key={b._id || b.slug}
+                type="button"
+                className={`partner-logo-item ${isSelected ? 'active' : ''}`}
+                onClick={() => handleSelectBrand(b.slug)}
+                title={`View ${b.name} Products`}
+              >
+                {logoSrc ? (
+                  <img
+                    src={logoSrc}
+                    alt={b.name}
+                    className={`partner-logo-img logo-${b.slug}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="partner-logo-text">{b.tabLabel || b.name}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* BRAND TABS */}
       {brands.length > 0 && (

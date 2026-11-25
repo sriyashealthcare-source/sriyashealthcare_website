@@ -198,15 +198,26 @@ export default function PartnerProducts() {
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // Filter by category
+    // Filter by category or subcategory
     if (selectedCategory !== 'all') {
+      const childSubcatIds = new Set(
+        categories
+          .filter(c => String(c.parentCategory?._id || c.parentCategory) === selectedCategory)
+          .map(c => String(c._id))
+      );
+
       result = result.filter(p => {
         const pCatId = String(p.category?._id || p.category || '');
+        const pSubId = String(p.subcategory?._id || p.subcategory || '');
         if (selectedCategory.startsWith('card-')) {
           const cardName = selectedCategory.replace('card-', '');
           return p.cardCategory === cardName || pCatId === cardName;
         }
-        return pCatId === selectedCategory;
+        return (
+          pCatId === selectedCategory ||
+          pSubId === selectedCategory ||
+          childSubcatIds.has(pSubId)
+        );
       });
     }
 

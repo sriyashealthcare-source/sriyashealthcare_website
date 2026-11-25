@@ -6,10 +6,8 @@ import { productService } from '../../services/productService';
 
 const DEFAULT_PARTNER_PORTFOLIOS = [
   { slug: 'ams', name: 'Advanced Medical Solutions', specialty: 'Surgical & Wound Care' },
-  { slug: 'peters', name: 'Peters Surgical', specialty: 'Sutures & Mesh' },
-  { slug: 'liquiband', name: 'LiquiBand®', specialty: 'Tissue Adhesives' },
-  { slug: 'cutimed', name: 'Cutimed® Sorbact®', specialty: 'Wound Care' },
-  { slug: 'gentacoll', name: 'Genta-Coll® resorb', specialty: 'Haemostasis' },
+  { slug: 'panther-healthcare', name: 'Panther Healthcare', specialty: 'Surgical Staplers & MIS' },
+  { slug: 'futura-medtech', name: 'Futura Medtech', specialty: 'Dolphin Sutures & Wound Closure' },
   { slug: 'gore', name: 'W. L. Gore', specialty: 'Biomaterials' }
 ];
 

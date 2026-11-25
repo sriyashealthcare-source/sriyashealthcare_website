@@ -18,7 +18,11 @@ export const BRAND_LOGOS = {
   peters: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048215/sriyas-healthcare/brands/peters-surgical-logo.jpg",
   liquiband: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048216/sriyas-healthcare/brands/liquiband-logo.jpg",
   ams: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048218/sriyas-healthcare/brands/advanced-medical-solutions-logo.jpg",
-  gore: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048219/sriyas-healthcare/brands/gore-logo.png"
+  gore: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795048219/sriyas-healthcare/brands/gore-logo.png",
+  "futura-medtech": "/images/brands/futura-medtech-logo.webp",
+  futura: "/images/brands/futura-medtech-logo.webp",
+  "panther-healthcare": "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795579374/sriyas-healthcare/brands/file_a7yfrv.jpg",
+  panther: "https://res.cloudinary.com/pgjzw0zu/image/upload/v1795579374/sriyas-healthcare/brands/file_a7yfrv.jpg"
 };
 
 export const PLACEHOLDERS = {
