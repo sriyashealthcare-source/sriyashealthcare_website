@@ -4,6 +4,7 @@ import { homepageService } from '../../services/homepageService';
 import { useContactInfo } from '../../context/ContactContext';
 import HomepageContentRenderer from '../../components/home/HomepageContentRenderer';
 import SeoHead from '../../components/common/SeoHead';
+import { useHomepageStepScroll } from '../../hooks/useHomepageStepScroll';
 import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { COMPANY_CONTACT } from '../../constants/contact';
 import '../../styles/homepage.css';
@@ -435,6 +436,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const isAboutRoute = location.pathname === '/about';
+
+  // Desktop/laptop full-viewport single-step snapping (sections 0-5 + Footer)
+  useHomepageStepScroll({ isHomepage: true });
 
   useEffect(() => {
     let active = true;

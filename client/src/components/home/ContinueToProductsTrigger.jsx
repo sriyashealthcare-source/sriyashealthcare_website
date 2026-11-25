@@ -126,6 +126,9 @@ export default function ContinueToProductsTrigger({ isPreview = false }) {
     };
 
     const handleWheel = (e) => {
+      // On desktop/laptop viewports (min-width: 1024px), full-page step snap manages scrolling directly to Footer
+      if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
+
       // Scrolling upwards resets intent and unlocks POP navigation lock
       if (e.deltaY < -4) {
         gestureScoreRef.current = 0;
@@ -184,6 +187,7 @@ export default function ContinueToProductsTrigger({ isPreview = false }) {
     };
 
     const handleKeyDown = (e) => {
+      if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
       if (!canAdvanceNow()) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
         gestureScoreRef.current += 90;

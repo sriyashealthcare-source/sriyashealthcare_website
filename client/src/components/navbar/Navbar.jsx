@@ -140,6 +140,14 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
+              onClick={(e) => {
+                if (location.pathname === '/') {
+                  e.preventDefault();
+                  const hero = document.getElementById('hero') || document.querySelector('.hp-hero-section');
+                  if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  else window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               id="nav-home"
             >

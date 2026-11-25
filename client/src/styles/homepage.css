@@ -3575,12 +3575,15 @@
 
 @media (min-width: 1024px) {
   html:has(.hp-root),
-  body:has(.hp-root) {
-    scroll-snap-type: y proximity;
+  body:has(.hp-root),
+  html.hp-snap-active,
+  body.hp-snap-active {
+    scroll-snap-type: y mandatory !important;
+    scroll-behavior: smooth !important;
   }
 
   .hp-root {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory !important;
   }
 
   /* Universal section wrapper for all homepage sections */
@@ -3595,8 +3598,22 @@
     box-sizing: border-box !important;
     padding-block: clamp(0.75rem, 2.2vh, 2rem) !important;
     padding-inline: 0 !important;
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+  }
+
+  /* Site footer on homepage desktop full-viewport scroll */
+  body:has(.hp-root) #site-footer,
+  body:has(.hp-root) .footer,
+  body.hp-snap-active #site-footer,
+  body.hp-snap-active .footer {
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+  }
+
+  /* Hide continue-to-products sentinel on desktop so snap lands directly on Footer */
+  .hp-continue-sentinel {
+    display: none !important;
   }
 
   /* First section: Account for top fixed navbar so Hero fits completely above the fold */
@@ -4449,8 +4466,13 @@
    Revert to natural content flow with zero truncation or forced heights
    =================================================================== */
 @media (max-width: 1023px) {
+  html:has(.hp-root),
+  body:has(.hp-root),
+  html.hp-snap-active,
+  body.hp-snap-active,
   .hp-root {
     scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
   }
 
   .home-viewport-section {
@@ -4460,6 +4482,18 @@
     overflow: visible !important;
     display: block !important;
     padding-block: clamp(48px, 8vh, 72px) !important;
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+
+  #site-footer,
+  .footer {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+
+  .hp-continue-sentinel {
+    display: block !important;
   }
 
   .home-viewport-section.hp-hero-section {
