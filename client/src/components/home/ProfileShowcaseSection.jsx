@@ -159,10 +159,19 @@ function LeadershipEditorialRow({
   return (
     <article
       ref={rowRef}
-      className={`hp-leadership-row ${isEven ? 'hp-leadership-row--even' : 'hp-leadership-row--odd'} ${isRevealed ? 'is-revealed' : ''}`}
+      className={`hp-leadership-row ${isEven ? 'hp-leadership-row--even' : 'hp-leadership-row--odd hp-leadership-row--reversed'} ${isRevealed ? 'is-revealed' : ''}`}
     >
-      {photoContent}
-      {textContent}
+      {isEven ? (
+        <>
+          {textContent}
+          {photoContent}
+        </>
+      ) : (
+        <>
+          {photoContent}
+          {textContent}
+        </>
+      )}
     </article>
   );
 }

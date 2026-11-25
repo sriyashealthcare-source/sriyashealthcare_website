@@ -17,8 +17,8 @@ const { spawn } = require('child_process');
 
 const ARTIFACT_DIR = 'C:\\Users\\surya\\.gemini\\antigravity\\brain\\12cb1919-e846-449e-ac74-8ab8159fca5b';
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const CHROME_DEV_PROFILE = 'C:\\Users\\surya\\AppData\\Local\\Google\\Chrome\\DevSession_ViewportRedesign';
 const rootDir = path.join(__dirname, '..');
+const CHROME_DEV_PROFILE = path.join(rootDir, '.chrome_dev_session');
 const TARGET_URL = 'http://127.0.0.1:5173';
 
 function sleep(ms) {
@@ -283,9 +283,16 @@ async function runSuite() {
         const pRect = photoWrap ? photoWrap.getBoundingClientRect() : null;
         const cRect = content ? content.getBoundingClientRect() : null;
 
+        const isEven = i % 2 === 0;
+        const textIsFirst = content && photoWrap ? (content.compareDocumentPosition(photoWrap) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0 : false;
+
         return {
           index: i,
           name: name ? name.textContent.trim() : '',
+          isEven,
+          textIsFirst,
+          className: r.className,
+          isRevealed: r.classList.contains('is-revealed'),
           cardRect: { x: rRect.x, y: rRect.y, w: rRect.width, h: rRect.height },
           photoRect: pRect ? { x: pRect.x, y: pRect.y, w: pRect.width, h: pRect.height } : null,
           contentRect: cRect ? { x: cRect.x, y: cRect.y, w: cRect.width, h: cRect.height } : null,
