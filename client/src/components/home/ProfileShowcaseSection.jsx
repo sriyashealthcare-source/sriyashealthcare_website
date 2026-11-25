@@ -49,11 +49,11 @@ function LeadershipEditorialRow({
       const h = rect.height || 400;
       const enteredPx = currentVh - rect.top;
 
-      // Trigger when ~20-25% of profile enters viewport
-      if (enteredPx >= h * 0.22 && rect.bottom >= 60) {
+      // Trigger when ~18-22% of profile enters viewport
+      if (enteredPx >= h * 0.18 && rect.bottom >= 60) {
         setIsRevealed(true);
-      } else if (rect.top > currentVh * 0.95) {
-        // Reset when user scrolls back up above this profile
+      } else if (rect.top > currentVh * 0.94 || rect.bottom < 50) {
+        // Reset when user scrolls back up above this profile OR scrolls down past it
         setIsRevealed(false);
       }
     };
@@ -67,15 +67,15 @@ function LeadershipEditorialRow({
             const h = rect.height || 400;
             const enteredPx = currentVh - rect.top;
 
-            if (entry.isIntersecting && enteredPx >= h * 0.22 && rect.bottom >= 60) {
+            if (entry.isIntersecting && enteredPx >= h * 0.18 && rect.bottom >= 60) {
               setIsRevealed(true);
-            } else if (rect.top > currentVh * 0.95) {
+            } else if (rect.top > currentVh * 0.94 || rect.bottom < 50) {
               setIsRevealed(false);
             }
           }
         },
         {
-          threshold: [0, 0.1, 0.2, 0.25, 0.4],
+          threshold: [0, 0.1, 0.18, 0.25, 0.4],
           rootMargin: '0px 0px -4% 0px'
         }
       );
@@ -159,19 +159,10 @@ function LeadershipEditorialRow({
   return (
     <article
       ref={rowRef}
-      className={`hp-leadership-row ${isEven ? 'hp-leadership-row--even' : 'hp-leadership-row--odd hp-leadership-row--reversed'} ${isRevealed ? 'is-revealed' : ''}`}
+      className={`hp-leadership-row ${isEven ? 'hp-leadership-row--even' : 'hp-leadership-row--odd'} ${isRevealed ? 'is-revealed' : ''}`}
     >
-      {isEven ? (
-        <>
-          {textContent}
-          {photoContent}
-        </>
-      ) : (
-        <>
-          {photoContent}
-          {textContent}
-        </>
-      )}
+      {photoContent}
+      {textContent}
     </article>
   );
 }
