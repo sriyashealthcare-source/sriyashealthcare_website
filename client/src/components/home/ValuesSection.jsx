@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
+import React, { useEffect, useRef, useState } from 'react';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
 
 export default function ValuesSection({
@@ -9,10 +8,78 @@ export default function ValuesSection({
   forceMobile = false
 }) {
   const scrollRevealEnabled = animationSettings.scrollRevealEnabled !== false;
-  const [sectionRef, isVisible] = useRevealOnScroll({
-    immediate: isPreview || !scrollRevealEnabled,
-    disabled: !scrollRevealEnabled
-  });
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(() => isPreview || !scrollRevealEnabled);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    // In preview or disabled animations: reveal immediately
+    if (isPreview || !scrollRevealEnabled) {
+      setIsVisible(true);
+      return undefined;
+    }
+
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    let observer = null;
+    let fallbackScrollListener = null;
+
+    const checkVisibility = () => {
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const currentVh = window.innerHeight || 800;
+      const secH = rect.height || 400;
+      const enteredPx = currentVh - rect.top;
+
+      // Trigger entrance when ~15% of section enters viewport OR section is substantially in view
+      if ((enteredPx >= secH * 0.15 && rect.bottom >= 60) || (rect.top < currentVh * 0.85 && rect.bottom >= 60)) {
+        setIsVisible(true);
+      } else if (rect.top > currentVh * 0.95 || rect.bottom < 50) {
+        // Reset when user scrolls back UP above this section OR scrolls DOWN past this section
+        setIsVisible(false);
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            // Replay every time: trigger on enter, reset on exit
+            if (entry.isIntersecting && (entry.intersectionRatio >= 0.15 || entry.boundingClientRect.top < (window.innerHeight || 800) * 0.85)) {
+              setIsVisible(true);
+            } else if (!entry.isIntersecting) {
+              setIsVisible(false);
+            }
+          }
+        },
+        {
+          threshold: [0, 0.15, 0.3],
+          rootMargin: '0px 0px -2% 0px'
+        }
+      );
+      observer.observe(section);
+    }
+
+    // Scroll listener backup to guarantee trigger and bidirectional reset across varying scroll speeds
+    fallbackScrollListener = () => {
+      window.requestAnimationFrame(checkVisibility);
+    };
+    window.addEventListener('scroll', fallbackScrollListener, { passive: true });
+    window.addEventListener('resize', fallbackScrollListener, { passive: true });
+
+    // Initial check on mount
+    checkVisibility();
+
+    return () => {
+      if (observer) observer.disconnect();
+      if (fallbackScrollListener) {
+        window.removeEventListener('scroll', fallbackScrollListener);
+        window.removeEventListener('resize', fallbackScrollListener);
+      }
+    };
+  }, [isPreview, scrollRevealEnabled]);
 
   if (values.enabled === false) return null;
 
@@ -45,7 +112,7 @@ export default function ValuesSection({
             }`}
         >
           {/* Values Intro & Feature Image — Signature Left Entrance */}
-          <div className="hp-values-intro hp-converge-left" style={{ '--reveal-delay': '0ms' }}>
+          <div className="hp-values-intro">
             {eyebrowText && <span className="hp-eyebrow">{eyebrowText}</span>}
             {headingText && (
               <h2 id="values-heading" className="hp-heading hp-reveal-heading">
@@ -60,7 +127,7 @@ export default function ValuesSection({
             )}
 
             {hasFeatureImage && (
-              <figure className="hp-values-feature-frame hp-reveal-media">
+              <figure className="hp-values-feature-frame">
                 <ResponsiveMediaImage
                   media={values.featureImage}
                   alt={values.featureImage?.alt || 'Sriyas Healthcare clinical education and values in practice'}
@@ -75,12 +142,15 @@ export default function ValuesSection({
           </div>
 
           {/* Values Interactive Editorial Sequence — Signature Right Entrance */}
-          <div className="hp-values-sequence hp-converge-right" style={{ '--reveal-delay': '80ms' }}>
+          <div className="hp-values-sequence">
             {items.map((item, idx) => (
               <article
                 key={item.id || idx}
-                className="hp-value-item hp-reveal-child"
-                style={{ '--reveal-delay': `${80 + idx * 70}ms` }}
+                className="hp-value-item"
+                style={{
+                  '--value-index': idx,
+                  '--value-delay': `${(0.2 + idx * 0.5).toFixed(1)}s`
+                }}
               >
                 <div className="hp-value-numeral-col">
                   <span className="hp-value-numeral">0{idx + 1}</span>

@@ -4222,14 +4222,17 @@
   }
 
   /* -----------------------------------------------------------------
-     7. VALUES SECTION
+     7. VALUES SECTION — REPEATABLE SCROLL ENTRANCE ANIMATIONS
      ----------------------------------------------------------------- */
   .home-viewport-section.hp-values-section {
     padding-block: clamp(1.25rem, 3vh, 2.5rem) !important;
+    overflow-x: clip !important;
+    overflow-y: hidden !important;
   }
 
   .home-viewport-section.hp-values-section .hp-container {
     justify-content: center !important;
+    overflow: visible !important;
   }
 
   .home-viewport-section.hp-values-section .hp-values-layout {
@@ -4240,12 +4243,15 @@
     max-width: 1280px !important;
     width: 100% !important;
     margin: 0 auto !important;
+    overflow: visible !important;
   }
 
   .home-viewport-section.hp-values-section .hp-values-intro {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .home-viewport-section.hp-values-section .hp-values-intro .hp-heading {
@@ -4258,12 +4264,32 @@
     line-height: 1.55 !important;
   }
 
+  /* Left-Side Photo Entrance Animation (Slides in from Left) */
   .home-viewport-section.hp-values-section .hp-values-feature-frame {
     margin-top: clamp(8px, 1.4vh, 16px) !important;
     height: clamp(230px, 34vh, 320px) !important;
     aspect-ratio: 4 / 3 !important;
     border-radius: 14px !important;
     overflow: hidden !important;
+    opacity: 0 !important;
+    transform: translateX(-70px) !important;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease-out !important;
+    transition-delay: 0s !important;
+    will-change: transform, opacity;
+  }
+
+  .home-viewport-section.hp-values-section.is-revealed .hp-values-feature-frame {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease-out !important;
+    transition-delay: 0s !important;
+  }
+
+  .home-viewport-section.hp-values-section:not(.is-revealed) .hp-values-feature-frame {
+    opacity: 0 !important;
+    transform: translateX(-70px) !important;
+    transition-delay: 0s !important;
+    transition-duration: 0.25s !important;
   }
 
   .home-viewport-section.hp-values-section .hp-values-feature-frame img {
@@ -4273,6 +4299,7 @@
     object-fit: cover !important;
     object-position: center 25% !important;
     border-radius: 14px !important;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   .home-viewport-section.hp-values-section .hp-values-feature-caption {
@@ -4286,14 +4313,67 @@
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: clamp(8px, 1.3vh, 14px) clamp(10px, 1.2vw, 16px) !important;
     width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+    overflow: visible !important;
   }
 
+  /* Right-Side 6 Value Boxes Staggered Entrance (Slides In From Right, One by One Every 0.5s) */
   .home-viewport-section.hp-values-section .hp-value-item {
     padding: clamp(10px, 1.4vh, 16px) clamp(12px, 1.3vw, 16px) !important;
     border-radius: 12px !important;
     gap: 12px !important;
     height: 100% !important;
     box-sizing: border-box !important;
+    opacity: 0 !important;
+    transform: translateX(70px) !important;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease-out, border-color 0.3s ease, box-shadow 0.3s ease !important;
+    transition-delay: 0s !important;
+    will-change: transform, opacity;
+  }
+
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease-out !important;
+  }
+
+  /* Exact 0.5s staggered cascading delays per card in numerical reading order */
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(1) {
+    transition-delay: 0.2s !important;
+  }
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(2) {
+    transition-delay: 0.7s !important;
+  }
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(3) {
+    transition-delay: 1.2s !important;
+  }
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(4) {
+    transition-delay: 1.7s !important;
+  }
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(5) {
+    transition-delay: 2.2s !important;
+  }
+  .home-viewport-section.hp-values-section.is-revealed .hp-value-item:nth-child(6) {
+    transition-delay: 2.7s !important;
+  }
+
+  /* Reset immediately on scroll-out without lingering delays */
+  .home-viewport-section.hp-values-section:not(.is-revealed) .hp-value-item {
+    opacity: 0 !important;
+    transform: translateX(70px) !important;
+    transition-delay: 0s !important;
+    transition-duration: 0.25s !important;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .home-viewport-section.hp-values-section.is-revealed .hp-value-item:hover {
+      transform: translateX(6px) !important;
+      border-color: var(--gold, #C49A28) !important;
+      box-shadow: 0 8px 24px rgba(196, 154, 40, 0.12), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+      transition-delay: 0s !important;
+    }
   }
 
   .home-viewport-section.hp-values-section .hp-value-numeral {
