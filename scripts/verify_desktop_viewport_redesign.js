@@ -194,7 +194,13 @@ async function runSuite() {
     });
 
     await cdp.send('Page.navigate', { url: TARGET_URL });
-    await sleep(2500);
+    await sleep(3500);
+
+    for (let retry = 0; retry < 20; retry++) {
+      const ready = await cdp.eval(`Boolean(document.getElementById('about-sriyas'))`);
+      if (ready) break;
+      await sleep(300);
+    }
 
     // Section 1: About Sriyas
     console.log('\n--- Checking Section 1: About Sriyas Healthcare ---');
