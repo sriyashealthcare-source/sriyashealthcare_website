@@ -3537,42 +3537,44 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 12px;
+  gap: 1rem;
+  margin-bottom: 18px;
+  min-height: 40px;
+}
+
+.drilldown-category-card-header--no-logo {
+  justify-content: flex-end;
+  margin-bottom: 12px;
+  min-height: auto;
 }
 
 .drilldown-cat-logo-wrap {
-  height: 52px;
-  max-width: 170px;
+  height: 68px;
+  min-width: 110px;
+  max-width: 180px;
+  width: auto;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-radius: 12px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(23, 39, 71, 0.04);
+  box-sizing: border-box;
 }
 
 .drilldown-cat-logo {
-  max-height: 50px;
-  max-width: 160px;
+  height: 100%;
   width: auto;
-  height: auto;
+  max-width: 100%;
   object-fit: contain;
   display: block;
 }
 
-.drilldown-cat-icon-badge {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: rgba(197, 160, 89, 0.1);
-  border: 1px solid rgba(197, 160, 89, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: var(--gold-deep, #a9822c);
-}
-
 .drilldown-cat-type-pill {
   font-family: var(--font-brand);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3580,7 +3582,8 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   background: rgba(212, 175, 55, 0.1);
   border: 1px solid rgba(212, 175, 55, 0.28);
   border-radius: 20px;
-  padding: 3px 10px;
+  padding: 4px 12px;
+  white-space: nowrap;
 }
 
 .drilldown-category-title {
@@ -3659,6 +3662,14 @@ body.mobile-nav-open .hp-hero-morph-traveler {
   transform: translateY(-3px);
   border-color: var(--gold, #C5A059);
   box-shadow: 0 14px 34px rgba(197, 160, 89, 0.16), 0 3px 8px rgba(0, 0, 0, 0.02);
+}
+
+.drilldown-subcat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 14px;
 }
 
 .drilldown-subcat-numeral {

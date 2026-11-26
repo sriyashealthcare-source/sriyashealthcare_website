@@ -297,9 +297,7 @@ export default function BrandCategoryManagement() {
       if (catLogoFile) {
         formData.append('logo', catLogoFile);
       }
-      if (catLogoUrl) {
-        formData.append('logoUrl', catLogoUrl.trim());
-      }
+      formData.append('logoUrl', (catLogoUrl || '').trim());
 
       if (editingCategory) {
         const res = await productService.updateCategory(editingCategory._id, formData);
@@ -1127,9 +1125,19 @@ export default function BrandCategoryManagement() {
                       <img
                         src={catLogoUrl}
                         alt="Logo preview"
-                        style={{ height: '28px', maxWidth: '64px', objectFit: 'contain', border: '1px solid #ddd', padding: '2px', borderRadius: '4px', background: '#fff' }}
+                        style={{ height: '32px', maxWidth: '80px', objectFit: 'contain', border: '1px solid #ddd', padding: '2px 4px', borderRadius: '4px', background: '#fff' }}
                       />
-                      <span style={{ fontSize: '0.74rem', color: '#666' }}>Logo Preview</span>
+                      <button
+                        type="button"
+                        className="adm-btn adm-btn-secondary"
+                        style={{ fontSize: '0.72rem', padding: '2px 8px', height: 'auto', minHeight: '26px' }}
+                        onClick={() => {
+                          setCatLogoUrl('');
+                          setCatLogoFile(null);
+                        }}
+                      >
+                        Clear Logo
+                      </button>
                     </div>
                   )}
                 </div>

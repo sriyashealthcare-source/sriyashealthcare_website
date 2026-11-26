@@ -542,28 +542,25 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
                       const catChildSubs = categories.filter(
                         (s) => String(s.parentCategory?._id || s.parentCategory) === String(cat._id)
                       );
-                      const catLogo = cat.logoUrl || cat.logo_url || (cat.logoImage && cat.logoImage.url);
+                      const rawLogo = cat.logoUrl || cat.logo_url || (cat.logoImage && cat.logoImage.url) || '';
+                      const catLogo = typeof rawLogo === 'string' && rawLogo.trim() !== '' ? rawLogo.trim() : null;
 
                       return (
                         <Link
                           key={cat._id}
                           to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(cat.slug)}`}
-                          className="drilldown-category-card"
+                          className={`drilldown-category-card ${!catLogo ? 'drilldown-category-card--no-logo' : ''}`}
                           role="listitem"
                           aria-label={`View ${cat.name} product portfolio`}
                         >
-                          <div className="drilldown-category-card-header">
-                            {catLogo ? (
+                          <div className={`drilldown-category-card-header ${!catLogo ? 'drilldown-category-card-header--no-logo' : ''}`}>
+                            {catLogo && (
                               <div className="drilldown-cat-logo-wrap">
                                 <img
                                   src={resolveAssetUrl(catLogo)}
                                   alt={`${cat.name} logo`}
                                   className="drilldown-cat-logo"
                                 />
-                              </div>
-                            ) : (
-                              <div className="drilldown-cat-icon-badge" aria-hidden="true">
-                                🔬
                               </div>
                             )}
 
@@ -635,16 +632,32 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
                   {activeCategorySubcategories.map((sub, idx) => {
                     const subCount = getSubcategoryProductCount(sub._id);
                     const numeral = String(idx + 1).padStart(2, '0');
+                    const rawSubLogo = sub.logoUrl || sub.logo_url || (sub.logoImage && sub.logoImage.url) || '';
+                    const subLogo = typeof rawSubLogo === 'string' && rawSubLogo.trim() !== '' ? rawSubLogo.trim() : null;
 
                     return (
                       <Link
                         key={sub._id}
                         to={`/products/${encodeURIComponent(partnerSlug)}/${encodeURIComponent(activeCategory.slug)}/${encodeURIComponent(sub.slug)}`}
-                        className="drilldown-subcat-card"
+                        className={`drilldown-subcat-card ${subLogo ? 'drilldown-subcat-card--with-logo' : ''}`}
                         role="listitem"
                         aria-label={`View products in ${sub.name}`}
                       >
-                        <div className="drilldown-subcat-numeral">{numeral}</div>
+                        {subLogo ? (
+                          <div className="drilldown-subcat-card-header">
+                            <div className="drilldown-cat-logo-wrap">
+                              <img
+                                src={resolveAssetUrl(subLogo)}
+                                alt={`${sub.name} logo`}
+                                className="drilldown-cat-logo"
+                              />
+                            </div>
+                            <span className="drilldown-subcat-numeral">{numeral}</span>
+                          </div>
+                        ) : (
+                          <div className="drilldown-subcat-numeral">{numeral}</div>
+                        )}
+
                         <h3 className="drilldown-subcat-title">{sub.name}</h3>
                         <p className="drilldown-subcat-desc">
                           {sub.description ||

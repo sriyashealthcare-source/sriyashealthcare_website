@@ -222,6 +222,8 @@ const createCategory = async (req, res, next) => {
         height: uploadedLogo.height
       };
       logoUrl = uploadedLogo.url;
+    } else if (!logoUrl) {
+      logoImage = { url: '', publicId: '', format: 'webp', width: 0, height: 0 };
     }
 
     const hasSubcategories = Boolean(
@@ -386,6 +388,8 @@ const updateCategory = async (req, res, next) => {
         height: uploadedLogo.height
       };
       logoUrl = uploadedLogo.url;
+    } else if (!logoUrl) {
+      logoImage = { url: '', publicId: '', format: 'webp', width: 0, height: 0 };
     }
 
     const hasSubcategories = req.body.hasSubcategories !== undefined || req.body.has_subcategories !== undefined
