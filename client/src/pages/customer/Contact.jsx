@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { enquiryService } from '../../services/enquiryService';
 import { trackAnalyticsEvent } from '../../utils/session';
@@ -37,7 +38,28 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+  const isLightboxOpen = isImageOpen;
+  const setIsLightboxOpen = setIsImageOpen;
+
+  const [lightboxData, setLightboxData] = useState({
+    url: STOREFRONT_LOCATION_URL,
+    alt: 'Sriyas Healthcare registered office building in Chennai',
+    caption: ''
+  });
+
+  const openLightbox = (url, alt, caption) => {
+    setLightboxData({
+      url: url || primaryOfficeImage?.url || STOREFRONT_LOCATION_URL,
+      alt: alt || primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai',
+      caption: caption !== undefined ? caption : (primaryOfficeImage?.caption || '')
+    });
+    setIsImageOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setIsImageOpen(false);
+  };
 
   const resolvedGoogleMapsUrl = useMemo(() => {
     if (googleMapsUrl && !googleMapsUrl.includes('H981BLR5kQ2Yz1Sr7')) {
@@ -52,10 +74,10 @@ export default function Contact() {
   }, []);
 
   useEffect(() => {
-    if (!isLightboxOpen) return;
+    if (!isImageOpen) return;
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setIsLightboxOpen(false);
+        setIsImageOpen(false);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -65,7 +87,7 @@ export default function Contact() {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [isLightboxOpen]);
+  }, [isImageOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -575,10 +597,17 @@ export default function Contact() {
         <section className="contact-office-section" aria-label="Corporate Office Location">
           <div className="contact-office-container">
             <div className="office-portrait-card">
-              <button
-                type="button"
+              <div
                 className="office-portrait-frame"
-                onClick={() => setIsLightboxOpen(true)}
+                role="button"
+                tabIndex={0}
+                onClick={() => openLightbox()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openLightbox();
+                  }
+                }}
                 title="Click to view full photo"
                 aria-label="Enlarge Sriyas Healthcare corporate office building photo"
               >
@@ -588,10 +617,18 @@ export default function Contact() {
                   alt={primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
                   loading="lazy"
                 />
-                <span className="office-zoom-badge" aria-hidden="true">
+                <button
+                  type="button"
+                  className="office-zoom-badge"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openLightbox();
+                  }}
+                  aria-label="Click to enlarge building photo"
+                >
                   🔍 Click to enlarge
-                </span>
-              </button>
+                </button>
+              </div>
 
               {primaryOfficeImage?.caption && (
                 <div className="office-portrait-caption">
@@ -613,39 +650,55 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Fullscreen Image Lightbox Modal */}
-            {isLightboxOpen && (
+            {/* Fullscreen Image Lightbox Modal via Portal */}
+            {isImageOpen && typeof document !== 'undefined' && createPortal(
               <div
                 className="office-lightbox-overlay"
-                onClick={() => setIsLightboxOpen(false)}
+                onClick={closeLightbox}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Full-size corporate office photograph"
               >
-                <div
-                  className="office-lightbox-content"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <div className="office-lightbox-topbar" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    type="button"
+                    className="office-lightbox-back-btn"
+                    onClick={closeLightbox}
+                    aria-label="Close fullscreen view and return to Contact page"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="M16 10H4M9 15l-5-5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span>← Back to Contact Page</span>
+                  </button>
+
                   <button
                     type="button"
                     className="office-lightbox-close"
-                    onClick={() => setIsLightboxOpen(false)}
+                    onClick={closeLightbox}
                     aria-label="Close fullscreen view"
                   >
                     &times;
                   </button>
+                </div>
+
+                <div
+                  className="office-lightbox-content"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <img
                     className="office-lightbox-img"
-                    src={primaryOfficeImage?.url || STOREFRONT_LOCATION_URL}
-                    alt={primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
+                    src={lightboxData.url || primaryOfficeImage?.url || STOREFRONT_LOCATION_URL}
+                    alt={lightboxData.alt || primaryOfficeImage?.alt || 'Sriyas Healthcare registered office building in Chennai'}
                   />
-                  {primaryOfficeImage?.caption && (
+                  {(lightboxData.caption || primaryOfficeImage?.caption) && (
                     <div className="office-lightbox-caption">
-                      {primaryOfficeImage.caption}
+                      {lightboxData.caption || primaryOfficeImage?.caption}
                     </div>
                   )}
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
 
             {officeImages && officeImages.length > 1 && (
@@ -656,7 +709,20 @@ export default function Contact() {
                     .filter((img) => img.id !== primaryOfficeImage?.id && img.url !== primaryOfficeImage?.url)
                     .map((img) => (
                       <div key={img.id} className="office-gallery-card">
-                        <div className="office-gallery-thumb">
+                        <div
+                          className="office-gallery-thumb"
+                          role="button"
+                          tabIndex={0}
+                          style={{ cursor: 'zoom-in' }}
+                          onClick={() => openLightbox(img.url, img.alt, img.caption)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              openLightbox(img.url, img.alt, img.caption);
+                            }
+                          }}
+                          aria-label={`Enlarge photo: ${img.alt || 'Sriyas Healthcare facility'}`}
+                        >
                           <img
                             src={img.url}
                             alt={img.alt || 'Sriyas Healthcare Office Facility'}
