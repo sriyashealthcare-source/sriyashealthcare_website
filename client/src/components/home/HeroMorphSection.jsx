@@ -4,7 +4,7 @@ import { SRIYAS_EMBLEM_URL } from '../../utils/cloudinaryAssets';
 import { useHomepageScroll } from '../../context/HomepageScrollContext';
 import SmartActionLink from './SmartActionLink';
 import ResponsiveMediaImage from './ResponsiveMediaImage';
-import SriyasOrbitalLogo from './SriyasOrbitalLogo';
+import SriyasOrbitalLogo, { SriyasOuterOrbit } from './SriyasOrbitalLogo';
 import HeroConcentricRings from './HeroConcentricRings';
 
 function easeOutQuad(t) {
@@ -280,6 +280,9 @@ export default function HeroMorphSection({
         <HeroConcentricRings />
         <div className="hp-hero-grid-texture" />
       </div>
+
+      {/* Large Outer Circle Orbit centered on the hero screen */}
+      <SriyasOuterOrbit style={{ opacity: auraOpacity }} />
 
       <div className="hp-hero-inner">
         {/* Sriyas Healthcare Two-Stage Orbital Logo System */}

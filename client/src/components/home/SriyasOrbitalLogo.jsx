@@ -42,6 +42,69 @@ import React from 'react';
  *    - Outer circular stroke and dot naturally dissolve behind the typography zone,
  *      ensuring zero letters are ever cut through or obscured.
  */
+export function SriyasOuterOrbit({ style }) {
+  return (
+    <div
+      className="sriyas-outer-orbital-wrap"
+      aria-hidden="true"
+      data-testid="sriyas-outer-orbital"
+      style={style}
+    >
+      <svg
+        className="sriyas-outer-stage-svg"
+        viewBox="0 0 880 880"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          {/* Luminous Warm-Gold Glow for Outer Orbital Dot */}
+          <radialGradient id="sriyas-outer-dot-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.75" />
+            <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+          </radialGradient>
+
+          {/* Soft Feather Filter for Typography Mask */}
+          <filter id="sriyas-text-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" />
+          </filter>
+
+          {/* Typography Protection Mask for Outer Ring & Outer Dot */}
+          <mask id="sriyas-outer-typography-mask">
+            <rect x="0" y="0" width="880" height="880" fill="#FFFFFF" />
+          </mask>
+        </defs>
+
+        {/* 
+          STAGE 2: OUTER RING (50% - 100% of 12s timeline)
+          - Diameter: 860px (r = 430px), centered at (440, 440) on the hero screen center
+          - 1px champagne-gold border: rgba(197, 160, 89, 0.22)
+          - Luminous orbital dot (4.5px x 4.5px) revolving 360deg clockwise from 50% to 94.8%
+          - Encompasses the entire central hero block cleanly within its radius
+          - Completely finished and invisible at 100%
+        */}
+        <g className="sriyas-stage-outer-group">
+          <circle
+            cx="440"
+            cy="440"
+            r="430"
+            className="sriyas-outer-ring-circle"
+          />
+          <g className="sriyas-outer-dot-rotator">
+            {/* Subtle outer glow */}
+            <circle cx="440" cy="10" r="6" fill="url(#sriyas-outer-dot-glow)" />
+            {/* Crisp 4.5px dot */}
+            <circle cx="440" cy="10" r="2.25" fill="#D4AF37" />
+            {/* Specular glint */}
+            <circle cx="439.3" cy="9.3" r="0.75" fill="#FFFFFF" opacity="0.95" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export default function SriyasOrbitalLogo({
   logoUrl,
   logoAlt,
@@ -108,50 +171,25 @@ export default function SriyasOrbitalLogo({
 
               {/* 
                 STAGE 1: INNER RING (0% - 50% of 12s timeline)
-                - Diameter: 180px (r = 90px), centered at (230, 230)
+                - Diameter: 180px (r = 90px), centered dead-center at (237, 230) on the gold 'S' emblem
                 - 1px champagne-gold border: rgba(197, 160, 89, 0.25)
-                - Luminous orbital dot (4px x 4px) revolving 360deg clockwise from 5% to 43%
+                - Luminous orbital dot (4px x 4px) revolving 360deg clockwise from 0% to 44.8%
                 - Completely finished and invisible at 50%
               */}
               <g className="sriyas-stage-inner-group">
                 <circle
-                  cx="230"
+                  cx="237"
                   cy="230"
                   r="90"
                   className="sriyas-inner-ring-circle"
                 />
                 <g className="sriyas-inner-dot-rotator">
                   {/* Subtle outer glow */}
-                  <circle cx="230" cy="140" r="5" fill="url(#sriyas-dot-glow)" />
+                  <circle cx="237" cy="140" r="5" fill="url(#sriyas-dot-glow)" />
                   {/* Crisp 4px dot */}
-                  <circle cx="230" cy="140" r="2" fill="#D4AF37" />
+                  <circle cx="237" cy="140" r="2" fill="#D4AF37" />
                   {/* Specular glint */}
-                  <circle cx="229.4" cy="139.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
-                </g>
-              </g>
-
-              {/* 
-                STAGE 2: OUTER RING (50% - 100% of 12s timeline)
-                - Diameter: 440px (r = 220px), centered at (230, 230)
-                - 1px champagne-gold border: rgba(197, 160, 89, 0.22)
-                - Luminous orbital dot (4.5px x 4.5px) revolving 360deg clockwise from 55% to 93%
-                - Protected by sriyas-outer-typography-mask: strokes and dot naturally dissolve behind text
-                - Completely finished and invisible at 100%
-              */}
-              <g className="sriyas-stage-outer-group" mask="url(#sriyas-outer-typography-mask)">
-                <circle
-                  cx="230"
-                  cy="230"
-                  r="220"
-                  className="sriyas-outer-ring-circle"
-                />
-                <g className="sriyas-outer-dot-rotator">
-                  {/* Subtle outer glow */}
-                  <circle cx="230" cy="10" r="6" fill="url(#sriyas-dot-glow)" />
-                  {/* Crisp 4.5px dot */}
-                  <circle cx="230" cy="10" r="2.25" fill="#D4AF37" />
-                  {/* Specular glint */}
-                  <circle cx="229.3" cy="9.3" r="0.75" fill="#FFFFFF" opacity="0.95" />
+                  <circle cx="236.4" cy="139.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
                 </g>
               </g>
             </svg>
