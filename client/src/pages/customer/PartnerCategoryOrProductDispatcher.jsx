@@ -23,10 +23,17 @@ export default function PartnerCategoryOrProductDispatcher() {
         // Fetch categories for this brand to see if slug is a category
         const res = await productService.getPublicCategories({ brand: partnerSlug });
         const categories = res?.categories || [];
+        const target = categoryOrProductSlug.toLowerCase();
         const isCat = categories.some(
-          c =>
-            String(c.slug || '').toLowerCase() === categoryOrProductSlug.toLowerCase() ||
-            String(c._id) === categoryOrProductSlug
+          c => {
+            const s = String(c.slug || '').toLowerCase();
+            return (
+              s === target ||
+              String(c._id) === categoryOrProductSlug ||
+              (target === 'dolphin-mesh' && (s === 'futura-medtech-dolphin-mesh' || c.name === 'Dolphin Mesh')) ||
+              (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures'))
+            );
+          }
         );
 
         if (!isMounted) return;

@@ -785,6 +785,8 @@ const createProduct = async (req, res, next) => {
       brochure,
       seoTitle,
       seoDescription,
+      skuMatrix: req.body.skuMatrix !== undefined ? req.body.skuMatrix : null,
+      productCodes: req.body.productCodes !== undefined ? req.body.productCodes : [],
       imageAlt,
       ogImage,
       isActive,
@@ -1007,6 +1009,8 @@ const updateProduct = async (req, res, next) => {
           seoDescription,
           imageAlt,
           ogImage,
+          ...(req.body.skuMatrix !== undefined ? { skuMatrix: req.body.skuMatrix } : {}),
+          ...(req.body.productCodes !== undefined ? { productCodes: req.body.productCodes } : {}),
           isActive,
           displayOrder
         }

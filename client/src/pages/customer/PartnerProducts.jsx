@@ -150,9 +150,15 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
     const target = effectiveCategorySlug.toLowerCase();
     return (
       categories.find(
-        (c) =>
-          String(c.slug || '').toLowerCase() === target ||
-          String(c._id) === effectiveCategorySlug
+        (c) => {
+          const s = String(c.slug || '').toLowerCase();
+          return (
+            s === target ||
+            String(c._id) === effectiveCategorySlug ||
+            (target === 'dolphin-mesh' && (s === 'futura-medtech-dolphin-mesh' || c.name === 'Dolphin Mesh')) ||
+            (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures'))
+          );
+        }
       ) || null
     );
   }, [categories, effectiveCategorySlug]);

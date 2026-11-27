@@ -257,11 +257,11 @@ async function loadPublishedData() {
   try {
     const { getLocalDb } = require('../server/utils/localDbEngine');
     const localDb = getLocalDb();
-    const activeBrands = (localDb.brands || []).filter(b => b.isActive !== false);
+    const activeBrands = (localDb.Brand || localDb.brands || []).filter(b => b.isActive !== false);
     const activeCategories = (localDb.Category || localDb.categories || []).filter(c => c.isActive !== false);
-    const rawProducts = (localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
+    const rawProducts = (localDb.Product || localDb.products || []).filter(p => p.isActive !== false && !p.deletedAt);
     if (activeBrands.length > 0 && rawProducts.length > 0) {
-      // Ensure brand and category references are populated
+      // Ensure brand, category and subcategory references are populated
       const activeProducts = rawProducts.map(p => {
         const pCopy = { ...p };
         if (typeof pCopy.brand === 'string') {
@@ -269,6 +269,9 @@ async function loadPublishedData() {
         }
         if (typeof pCopy.category === 'string') {
           pCopy.category = activeCategories.find(c => String(c._id) === pCopy.category) || { _id: pCopy.category, name: pCopy.cardCategory || 'Medical Devices' };
+        }
+        if (typeof pCopy.subcategory === 'string') {
+          pCopy.subcategory = activeCategories.find(c => String(c._id) === pCopy.subcategory) || null;
         }
         return pCopy;
       });
@@ -576,6 +579,13 @@ async function run() {
 
       fs.writeFileSync(path.join(catDir, 'index.html'), catHtml, 'utf8');
 
+      // Also create alias for futura-medtech-dolphin-mesh -> dolphin-mesh
+      if (cat.slug === 'futura-medtech-dolphin-mesh') {
+        const aliasDir = path.join(brandDir, 'dolphin-mesh');
+        ensureDirSync(aliasDir);
+        fs.writeFileSync(path.join(aliasDir, 'index.html'), catHtml, 'utf8');
+      }
+
       // Check for child subcategories
       const childSubs = brandCategories.filter(s => String(s.parentCategory?._id || s.parentCategory) === String(cat._id));
       for (const sub of childSubs) {
@@ -672,6 +682,18 @@ async function run() {
       });
 
       fs.writeFileSync(path.join(productDir, 'index.html'), prodHtml, 'utf8');
+
+      if (p.category?.slug && p.subcategory?.slug) {
+        const nestedProductDir = path.join(brandDir, p.category.slug, p.subcategory.slug, p.slug);
+        ensureDirSync(nestedProductDir);
+        fs.writeFileSync(path.join(nestedProductDir, 'index.html'), prodHtml, 'utf8');
+
+        if (p.category.slug === 'futura-medtech-dolphin-mesh') {
+          const aliasProductDir = path.join(brandDir, 'dolphin-mesh', p.subcategory.slug, p.slug);
+          ensureDirSync(aliasProductDir);
+          fs.writeFileSync(path.join(aliasProductDir, 'index.html'), prodHtml, 'utf8');
+        }
+      }
     }
   }
 

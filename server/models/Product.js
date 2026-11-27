@@ -114,6 +114,10 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed,
       default: null
     },
+    productCodes: {
+      type: mongoose.Schema.Types.Mixed,
+      default: []
+    },
     seoTitle: {
       type: String,
       trim: true,

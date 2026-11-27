@@ -501,6 +501,77 @@ export default function ProductDetails() {
             </div>
           )}
 
+          {/* Product Ordering Codes Matrix (for Dolphin Mesh and catalog products with full SKU matrices) */}
+          {((Array.isArray(product.productCodes) && product.productCodes.length > 0) ||
+            (Array.isArray(product.skuMatrix?.codes) && product.skuMatrix.codes.length > 0)) && (
+            <div id="ud-sku-matrix-wrap" style={{ marginTop: '24px' }}>
+              <div className="detail-sec-lbl" style={{ color: 'var(--gold, #c5a059)' }}>
+                Product Ordering Codes &amp; Available Sizes (
+                {((product.productCodes || product.skuMatrix?.codes) || []).length} Codes Available)
+              </div>
+              <div style={{ overflowX: 'auto', marginTop: '10px' }}>
+                <table className="sku-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                  <thead>
+                    <tr style={{ background: '#f5f0e6', borderBottom: '1px solid #dfba66' }}>
+                      <th style={{ padding: '8px 10px', textAlign: 'left' }}>Product Code</th>
+                      {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.variant) && (
+                        <th style={{ padding: '8px 10px', textAlign: 'left' }}>Variant</th>
+                      )}
+                      {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.shape) && (
+                        <th style={{ padding: '8px 10px', textAlign: 'left' }}>Shape / Config</th>
+                      )}
+                      {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.size) && (
+                        <th style={{ padding: '8px 10px', textAlign: 'left' }}>Size / Dimensions</th>
+                      )}
+                      {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.fixators) && (
+                        <th style={{ padding: '8px 10px', textAlign: 'left' }}>Fixators</th>
+                      )}
+                      <th style={{ padding: '8px 10px', textAlign: 'left' }}>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {((product.productCodes || product.skuMatrix?.codes) || []).map((item, idx) => (
+                      <tr
+                        key={idx}
+                        style={{
+                          borderBottom: '1px solid #ede5d3',
+                          background: idx % 2 === 0 ? '#ffffff' : '#faf7f2'
+                        }}
+                      >
+                        <td
+                          style={{
+                            padding: '8px 10px',
+                            fontWeight: 700,
+                            color: '#9a762e',
+                            fontFamily: 'monospace',
+                            fontSize: '0.9rem'
+                          }}
+                        >
+                          {item.code || item.productCode}
+                        </td>
+                        {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.variant) && (
+                          <td style={{ padding: '8px 10px' }}>{item.variant || '—'}</td>
+                        )}
+                        {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.shape) && (
+                          <td style={{ padding: '8px 10px' }}>{item.shape || '—'}</td>
+                        )}
+                        {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.size) && (
+                          <td style={{ padding: '8px 10px' }}>{item.size || '—'}</td>
+                        )}
+                        {((product.productCodes || product.skuMatrix?.codes) || []).some(c => c.fixators) && (
+                          <td style={{ padding: '8px 10px' }}>{item.fixators || '—'}</td>
+                        )}
+                        <td style={{ padding: '8px 10px', color: '#555' }}>
+                          {item.description || item.code}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
           {brochureUrl && (
             <div className="detail-pdf-bar" id="ud-pdf-bar">
               <a
