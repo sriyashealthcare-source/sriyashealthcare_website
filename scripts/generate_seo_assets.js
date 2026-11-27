@@ -586,6 +586,13 @@ async function run() {
         fs.writeFileSync(path.join(aliasDir, 'index.html'), catHtml, 'utf8');
       }
 
+      // Also create alias for futura-medtech-skin-staplers-tackers -> skin-staplers-tackers
+      if (cat.slug === 'futura-medtech-skin-staplers-tackers') {
+        const aliasDir = path.join(brandDir, 'skin-staplers-tackers');
+        ensureDirSync(aliasDir);
+        fs.writeFileSync(path.join(aliasDir, 'index.html'), catHtml, 'utf8');
+      }
+
       // Check for child subcategories
       const childSubs = brandCategories.filter(s => String(s.parentCategory?._id || s.parentCategory) === String(cat._id));
       for (const sub of childSubs) {
@@ -690,6 +697,16 @@ async function run() {
 
         if (p.category.slug === 'futura-medtech-dolphin-mesh') {
           const aliasProductDir = path.join(brandDir, 'dolphin-mesh', p.subcategory.slug, p.slug);
+          ensureDirSync(aliasProductDir);
+          fs.writeFileSync(path.join(aliasProductDir, 'index.html'), prodHtml, 'utf8');
+        }
+      } else if (p.category?.slug) {
+        const catProductDir = path.join(brandDir, p.category.slug, p.slug);
+        ensureDirSync(catProductDir);
+        fs.writeFileSync(path.join(catProductDir, 'index.html'), prodHtml, 'utf8');
+
+        if (p.category.slug === 'futura-medtech-skin-staplers-tackers') {
+          const aliasProductDir = path.join(brandDir, 'skin-staplers-tackers', p.slug);
           ensureDirSync(aliasProductDir);
           fs.writeFileSync(path.join(aliasProductDir, 'index.html'), prodHtml, 'utf8');
         }

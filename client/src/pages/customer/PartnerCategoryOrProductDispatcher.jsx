@@ -31,7 +31,8 @@ export default function PartnerCategoryOrProductDispatcher() {
               s === target ||
               String(c._id) === categoryOrProductSlug ||
               (target === 'dolphin-mesh' && (s === 'futura-medtech-dolphin-mesh' || c.name === 'Dolphin Mesh')) ||
-              (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures'))
+              (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures')) ||
+              (target === 'skin-staplers-tackers' && (s === 'futura-medtech-skin-staplers-tackers' || c.name === 'Skin Staplers & Tackers'))
             );
           }
         );

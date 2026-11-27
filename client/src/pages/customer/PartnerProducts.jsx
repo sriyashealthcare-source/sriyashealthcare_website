@@ -156,7 +156,8 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
             s === target ||
             String(c._id) === effectiveCategorySlug ||
             (target === 'dolphin-mesh' && (s === 'futura-medtech-dolphin-mesh' || c.name === 'Dolphin Mesh')) ||
-            (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures'))
+            (target === 'dolphin-sutures' && (s === 'futura-medtech-dolphin-sutures' || c.name === 'Dolphin Sutures')) ||
+            (target === 'skin-staplers-tackers' && (s === 'futura-medtech-skin-staplers-tackers' || c.name === 'Skin Staplers & Tackers'))
           );
         }
       ) || null
@@ -177,11 +178,18 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
 
   const hasSubcategories = useMemo(() => {
     if (!activeCategory) return false;
-    return (
-      activeCategorySubcategories.length > 0 ||
-      activeCategory.hasSubcategories === true ||
-      activeCategory.has_subcategories === true
-    );
+    // If no child subcategories exist, category definitely has no subcategories
+    if (activeCategorySubcategories.length === 0) return false;
+    // If category is explicitly marked as not having subcategories
+    if (activeCategory.hasSubcategories === false || activeCategory.has_subcategories === false) return false;
+    // If there is only 1 subcategory with the identical name as the category, treat as no subcategories
+    if (
+      activeCategorySubcategories.length === 1 &&
+      normalizeSearchText(activeCategorySubcategories[0].name) === normalizeSearchText(activeCategory.name)
+    ) {
+      return false;
+    }
+    return activeCategorySubcategories.length > 0;
   }, [activeCategory, activeCategorySubcategories]);
 
   // Identify active subcategory from effectiveSubcategorySlug
@@ -548,6 +556,12 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
                       const catChildSubs = categories.filter(
                         (s) => String(s.parentCategory?._id || s.parentCategory) === String(cat._id)
                       );
+                      const isMultiSub =
+                        (catChildSubs.length > 1 ||
+                          (catChildSubs.length === 1 &&
+                            normalizeSearchText(catChildSubs[0].name) !== normalizeSearchText(cat.name))) &&
+                        cat.hasSubcategories !== false &&
+                        cat.has_subcategories !== false;
                       const rawLogo = cat.logoUrl || cat.logo_url || (cat.logoImage && cat.logoImage.url) || '';
                       const catLogo = typeof rawLogo === 'string' && rawLogo.trim() !== '' ? rawLogo.trim() : null;
 
@@ -570,7 +584,7 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
                               </div>
                             )}
 
-                            {catChildSubs.length > 0 ? (
+                            {isMultiSub ? (
                               <span className="drilldown-cat-type-pill">
                                 {catChildSubs.length} Subcategories
                               </span>
@@ -591,9 +605,9 @@ export default function PartnerProducts({ categorySlugProp = null, subcategorySl
 
                           <div className="drilldown-category-footer">
                             <span className="drilldown-count-badge">
-                              {catChildSubs.length > 0
+                              {isMultiSub
                                 ? `${catChildSubs.length} Subcategories · ${catTotalProducts} Products`
-                                : `${catTotalProducts} Clinical Products`}
+                                : `${catTotalProducts} Products`}
                             </span>
                             <span className="drilldown-cta-link">
                               <span>View Range</span>
