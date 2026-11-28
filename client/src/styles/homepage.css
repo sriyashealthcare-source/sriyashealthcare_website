@@ -567,10 +567,10 @@
 .sriyas-outer-orbital-wrap {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 57%;
   transform: translate(-50%, -50%);
-  width: clamp(680px, 78vh, 880px);
-  height: clamp(680px, 78vh, 880px);
+  width: min(740px, 82vh);
+  height: min(740px, 82vh);
   max-width: 92vw;
   max-height: 92vw;
   aspect-ratio: 1 / 1;
@@ -695,20 +695,34 @@
   }
 }
 
-/* Typography Priority: elevate text layers above decorative orbits */
+/* Typography Priority & Occlusion: elevate text layers strictly above decorative orbits */
 .hp-hero-title-slot {
   position: relative;
-  z-index: 3;
+  z-index: 10;
 }
 
 .hp-hero-title-stack {
   position: relative;
-  z-index: 3;
+  z-index: 10;
+}
+
+.hp-hero-brand-name {
+  position: relative;
+  z-index: 10;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 1px rgba(251, 249, 244, 0.4);
 }
 
 .hp-hero-tagline {
   position: relative;
-  z-index: 3;
+  z-index: 10;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.5px rgba(251, 249, 244, 0.3);
+}
+
+.hp-hero-copy {
+  position: relative;
+  z-index: 10;
 }
 
 /* Reduced motion accessibility preference: clean static logo & pause orbital satellite */
@@ -3001,8 +3015,9 @@
   }
 
   .sriyas-outer-orbital-wrap {
-    width: clamp(340px, 88vw, 560px);
-    height: clamp(340px, 88vw, 560px);
+    top: 56%;
+    width: clamp(340px, 88vw, 540px);
+    height: clamp(340px, 88vw, 540px);
   }
 
   .hp-hero-emblem-slot {
@@ -3073,6 +3088,7 @@
   }
 
   .sriyas-outer-orbital-wrap {
+    top: 55%;
     width: clamp(300px, 88vw, 360px);
     height: clamp(300px, 88vw, 360px);
   }

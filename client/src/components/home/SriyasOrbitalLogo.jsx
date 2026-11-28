@@ -66,13 +66,23 @@ export function SriyasOuterOrbit({ style }) {
           </radialGradient>
 
           {/* Soft Feather Filter for Typography Mask */}
-          <filter id="sriyas-text-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="6" />
+          <filter id="sriyas-outer-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="12" />
           </filter>
 
-          {/* Typography Protection Mask for Outer Ring & Outer Dot */}
+          {/* Typography Protection Mask for Outer Ring & Outer Dot:
+              White (#FFFFFF) = Fully visible outside text.
+              Black (#000000) = Smoothly dissolves behind text elements and reappears past them. */}
           <mask id="sriyas-outer-typography-mask">
             <rect x="0" y="0" width="880" height="880" fill="#FFFFFF" />
+            <ellipse
+              cx="440"
+              cy="345"
+              rx="420"
+              ry="110"
+              fill="#000000"
+              filter="url(#sriyas-outer-mask-blur)"
+            />
           </mask>
         </defs>
 
@@ -81,10 +91,10 @@ export function SriyasOuterOrbit({ style }) {
           - Diameter: 860px (r = 430px), centered at (440, 440) on the hero screen center
           - 1px champagne-gold border: rgba(197, 160, 89, 0.22)
           - Luminous orbital dot (4.5px x 4.5px) revolving 360deg clockwise from 50% to 94.8%
-          - Encompasses the entire central hero block cleanly within its radius
+          - Protected by feathered typography mask: smoothly dissolves behind text & reappears past letters
           - Completely finished and invisible at 100%
         */}
-        <g className="sriyas-stage-outer-group">
+        <g className="sriyas-stage-outer-group" mask="url(#sriyas-outer-typography-mask)">
           <circle
             cx="440"
             cy="440"
@@ -144,52 +154,30 @@ export default function SriyasOrbitalLogo({
                   <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.25" />
                   <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
                 </radialGradient>
-
-                {/* Soft Feather Filter for Typography Mask */}
-                <filter id="sriyas-text-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="6" />
-                </filter>
-
-                {/* 
-                  Typography Protection Mask for Outer Ring & Outer Dot:
-                  White (#FFFFFF) = Fully visible outside text.
-                  Black (#000000) = Completely masked out behind text.
-                */}
-                <mask id="sriyas-outer-typography-mask">
-                  <rect x="0" y="0" width="460" height="460" fill="#FFFFFF" />
-                  <rect
-                    x="15"
-                    y="298"
-                    width="430"
-                    height="126"
-                    rx="18"
-                    fill="#000000"
-                    filter="url(#sriyas-text-mask-blur)"
-                  />
-                </mask>
               </defs>
 
               {/* 
                 STAGE 1: INNER RING (0% - 50% of 12s timeline)
-                - Diameter: 180px (r = 90px), centered dead-center at (237, 230) on the gold 'S' emblem
+                - Diameter: 140px (r = 70px, decreased by 20px), centered dead-center at (237, 230) on the gold 'S' emblem
                 - 1px champagne-gold border: rgba(197, 160, 89, 0.25)
                 - Luminous orbital dot (4px x 4px) revolving 360deg clockwise from 0% to 44.8%
+                - Clear white space above "SRIYAS HEALTHCARE" lettering
                 - Completely finished and invisible at 50%
               */}
               <g className="sriyas-stage-inner-group">
                 <circle
                   cx="237"
                   cy="230"
-                  r="90"
+                  r="70"
                   className="sriyas-inner-ring-circle"
                 />
                 <g className="sriyas-inner-dot-rotator">
                   {/* Subtle outer glow */}
-                  <circle cx="237" cy="140" r="5" fill="url(#sriyas-dot-glow)" />
+                  <circle cx="237" cy="160" r="5" fill="url(#sriyas-dot-glow)" />
                   {/* Crisp 4px dot */}
-                  <circle cx="237" cy="140" r="2" fill="#D4AF37" />
+                  <circle cx="237" cy="160" r="2" fill="#D4AF37" />
                   {/* Specular glint */}
-                  <circle cx="236.4" cy="139.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
+                  <circle cx="236.4" cy="159.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
                 </g>
               </g>
             </svg>
