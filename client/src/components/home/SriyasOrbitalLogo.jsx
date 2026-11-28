@@ -65,24 +65,23 @@ export function SriyasOuterOrbit({ style }) {
             <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
           </radialGradient>
 
-          {/* Soft Feather Filter for Typography Mask */}
-          <filter id="sriyas-outer-mask-blur" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="12" />
-          </filter>
-
           {/* Typography Protection Mask for Outer Ring & Outer Dot:
-              White (#FFFFFF) = Fully visible outside text.
-              Black (#000000) = Smoothly dissolves behind text elements and reappears past them. */}
+              White (#FFFFFF) = Fully visible in top & bottom clear zones.
+              Smooth gradient = Becomes light when touching words.
+              Black (#000000) = Disappears over the words area so it never cuts any letters. */}
+          <linearGradient id="sriyas-outer-mask-linear" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="18%" stopColor="#FFFFFF" />
+            <stop offset="25%" stopColor="#404040" />
+            <stop offset="30%" stopColor="#000000" />
+            <stop offset="73%" stopColor="#000000" />
+            <stop offset="78%" stopColor="#404040" />
+            <stop offset="85%" stopColor="#FFFFFF" />
+            <stop offset="100%" stopColor="#FFFFFF" />
+          </linearGradient>
+
           <mask id="sriyas-outer-typography-mask">
-            <rect x="0" y="0" width="880" height="880" fill="#FFFFFF" />
-            <ellipse
-              cx="440"
-              cy="345"
-              rx="420"
-              ry="110"
-              fill="#000000"
-              filter="url(#sriyas-outer-mask-blur)"
-            />
+            <rect x="0" y="0" width="880" height="880" fill="url(#sriyas-outer-mask-linear)" />
           </mask>
         </defs>
 
@@ -158,26 +157,27 @@ export default function SriyasOrbitalLogo({
 
               {/* 
                 STAGE 1: INNER RING (0% - 50% of 12s timeline)
-                - Diameter: 140px (r = 70px, decreased by 20px), centered dead-center at (237, 230) on the gold 'S' emblem
+                - Diameter: 96px (r = 48px), centered dead-center at (237, 230) on the gold 'S' emblem
                 - 1px champagne-gold border: rgba(197, 160, 89, 0.25)
                 - Luminous orbital dot (4px x 4px) revolving 360deg clockwise from 0% to 44.8%
-                - Clear white space above "SRIYAS HEALTHCARE" lettering
+                - Revolved tightly and cleanly around ONLY the logo emblem without touching other things
+                - Generous clear margin above "SRIYAS HEALTHCARE" lettering
                 - Completely finished and invisible at 50%
               */}
               <g className="sriyas-stage-inner-group">
                 <circle
                   cx="237"
                   cy="230"
-                  r="70"
+                  r="48"
                   className="sriyas-inner-ring-circle"
                 />
                 <g className="sriyas-inner-dot-rotator">
                   {/* Subtle outer glow */}
-                  <circle cx="237" cy="160" r="5" fill="url(#sriyas-dot-glow)" />
+                  <circle cx="237" cy="182" r="5" fill="url(#sriyas-dot-glow)" />
                   {/* Crisp 4px dot */}
-                  <circle cx="237" cy="160" r="2" fill="#D4AF37" />
+                  <circle cx="237" cy="182" r="2" fill="#D4AF37" />
                   {/* Specular glint */}
-                  <circle cx="236.4" cy="159.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
+                  <circle cx="236.4" cy="181.4" r="0.6" fill="#FFFFFF" opacity="0.9" />
                 </g>
               </g>
             </svg>
